@@ -114,7 +114,7 @@ namespace SportsTacticsBoard
     {
       if (null != layout) {
         foreach (FieldObject fo in fieldObjects) {
-          FieldObjectLayout.Entry e = layout.GetEntry(fo.Name);
+          FieldObjectLayout.Entry e = layout.GetEntry(fo.Tag);
           if (e != null) {
             fo.Position = e.pos;
             IsDirty = true;
@@ -210,7 +210,7 @@ namespace SportsTacticsBoard
       // the players)
       if ((showMovementLines) && (nextLayout != null)) {
         foreach (FieldObject fieldObject in fieldObjects) {
-          FieldObjectLayout.Entry layoutEntry = nextLayout.GetEntry(fieldObject.Name);
+          FieldObjectLayout.Entry layoutEntry = nextLayout.GetEntry(fieldObject.Tag);
           if (layoutEntry != null) {
             fieldObject.DrawMovementLine(e.Graphics, new FieldUnitToPixelConversionDelegate(YardsToPixelsNoOffset), layoutEntry.pos);
           } // endif

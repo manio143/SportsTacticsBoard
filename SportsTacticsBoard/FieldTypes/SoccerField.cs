@@ -109,7 +109,7 @@ namespace SportsTacticsBoard.FieldTypes
     {
       List<string> playersOnTeam = new List<string>();
       for (int i = 1; i <= playersPerTeam; i++) {
-        playersOnTeam.Add(FieldObjects.Player.ComposeName(team, i));
+        playersOnTeam.Add(FieldObjects.Player.ComposeTag(team, i));
       }
       return playersOnTeam;
     }

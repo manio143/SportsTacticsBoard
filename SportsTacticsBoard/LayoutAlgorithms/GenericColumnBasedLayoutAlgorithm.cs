@@ -55,7 +55,7 @@ namespace SportsTacticsBoard.LayoutAlgorithms
 
     private int ColumnOfPlayer(string p)
     {
-      int playerNumber = FieldObjects.Player.ExtractPlayerNumberFromName(p);
+      int playerNumber = FieldObjects.Player.ExtractPlayerNumberFromTag(p);
       int[] ptci = PlayerToColumnIndexes;
       if ((playerNumber <= 0) && (playerNumber > ptci.Length)) {
         return -1;
