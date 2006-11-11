@@ -395,10 +395,6 @@ namespace SportsTacticsBoard
         List<IFieldType> fieldTypes = new List<IFieldType>();
 
         // TODO: Enumerate these using reflection on the current assembly
-        Type[] types = global::System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
-        foreach (Type t in types) {
-          string s = t.Name;
-        }
 
         fieldTypes.Add(new FieldTypes.SoccerField());
         fieldTypes.Add(new FieldTypes.HockeyRink_NHL());

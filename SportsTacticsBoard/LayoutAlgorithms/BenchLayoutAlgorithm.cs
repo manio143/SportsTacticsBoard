@@ -61,7 +61,7 @@ namespace SportsTacticsBoard.LayoutAlgorithms
 
       foreach (string p in playersToPosition)
       {
-        int playerNumber = FieldObjects.Player.ExtractPlayerNumberFromName(p);
+        int playerNumber = FieldObjects.Player.ExtractPlayerNumberFromTag(p);
         if (playerNumber >= 0)
         {
           FieldObjectLayout.Entry e = new FieldObjectLayout.Entry();

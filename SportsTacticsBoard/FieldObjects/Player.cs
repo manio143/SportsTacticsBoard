@@ -56,7 +56,7 @@ namespace SportsTacticsBoard.FieldObjects
 
     public override string Tag
     {
-      get { return "Player_" + team.ToString() + "_" + number.ToString(); }
+      get { return ComposeTag(Team, Number); }
     }
 
     public override string Name
@@ -69,17 +69,21 @@ namespace SportsTacticsBoard.FieldObjects
       string nameFormat = Properties.Resources.ResourceManager.GetString("FieldObject_Player_Name_Format");
       string teamName = Properties.Resources.ResourceManager.GetString("TeamName_" + team.ToString());
       return String.Format(nameFormat, teamName, playerNumber);
-//      return "Player - " + team.ToString() + " - #" + playerNumber.ToString();
     }
 
-    public static int ExtractPlayerNumberFromName(string playerName)
+    public static string ComposeTag(TeamId team, int playerNumber)
     {
-      int hashIndex = playerName.LastIndexOf('#');
+      return "Player_" + team.ToString() + "_" + playerNumber.ToString();
+    }
+
+    public static int ExtractPlayerNumberFromTag(string playerTag)
+    {
+      int hashIndex = playerTag.LastIndexOf('_');
       if (hashIndex < 0)
       {
         return -1;
       }
-      return int.Parse(playerName.Substring(hashIndex + 1));
+      return int.Parse(playerTag.Substring(hashIndex + 1));
     }
 
     protected override Brush FillBrush
