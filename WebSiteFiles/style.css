@@ -1,0 +1,52 @@
+﻿body { 
+  font-family: Verdana, Arial, Helvetica, sans-serif; 
+  font-size: 11pt;
+	font-style: normal;
+  margin-bottom: 0pt; 
+  margin-top: 0pt;
+}
+p, td { 
+  font-family: Verdana, Arial, Helvetica, sans-serif; 
+  font-size: 11pt;
+	font-style: normal;
+  margin-bottom: 3pt; 
+  margin-top: 3pt;
+}
+ul,ol {
+  margin-top: 2pt;
+  margin-bottom: 2pt;
+}
+li {
+  margin-top: 1pt;
+  margin-bottom: 1pt;
+}
+h1 {
+  font-family: Verdana, Arial, Helvetica, sans-serif; 
+  font-size: 24pt;
+	font-style: normal;
+  font-weight: bold;
+  margin-bottom: 5pt; 
+  margin-top: 4pt;
+}
+h2 {
+  font-family: Verdana, Arial, Helvetica, sans-serif; 
+  font-size: 12pt;
+	font-style: normal;
+  font-weight: bold;
+  margin-bottom: 6pt; 
+  margin-top: 12pt;
+}
+h3 {
+  font-family: Verdana, Arial, Helvetica, sans-serif; 
+  font-size: 11pt;
+	font-style: normal;
+  font-weight: bold;
+  margin-bottom: 4pt; 
+  margin-top: 6pt;
+}
+.menu {
+  font-size: 12pt;
+  font-weight: bold;
+  margin-bottom: 4pt; 
+  margin-top: 4pt;
+}
