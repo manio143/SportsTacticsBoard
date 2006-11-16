@@ -23,6 +23,7 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -103,12 +104,12 @@ namespace SportsTacticsBoard.FieldTypes
       get { return margin; }
     }
 
-    public Color FieldSurfaceColour
+    public Color FieldSurfaceColor
     {
       get { return Color.LightGray; } 
     }
 
-    public List<FieldObject> StandardFieldObjects
+    public Collection<FieldObject> StandardFieldObjects
     {
       get {
         const float personSize = 2.5F;
@@ -151,7 +152,7 @@ namespace SportsTacticsBoard.FieldTypes
         line2.DisplayRadius = personSize;
         fieldObjects.Add(line2);
 
-        return fieldObjects;
+        return new Collection<FieldObject>(fieldObjects);
       }
     }
 
@@ -162,22 +163,22 @@ namespace SportsTacticsBoard.FieldTypes
       } 
     }
 
-    public List<string> GetTeam(FieldObjects.Player.TeamId team)
+    public ReadOnlyCollection<string> GetTeam(FieldObjects.Player.TeamId team)
     {
       List<string> t = new List<string>();
       
       // Fill in the list of players on the specified team
 
-      return t;
+      return new ReadOnlyCollection<string>(t);
     }
 
 
-    // Pantone colours matched using: http://www.logoorange.com/color/color-codes-chart.php
+    // Pantone colors matched using: http://www.logoorange.com/color/color-codes-chart.php
     private Color pms286 = Color.FromArgb(0xff, 0x00, 0x55, 0xfa); // blue lines
     private Color pms186 = Color.FromArgb(0xff, 0xf5, 0x00, 0x2f); // red lines
     private Color pms298 = Color.FromArgb(0xff, 0x4f, 0xed, 0xff); // goal crease
 
-    private int GetSizeInPixelsEnforcingMinimum(float fieldUnits, int minimumPixels, FieldUnitToPixelConversionDelegate cd)
+    private static int GetSizeInPixelsEnforcingMinimum(float fieldUnits, int minimumPixels, FieldUnitToPixelConverter cd)
     {
       int sizeInPixels = cd(fieldUnits);
       if (sizeInPixels < minimumPixels) {
@@ -186,29 +187,29 @@ namespace SportsTacticsBoard.FieldTypes
       return sizeInPixels;
     }
 
-    private int getBoardLineSizeInPixels(FieldUnitToPixelConversionDelegate cd)
+    private static int getBoardLineSizeInPixels(FieldUnitToPixelConverter cd)
     {
       return GetSizeInPixelsEnforcingMinimum(boardsPenWidth, minimumThickLineWidthInPixels, cd);
     }
 
-    private int getThickLineSizeInPixels(FieldUnitToPixelConversionDelegate cd)
+    private static int getThickLineSizeInPixels(FieldUnitToPixelConverter cd)
     {
       return GetSizeInPixelsEnforcingMinimum(thickLinePenWidth, minimumThickLineWidthInPixels, cd);
     }
 
-    private int getThinLineSizeInPixels(FieldUnitToPixelConversionDelegate cd)
+    private static int getThinLineSizeInPixels(FieldUnitToPixelConverter cd)
     {
       return GetSizeInPixelsEnforcingMinimum(thinLinePenWidth, minimumThinLineWidthInPixels, cd);
     }
 
-    private Point InPixelsOnScreen(PointF fieldUnitPoint, Rectangle fieldRectangle, FieldUnitToPixelConversionDelegate cd)
+    private static Point InPixelsOnScreen(PointF fieldUnitPoint, Rectangle fieldRectangle, FieldUnitToPixelConverter cd)
     {
       Point pt = new Point(cd(fieldUnitPoint.X), cd(fieldUnitPoint.Y));
       pt.Offset(fieldRectangle.Location);
       return pt;
     }
 
-    private void DrawFaceOffSpot(Graphics g, PointF position, Brush brush, float diameter, Rectangle fieldRectangle, FieldUnitToPixelConversionDelegate cd)
+    private static void DrawFaceOffSpot(Graphics g, PointF position, Brush brush, float diameter, Rectangle fieldRectangle, FieldUnitToPixelConverter cd)
     {
       int faceOffSpotRadiusInPixels =
         GetSizeInPixelsEnforcingMinimum(diameter / 2.0F, minimumFaceOffCircleRadiusInPixels, cd);
@@ -224,7 +225,7 @@ namespace SportsTacticsBoard.FieldTypes
                     faceOffSpotDiameterInPixels);
     }
 
-    private void DrawFaceOffArea(Graphics g, PointF position, Brush spotBrush, Pen linePen, Rectangle fieldRectangle, FieldUnitToPixelConversionDelegate cd)
+    private static void DrawFaceOffArea(Graphics g, PointF position, Brush spotBrush, Pen linePen, Rectangle fieldRectangle, FieldUnitToPixelConverter cd)
     {
       DrawFaceOffSpot(g, position, spotBrush, faceOffSpotDiameter, fieldRectangle, cd);
 
@@ -307,7 +308,7 @@ namespace SportsTacticsBoard.FieldTypes
       g.DrawEllipse(linePen, circleRectangle);
     }
 
-    public void DrawFieldMarkings(Graphics g, Rectangle fieldRectangle, FieldUnitToPixelConversionDelegate conversionDelegateWithNoOffset)
+    public void DrawFieldMarkings(Graphics graphics, Rectangle fieldRectangle, FieldUnitToPixelConverter conversionDelegateWithNoOffset)
     {
       // Create the pens for drawing the lines with
       Pen boardsPen = new Pen(Color.Black, getBoardLineSizeInPixels(conversionDelegateWithNoOffset));
@@ -390,11 +391,11 @@ namespace SportsTacticsBoard.FieldTypes
       rink.CloseFigure();
 
       // Clip the drawing area to the rink itself
-      Region oldClip = g.Clip;
-      g.SetClip(rink);
+      Region oldClip = graphics.Clip;
+      graphics.SetClip(rink);
 
       // Draw the ice
-      g.FillPath(iceBrush, rink);
+      graphics.FillPath(iceBrush, rink);
 
       // Draw the goal creases
       int halfCreaseWidthInPixels = conversionDelegateWithNoOffset(creaseWidth / 2.0F);
@@ -408,22 +409,22 @@ namespace SportsTacticsBoard.FieldTypes
                       centreOfIceInPixels.Y - halfCreaseWidthInPixels,
                       creaseClipWidth,
                       creaseWidthInPixels);
-      Region creaseOldClip = g.Clip;
-      g.SetClip(creaseClipRect1);
+      Region creaseOldClip = graphics.Clip;
+      graphics.SetClip(creaseClipRect1);
       Rectangle crease1ArcRect =
         new Rectangle(fieldRectangle.Left + distanceOfGoalLinesFromEndOfRinkInPixels - creaseArcRadiusInPixels,
                       centreOfIceInPixels.Y - creaseArcRadiusInPixels,
                       creaseArcDiameterInPixels,
                       creaseArcDiameterInPixels);
-      g.FillEllipse(creaseBrush, crease1ArcRect);
-      g.DrawEllipse(redThinLinePen, crease1ArcRect);
-      g.Clip = creaseOldClip;
-      g.DrawLine(redThinLinePen,
+      graphics.FillEllipse(creaseBrush, crease1ArcRect);
+      graphics.DrawEllipse(redThinLinePen, crease1ArcRect);
+      graphics.Clip = creaseOldClip;
+      graphics.DrawLine(redThinLinePen,
                  fieldRectangle.Left + distanceOfGoalLinesFromEndOfRinkInPixels,
                  centreOfIceInPixels.Y - halfCreaseWidthInPixels,
                  fieldRectangle.Left + distanceOfGoalLinesFromEndOfRinkInPixels + creaseEdgeLengthInPixels,
                  centreOfIceInPixels.Y - halfCreaseWidthInPixels);
-      g.DrawLine(redThinLinePen,
+      graphics.DrawLine(redThinLinePen,
                  fieldRectangle.Left + distanceOfGoalLinesFromEndOfRinkInPixels,
                  centreOfIceInPixels.Y + halfCreaseWidthInPixels,
                  fieldRectangle.Left + distanceOfGoalLinesFromEndOfRinkInPixels + creaseEdgeLengthInPixels,
@@ -433,71 +434,71 @@ namespace SportsTacticsBoard.FieldTypes
                       centreOfIceInPixels.Y - halfCreaseWidthInPixels,
                       creaseClipWidth,
                       creaseWidthInPixels);
-      g.SetClip(creaseClipRect2);
+      graphics.SetClip(creaseClipRect2);
       Rectangle crease2ArcRect =
         new Rectangle(fieldRectangle.Right - distanceOfGoalLinesFromEndOfRinkInPixels - creaseArcRadiusInPixels,
                       centreOfIceInPixels.Y - creaseArcRadiusInPixels,
                       creaseArcDiameterInPixels,
                       creaseArcDiameterInPixels);
-      g.FillEllipse(creaseBrush, crease2ArcRect);
-      g.DrawEllipse(redThinLinePen, crease2ArcRect);
-      g.Clip = creaseOldClip;
-      g.DrawLine(redThinLinePen,
+      graphics.FillEllipse(creaseBrush, crease2ArcRect);
+      graphics.DrawEllipse(redThinLinePen, crease2ArcRect);
+      graphics.Clip = creaseOldClip;
+      graphics.DrawLine(redThinLinePen,
                  fieldRectangle.Right - distanceOfGoalLinesFromEndOfRinkInPixels,
                  centreOfIceInPixels.Y - halfCreaseWidthInPixels,
                  fieldRectangle.Right - distanceOfGoalLinesFromEndOfRinkInPixels - creaseEdgeLengthInPixels,
                  centreOfIceInPixels.Y - halfCreaseWidthInPixels);
-      g.DrawLine(redThinLinePen,
+      graphics.DrawLine(redThinLinePen,
                  fieldRectangle.Right - distanceOfGoalLinesFromEndOfRinkInPixels,
                  centreOfIceInPixels.Y + halfCreaseWidthInPixels,
                  fieldRectangle.Right - distanceOfGoalLinesFromEndOfRinkInPixels - creaseEdgeLengthInPixels,
                  centreOfIceInPixels.Y + halfCreaseWidthInPixels);
 
-      g.Clip = creaseOldClip;
+      graphics.Clip = creaseOldClip;
 
       // Draw the goal lines
-      g.DrawLine(redThinLinePen,
+      graphics.DrawLine(redThinLinePen,
                  fieldRectangle.Left + distanceOfGoalLinesFromEndOfRinkInPixels,
                  fieldRectangle.Top,
                  fieldRectangle.Left + distanceOfGoalLinesFromEndOfRinkInPixels,
                  fieldRectangle.Bottom);
-      g.DrawLine(redThinLinePen,
+      graphics.DrawLine(redThinLinePen,
                  fieldRectangle.Right - distanceOfGoalLinesFromEndOfRinkInPixels,
                  fieldRectangle.Top,
                  fieldRectangle.Right - distanceOfGoalLinesFromEndOfRinkInPixels,
                  fieldRectangle.Bottom);
 
       // Draw the blue lines
-      g.DrawLine(blueLinePen,
+      graphics.DrawLine(blueLinePen,
                  fieldRectangle.Left + distanceOfBlueLineFromEndOfRinkInPixels,
                  fieldRectangle.Top,
                  fieldRectangle.Left + distanceOfBlueLineFromEndOfRinkInPixels,
                  fieldRectangle.Bottom);
-      g.DrawLine(blueLinePen,
+      graphics.DrawLine(blueLinePen,
                  fieldRectangle.Right - distanceOfBlueLineFromEndOfRinkInPixels,
                  fieldRectangle.Top,
                  fieldRectangle.Right - distanceOfBlueLineFromEndOfRinkInPixels,
                  fieldRectangle.Bottom);
 
       // Draw the centre-circle
-      g.DrawEllipse(blueThinLinePen,
+      graphics.DrawEllipse(blueThinLinePen,
                     centreOfIceInPixels.X - centreCircleRadiusInPixels,
                     centreOfIceInPixels.Y - centreCircleRadiusInPixels,
                     centreCircleDiameterInPixels,
                     centreCircleDiameterInPixels);
 
       // Draw the red line
-      g.DrawLine(redLinePen,
+      graphics.DrawLine(redLinePen,
                  centreOfIceInPixels.X,
                  fieldRectangle.Top,
                  centreOfIceInPixels.X,
                  fieldRectangle.Bottom);
 
       // Draw the centre face-off spot
-      DrawFaceOffSpot(g, centreOfIce, blueBrush, centreFaceOffSpotDiameter, fieldRectangle, conversionDelegateWithNoOffset);
+      DrawFaceOffSpot(graphics, centreOfIce, blueBrush, centreFaceOffSpotDiameter, fieldRectangle, conversionDelegateWithNoOffset);
 
       // Draw the "Referee's crease" (a semi-circle zone on one side at centre ice)
-      g.DrawArc(redThinLinePen,
+      graphics.DrawArc(redThinLinePen,
                 centreOfIceInPixels.X - refereesCreaseRadiusInPixels,
                 fieldRectangle.Bottom - refereesCreaseRadiusInPixels,
                 refereesCreaseDiameterInPixels, 
@@ -521,20 +522,20 @@ namespace SportsTacticsBoard.FieldTypes
         goal1,
         goal2
       };
-      g.FillRectangles(goalBrush, goals);
-      g.DrawRectangles(redThinLinePen, goals);
+      graphics.FillRectangles(goalBrush, goals);
+      graphics.DrawRectangles(redThinLinePen, goals);
 
       // Draw the trapezoid zone behind the goals
-      g.DrawLine(redThinLinePen,
+      graphics.DrawLine(redThinLinePen,
                  InPixelsOnScreen(new PointF(0.0F, (rinkWidth / 2.0F) - (trapezoidBaseWidth / 2.0F)), fieldRectangle, conversionDelegateWithNoOffset),
                  InPixelsOnScreen(new PointF(distanceOfGoalLineFromEndOfRink, (rinkWidth / 2.0F) - trapezoidOffsetFromCentre), fieldRectangle, conversionDelegateWithNoOffset));
-      g.DrawLine(redThinLinePen,
+      graphics.DrawLine(redThinLinePen,
                  InPixelsOnScreen(new PointF(0.0F, (rinkWidth / 2.0F) + (trapezoidBaseWidth / 2.0F)), fieldRectangle, conversionDelegateWithNoOffset),
                  InPixelsOnScreen(new PointF(distanceOfGoalLineFromEndOfRink, (rinkWidth / 2.0F) + trapezoidOffsetFromCentre), fieldRectangle, conversionDelegateWithNoOffset));
-      g.DrawLine(redThinLinePen,
+      graphics.DrawLine(redThinLinePen,
                  InPixelsOnScreen(new PointF(rinkLength, (rinkWidth / 2.0F) - (trapezoidBaseWidth / 2.0F)), fieldRectangle, conversionDelegateWithNoOffset),
                  InPixelsOnScreen(new PointF(rinkLength - distanceOfGoalLineFromEndOfRink, (rinkWidth / 2.0F) - trapezoidOffsetFromCentre), fieldRectangle, conversionDelegateWithNoOffset));
-      g.DrawLine(redThinLinePen,
+      graphics.DrawLine(redThinLinePen,
                  InPixelsOnScreen(new PointF(rinkLength, (rinkWidth / 2.0F) + (trapezoidBaseWidth / 2.0F)), fieldRectangle, conversionDelegateWithNoOffset),
                  InPixelsOnScreen(new PointF(rinkLength - distanceOfGoalLineFromEndOfRink, (rinkWidth / 2.0F) + trapezoidOffsetFromCentre), fieldRectangle, conversionDelegateWithNoOffset));
 
@@ -546,7 +547,7 @@ namespace SportsTacticsBoard.FieldTypes
         new PointF(rinkLength - distanceOfZoneFaceOffAreasFromEndOfRink, (rinkWidth / 2.0F) + distanceOfFaceOffSpotsFromCentreOfRink)
       };
       foreach (PointF faceOffArea in faceOffAreas) {
-        DrawFaceOffArea(g, faceOffArea, redBrush, redThinLinePen, fieldRectangle, conversionDelegateWithNoOffset);
+        DrawFaceOffArea(graphics, faceOffArea, redBrush, redThinLinePen, fieldRectangle, conversionDelegateWithNoOffset);
       }
 
       // Draw the neutral zone face off spots
@@ -557,11 +558,11 @@ namespace SportsTacticsBoard.FieldTypes
         new PointF(rinkLength - distanceOfNeutralZoneFaceOffSpotsFromEndOfRink, (rinkWidth / 2.0F) + distanceOfFaceOffSpotsFromCentreOfRink)
       };
       foreach (PointF faceOffSpot in faceOffSpots) {
-        DrawFaceOffSpot(g, faceOffSpot, redBrush, faceOffSpotDiameter, fieldRectangle, conversionDelegateWithNoOffset);
+        DrawFaceOffSpot(graphics, faceOffSpot, redBrush, faceOffSpotDiameter, fieldRectangle, conversionDelegateWithNoOffset);
       }
 
       // Restore clipping region to draw the boards and the stuff outside the boards
-      g.Clip = oldClip;
+      graphics.Clip = oldClip;
 
       // Create the player benches
       int halfBenchWidth = conversionDelegateWithNoOffset(playerBenchWidth / 2.0F);
@@ -599,11 +600,11 @@ namespace SportsTacticsBoard.FieldTypes
         penaltyBox1,
         penaltyBox2
       };
-      g.FillRectangles(benchBrush, benches);
-      g.DrawRectangles(boardsPen, benches);
+      graphics.FillRectangles(benchBrush, benches);
+      graphics.DrawRectangles(boardsPen, benches);
 
       // Draw the boards
-      g.DrawPath(boardsPen, rink);
+      graphics.DrawPath(boardsPen, rink);
     }
 
   }

@@ -30,7 +30,7 @@ using System.Drawing;
 
 namespace SportsTacticsBoard.FieldObjects
 {
-  public class Puck : FieldObject
+  class Puck : FieldObject
   {
     public override string Label
     {

@@ -30,9 +30,9 @@ using System.Drawing;
 
 namespace SportsTacticsBoard.FieldObjects
 {
-  public abstract class Person : FieldObject
+  abstract class Person : FieldObject
   {
-    public Person(float posX, float posY) :
+    protected Person(float posX, float posY) :
       base(posX, posY, 1.15F)
     {
     }

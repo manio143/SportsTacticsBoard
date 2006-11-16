@@ -24,6 +24,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Text;
 
@@ -31,23 +32,21 @@ namespace SportsTacticsBoard.LayoutAlgorithms
 {
   internal abstract class FourFourTwoLayoutAlgorithm : GenericColumnBasedLayoutAlgorithm
   {
-    public FourFourTwoLayoutAlgorithm(IFieldType _fieldType)
-      :
+    public FourFourTwoLayoutAlgorithm(IFieldType _fieldType) :
       base(_fieldType)
     {
     }
 
-    protected override void InitPositionArrays()
-    {
-      playerToColumnIndexes = new int[11] { 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3 };
+    protected override int[] PlayerToColumnIndexes {
+      get {
+        return new int[11] { 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3 };
+      }
     }
-
-    public override List<string> SupportedFieldTypes
+    
+    public override ReadOnlyCollection<string> SupportedFieldTypes
     { 
       get {
-        List<string> fieldTypes = new List<string>();
-        fieldTypes.Add("Soccer");
-        return fieldTypes;
+        return new ReadOnlyCollection<string>(new string[] { "Soccer" });
       } 
     }
   }

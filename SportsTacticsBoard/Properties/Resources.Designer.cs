@@ -60,6 +60,24 @@ namespace SportsTacticsBoard.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string CurrentLayoutNumber_Empty {
+            get {
+                return ResourceManager.GetString("CurrentLayoutNumber_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}/{1}.
+        /// </summary>
+        internal static string CurrentLayoutNumber_Format {
+            get {
+                return ResourceManager.GetString("CurrentLayoutNumber_Format", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap DeleteHS {
             get {
                 object obj = ResourceManager.GetObject("DeleteHS", resourceCulture);
@@ -259,6 +277,15 @@ namespace SportsTacticsBoard.Properties {
         internal static string NoSavedLayoutsMenuItemText {
             get {
                 return ResourceManager.GetString("NoSavedLayoutsMenuItemText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not implemented yet!.
+        /// </summary>
+        internal static string NotImplementedYet {
+            get {
+                return ResourceManager.GetString("NotImplementedYet", resourceCulture);
             }
         }
         

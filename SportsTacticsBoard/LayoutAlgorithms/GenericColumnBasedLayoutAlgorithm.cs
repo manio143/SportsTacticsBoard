@@ -24,6 +24,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Text;
 
@@ -31,27 +32,14 @@ namespace SportsTacticsBoard.LayoutAlgorithms
 {
   internal abstract class GenericColumnBasedLayoutAlgorithm : TeamLayoutAlgorithm
   {
-    protected float[] positionIdents;
-    protected int[] playerToColumnIndexes;
+    protected abstract float[] PositionIndents { get; }
 
-    protected float[] PositionIndents
-    {
-      get { return positionIdents; }
-    }
+    protected abstract int[] PlayerToColumnIndexes { get; }
 
-    protected int[] PlayerToColumnIndexes
-    {
-      get { return playerToColumnIndexes; }
-    }
-
-    public GenericColumnBasedLayoutAlgorithm(IFieldType _fieldType)
-      :
+    public GenericColumnBasedLayoutAlgorithm(IFieldType _fieldType) :
       base(_fieldType)
     {
-      InitPositionArrays();
     }
-
-    protected abstract void InitPositionArrays();
 
     private int ColumnOfPlayer(string p)
     {
@@ -63,12 +51,12 @@ namespace SportsTacticsBoard.LayoutAlgorithms
       return ptci[playerNumber - 1];
     }
 
-    protected override void AppendPlayerPositions(FieldObjectLayout layout, List<string> playersToPosition, bool putOnLeftSide)
+    protected override void AppendPlayerPositions(FieldObjectLayout layout, ReadOnlyCollection<string> playersToPosition, bool putOnLeftSide)
     {
       PositionPlayers(layout, playersToPosition, putOnLeftSide, PositionIndents);            
     }
 
-    private void PositionPlayers(FieldObjectLayout layout, List<string> playersToPosition, bool putOnLeftSide, float[] indents)
+    private void PositionPlayers(FieldObjectLayout layout, ReadOnlyCollection<string> playersToPosition, bool putOnLeftSide, float[] indents)
     {
       // Put the players in "columns"
       List<string>[] columns = new List<string>[indents.Length];
@@ -97,12 +85,7 @@ namespace SportsTacticsBoard.LayoutAlgorithms
         }
         foreach (string p in column)
         {
-          FieldObjectLayout.Entry e = new FieldObjectLayout.Entry();
-          e.tag = p;
-          e.pos.X = FlipSide(indents[ColumnOfPlayer(p)], putOnLeftSide);
-          e.pos.Y = posY;
-          layout.entries.Add(e);
-          
+          layout.AddEntry(p, FlipToSide(indents[ColumnOfPlayer(p)], putOnLeftSide), posY);
           posY += spacing;
         }
       }

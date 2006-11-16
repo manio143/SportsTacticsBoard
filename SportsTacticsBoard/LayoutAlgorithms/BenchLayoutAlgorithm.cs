@@ -24,6 +24,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Text;
 
@@ -37,17 +38,15 @@ namespace SportsTacticsBoard.LayoutAlgorithms
     {
     }
 
-    public override List<string> SupportedFieldTypes
+    public override ReadOnlyCollection<string> SupportedFieldTypes
     {
       get
       {
-        List<string> fieldTypes = new List<string>();
-        fieldTypes.Add("Soccer");
-        return fieldTypes;
+        return new ReadOnlyCollection<string>(new string[] { "Soccer" });
       }
     }
 
-    protected override void AppendPlayerPositions(FieldObjectLayout layout, List<string> playersToPosition, bool putOnLeftSide)
+    protected override void AppendPlayerPositions(FieldObjectLayout layout, ReadOnlyCollection<string> playersToPosition, bool putOnLeftSide)
     {
       const float spacing = 3.25F;
       const float benchIndent = 5.0F;
@@ -64,11 +63,7 @@ namespace SportsTacticsBoard.LayoutAlgorithms
         int playerNumber = FieldObjects.Player.ExtractPlayerNumberFromTag(p);
         if (playerNumber >= 0)
         {
-          FieldObjectLayout.Entry e = new FieldObjectLayout.Entry();
-          e.tag = p;
-          e.pos.X = benchStartPos + (spacing * playerNumber);
-          e.pos.Y = benchY;
-          layout.entries.Add(e);
+          layout.AddEntry(p, benchStartPos + (spacing * playerNumber), benchY);
         }
       }
     }

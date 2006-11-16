@@ -24,35 +24,116 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Xml.Serialization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SportsTacticsBoard
 {
-  public class FieldObjectLayout
+  [XmlType(TypeName = "FieldObjectLayoutEntry")]
+  public class FieldObjectLayoutEntry
   {
-    public class Entry 
+    public FieldObjectLayoutEntry()
     {
-      public PointF pos;
-      public string tag;
+      tag = "";
     }
 
-    public List<Entry> entries;
+    public FieldObjectLayoutEntry(string _tag, float posX, float posY)
+    {
+      tag = _tag;
+      positionX = posX;
+      positionY = posY;
+    }
+
+    public FieldObjectLayoutEntry(string _tag, PointF pt)
+    {
+      tag = _tag;
+      positionX = pt.X;
+      positionY = pt.Y;
+    }
+
+    [XmlAttribute(AttributeName = "tag")]
+    public string Tag
+    {
+      get { return tag; }
+      set { tag = value; }
+    }
+
+    [XmlAttribute(AttributeName = "x")]
+    public float PositionX
+    {
+      get { return positionX; }
+      set { positionX = value; }
+    }
+
+    [XmlAttribute(AttributeName = "y")]
+    public float PositionY
+    {
+      get { return positionY; }
+      set { positionY = value; }
+    }
+
+    private string tag;
+    private float positionX;
+    private float positionY;
+  }
+
+  public class FieldObjectLayout
+  {
+    [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
+    [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+    public List<FieldObjectLayoutEntry> entries;
 
     public FieldObjectLayout()
     {
-      entries = new List<Entry>();
+      entries = new List<FieldObjectLayoutEntry>();
     }
 
-    public Entry GetEntry(string tag)
+    public void AddEntry(string tag, PointF pos)
     {
-      return entries.Find(delegate(Entry entry) { return (entry.tag == tag); });
+      entries.Add(new FieldObjectLayoutEntry(tag, pos));
+    }
+
+    public void AddEntry(string tag, float posX, float posY)
+    {
+      entries.Add(new FieldObjectLayoutEntry(tag, posX, posY));
+    }
+
+    private FieldObjectLayoutEntry FindEntry(string tag)
+    {
+      return entries.Find(delegate(FieldObjectLayoutEntry entry) { return (entry.Tag == tag); });
+    }
+
+    public bool HasEntry(string tag)
+    {
+      return (FindEntry(tag) != null);
+    }
+
+    public PointF GetEntryPosition(string tag)
+    {
+      FieldObjectLayoutEntry e = FindEntry(tag);
+      return new PointF(e.PositionX, e.PositionY);
     }
 
     public void RemoveEntry(string tag)
     {
-      entries.Remove(entries.Find(delegate(Entry entry) { return (entry.tag == tag); }));
+      // Not particularily efficient, but works
+      entries.Remove(FindEntry(tag));
+    }
+
+    [XmlIgnore]
+    public ICollection<string> Tags
+    {
+      get {
+        List<string> l = new List<string>();
+        foreach (FieldObjectLayoutEntry e in entries) {
+          l.Add(e.Tag);
+        }
+        return l;
+      }
     }
   }
 }

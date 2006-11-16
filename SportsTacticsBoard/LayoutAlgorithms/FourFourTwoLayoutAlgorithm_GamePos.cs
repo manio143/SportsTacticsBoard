@@ -31,16 +31,15 @@ namespace SportsTacticsBoard.LayoutAlgorithms
 {
   internal class FourFourTwoLayoutAlgorithm_GamePos : FourFourTwoLayoutAlgorithm
   {
-    public FourFourTwoLayoutAlgorithm_GamePos(IFieldType _fieldType)
-      :
+    public FourFourTwoLayoutAlgorithm_GamePos(IFieldType _fieldType) :
       base(_fieldType)
     {
     }
 
-    protected override void InitPositionArrays()
-    {
-      base.InitPositionArrays();
-      positionIdents = new float[4] { 8.0F, 25.0F, 45.0F, 70.0F };
+    protected override float[] PositionIndents {
+      get {
+        return new float[4] { 8.0F, 25.0F, 45.0F, 70.0F };
+      }
     }
   }
 }

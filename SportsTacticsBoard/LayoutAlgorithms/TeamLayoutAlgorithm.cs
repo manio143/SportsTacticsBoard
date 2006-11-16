@@ -24,35 +24,19 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SportsTacticsBoard.LayoutAlgorithms
 {
-  abstract public class TeamLayoutAlgorithm : ILayoutAlgorithm
+  abstract class TeamLayoutAlgorithm : ILayoutAlgorithm
   {
     private IFieldType fieldType;
 
-    public TeamLayoutAlgorithm(IFieldType _fieldType)
+    protected TeamLayoutAlgorithm(IFieldType _fieldType)
     {
       fieldType = _fieldType;
-    }
-
-    private List<FieldObjects.Player> GetTeam(List<FieldObject> fieldObjects, FieldObjects.Player.TeamId team)
-    {
-      List<FieldObjects.Player> players = new List<FieldObjects.Player>();
-      foreach (FieldObject fo in fieldObjects)
-      {
-        if (fo.GetType() == typeof(FieldObjects.Player))
-        {
-          FieldObjects.Player p = (FieldObjects.Player)fo;
-          if (p.Team == team)
-          {
-            players.Add(p);
-          }
-        }
-      }
-      return players;
     }
 
     public FieldObjectLayout GetLayout(IFieldType fieldType)
@@ -63,9 +47,9 @@ namespace SportsTacticsBoard.LayoutAlgorithms
       return layout;
     }
 
-    public abstract List<string> SupportedFieldTypes { get; }
+    public abstract ReadOnlyCollection<string> SupportedFieldTypes { get; }
 
-    protected abstract void AppendPlayerPositions(FieldObjectLayout layout, List<string> playersToPosition, bool putOnLeftSide);
+    protected abstract void AppendPlayerPositions(FieldObjectLayout layout, ReadOnlyCollection<string> playersToPosition, bool putOnLeftSide);
 
     protected float FieldLength
     {
@@ -77,18 +61,13 @@ namespace SportsTacticsBoard.LayoutAlgorithms
       get { return fieldType.FieldWidth; }
     }
 
-    protected float FlipSide(float pos, bool putOnLeftSize)
+    protected float FlipToSide(float pos, bool putOnLeftSize)
     {
       if (putOnLeftSize) {
         return pos;
       } else {
         return FieldLength - pos;
       }
-    }
-
-    protected FieldObjects.Player GetPlayer(List<FieldObjects.Player> players, int number)
-    {
-      return players.Find(delegate(FieldObjects.Player p) { return (p.Number == number); });
     }
   }
 }

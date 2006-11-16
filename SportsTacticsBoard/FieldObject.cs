@@ -30,7 +30,7 @@ using System.Drawing;
 
 namespace SportsTacticsBoard
 {
-  public abstract class FieldObject
+  abstract class FieldObject
   {
     private PointF position;
     public PointF Position
@@ -86,44 +86,47 @@ namespace SportsTacticsBoard
       }
     }
 
-    public FieldObject(float posX, float posY)
-    {
-      position.X = posX;
-      position.Y = posY;
-    }
-
-    public FieldObject(float posX, float posY, float dispRadius)
+    protected FieldObject(float posX, float posY, float dispRadius)
     {
       position.X = posX;
       position.Y = posY;
       displayRadius = dispRadius;
     }
 
-    public bool ContainsPoint(Point pt, FieldUnitToPixelConversionDelegate conversionDelegate)
+    public bool ContainsPoint(Point pt, FieldUnitToPixelConverter conversionDelegate)
     {
       Rectangle rect = GetRectangle(conversionDelegate);
       return rect.Contains(pt);
     }
 
-    private Point GetCentre(FieldUnitToPixelConversionDelegate conversionDelegate)
+    private Point GetCentre(FieldUnitToPixelConverter conversionDelegate)
     {
       return new Point(conversionDelegate(position.X), conversionDelegate(position.Y));
     }
 
-    public Rectangle GetRectangle(FieldUnitToPixelConversionDelegate conversionDelegate)
+    public Rectangle GetRectangle(FieldUnitToPixelConverter conversionDelegate)
     {
+      if (null == conversionDelegate) {
+        throw new ArgumentNullException("conversionDelegate");
+      }
       int dispRadius = conversionDelegate(DisplayRadius);
       return new Rectangle(conversionDelegate(position.X) - dispRadius,
         conversionDelegate(position.Y) - dispRadius, dispRadius * 2, dispRadius * 2);
     }
 
-    public virtual void Draw(Graphics g, FieldUnitToPixelConversionDelegate conversionDelegate)
+    public virtual void Draw(Graphics graphics, FieldUnitToPixelConverter conversionDelegate)
     {
+      if (null == conversionDelegate) {
+        throw new ArgumentNullException("conversionDelegate");
+      }
+      if (null == graphics) {
+        throw new ArgumentNullException("graphics");
+      }
       Rectangle rect = GetRectangle(conversionDelegate);
-      g.FillEllipse(FillBrush, rect);
+      graphics.FillEllipse(FillBrush, rect);
       Pen outlinePen = OutlinePen;
       if (outlinePen != null) {
-        g.DrawEllipse(outlinePen, rect);
+        graphics.DrawEllipse(outlinePen, rect);
       }
       if (HasLabel) {
         float fontSize = LabelFontSize * (float)rect.Height / 18.0F;
@@ -131,15 +134,21 @@ namespace SportsTacticsBoard
         StringFormat strFormat = new StringFormat();
         strFormat.Alignment = StringAlignment.Center;
         strFormat.LineAlignment = StringAlignment.Center;
-        g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-        g.DrawString(Label, labelFont, LabelBrush, rect, strFormat);
+        graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+        graphics.DrawString(Label, labelFont, LabelBrush, rect, strFormat);
       }
     }
 
-    public virtual void DrawMovementLine(Graphics g, FieldUnitToPixelConversionDelegate conversionDelegate, PointF pos)
+    public virtual void DrawMovementLine(Graphics graphics, FieldUnitToPixelConverter conversionDelegate, PointF pos)
     {
+      if (null == conversionDelegate) {
+        throw new ArgumentNullException("conversionDelegate");
+      }
+      if (null == graphics) {
+        throw new ArgumentNullException("graphics");
+      }
       Point endPoint = new Point(conversionDelegate(pos.X), conversionDelegate(pos.Y));
-      g.DrawLine(MovementPen, GetCentre(conversionDelegate), endPoint);
+      graphics.DrawLine(MovementPen, GetCentre(conversionDelegate), endPoint);
     }
   }
 }
