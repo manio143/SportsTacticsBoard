@@ -24,6 +24,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -33,7 +34,7 @@ using System.Windows.Forms;
 
 namespace SportsTacticsBoard
 {
-  public partial class FieldControl : UserControl
+  partial class FieldControl : UserControl
   {
     private float ratio;
     private Rectangle fieldRectangle;
@@ -52,7 +53,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    public EventHandler IsDirtyChanged;
+    public event EventHandler IsDirtyChanged;
 
     private bool showMovementLines = true;
 
@@ -84,7 +85,7 @@ namespace SportsTacticsBoard
 
         fieldType = value;
         if (null != fieldType) {
-          BackColor = fieldType.FieldSurfaceColour;
+          BackColor = fieldType.FieldSurfaceColor;
           CalculateFieldGeometry(Size);
           fieldObjects = fieldType.StandardFieldObjects;
           SetLayout(fieldType.DefaultLayout);
@@ -96,27 +97,26 @@ namespace SportsTacticsBoard
       get { return fieldType; }
     }
 
-    protected List<FieldObject> fieldObjects;
+    private Collection<FieldObject> fieldObjects;
 
-    public FieldObjectLayout GetLayout()
+    public FieldObjectLayout FieldLayout
     {
-      FieldObjectLayout layout = new FieldObjectLayout();
-      foreach (FieldObject fo in fieldObjects) {
-        FieldObjectLayout.Entry e = new FieldObjectLayout.Entry();
-        e.pos = fo.Position;
-        e.tag = fo.Tag;
-        layout.entries.Add(e);
+      get
+      {
+        FieldObjectLayout layout = new FieldObjectLayout();
+        foreach (FieldObject fo in fieldObjects) {
+          layout.AddEntry(fo.Tag, fo.Position);
+        }
+        return layout;
       }
-      return layout;
     }
 
     public void SetLayout(FieldObjectLayout layout)
     {
       if (null != layout) {
         foreach (FieldObject fo in fieldObjects) {
-          FieldObjectLayout.Entry e = layout.GetEntry(fo.Tag);
-          if (e != null) {
-            fo.Position = e.pos;
+          if (layout.HasEntry(fo.Tag)) {
+            fo.Position = layout.GetEntryPosition(fo.Tag);
             IsDirty = true;
           }
         }
@@ -125,18 +125,18 @@ namespace SportsTacticsBoard
       }
     }
 
-    protected FieldObjectLayout nextLayout;
+    private FieldObjectLayout nextLayout;
 
-    public void SetNextLayout(FieldObjectLayout _nextLayout)
+    public void SetNextLayout(FieldObjectLayout layout)
     {
-      nextLayout = _nextLayout;
+      nextLayout = layout;
       Invalidate();
       Refresh();
     }
 
-    public void SetLayouts(FieldObjectLayout layout, FieldObjectLayout _nextLayout)
+    public void SetLayouts(FieldObjectLayout layout, FieldObjectLayout newNextLayout)
     {
-      nextLayout = _nextLayout;
+      nextLayout = newNextLayout;
       SetLayout(layout);
     }
 
@@ -165,8 +165,13 @@ namespace SportsTacticsBoard
     private FieldObject ObjectAtPoint(Point pt)
     {
       Point fieldPoint = ToFieldPoint(pt);
-      FieldUnitToPixelConversionDelegate cd = new FieldUnitToPixelConversionDelegate(YardsToPixelsNoOffset);
-      return fieldObjects.Find(delegate(FieldObject fo) { return fo.ContainsPoint(fieldPoint, cd); });
+      FieldUnitToPixelConverter cd = new FieldUnitToPixelConverter(YardsToPixelsNoOffset);
+      foreach (FieldObject fo in fieldObjects) {
+        if (fo.ContainsPoint(fieldPoint, cd)) {
+          return fo;
+        }
+      }
+      return null;
     }
 
     private void CalculateFieldGeometry(Size windowSize)
@@ -200,7 +205,7 @@ namespace SportsTacticsBoard
 
       e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-      FieldType.DrawFieldMarkings(e.Graphics, fieldRectangle, new FieldUnitToPixelConversionDelegate(YardsToPixelsNoOffset));
+      FieldType.DrawFieldMarkings(e.Graphics, fieldRectangle, new FieldUnitToPixelConverter(YardsToPixelsNoOffset));
 
       // Adjust the origin so that all field objects are drawn with respect to the topleft of the field
       e.Graphics.TranslateTransform(fieldRectangle.X, fieldRectangle.Y);
@@ -210,16 +215,17 @@ namespace SportsTacticsBoard
       // the players)
       if ((showMovementLines) && (nextLayout != null)) {
         foreach (FieldObject fieldObject in fieldObjects) {
-          FieldObjectLayout.Entry layoutEntry = nextLayout.GetEntry(fieldObject.Tag);
-          if (layoutEntry != null) {
-            fieldObject.DrawMovementLine(e.Graphics, new FieldUnitToPixelConversionDelegate(YardsToPixelsNoOffset), layoutEntry.pos);
+          if (nextLayout.HasEntry(fieldObject.Tag)) {
+            fieldObject.DrawMovementLine(e.Graphics, 
+                                         new FieldUnitToPixelConverter(YardsToPixelsNoOffset), 
+                                         nextLayout.GetEntryPosition(fieldObject.Tag));
           } // endif
         }
       }
 
       // Draw each of the field objects
       foreach (FieldObject fieldObject in fieldObjects) {
-        fieldObject.Draw(e.Graphics, new FieldUnitToPixelConversionDelegate(YardsToPixelsNoOffset));
+        fieldObject.Draw(e.Graphics, new FieldUnitToPixelConverter(YardsToPixelsNoOffset));
       }
     }
 
@@ -234,7 +240,7 @@ namespace SportsTacticsBoard
     private void MoveObjectTo(FieldObject fo, PointF pos)
     {
       if (fo.Position != pos) {
-        FieldUnitToPixelConversionDelegate cd = new FieldUnitToPixelConversionDelegate(YardsToPixelsNoOffset);
+        FieldUnitToPixelConverter cd = new FieldUnitToPixelConverter(YardsToPixelsNoOffset);
         Rectangle oldRect = fo.GetRectangle(cd);
         fo.Position = pos;
         IsDirty = true;

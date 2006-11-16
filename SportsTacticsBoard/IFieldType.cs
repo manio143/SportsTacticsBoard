@@ -24,26 +24,27 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Drawing;
 
 namespace SportsTacticsBoard
 {
-  public delegate int FieldUnitToPixelConversionDelegate(float value);
+  delegate int FieldUnitToPixelConverter(float value);
 
-  public interface IFieldType
+  interface IFieldType
   {
     string Tag { get; }
     string Name { get; }
     float FieldLength { get; }
     float FieldWidth { get; }
     float Margin { get; }
-    Color FieldSurfaceColour { get; }
+    Color FieldSurfaceColor { get; }
 
-    List<FieldObject> StandardFieldObjects { get; }
+    Collection<FieldObject> StandardFieldObjects { get; }
     FieldObjectLayout DefaultLayout { get; }
 
-    List<string> GetTeam(FieldObjects.Player.TeamId team);
-    void DrawFieldMarkings(Graphics g, Rectangle fieldRectangle, FieldUnitToPixelConversionDelegate conversionDelegateWithNoOffset);
+    ReadOnlyCollection<string> GetTeam(FieldObjects.Player.TeamId team);
+    void DrawFieldMarkings(Graphics graphics, Rectangle fieldRectangle, FieldUnitToPixelConverter conversionDelegateWithNoOffset);
   }
 }

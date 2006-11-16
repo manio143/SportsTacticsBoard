@@ -33,13 +33,14 @@ using System.Windows.Forms;
 using System.IO;
 using System.Xml.Serialization;
 using System.Reflection;
+using System.Globalization;
 
 namespace SportsTacticsBoard
 {
   public partial class MainForm : Form
   {
-    private List<SavedLayout> savedLayouts = null;
-    private FieldObjectLayoutSequence currentSequence = null;
+    private List<SavedLayout> savedLayouts;
+    private FieldObjectLayoutSequence currentSequence;
     private int positionInSequence;
     private string fileName = "";
     private string fileFilter = Properties.Resources.ResourceManager.GetString("FileFilter");
@@ -128,10 +129,10 @@ namespace SportsTacticsBoard
 
     private void SaveCurrentLayout()
     {
-      FieldObjectLayout layout = fieldControl.GetLayout();
+      FieldObjectLayout layout = fieldControl.FieldLayout;
       SavedLayoutInformation dialog = new SavedLayoutInformation();
-      foreach (FieldObjectLayout.Entry entry in layout.entries) {
-        dialog.entriesListBox.Items.Add(entry.tag, true);
+      foreach (string entryTag in layout.Tags) {
+        dialog.entriesListBox.Items.Add(entryTag, true);
       }
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -152,9 +153,13 @@ namespace SportsTacticsBoard
     {
       if (null != currentSequence) {
         if (currentSequence.NumberOfLayouts == 0) {
-          currentLayoutNumber.Text = "";
+          currentLayoutNumber.Text = 
+            Properties.Resources.ResourceManager.GetString("CurrentLayoutNumber_Empty");
         } else {
-          currentLayoutNumber.Text = (positionInSequence + 1).ToString() + "/" + currentSequence.NumberOfLayouts.ToString();
+          string formatString = 
+            Properties.Resources.ResourceManager.GetString("CurrentLayoutNumber_Format");
+          currentLayoutNumber.Text = 
+            string.Format(CultureInfo.CurrentUICulture, formatString, positionInSequence + 1, currentSequence.NumberOfLayouts);
         }
         previousLayoutInSequence.Enabled = (positionInSequence > 0);
         nextLayoutInSequence.Enabled = ((positionInSequence + 1) < currentSequence.NumberOfLayouts);
@@ -300,7 +305,7 @@ namespace SportsTacticsBoard
     private void UpdateCaption()
     {
       string title = originalCaption;
-      if (fileName != "") {
+      if (!string.IsNullOrEmpty(fileName)) {
         int idx = fileName.LastIndexOf('\\');
         string name;
         if (idx >= 0) {
@@ -324,20 +329,42 @@ namespace SportsTacticsBoard
 
       DialogResult res = openFileDialog.ShowDialog();
       if (res == DialogResult.OK) {
-        XmlSerializer serializer = new XmlSerializer(typeof(FieldObjectLayoutSequence));
-        FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open);
-        FieldObjectLayoutSequence seq = (FieldObjectLayoutSequence)serializer.Deserialize(fs);
-        if (seq != null) {
-          currentSequence = seq;
-          positionInSequence = 0;
-          RestorePositionFromSequence(positionInSequence, currentSequence, currentSequence.GetLayout(positionInSequence + 1));
-          UpdateSequenceControls();
-          fileName = openFileDialog.FileName;
-          UpdateCaption();
+        try {
+          XmlSerializer serializer = new XmlSerializer(typeof(FieldObjectLayoutSequence));
+          using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open)) {
+            FieldObjectLayoutSequence seq = (FieldObjectLayoutSequence)serializer.Deserialize(fs);
+            if (seq != null) {
+              // Locate the field type interface for the field specified by
+              // this saved file
+              IFieldType newFieldType = FindFieldType(seq.fieldTypeTag);
+              if (newFieldType == null) {
+                string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
+                MessageBox.Show(String.Format(CultureInfo.CurrentUICulture, msgFormat, openFileDialog.FileName),
+                  Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+              } else {
+                fieldControl.FieldType = newFieldType;
+                fieldControl.SetNextLayout(null);
+                fieldControl.IsDirty = false;
+                positionInSequence = 0;
+                currentSequence = seq;
+                RestorePositionFromSequence(positionInSequence, currentSequence, currentSequence.GetLayout(positionInSequence + 1));
+                fileName = openFileDialog.FileName;
+                UpdateCaption();
+                UpdateFileMenuItems();
+                UpdateLayoutMenuItems();
+                UpdateSavedLayoutMenuItems();
+                UpdateSequenceControls();
+              }
+            } else {
+              string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
+              MessageBox.Show(String.Format(CultureInfo.CurrentUICulture, msgFormat, openFileDialog.FileName),
+                Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+          }
         }
-        if (seq == null) {
+        catch (System.IO.IOException /*exception*/) {
           string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
-          MessageBox.Show(String.Format(msgFormat, openFileDialog.FileName),
+          MessageBox.Show(String.Format(CultureInfo.CurrentUICulture, msgFormat, openFileDialog.FileName),
             Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
       }
@@ -345,7 +372,7 @@ namespace SportsTacticsBoard
 
     private void saveToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      if (fileName == "") {
+      if (string.IsNullOrEmpty(fileName)) {
         FileSaveAs();
       } else {
         FileSave();
@@ -361,9 +388,10 @@ namespace SportsTacticsBoard
     {
       if (null != currentSequence) {
         XmlSerializer serializer = new XmlSerializer(typeof(FieldObjectLayoutSequence));
-        TextWriter writer = new StreamWriter(fileName);
-        serializer.Serialize(writer, currentSequence);
-        writer.Close();
+        using (TextWriter writer = new StreamWriter(fileName)) {
+          serializer.Serialize(writer, currentSequence);
+          writer.Close();
+        }
       }
       UpdateFileMenuItems();
     }
@@ -388,7 +416,7 @@ namespace SportsTacticsBoard
       FileNew(true, false);
     }
 
-    private List<IFieldType> AvailableFieldTypes
+    private static List<IFieldType> AvailableFieldTypes
     {
       get
       {
@@ -403,7 +431,18 @@ namespace SportsTacticsBoard
       }
     }
 
-    private IFieldType LoadDefaultFieldType()
+    private static IFieldType FindFieldType(string tag)
+    {
+      List<IFieldType> fieldTypes = AvailableFieldTypes;
+      foreach (IFieldType ft in fieldTypes) {
+        if (ft.Tag == tag) {
+          return ft;
+        }
+      }
+      return null;
+    }
+
+    private static IFieldType LoadDefaultFieldType()
     {
       string defaultFieldType = global::SportsTacticsBoard.Properties.Settings.Default.DefaultFieldType;
       if (defaultFieldType.Length == 0) {
@@ -418,7 +457,7 @@ namespace SportsTacticsBoard
       return null;
     }
 
-    private IFieldType AskUserForFieldType(bool saveAsDefaultChecked)
+    private static IFieldType AskUserForFieldType(bool saveAsDefaultChecked)
     {
       SelectFieldType sftDialog = new SelectFieldType();
       sftDialog.saveAsDefaultCheckBox.Checked = saveAsDefaultChecked;
@@ -493,7 +532,7 @@ namespace SportsTacticsBoard
 
     private int RecordPositionToSequence(bool replace, int index, FieldObjectLayoutSequence sequence)
     {
-      FieldObjectLayout layout = fieldControl.GetLayout();
+      FieldObjectLayout layout = fieldControl.FieldLayout;
       fieldControl.IsDirty = false;
       if (replace) {
         sequence.SetLayout(index, layout);
@@ -516,7 +555,8 @@ namespace SportsTacticsBoard
 
     private void removeSavedLayoutMenuItem_Click(object sender, EventArgs e)
     {
-      MessageBox.Show("Not implemented yet!");
+      string msg = Properties.Resources.ResourceManager.GetString("NotImplementedYet");
+      MessageBox.Show(msg);
     }
 
     private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

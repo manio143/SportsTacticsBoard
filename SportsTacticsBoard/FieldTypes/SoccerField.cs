@@ -23,13 +23,14 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace SportsTacticsBoard.FieldTypes
 {
-  public class SoccerField : SportsTacticsBoard.IFieldType
+  class SoccerField : SportsTacticsBoard.IFieldType
   {
     private const float fieldLength = 100.0F;
     private const float fieldWidth = 60.0F;
@@ -54,7 +55,7 @@ namespace SportsTacticsBoard.FieldTypes
       get { return margin; }
     }
 
-    public Color FieldSurfaceColour
+    public Color FieldSurfaceColor
     {
       get { return Color.Green; }
     }
@@ -71,7 +72,7 @@ namespace SportsTacticsBoard.FieldTypes
       }
     }
 
-    public List<FieldObject> StandardFieldObjects
+    public Collection<FieldObject> StandardFieldObjects
     {
       get
       {
@@ -92,7 +93,7 @@ namespace SportsTacticsBoard.FieldTypes
         fieldObjects.Add(new FieldObjects.Referee("AR", "Referee_Soccer_AR2", FieldLength * 3.0F / 4.0F, FieldWidth + 2.0F));
         fieldObjects.Add(new FieldObjects.Referee("4", "Referee_Soccer_4th", FieldLength / 2.0F, FieldWidth + 3.0F));
 
-        return fieldObjects;
+        return new Collection<FieldObject>(fieldObjects);
       }
     }
 
@@ -105,16 +106,16 @@ namespace SportsTacticsBoard.FieldTypes
       }
     }
 
-    public List<string> GetTeam(FieldObjects.Player.TeamId team)
+    public ReadOnlyCollection<string> GetTeam(FieldObjects.Player.TeamId team)
     {
       List<string> playersOnTeam = new List<string>();
       for (int i = 1; i <= playersPerTeam; i++) {
         playersOnTeam.Add(FieldObjects.Player.ComposeTag(team, i));
       }
-      return playersOnTeam;
+      return new ReadOnlyCollection<string>(playersOnTeam);
     }
 
-    public virtual void DrawFieldMarkings(Graphics g, Rectangle fieldRectangle, FieldUnitToPixelConversionDelegate conversionDelegateWithNoOffset)
+    public virtual void DrawFieldMarkings(Graphics graphics, Rectangle fieldRectangle, FieldUnitToPixelConverter conversionDelegateWithNoOffset)
     {
       // Create the pens for drawing the field lines with
       Pen linePen = new Pen(Color.White, linePenWidth);
@@ -123,20 +124,20 @@ namespace SportsTacticsBoard.FieldTypes
       // Draw the lines on the field
 
       // ... The goal and touch lines
-      g.DrawRectangle(linePen, fieldRectangle);
+      graphics.DrawRectangle(linePen, fieldRectangle);
 
       // ... The centre line
       Point fieldCentre = new Point(fieldRectangle.Left + (fieldRectangle.Width / 2),
         fieldRectangle.Top + (fieldRectangle.Height / 2));
       Point centreLineTop = new Point(fieldCentre.X, fieldRectangle.Top);
       Point centreLineBottom = new Point(fieldCentre.X, fieldRectangle.Bottom);
-      g.DrawLine(linePen, centreLineTop, centreLineBottom);
-      g.DrawLine(linePen, fieldCentre.X - 3, fieldCentre.Y, fieldCentre.X + 3, fieldCentre.Y);
+      graphics.DrawLine(linePen, centreLineTop, centreLineBottom);
+      graphics.DrawLine(linePen, fieldCentre.X - 3, fieldCentre.Y, fieldCentre.X + 3, fieldCentre.Y);
 
       // ... The centre circle
       int centreCircleDiameter = conversionDelegateWithNoOffset(20.0F);
       Rectangle centreCircleRect = new Rectangle(fieldCentre.X - (centreCircleDiameter / 2), fieldCentre.Y - (centreCircleDiameter / 2), centreCircleDiameter, centreCircleDiameter);
-      g.DrawEllipse(linePen, centreCircleRect);
+      graphics.DrawEllipse(linePen, centreCircleRect);
 
       // ... The goals
       int goalWidthInPixels = conversionDelegateWithNoOffset(netDepth);
@@ -145,8 +146,8 @@ namespace SportsTacticsBoard.FieldTypes
         goalWidthInPixels, goalHeightInPixels);
       Rectangle rightGoal = new Rectangle(fieldRectangle.Right, fieldCentre.Y - (goalHeightInPixels / 2),
         goalWidthInPixels, goalHeightInPixels);
-      g.DrawRectangle(goalPen, leftGoal);
-      g.DrawRectangle(goalPen, rightGoal);
+      graphics.DrawRectangle(goalPen, leftGoal);
+      graphics.DrawRectangle(goalPen, rightGoal);
 
       // ... The 6 yard boxes
       int widthOf6YardBoxInPixels = conversionDelegateWithNoOffset(6.0F);
@@ -156,8 +157,8 @@ namespace SportsTacticsBoard.FieldTypes
         widthOf6YardBoxInPixels, heightOf6YardBoxInPixels);
       Rectangle rightSide6YardBox = new Rectangle(fieldRectangle.Right - widthOf6YardBoxInPixels, fieldCentre.Y - halfHeightOf6YardBoxInPixels,
         widthOf6YardBoxInPixels, heightOf6YardBoxInPixels);
-      g.DrawRectangle(linePen, leftSide6YardBox);
-      g.DrawRectangle(linePen, rightSide6YardBox);
+      graphics.DrawRectangle(linePen, leftSide6YardBox);
+      graphics.DrawRectangle(linePen, rightSide6YardBox);
 
       // ... The 18 yard boxes
       int widthOf18YardBoxInPixels = conversionDelegateWithNoOffset(18.0F);
@@ -167,28 +168,28 @@ namespace SportsTacticsBoard.FieldTypes
         widthOf18YardBoxInPixels, heightOf18YardBoxInPixels);
       Rectangle rightSide18YardBox = new Rectangle(fieldRectangle.Right - widthOf18YardBoxInPixels, fieldCentre.Y - halfHeightOf18YardBoxInPixels,
         widthOf18YardBoxInPixels, heightOf18YardBoxInPixels);
-      g.DrawRectangle(linePen, leftSide18YardBox);
-      g.DrawRectangle(linePen, rightSide18YardBox);
+      graphics.DrawRectangle(linePen, leftSide18YardBox);
+      graphics.DrawRectangle(linePen, rightSide18YardBox);
 
       // ... The penalty marks
       Rectangle leftPenaltyMark = new Rectangle(fieldRectangle.Left + conversionDelegateWithNoOffset(12.0F), fieldCentre.Y, 1, 1);
       Rectangle rightPenaltyMark = new Rectangle(fieldRectangle.Right - conversionDelegateWithNoOffset(12.0F), fieldCentre.Y, 1, 1);
-      g.DrawEllipse(linePen, leftPenaltyMark);
-      g.DrawEllipse(linePen, rightPenaltyMark);
+      graphics.DrawEllipse(linePen, leftPenaltyMark);
+      graphics.DrawEllipse(linePen, rightPenaltyMark);
 
       // ... The D's
-      Region oldClip = g.Clip;
-      g.ExcludeClip(leftSide18YardBox);
-      g.ExcludeClip(rightSide18YardBox);
+      Region oldClip = graphics.Clip;
+      graphics.ExcludeClip(leftSide18YardBox);
+      graphics.ExcludeClip(rightSide18YardBox);
       int dRadiusInPixels = conversionDelegateWithNoOffset(10.0F);
       int dDiameterInPixels = conversionDelegateWithNoOffset(20.0F);
       Rectangle leftDRectangle = new Rectangle(leftPenaltyMark.Left - dRadiusInPixels,
         leftPenaltyMark.Top - dRadiusInPixels, dDiameterInPixels, dDiameterInPixels);
       Rectangle rightDRectangle = new Rectangle(rightPenaltyMark.Left - dRadiusInPixels,
         rightPenaltyMark.Top - dRadiusInPixels, dDiameterInPixels, dDiameterInPixels);
-      g.DrawEllipse(linePen, leftDRectangle);
-      g.DrawEllipse(linePen, rightDRectangle);
-      g.Clip = oldClip;
+      graphics.DrawEllipse(linePen, leftDRectangle);
+      graphics.DrawEllipse(linePen, rightDRectangle);
+      graphics.Clip = oldClip;
 
       // ... The corner arcs
       int cornerArcDiameterInPixels = conversionDelegateWithNoOffset(2.0F);
@@ -201,10 +202,10 @@ namespace SportsTacticsBoard.FieldTypes
         fieldRectangle.Bottom - cornerArcRadiusInPixels, cornerArcDiameterInPixels, cornerArcDiameterInPixels);
       Rectangle bottomRightCornerArc = new Rectangle(fieldRectangle.Right - cornerArcRadiusInPixels,
         fieldRectangle.Bottom - cornerArcRadiusInPixels, cornerArcDiameterInPixels, cornerArcDiameterInPixels);
-      g.DrawArc(linePen, topLeftCornerArc, 0.0F, 90.0F);
-      g.DrawArc(linePen, topRightCornerArc, 90.0F, 90.0F);
-      g.DrawArc(linePen, bottomLeftCornerArc, 270.0F, 90.0F);
-      g.DrawArc(linePen, bottomRightCornerArc, 180.0F, 90.0F);
+      graphics.DrawArc(linePen, topLeftCornerArc, 0.0F, 90.0F);
+      graphics.DrawArc(linePen, topRightCornerArc, 90.0F, 90.0F);
+      graphics.DrawArc(linePen, bottomLeftCornerArc, 270.0F, 90.0F);
+      graphics.DrawArc(linePen, bottomRightCornerArc, 180.0F, 90.0F);
     }
   }
 }

@@ -26,29 +26,41 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SportsTacticsBoard
 {
+  [XmlType(TypeName = "SportsTacticsBoardDocument")]
   public class FieldObjectLayoutSequence
   {
+    [XmlElement(ElementName="fieldType")]
     public string fieldTypeTag;
-    public List<FieldObjectLayout> layoutSequences;
+
+    [XmlElement(ElementName = "layoutSequence")]
+    [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+    public List<FieldObjectLayout> layoutSequence;
+
+    public FieldObjectLayoutSequence()
+    {
+      layoutSequence = new List<FieldObjectLayout>();
+    }
 
     public FieldObjectLayoutSequence(string _fieldTypeTag)
     {
-      layoutSequences = new List<FieldObjectLayout>();
+      layoutSequence = new List<FieldObjectLayout>();
       fieldTypeTag = _fieldTypeTag;
     }
 
     public int NumberOfLayouts
     {
-      get { return layoutSequences.Count; }
+      get { return layoutSequence.Count; }
     }
 
     public FieldObjectLayout GetLayout(int index)
     {
-      if ((index >= 0) && (index < layoutSequences.Count)) {
-        return layoutSequences[index];
+      if ((index >= 0) && (index < layoutSequence.Count)) {
+        return layoutSequence[index];
       } else {
         return null;
       }
@@ -56,26 +68,26 @@ namespace SportsTacticsBoard
 
     public void SetLayout(int index, FieldObjectLayout layout)
     {
-      if ((index >= 0) && (index < layoutSequences.Count)) {
-        layoutSequences[index] = layout;
+      if ((index >= 0) && (index < layoutSequence.Count)) {
+        layoutSequence[index] = layout;
       }
     }
 
     public int AddNewLayout(int index, FieldObjectLayout layout)
     {
-      if (index >= layoutSequences.Count) {
-        layoutSequences.Add(layout);
-        return layoutSequences.Count - 1;
+      if (index >= layoutSequence.Count) {
+        layoutSequence.Add(layout);
+        return layoutSequence.Count - 1;
       } else {
-        layoutSequences.Insert(index, layout);
+        layoutSequence.Insert(index, layout);
         return index;
       }
     }
 
     public void RemoveFromSequence(int index)
     {
-      if ((index >= 0) && (index < layoutSequences.Count)) {
-        layoutSequences.RemoveAt(index);
+      if ((index >= 0) && (index < layoutSequence.Count)) {
+        layoutSequence.RemoveAt(index);
       }
     }
   }

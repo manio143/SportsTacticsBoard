@@ -27,10 +27,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Globalization;
 
 namespace SportsTacticsBoard.FieldObjects
 {
-  public class Player : Person
+  class Player : Person
   {
     public enum TeamId {
       Attacking,
@@ -51,7 +52,7 @@ namespace SportsTacticsBoard.FieldObjects
 
     public override string Label
     {
-      get { return number.ToString(); }
+      get { return number.ToString(CultureInfo.CurrentUICulture); }
     }
 
     public override string Tag
@@ -68,22 +69,25 @@ namespace SportsTacticsBoard.FieldObjects
     {
       string nameFormat = Properties.Resources.ResourceManager.GetString("FieldObject_Player_Name_Format");
       string teamName = Properties.Resources.ResourceManager.GetString("TeamName_" + team.ToString());
-      return String.Format(nameFormat, teamName, playerNumber);
+      return String.Format(CultureInfo.CurrentUICulture, nameFormat, teamName, playerNumber);
     }
 
     public static string ComposeTag(TeamId team, int playerNumber)
     {
-      return "Player_" + team.ToString() + "_" + playerNumber.ToString();
+      return "Player_" + team.ToString() + "_" + playerNumber.ToString(CultureInfo.InvariantCulture);
     }
 
     public static int ExtractPlayerNumberFromTag(string playerTag)
     {
+      if (null == playerTag) {
+        throw new ArgumentNullException("playerTag");
+      }
       int hashIndex = playerTag.LastIndexOf('_');
       if (hashIndex < 0)
       {
         return -1;
       }
-      return int.Parse(playerTag.Substring(hashIndex + 1));
+      return int.Parse(playerTag.Substring(hashIndex + 1), CultureInfo.InvariantCulture);
     }
 
     protected override Brush FillBrush
