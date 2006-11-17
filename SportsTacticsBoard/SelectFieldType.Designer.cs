@@ -116,7 +116,7 @@ namespace SportsTacticsBoard
     private System.Windows.Forms.Button okButton;
     private System.Windows.Forms.Button cancelButton;
     private System.Windows.Forms.Label label1;
-    public System.Windows.Forms.ComboBox fieldTypeComboBox;
-    public System.Windows.Forms.CheckBox saveAsDefaultCheckBox;
+    private System.Windows.Forms.ComboBox fieldTypeComboBox;
+    private System.Windows.Forms.CheckBox saveAsDefaultCheckBox;
   }
 }

@@ -151,10 +151,10 @@ namespace SportsTacticsBoard
     private System.Windows.Forms.Button cancelButton;
     private System.Windows.Forms.Label nameLabel;
     private System.Windows.Forms.Label descriptionLabel;
-    public System.Windows.Forms.TextBox nameTextBox;
-    public System.Windows.Forms.TextBox descriptionTextBox;
+    private System.Windows.Forms.TextBox nameTextBox;
+    private System.Windows.Forms.TextBox descriptionTextBox;
     private System.Windows.Forms.Label entriesLabel;
-    public System.Windows.Forms.CheckedListBox entriesListBox;
+    private System.Windows.Forms.CheckedListBox entriesListBox;
     private System.Windows.Forms.ErrorProvider errorProvider;
   }
 }

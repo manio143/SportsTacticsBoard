@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="FieldObjectLayoutSequence.cs" />
     <Compile Include="LayoutAlgorithms\TeamLayoutAlgorithm.cs" />
+    <Compile Include="GlobalizationAwareMessageBox.cs" />
     <Compile Include="SavedLayout.cs" />
     <Compile Include="SavedLayoutInformation.cs">
       <SubType>Form</SubType>

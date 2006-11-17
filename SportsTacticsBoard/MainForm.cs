@@ -71,10 +71,8 @@ namespace SportsTacticsBoard
 
     private void RestoreSavedLayout(string name)
     {
-      foreach (SavedLayout savedLayout in savedLayouts)
-      {
-        if (savedLayout.Name == name)
-        {
+      foreach (SavedLayout savedLayout in savedLayouts) {
+        if (savedLayout.Name == name) {
           fieldControl.SetLayout(savedLayout.Layout);
           return;
         }
@@ -90,7 +88,7 @@ namespace SportsTacticsBoard
     private void UpdateFileMenuItems()
     {
       saveAsToolStripMenuItem.Enabled = (fieldControl.FieldType != null);
-      saveToolStripMenuItem.Enabled   = (fieldControl.FieldType != null);
+      saveToolStripMenuItem.Enabled = (fieldControl.FieldType != null);
     }
 
     private void UpdateLayoutMenuItems()
@@ -102,10 +100,8 @@ namespace SportsTacticsBoard
     {
       savedLayoutsMenuItem.DropDownItems.Clear();
       bool itemsInserted = false;
-      if (savedLayouts.Count > 0)
-      {
-        foreach (SavedLayout savedLayout in savedLayouts)
-        {
+      if (savedLayouts.Count > 0) {
+        foreach (SavedLayout savedLayout in savedLayouts) {
           if (savedLayout.FieldTypeTag == fieldControl.FieldType.Tag) {
             ToolStripMenuItem mi = new ToolStripMenuItem(savedLayout.Name, null, new EventHandler(savedLayoutMenuItem_Click));
             if (savedLayout.Description.Length > 0) {
@@ -129,21 +125,10 @@ namespace SportsTacticsBoard
 
     private void SaveCurrentLayout()
     {
-      FieldObjectLayout layout = fieldControl.FieldLayout;
-      SavedLayoutInformation dialog = new SavedLayoutInformation();
-      foreach (string entryTag in layout.Tags) {
-        dialog.entriesListBox.Items.Add(entryTag, true);
-      }
-      if (dialog.ShowDialog() == DialogResult.OK)
-      {
-        for (int index = 0; index < dialog.entriesListBox.Items.Count; index++)
-        {
-          if (!dialog.entriesListBox.GetItemChecked(index))
-          {
-            layout.RemoveEntry((string)(dialog.entriesListBox.Items[index]));
-          }
-        }
-        SavedLayout sl = new SavedLayout(dialog.nameTextBox.Text, dialog.descriptionTextBox.Text, layout, fieldControl.FieldType.Tag);
+      SavedLayout sl =
+        SavedLayoutInformation.AskUserForSavedLayoutDetails(fieldControl.FieldLayout,
+                                                            fieldControl.FieldType.Tag);
+      if (null != sl) {
         savedLayouts.Add(sl);
       }
       UpdateSavedLayoutMenuItems();
@@ -153,12 +138,12 @@ namespace SportsTacticsBoard
     {
       if (null != currentSequence) {
         if (currentSequence.NumberOfLayouts == 0) {
-          currentLayoutNumber.Text = 
+          currentLayoutNumber.Text =
             Properties.Resources.ResourceManager.GetString("CurrentLayoutNumber_Empty");
         } else {
-          string formatString = 
+          string formatString =
             Properties.Resources.ResourceManager.GetString("CurrentLayoutNumber_Format");
-          currentLayoutNumber.Text = 
+          currentLayoutNumber.Text =
             string.Format(CultureInfo.CurrentUICulture, formatString, positionInSequence + 1, currentSequence.NumberOfLayouts);
         }
         previousLayoutInSequence.Enabled = (positionInSequence > 0);
@@ -192,13 +177,16 @@ namespace SportsTacticsBoard
         return;
       }
       if (positionInSequence > 0) {
-        if ((currentSequence.NumberOfLayouts > 0) && (fieldControl.IsDirty))
-        {
-          DialogResult dr = 
-            MessageBox.Show(Properties.Resources.ResourceManager.GetString("SaveSequenceEntryBeforeSwitchingEntries"),
-                            this.Text, MessageBoxButtons.YesNoCancel);
-          switch (dr)
-          {
+        if ((currentSequence.NumberOfLayouts > 0) && (fieldControl.IsDirty)) {
+          DialogResult dr = GlobalizationAwareMessageBox.Show(
+            this,
+            Properties.Resources.ResourceManager.GetString("SaveSequenceEntryBeforeSwitchingEntries"),
+            this.Text,
+            MessageBoxButtons.YesNoCancel,
+            MessageBoxIcon.Question,
+            MessageBoxDefaultButton.Button1,
+            (MessageBoxOptions)0);
+          switch (dr) {
             case DialogResult.Yes:
               RecordPositionToSequence(true, positionInSequence, currentSequence);
               break;
@@ -223,13 +211,16 @@ namespace SportsTacticsBoard
         return;
       }
       if (positionInSequence < currentSequence.NumberOfLayouts) {
-        if ((currentSequence.NumberOfLayouts > 0) && (fieldControl.IsDirty))
-        {
+        if ((currentSequence.NumberOfLayouts > 0) && (fieldControl.IsDirty)) {
           DialogResult dr =
-            MessageBox.Show(Properties.Resources.ResourceManager.GetString("SaveSequenceEntryBeforeSwitchingEntries"),
-                            this.Text, MessageBoxButtons.YesNoCancel);
-          switch (dr)
-          {
+            GlobalizationAwareMessageBox.Show(this,
+                                    Properties.Resources.ResourceManager.GetString("SaveSequenceEntryBeforeSwitchingEntries"),
+                                    this.Text,
+                                    MessageBoxButtons.YesNoCancel,
+                                    MessageBoxIcon.Question,
+                                    MessageBoxDefaultButton.Button1,
+                                    (MessageBoxOptions)0);
+          switch (dr) {
             case DialogResult.Yes:
               RecordPositionToSequence(true, positionInSequence, currentSequence);
               break;
@@ -339,8 +330,14 @@ namespace SportsTacticsBoard
               IFieldType newFieldType = FindFieldType(seq.fieldTypeTag);
               if (newFieldType == null) {
                 string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
-                MessageBox.Show(String.Format(CultureInfo.CurrentUICulture, msgFormat, openFileDialog.FileName),
-                  Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                GlobalizationAwareMessageBox.Show(
+                  this,
+                  String.Format(CultureInfo.CurrentUICulture, msgFormat, openFileDialog.FileName),
+                  this.Text,
+                  MessageBoxButtons.OK,
+                  MessageBoxIcon.Error,
+                  MessageBoxDefaultButton.Button1,
+                  (MessageBoxOptions)0);
               } else {
                 fieldControl.FieldType = newFieldType;
                 fieldControl.SetNextLayout(null);
@@ -357,15 +354,27 @@ namespace SportsTacticsBoard
               }
             } else {
               string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
-              MessageBox.Show(String.Format(CultureInfo.CurrentUICulture, msgFormat, openFileDialog.FileName),
-                Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+              GlobalizationAwareMessageBox.Show(
+                this,
+                String.Format(CultureInfo.CurrentUICulture, msgFormat, openFileDialog.FileName),
+                this.Text,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error,
+                MessageBoxDefaultButton.Button1,
+                (MessageBoxOptions)0);
             }
           }
         }
         catch (System.IO.IOException /*exception*/) {
           string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
-          MessageBox.Show(String.Format(CultureInfo.CurrentUICulture, msgFormat, openFileDialog.FileName),
-            Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+          GlobalizationAwareMessageBox.Show(
+            this,
+            String.Format(CultureInfo.CurrentUICulture, msgFormat, openFileDialog.FileName),
+            this.Text,
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Error,
+            MessageBoxDefaultButton.Button1,
+            (MessageBoxOptions)0);
         }
       }
     }
@@ -416,7 +425,7 @@ namespace SportsTacticsBoard
       FileNew(true, false);
     }
 
-    private static List<IFieldType> AvailableFieldTypes
+    internal static List<IFieldType> AvailableFieldTypes
     {
       get
       {
@@ -457,35 +466,6 @@ namespace SportsTacticsBoard
       return null;
     }
 
-    private static IFieldType AskUserForFieldType(bool saveAsDefaultChecked)
-    {
-      SelectFieldType sftDialog = new SelectFieldType();
-      sftDialog.saveAsDefaultCheckBox.Checked = saveAsDefaultChecked;
-      sftDialog.fieldTypeComboBox.DataSource = AvailableFieldTypes;
-      sftDialog.fieldTypeComboBox.DisplayMember = "Name";
-      if (sftDialog.fieldTypeComboBox.Items.Count > 0) {
-        string defaultFieldType = global::SportsTacticsBoard.Properties.Settings.Default.DefaultFieldType;
-        int selectedIndex = 0;
-        if (defaultFieldType.Length > 0) {
-          int index = sftDialog.fieldTypeComboBox.FindStringExact(defaultFieldType);
-          if (index >= 0) {
-            selectedIndex = index;
-          } 
-        }
-        sftDialog.fieldTypeComboBox.SelectedIndex = selectedIndex;
-      }
-      if (sftDialog.ShowDialog() != DialogResult.OK) {
-        return null;
-      }
-      IFieldType selectedFieldType = (IFieldType)sftDialog.fieldTypeComboBox.SelectedItem;
-      if (sftDialog.saveAsDefaultCheckBox.Checked) {
-        global::SportsTacticsBoard.Properties.Settings.Default.DefaultFieldType =
-          selectedFieldType.Name;
-        global::SportsTacticsBoard.Properties.Settings.Default.Save();
-      }
-      return selectedFieldType;
-    }
-
     private void FileNew(bool saveAsDefaultChecked, bool alwaysAskForFieldType)
     {
       IFieldType newFieldType = fieldControl.FieldType;
@@ -493,7 +473,7 @@ namespace SportsTacticsBoard
         newFieldType = LoadDefaultFieldType();
       }
       if ((newFieldType == null) || (alwaysAskForFieldType)) {
-        newFieldType = AskUserForFieldType(saveAsDefaultChecked);
+        newFieldType = SelectFieldType.AskUserForFieldType(saveAsDefaultChecked);
         if (null == newFieldType) {
           return;
         }
@@ -556,7 +536,14 @@ namespace SportsTacticsBoard
     private void removeSavedLayoutMenuItem_Click(object sender, EventArgs e)
     {
       string msg = Properties.Resources.ResourceManager.GetString("NotImplementedYet");
-      MessageBox.Show(msg);
+      GlobalizationAwareMessageBox.Show(
+        this,
+        msg,
+        this.Text,
+        MessageBoxButtons.OK,
+        MessageBoxIcon.Information,
+        MessageBoxDefaultButton.Button1,
+        (MessageBoxOptions)0);
     }
 
     private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -580,6 +567,6 @@ namespace SportsTacticsBoard
     {
       FileNew(false, true);
     }
-    
+
   }
 }
