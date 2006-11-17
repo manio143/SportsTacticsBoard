@@ -39,5 +39,35 @@ namespace SportsTacticsBoard
     {
       InitializeComponent();
     }
+
+    internal static IFieldType AskUserForFieldType(bool saveAsDefaultChecked)
+    {
+      SelectFieldType sftDialog = new SelectFieldType();
+      sftDialog.saveAsDefaultCheckBox.Checked = saveAsDefaultChecked;
+      sftDialog.fieldTypeComboBox.DataSource = MainForm.AvailableFieldTypes;
+      sftDialog.fieldTypeComboBox.DisplayMember = "Name";
+      if (sftDialog.fieldTypeComboBox.Items.Count > 0) {
+        string defaultFieldType = global::SportsTacticsBoard.Properties.Settings.Default.DefaultFieldType;
+        int selectedIndex = 0;
+        if (defaultFieldType.Length > 0) {
+          int index = sftDialog.fieldTypeComboBox.FindStringExact(defaultFieldType);
+          if (index >= 0) {
+            selectedIndex = index;
+          }
+        }
+        sftDialog.fieldTypeComboBox.SelectedIndex = selectedIndex;
+      }
+      if (sftDialog.ShowDialog() != DialogResult.OK) {
+        return null;
+      }
+      IFieldType selectedFieldType = (IFieldType)sftDialog.fieldTypeComboBox.SelectedItem;
+      if (sftDialog.saveAsDefaultCheckBox.Checked) {
+        global::SportsTacticsBoard.Properties.Settings.Default.DefaultFieldType =
+          selectedFieldType.Name;
+        global::SportsTacticsBoard.Properties.Settings.Default.Save();
+      }
+      return selectedFieldType;
+    }
+
   }
 }
