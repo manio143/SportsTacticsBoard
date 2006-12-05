@@ -32,58 +32,79 @@ namespace SportsTacticsBoard
 {
   abstract class FieldObject
   {
-    private PointF position;
+    public abstract string Tag { get; }
+    public abstract string Label { get; }
+
     public PointF Position
     {
       get { return position; }
       set { position = value; }
     }
-    
-    private float displayRadius = 1.15F;
+
     public float DisplayRadius
     {
       get { return displayRadius; }
       set { displayRadius = value; }
     }
 
-    public abstract string Tag { get; }
     public virtual string Name {
       get {
         return Properties.Resources.ResourceManager.GetString("FieldObject_" + Tag); 
       }
     }
-    public abstract string Label { get; }
-    protected abstract Brush FillBrush { get; }
-    protected virtual Pen OutlinePen {
-      get { return null; }
-    }
-    protected virtual Brush LabelBrush {
-      get { return Brushes.Black; }
-    }
-    protected virtual int LabelFontSize {
-      get { return 9; }
-    }
-    protected virtual bool HasLabel
+
+    public bool ContainsPoint(PointF pt)
     {
-      get
-      {
-        return ((Label != null) && (Label.Length > 0));
+      RectangleF rect = GetRectangle();
+      return rect.Contains(pt);
+    }
+
+    public RectangleF GetRectangle()
+    {
+      return new RectangleF(position.X - DisplayRadius,
+        position.Y - DisplayRadius, DisplayRadius * 2, DisplayRadius * 2);
+    }
+
+    public virtual void Draw(Graphics graphics, IFieldType fieldType)
+    {
+      if (null == graphics) {
+        throw new ArgumentNullException("graphics");
+      }
+      RectangleF rect = GetRectangle();
+      using (Brush fillBrush = new SolidBrush(FillBrushColor)) {
+        graphics.FillEllipse(fillBrush, rect);
+      }
+      if (fieldType.FieldObjectOutlinePenWidth > 0.0) {
+        using (Pen outlinePen = new Pen(OutlinePenColor, fieldType.FieldObjectOutlinePenWidth)) {
+          graphics.DrawEllipse(outlinePen, rect);
+        }
+      }
+      if (HasLabel) {
+        float fontSize = LabelFontSize * (float)rect.Height / 18.0F;
+        Font labelFont = new Font("Arial", fontSize, FontStyle.Bold);
+        StringFormat strFormat = new StringFormat();
+        strFormat.Alignment = StringAlignment.Center;
+        strFormat.LineAlignment = StringAlignment.Center;
+        graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+        try {
+          graphics.DrawString(Label, labelFont, LabelBrush, rect, strFormat);
+        }
+        catch (System.Runtime.InteropServices.ExternalException) {
+          // Sometimes we get a "generic error" from the GDI+ subsystem
+          // when resizing the window really small and then slowly larger 
+          // again. All the parameters seem correct, so we'll just catch and
+          // ignore this exception here.
+        }
       }
     }
 
-    protected virtual Color MovementPenColor
+    public virtual void DrawMovementLine(Graphics graphics, IFieldType fieldType, PointF pos)
     {
-      get { return Color.White; }
-    }
-
-    protected virtual Pen MovementPen
-    {
-      get {
-        Pen p = new Pen(MovementPenColor, 4);
-        p.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-        p.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
-        return p; 
+      if (null == graphics) {
+        throw new ArgumentNullException("graphics");
       }
+      PointF endPoint = new PointF(pos.X, pos.Y);
+      graphics.DrawLine(GetMovementPen(fieldType), GetCentre(), endPoint);
     }
 
     protected FieldObject(float posX, float posY, float dispRadius)
@@ -93,62 +114,59 @@ namespace SportsTacticsBoard
       displayRadius = dispRadius;
     }
 
-    public bool ContainsPoint(Point pt, FieldUnitToPixelConverter conversionDelegate)
+    protected abstract Color FillBrushColor { get; }
+
+    protected virtual Color OutlinePenColor
     {
-      Rectangle rect = GetRectangle(conversionDelegate);
-      return rect.Contains(pt);
+      get { return Color.White; }
     }
 
-    private Point GetCentre(FieldUnitToPixelConverter conversionDelegate)
+    protected virtual Brush LabelBrush
     {
-      return new Point(conversionDelegate(position.X), conversionDelegate(position.Y));
+      get { return Brushes.Black; }
     }
 
-    public Rectangle GetRectangle(FieldUnitToPixelConverter conversionDelegate)
+    protected virtual int LabelFontSize
     {
-      if (null == conversionDelegate) {
-        throw new ArgumentNullException("conversionDelegate");
-      }
-      int dispRadius = conversionDelegate(DisplayRadius);
-      return new Rectangle(conversionDelegate(position.X) - dispRadius,
-        conversionDelegate(position.Y) - dispRadius, dispRadius * 2, dispRadius * 2);
+      get { return 9; }
     }
 
-    public virtual void Draw(Graphics graphics, FieldUnitToPixelConverter conversionDelegate)
+    protected virtual Color MovementPenColor
     {
-      if (null == conversionDelegate) {
-        throw new ArgumentNullException("conversionDelegate");
-      }
-      if (null == graphics) {
-        throw new ArgumentNullException("graphics");
-      }
-      Rectangle rect = GetRectangle(conversionDelegate);
-      graphics.FillEllipse(FillBrush, rect);
-      Pen outlinePen = OutlinePen;
-      if (outlinePen != null) {
-        graphics.DrawEllipse(outlinePen, rect);
-      }
-      if (HasLabel) {
-        float fontSize = LabelFontSize * (float)rect.Height / 18.0F;
-        Font labelFont = new Font("Arial", fontSize, FontStyle.Bold);
-        StringFormat strFormat = new StringFormat();
-        strFormat.Alignment = StringAlignment.Center;
-        strFormat.LineAlignment = StringAlignment.Center;
-        graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-        graphics.DrawString(Label, labelFont, LabelBrush, rect, strFormat);
+      get { return Color.White; }
+    }
+
+    protected virtual float[] MovementPenDashPattern
+    {
+      get { return null; }
+    }
+
+    private bool HasLabel
+    {
+      get
+      {
+        return ((Label != null) && (Label.Length > 0));
       }
     }
 
-    public virtual void DrawMovementLine(Graphics graphics, FieldUnitToPixelConverter conversionDelegate, PointF pos)
+    private PointF GetCentre()
     {
-      if (null == conversionDelegate) {
-        throw new ArgumentNullException("conversionDelegate");
-      }
-      if (null == graphics) {
-        throw new ArgumentNullException("graphics");
-      }
-      Point endPoint = new Point(conversionDelegate(pos.X), conversionDelegate(pos.Y));
-      graphics.DrawLine(MovementPen, GetCentre(conversionDelegate), endPoint);
+      return new PointF(position.X, position.Y);
     }
+
+    private Pen GetMovementPen(IFieldType fieldType)
+    {
+      Pen p = new Pen(MovementPenColor, fieldType.FieldObjectMovementPenWidth);
+      p.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+      p.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+      float[] dashPattern = MovementPenDashPattern;
+      if (null != dashPattern) {
+        p.DashPattern = dashPattern;
+      }
+      return p;
+    }
+
+    private PointF position;
+    private float displayRadius = 1.15F;
   }
 }

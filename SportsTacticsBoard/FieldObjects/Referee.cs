@@ -44,9 +44,9 @@ namespace SportsTacticsBoard.FieldObjects
       get { return tag; }
     }
 
-    protected override Brush FillBrush
+    protected override Color FillBrushColor
     {
-      get { return Brushes.Black; }
+      get { return Color.Black; }
     }
 
     protected override Color MovementPenColor

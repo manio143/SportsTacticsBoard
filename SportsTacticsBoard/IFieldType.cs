@@ -30,8 +30,6 @@ using System.Drawing;
 
 namespace SportsTacticsBoard
 {
-  delegate int FieldUnitToPixelConverter(float value);
-
   interface IFieldType
   {
     string Tag { get; }
@@ -40,11 +38,13 @@ namespace SportsTacticsBoard
     float FieldWidth { get; }
     float Margin { get; }
     Color FieldSurfaceColor { get; }
+    float FieldObjectOutlinePenWidth { get; }
+    float FieldObjectMovementPenWidth { get; }
 
     Collection<FieldObject> StandardFieldObjects { get; }
     FieldObjectLayout DefaultLayout { get; }
 
     ReadOnlyCollection<string> GetTeam(FieldObjects.Player.TeamId team);
-    void DrawFieldMarkings(Graphics graphics, Rectangle fieldRectangle, FieldUnitToPixelConverter conversionDelegateWithNoOffset);
+    void DrawFieldMarkings(Graphics graphics);
   }
 }

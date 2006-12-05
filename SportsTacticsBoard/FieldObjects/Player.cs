@@ -90,15 +90,15 @@ namespace SportsTacticsBoard.FieldObjects
       return int.Parse(playerTag.Substring(hashIndex + 1), CultureInfo.InvariantCulture);
     }
 
-    protected override Brush FillBrush
+    protected override Color FillBrushColor
     {
       get {
         switch (team) {
           case TeamId.Defending:
-            return Brushes.Red;
+            return Color.Red;
           case TeamId.Attacking:
           default:
-            return Brushes.Yellow;
+            return Color.Yellow;
         }
       }
     }
@@ -116,9 +116,9 @@ namespace SportsTacticsBoard.FieldObjects
       }
     }
 
-    protected override Pen OutlinePen
+    protected override Color OutlinePenColor
     {
-      get { return Pens.White; }
+      get { return Color.White; }
     }
 
     public Player(int _number, TeamId _team, float posX, float posY) :
