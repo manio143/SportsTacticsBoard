@@ -37,7 +37,7 @@ namespace SportsTacticsBoard
   partial class FieldControl : UserControl
   {
     private float ratio;
-    private Rectangle fieldRectangle;
+    private Point fieldOriginInDisplayUnits = new Point(0, 0);
     private bool dirty;
     private IFieldType fieldType;
 
@@ -147,27 +147,39 @@ namespace SportsTacticsBoard
       }
     }
 
-    private int YardsToPixelsNoOffset(float yards)
+    private int FieldUnitsToDisplayUnits(float fieldUnits)
     {
-      return (int)(yards * ratio);
+      return (int)Math.Round(fieldUnits * ratio);
     }
 
-    private float PixelsToYardsNoOffset(int pixels)
+    private float DisplayUnitsToFieldUnits(float displayUnits)
     {
-      return (float)pixels / ratio;
+      return displayUnits / ratio;
     }
 
-    private Point ToFieldPoint(Point pt)
+    private PointF ToFieldPoint(Point pt)
     {
-      return new Point(pt.X - fieldRectangle.Left, pt.Y - fieldRectangle.Top);
+      return new PointF(DisplayUnitsToFieldUnits((float)pt.X - fieldOriginInDisplayUnits.X),
+                        DisplayUnitsToFieldUnits((float)pt.Y - fieldOriginInDisplayUnits.Y));
+    }
+
+    private Rectangle ToDisplayRect(RectangleF fieldRect)
+    {
+      Rectangle r = 
+        new Rectangle(FieldUnitsToDisplayUnits(fieldRect.X),
+                      FieldUnitsToDisplayUnits(fieldRect.Y),
+                      FieldUnitsToDisplayUnits(fieldRect.Width),
+                      FieldUnitsToDisplayUnits(fieldRect.Height));
+      r.Offset(fieldOriginInDisplayUnits.X,
+               fieldOriginInDisplayUnits.Y);
+      return r;
     }
 
     private FieldObject ObjectAtPoint(Point pt)
     {
-      Point fieldPoint = ToFieldPoint(pt);
-      FieldUnitToPixelConverter cd = new FieldUnitToPixelConverter(YardsToPixelsNoOffset);
+      PointF fieldPoint = ToFieldPoint(pt);
       foreach (FieldObject fo in fieldObjects) {
-        if (fo.ContainsPoint(fieldPoint, cd)) {
+        if (fo.ContainsPoint(fieldPoint)) {
           return fo;
         }
       }
@@ -183,17 +195,12 @@ namespace SportsTacticsBoard
         float ratioY = windowSize.Height / (ft.FieldWidth + (ft.Margin * 2.0F));
         ratio = (ratioX < ratioY) ? ratioX : ratioY;
 
-        // Calculate the rectangle for the field
-        int fieldLengthInPixels = YardsToPixelsNoOffset(ft.FieldLength);
-        int fieldWidthInPixels = YardsToPixelsNoOffset(ft.FieldWidth);
-        fieldRectangle =
-          new Rectangle((windowSize.Width - (fieldLengthInPixels)) / 2,
-                        (windowSize.Height - (fieldWidthInPixels)) / 2,
-                        fieldLengthInPixels,
-                        fieldWidthInPixels);
+        fieldOriginInDisplayUnits = 
+          new Point((windowSize.Width - (int)Math.Round(ft.FieldLength * ratio)) / 2,
+                    (windowSize.Height - (int)Math.Round(ft.FieldWidth * ratio)) / 2);
       } else {
         ratio = 1.0F;
-        fieldRectangle = new Rectangle(0, 0, 0, 0);
+        fieldOriginInDisplayUnits = new Point(0, 0);
       }
     }
 
@@ -202,13 +209,15 @@ namespace SportsTacticsBoard
       if (null == FieldType) {
         return;
       }
-
       e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-      FieldType.DrawFieldMarkings(e.Graphics, fieldRectangle, new FieldUnitToPixelConverter(YardsToPixelsNoOffset));
+      // Adjust the transform to scale the "field units" to display units, and to
+      // offset the playing surface so that it is centered in the window.
+      // NOTE: The order of these transforms is important.
+      e.Graphics.TranslateTransform(fieldOriginInDisplayUnits.X, fieldOriginInDisplayUnits.Y);
+      e.Graphics.ScaleTransform(ratio, ratio);
 
-      // Adjust the origin so that all field objects are drawn with respect to the topleft of the field
-      e.Graphics.TranslateTransform(fieldRectangle.X, fieldRectangle.Y);
+      FieldType.DrawFieldMarkings(e.Graphics);
 
       // Draw the movement lines that show the movement between the current position and
       // the next position in the sequence (these are drawn first so that they appear under
@@ -217,7 +226,7 @@ namespace SportsTacticsBoard
         foreach (FieldObject fieldObject in fieldObjects) {
           if (nextLayout.HasEntry(fieldObject.Tag)) {
             fieldObject.DrawMovementLine(e.Graphics, 
-                                         new FieldUnitToPixelConverter(YardsToPixelsNoOffset), 
+                                         FieldType,
                                          nextLayout.GetEntryPosition(fieldObject.Tag));
           } // endif
         }
@@ -225,7 +234,7 @@ namespace SportsTacticsBoard
 
       // Draw each of the field objects
       foreach (FieldObject fieldObject in fieldObjects) {
-        fieldObject.Draw(e.Graphics, new FieldUnitToPixelConverter(YardsToPixelsNoOffset));
+        fieldObject.Draw(e.Graphics, FieldType);
       }
     }
 
@@ -237,17 +246,23 @@ namespace SportsTacticsBoard
       }
     }
 
+    private void InvalidateFieldArea(RectangleF rect)
+    {
+      Rectangle r = ToDisplayRect(rect);
+      // Make the rectangle slightly bigger to ensure that we invalidate the 
+      // entire area of the object, including possible anti-aliasing area.
+      r.Inflate(3, 3); 
+      Invalidate(r);
+    }
+
     private void MoveObjectTo(FieldObject fo, PointF pos)
     {
       if (fo.Position != pos) {
-        FieldUnitToPixelConverter cd = new FieldUnitToPixelConverter(YardsToPixelsNoOffset);
-        Rectangle oldRect = fo.GetRectangle(cd);
+        InvalidateFieldArea(fo.GetRectangle());
         fo.Position = pos;
         IsDirty = true;
-        Rectangle newRect = fo.GetRectangle(cd);
-        Invalidate(oldRect);
-        Invalidate(newRect);
-        Refresh();
+        InvalidateFieldArea(fo.GetRectangle());
+        Update();
       }
     }
 
@@ -267,7 +282,7 @@ namespace SportsTacticsBoard
     protected override void OnMouseMove(MouseEventArgs e)
     {
       if ((Capture) && (dragObject != null)) {
-        PointF pt = new PointF(PixelsToYardsNoOffset(e.X - fieldRectangle.Left), PixelsToYardsNoOffset(e.Y - fieldRectangle.Top));
+        PointF pt = ToFieldPoint(new Point(e.X, e.Y));
         MoveObjectTo(dragObject, pt);
       }
     }
@@ -275,7 +290,7 @@ namespace SportsTacticsBoard
     protected override void OnMouseUp(MouseEventArgs e)
     {
       if ((Capture) && (dragObject != null)) {
-        PointF pt = new PointF(PixelsToYardsNoOffset(e.X - fieldRectangle.Left), PixelsToYardsNoOffset(e.Y - fieldRectangle.Top));
+        PointF pt = ToFieldPoint(new Point(e.X, e.Y));
         MoveObjectTo(dragObject, pt);
         dragObject = null;
         Capture = false;

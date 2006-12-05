@@ -36,8 +36,11 @@ namespace SportsTacticsBoard.FieldTypes
     private const float fieldWidth = 60.0F;
     private const float margin = 6.5F;
     private const float netDepth = 2.0F;
-    private const int linePenWidth = 2;
-    private const int goalPenWidth = 1;
+    private const float linePenWidth = 5.0F / 36.0F;
+    private const float goalPenWidth = linePenWidth / 2.0F;
+    private const float penaltyMarkRadius = 5.0F / 36.0F;
+    private const float penaltyMarkDiameter = penaltyMarkRadius * 2.0F;
+    private const float centreTickLength = penaltyMarkRadius;
     private const int playersPerTeam = 11;
 
     public float FieldLength
@@ -69,6 +72,21 @@ namespace SportsTacticsBoard.FieldTypes
     {
       get {
         return Properties.Resources.ResourceManager.GetString("FieldType_" + Tag);
+      }
+    }
+
+    public float FieldObjectOutlinePenWidth
+    {
+      get {
+        return 3.0F / 36.0F;
+      }
+    }
+
+    public float FieldObjectMovementPenWidth
+    {
+      get
+      {
+        return FieldObjectOutlinePenWidth * 3.0F;
       }
     }
 
@@ -115,7 +133,7 @@ namespace SportsTacticsBoard.FieldTypes
       return new ReadOnlyCollection<string>(playersOnTeam);
     }
 
-    public virtual void DrawFieldMarkings(Graphics graphics, Rectangle fieldRectangle, FieldUnitToPixelConverter conversionDelegateWithNoOffset)
+    public virtual void DrawFieldMarkings(Graphics graphics)
     {
       // Create the pens for drawing the field lines with
       Pen linePen = new Pen(Color.White, linePenWidth);
@@ -124,84 +142,86 @@ namespace SportsTacticsBoard.FieldTypes
       // Draw the lines on the field
 
       // ... The goal and touch lines
-      graphics.DrawRectangle(linePen, fieldRectangle);
+      graphics.DrawRectangle(linePen, 0.0F, 0.0F, FieldLength, FieldWidth);
 
       // ... The centre line
-      Point fieldCentre = new Point(fieldRectangle.Left + (fieldRectangle.Width / 2),
-        fieldRectangle.Top + (fieldRectangle.Height / 2));
-      Point centreLineTop = new Point(fieldCentre.X, fieldRectangle.Top);
-      Point centreLineBottom = new Point(fieldCentre.X, fieldRectangle.Bottom);
+      PointF fieldCentre = new PointF(FieldLength / 2, FieldWidth / 2);
+      PointF centreLineTop = new PointF(fieldCentre.X, 0.0F);
+      PointF centreLineBottom = new PointF(fieldCentre.X, 0.0F);
       graphics.DrawLine(linePen, centreLineTop, centreLineBottom);
-      graphics.DrawLine(linePen, fieldCentre.X - 3, fieldCentre.Y, fieldCentre.X + 3, fieldCentre.Y);
+      // ......The 'tick' across the centre line for the kick-off spot
+      graphics.DrawLine(linePen, fieldCentre.X - centreTickLength, fieldCentre.Y, fieldCentre.X + centreTickLength, fieldCentre.Y);
 
       // ... The centre circle
-      int centreCircleDiameter = conversionDelegateWithNoOffset(20.0F);
-      Rectangle centreCircleRect = new Rectangle(fieldCentre.X - (centreCircleDiameter / 2), fieldCentre.Y - (centreCircleDiameter / 2), centreCircleDiameter, centreCircleDiameter);
+      float centreCircleDiameter = 20.0F;
+      RectangleF centreCircleRect = new RectangleF(fieldCentre.X - (centreCircleDiameter / 2), fieldCentre.Y - (centreCircleDiameter / 2), centreCircleDiameter, centreCircleDiameter);
       graphics.DrawEllipse(linePen, centreCircleRect);
 
       // ... The goals
-      int goalWidthInPixels = conversionDelegateWithNoOffset(netDepth);
-      int goalHeightInPixels = conversionDelegateWithNoOffset(8.0F);
-      Rectangle leftGoal = new Rectangle(fieldRectangle.Left - goalWidthInPixels, fieldCentre.Y - (goalHeightInPixels / 2),
+      float goalWidthInPixels = netDepth;
+      float goalHeightInPixels = 8.0F;
+      RectangleF leftGoal = new RectangleF(0.0F - goalWidthInPixels, fieldCentre.Y - (goalHeightInPixels / 2),
         goalWidthInPixels, goalHeightInPixels);
-      Rectangle rightGoal = new Rectangle(fieldRectangle.Right, fieldCentre.Y - (goalHeightInPixels / 2),
+      RectangleF rightGoal = new RectangleF(FieldLength, fieldCentre.Y - (goalHeightInPixels / 2),
         goalWidthInPixels, goalHeightInPixels);
-      graphics.DrawRectangle(goalPen, leftGoal);
-      graphics.DrawRectangle(goalPen, rightGoal);
+      graphics.DrawRectangle(goalPen, leftGoal.X, leftGoal.Y, leftGoal.Width, leftGoal.Height);
+      graphics.DrawRectangle(goalPen, rightGoal.X, rightGoal.Y, rightGoal.Width, rightGoal.Height);
 
       // ... The 6 yard boxes
-      int widthOf6YardBoxInPixels = conversionDelegateWithNoOffset(6.0F);
-      int heightOf6YardBoxInPixels = conversionDelegateWithNoOffset(6.0F * 2.0F + 8.0F);
-      int halfHeightOf6YardBoxInPixels = conversionDelegateWithNoOffset(6.0F + 4.0F);
-      Rectangle leftSide6YardBox = new Rectangle(fieldRectangle.Left, fieldCentre.Y - halfHeightOf6YardBoxInPixels,
+      float widthOf6YardBoxInPixels = 6.0F;
+      float heightOf6YardBoxInPixels = 6.0F * 2.0F + 8.0F;
+      float halfHeightOf6YardBoxInPixels = 6.0F + 4.0F;
+      RectangleF leftSide6YardBox = new RectangleF(0.0F, fieldCentre.Y - halfHeightOf6YardBoxInPixels,
         widthOf6YardBoxInPixels, heightOf6YardBoxInPixels);
-      Rectangle rightSide6YardBox = new Rectangle(fieldRectangle.Right - widthOf6YardBoxInPixels, fieldCentre.Y - halfHeightOf6YardBoxInPixels,
+      RectangleF rightSide6YardBox = new RectangleF(FieldLength - widthOf6YardBoxInPixels, fieldCentre.Y - halfHeightOf6YardBoxInPixels,
         widthOf6YardBoxInPixels, heightOf6YardBoxInPixels);
-      graphics.DrawRectangle(linePen, leftSide6YardBox);
-      graphics.DrawRectangle(linePen, rightSide6YardBox);
+      graphics.DrawRectangle(linePen, leftSide6YardBox.X, leftSide6YardBox.Y, leftSide6YardBox.Width, leftSide6YardBox.Height);
+      graphics.DrawRectangle(linePen, rightSide6YardBox.X, rightSide6YardBox.Y, rightSide6YardBox.Width, rightSide6YardBox.Height);
 
       // ... The 18 yard boxes
-      int widthOf18YardBoxInPixels = conversionDelegateWithNoOffset(18.0F);
-      int heightOf18YardBoxInPixels = conversionDelegateWithNoOffset(18.0F * 2.0F + 8.0F);
-      int halfHeightOf18YardBoxInPixels = conversionDelegateWithNoOffset(18.0F + 4.0F);
-      Rectangle leftSide18YardBox = new Rectangle(fieldRectangle.Left, fieldCentre.Y - halfHeightOf18YardBoxInPixels,
+      float widthOf18YardBoxInPixels = 18.0F;
+      float heightOf18YardBoxInPixels = 18.0F * 2.0F + 8.0F;
+      float halfHeightOf18YardBoxInPixels = 18.0F + 4.0F;
+      RectangleF leftSide18YardBox = new RectangleF(0.0F, fieldCentre.Y - halfHeightOf18YardBoxInPixels,
         widthOf18YardBoxInPixels, heightOf18YardBoxInPixels);
-      Rectangle rightSide18YardBox = new Rectangle(fieldRectangle.Right - widthOf18YardBoxInPixels, fieldCentre.Y - halfHeightOf18YardBoxInPixels,
+      RectangleF rightSide18YardBox = new RectangleF(FieldLength - widthOf18YardBoxInPixels, fieldCentre.Y - halfHeightOf18YardBoxInPixels,
         widthOf18YardBoxInPixels, heightOf18YardBoxInPixels);
-      graphics.DrawRectangle(linePen, leftSide18YardBox);
-      graphics.DrawRectangle(linePen, rightSide18YardBox);
+      graphics.DrawRectangle(linePen, leftSide18YardBox.X, leftSide18YardBox.Y, leftSide18YardBox.Width, leftSide18YardBox.Height);
+      graphics.DrawRectangle(linePen, rightSide18YardBox.X, rightSide18YardBox.Y, rightSide18YardBox.Width, rightSide18YardBox.Height);
 
       // ... The penalty marks
-      Rectangle leftPenaltyMark = new Rectangle(fieldRectangle.Left + conversionDelegateWithNoOffset(12.0F), fieldCentre.Y, 1, 1);
-      Rectangle rightPenaltyMark = new Rectangle(fieldRectangle.Right - conversionDelegateWithNoOffset(12.0F), fieldCentre.Y, 1, 1);
+      RectangleF leftPenaltyMark = new RectangleF(0.0F + 12.0F - penaltyMarkRadius, fieldCentre.Y - penaltyMarkRadius, penaltyMarkDiameter, penaltyMarkDiameter);
+      RectangleF rightPenaltyMark = new RectangleF(FieldLength - 12.0F - penaltyMarkRadius, fieldCentre.Y - penaltyMarkRadius, penaltyMarkDiameter, penaltyMarkDiameter);
       graphics.DrawEllipse(linePen, leftPenaltyMark);
       graphics.DrawEllipse(linePen, rightPenaltyMark);
 
+#if false
       // ... The D's
       Region oldClip = graphics.Clip;
       graphics.ExcludeClip(leftSide18YardBox);
       graphics.ExcludeClip(rightSide18YardBox);
-      int dRadiusInPixels = conversionDelegateWithNoOffset(10.0F);
-      int dDiameterInPixels = conversionDelegateWithNoOffset(20.0F);
-      Rectangle leftDRectangle = new Rectangle(leftPenaltyMark.Left - dRadiusInPixels,
+      float dRadiusInPixels = 10.0F;
+      float dDiameterInPixels = 20.0F;
+      RectangleF leftDRectangle = new RectangleF(leftPenaltyMark.Left - dRadiusInPixels,
         leftPenaltyMark.Top - dRadiusInPixels, dDiameterInPixels, dDiameterInPixels);
-      Rectangle rightDRectangle = new Rectangle(rightPenaltyMark.Left - dRadiusInPixels,
+      RectangleF rightDRectangle = new RectangleF(rightPenaltyMark.Left - dRadiusInPixels,
         rightPenaltyMark.Top - dRadiusInPixels, dDiameterInPixels, dDiameterInPixels);
       graphics.DrawEllipse(linePen, leftDRectangle);
       graphics.DrawEllipse(linePen, rightDRectangle);
       graphics.Clip = oldClip;
+#endif
 
       // ... The corner arcs
-      int cornerArcDiameterInPixels = conversionDelegateWithNoOffset(2.0F);
-      int cornerArcRadiusInPixels = conversionDelegateWithNoOffset(1.0F);
-      Rectangle topLeftCornerArc = new Rectangle(fieldRectangle.Left - cornerArcRadiusInPixels,
-        fieldRectangle.Top - cornerArcRadiusInPixels, cornerArcDiameterInPixels, cornerArcDiameterInPixels);
-      Rectangle topRightCornerArc = new Rectangle(fieldRectangle.Right - cornerArcRadiusInPixels,
-        fieldRectangle.Top - cornerArcRadiusInPixels, cornerArcDiameterInPixels, cornerArcDiameterInPixels);
-      Rectangle bottomLeftCornerArc = new Rectangle(fieldRectangle.Left - cornerArcRadiusInPixels,
-        fieldRectangle.Bottom - cornerArcRadiusInPixels, cornerArcDiameterInPixels, cornerArcDiameterInPixels);
-      Rectangle bottomRightCornerArc = new Rectangle(fieldRectangle.Right - cornerArcRadiusInPixels,
-        fieldRectangle.Bottom - cornerArcRadiusInPixels, cornerArcDiameterInPixels, cornerArcDiameterInPixels);
+      float cornerArcDiameterInPixels = 2.0F;
+      float cornerArcRadiusInPixels = 1.0F;
+      RectangleF topLeftCornerArc = new RectangleF(0.0F - cornerArcRadiusInPixels,
+        0.0F - cornerArcRadiusInPixels, cornerArcDiameterInPixels, cornerArcDiameterInPixels);
+      RectangleF topRightCornerArc = new RectangleF(FieldLength - cornerArcRadiusInPixels,
+        0.0F - cornerArcRadiusInPixels, cornerArcDiameterInPixels, cornerArcDiameterInPixels);
+      RectangleF bottomLeftCornerArc = new RectangleF(0.0F - cornerArcRadiusInPixels,
+        FieldWidth - cornerArcRadiusInPixels, cornerArcDiameterInPixels, cornerArcDiameterInPixels);
+      RectangleF bottomRightCornerArc = new RectangleF(FieldLength - cornerArcRadiusInPixels,
+        FieldWidth - cornerArcRadiusInPixels, cornerArcDiameterInPixels, cornerArcDiameterInPixels);
       graphics.DrawArc(linePen, topLeftCornerArc, 0.0F, 90.0F);
       graphics.DrawArc(linePen, topRightCornerArc, 90.0F, 90.0F);
       graphics.DrawArc(linePen, bottomLeftCornerArc, 270.0F, 90.0F);

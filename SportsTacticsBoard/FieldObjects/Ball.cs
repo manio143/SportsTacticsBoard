@@ -42,14 +42,14 @@ namespace SportsTacticsBoard.FieldObjects
       get { return "Ball"; }
     }
 
-    protected override Brush FillBrush
+    protected override Color FillBrushColor
     {
-      get { return Brushes.White; }
+      get { return Color.White; }
     }
 
-    protected override Pen OutlinePen
+    protected override Color OutlinePenColor
     {
-      get { return Pens.Black; }
+      get { return Color.Black; }
     }
 
     public Ball(float posX, float posY) :
@@ -57,18 +57,11 @@ namespace SportsTacticsBoard.FieldObjects
     {
     }
 
-    protected override Pen MovementPen
+    protected override float[] MovementPenDashPattern
     {
-      get
-      {
-        Pen p = new Pen(MovementPenColor, 3);
-        p.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-        p.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
-        p.DashPattern = new float[] { 3.0F, 2.0F };
-        return p;
+      get { 
+        return new float[] { 3.0F, 2.0F }; 
       }
     }
-
-
   }
 }
