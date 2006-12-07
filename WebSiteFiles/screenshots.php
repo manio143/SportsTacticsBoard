@@ -5,27 +5,9 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-<table cellpadding="5" width="100%" border="0">
-  <tr>
-    <td valign="middle">
-      <a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=181975&amp;type=2" width="125" height="37" alt="SourceForge.net Logo" /></a>
-    </td>
-    <td valign="middle">
-      <h1>Sports Tactics Board</h1>
-    </td>
-    <td valign="middle" align="right">
-      <img src="http://sourceforge.net/dbimage.php?id=97766" width="100" height="73" alt="Small screenshot" />
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <a class="menu" href="index.htm">Home</a><br />
-      <a class="menu" href="features.htm">Features</a><br />
-      <a class="menu" href="downloads.htm">Downloads</a><br />
-      <a class="menu" href="screenshots.htm">Screenshots</a><br />
-      <a class="menu" href="http://sourceforge.net/projects/sportstacticsbd/">SF&nbsp;Project&nbsp;Page</a>
-    </td>
-    <td valign="top" colspan="2">
+<?php include("header.php"); ?>
+
+
       <h2>Screenshots</h2>
 
       <p>Soccer field showing player and ball movement:</p>
@@ -42,12 +24,9 @@
 
       <p>Soccer field with players in position:</p>
       <img src="http://sourceforge.net/dbimage.php?id=97763" width="594" height="469" alt="Screenshot: Soccer field showing player and ball moving" />
-    
-    </td>
-  </tr>
-</table>
 
 
+<?php include("footer.php"); ?>
 
 </body>
 </html>
