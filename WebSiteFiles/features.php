@@ -13,8 +13,7 @@
         <li>Supports more than one sport (currently Soccer and Hockey), more to be added.</li>
         <li>Records sequences of positions for documenting tactical strategies or plays.</li>
         <li>Save and loads tactical sequences from files - allows building a library of plays or drills.</li>
-        <li>Supports pre-defined layouts that position players, ball and officials.</li>
-        <li>Supports game officials for instructing officials in positioning and rules.</li>
+        <li>Supports pre-defined layouts that position players, ball/puck and officials.</li>
       </ul>
       
       <br />
@@ -27,11 +26,14 @@
         <li>Support for other sports (basketball, football, etc.).</li>
         <li>Support for &quot;views&quot; of sections of the playing field, including rotation.</li>
         <li>Improved drawing of fields, players and movement lines.</li>
-        <li>More configurable and flxible movements lines.</li>
+        <li>More configurable and flexible movements lines.</li>
         <li>Movement line types, allowing for passing, carrying, dribbling, heading, etc to be distinguished more easily.</li>
         <li>Support for marker lines associated with field objects (easily show offside line in soccer, etc.).</li>
         <li>Support for annotated descriptions and labels placed on the field of play.</li>
       </ul>
+
+      <h2>Release Plan</h2>
+      <p>TBD<p>
 
 
 <?php include("footer.php"); ?>
