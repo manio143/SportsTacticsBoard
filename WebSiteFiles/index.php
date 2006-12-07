@@ -16,13 +16,13 @@
       Supports soccer and hockey so far, other sports can be easily added.</p>
       
       <p>For a list of current and planned features, 
-      please look <a href="features.htm">here</a>.</p>
+      please look <a href="features.php">here</a>.</p>
      
       
       <h2>How do I get a copy to use?</h2>
       <ol>
         <li>Get the Microsoft .NET 2.0 Framework</li>
-        <li>Download a binary release of Sports Tactics Board from the <a href="downloads.htm">Downloads</a> page.</li>
+        <li>Download a binary release of Sports Tactics Board from the <a href="downloads.php">Downloads</a> page.</li>
         <li>Extract and run the downloaded software.</li>
           <ol>
             <li>Extract the files into a folder, e.g.: <kbd>C:\Program Files\Sports Tactics Board</kbd></li>
