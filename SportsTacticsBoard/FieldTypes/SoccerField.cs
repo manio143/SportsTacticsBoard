@@ -147,7 +147,7 @@ namespace SportsTacticsBoard.FieldTypes
       // ... The centre line
       PointF fieldCentre = new PointF(FieldLength / 2, FieldWidth / 2);
       PointF centreLineTop = new PointF(fieldCentre.X, 0.0F);
-      PointF centreLineBottom = new PointF(fieldCentre.X, 0.0F);
+      PointF centreLineBottom = new PointF(fieldCentre.X, FieldWidth);
       graphics.DrawLine(linePen, centreLineTop, centreLineBottom);
       // ......The 'tick' across the centre line for the kick-off spot
       graphics.DrawLine(linePen, fieldCentre.X - centreTickLength, fieldCentre.Y, fieldCentre.X + centreTickLength, fieldCentre.Y);
