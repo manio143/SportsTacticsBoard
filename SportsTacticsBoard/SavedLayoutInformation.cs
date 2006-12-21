@@ -40,19 +40,22 @@ namespace SportsTacticsBoard
       InitializeComponent();
     }
 
-    internal static SavedLayout AskUserForSavedLayoutDetails(FieldObjectLayout layout, string fieldTypeTag)
+    internal static SavedLayout AskUserForSavedLayoutDetails(FieldObjectLayout layout, string fieldTypeTag, string[] existingLayoutCategories)
     {
       SavedLayoutInformation dialog = new SavedLayoutInformation();
       foreach (string entryTag in layout.Tags) {
         dialog.entriesListBox.Items.Add(entryTag, true);
       }
+      dialog.categoryComboBox.DataSource = existingLayoutCategories;
+      dialog.categoryComboBox.SelectedIndex = -1; // make sure nothing is specified at first
+
       if (dialog.ShowDialog() == DialogResult.OK) {
         for (int index = 0; index < dialog.entriesListBox.Items.Count; index++) {
           if (!dialog.entriesListBox.GetItemChecked(index)) {
             layout.RemoveEntry((string)(dialog.entriesListBox.Items[index]));
           }
         }
-        return new SavedLayout(dialog.nameTextBox.Text, dialog.descriptionTextBox.Text, layout, fieldTypeTag);
+        return new SavedLayout(dialog.nameTextBox.Text, dialog.categoryComboBox.Text, dialog.descriptionTextBox.Text, layout, fieldTypeTag);
       }
       return null;
     }
