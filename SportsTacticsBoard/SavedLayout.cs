@@ -33,6 +33,7 @@ namespace SportsTacticsBoard
   {
     private string fieldTypeTag;
     private string name;
+    private string category;
     private string description;
     private FieldObjectLayout layout;
 
@@ -44,6 +45,11 @@ namespace SportsTacticsBoard
     public string Name
     {
       get { return name; }
+    }
+
+    public string Category
+    {
+      get { return category; }
     }
 
     public string Description
@@ -59,14 +65,16 @@ namespace SportsTacticsBoard
     public SavedLayout()
     {
       name = "";
+      category = "";
       description = "";
       layout = new FieldObjectLayout();
       fieldTypeTag = "";
     }
 
-    public SavedLayout(string _name, string _description, FieldObjectLayout _layout, string _fieldTypeTag)
+    public SavedLayout(string _name, string _category, string _description, FieldObjectLayout _layout, string _fieldTypeTag)
     {
       name = _name;
+      category = _category;
       description = _description;
       layout = _layout;
       fieldTypeTag = _fieldTypeTag;

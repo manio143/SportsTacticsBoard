@@ -64,6 +64,8 @@ namespace SportsTacticsBoard
       this.entriesLabel = new System.Windows.Forms.Label();
       this.entriesListBox = new System.Windows.Forms.CheckedListBox();
       this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+      this.categoryLabel = new System.Windows.Forms.Label();
+      this.categoryComboBox = new System.Windows.Forms.ComboBox();
       ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
       this.SuspendLayout();
       // 
@@ -122,10 +124,26 @@ namespace SportsTacticsBoard
       // 
       this.errorProvider.ContainerControl = this;
       // 
+      // categoryLabel
+      // 
+      resources.ApplyResources(this.categoryLabel, "categoryLabel");
+      this.categoryLabel.Name = "categoryLabel";
+      // 
+      // categoryComboBox
+      // 
+      this.categoryComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+      this.categoryComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+      this.categoryComboBox.FormattingEnabled = true;
+      resources.ApplyResources(this.categoryComboBox, "categoryComboBox");
+      this.categoryComboBox.Name = "categoryComboBox";
+      this.categoryComboBox.Sorted = true;
+      // 
       // SavedLayoutInformation
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.categoryComboBox);
+      this.Controls.Add(this.categoryLabel);
       this.Controls.Add(this.entriesListBox);
       this.Controls.Add(this.entriesLabel);
       this.Controls.Add(this.descriptionTextBox);
@@ -156,5 +174,7 @@ namespace SportsTacticsBoard
     private System.Windows.Forms.Label entriesLabel;
     private System.Windows.Forms.CheckedListBox entriesListBox;
     private System.Windows.Forms.ErrorProvider errorProvider;
+    private System.Windows.Forms.ComboBox categoryComboBox;
+    private System.Windows.Forms.Label categoryLabel;
   }
 }
