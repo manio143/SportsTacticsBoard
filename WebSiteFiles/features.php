@@ -21,7 +21,7 @@
       <h2>Release Plan</h2>
 
       <p>The following are descriptions of the planned content of upcoming releases. Projected dates for these
-      releases are not possible at this timedue to limited programming resources. They will be released when the 
+      releases are not possible at this time due to limited programming resources. They will be released when the 
       features are complete.</p>
 
       <h3>Release 0.2</h3>
