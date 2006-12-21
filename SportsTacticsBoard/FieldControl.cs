@@ -204,20 +204,36 @@ namespace SportsTacticsBoard
       }
     }
 
-    protected override void OnPaint(PaintEventArgs e)
+    public void DrawIntoImage(Image image)
+    {
+      using (Graphics graphics = Graphics.FromImage(image)) {
+        if (image.GetType() == typeof(Bitmap)) {
+          Brush brush;
+          if (null == FieldType) {
+            brush = new SolidBrush(Color.White);
+          } else {
+            brush = new SolidBrush(this.FieldType.FieldSurfaceColor);
+          }
+          graphics.FillRectangle(brush, 0, 0, image.Width, image.Height);
+        }
+        DrawIntoGraphics(graphics);
+      }
+    }
+
+    protected void DrawIntoGraphics(Graphics g)
     {
       if (null == FieldType) {
         return;
       }
-      e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+      g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
       // Adjust the transform to scale the "field units" to display units, and to
       // offset the playing surface so that it is centered in the window.
       // NOTE: The order of these transforms is important.
-      e.Graphics.TranslateTransform(fieldOriginInDisplayUnits.X, fieldOriginInDisplayUnits.Y);
-      e.Graphics.ScaleTransform(ratio, ratio);
+      g.TranslateTransform(fieldOriginInDisplayUnits.X, fieldOriginInDisplayUnits.Y);
+      g.ScaleTransform(ratio, ratio);
 
-      FieldType.DrawFieldMarkings(e.Graphics);
+      FieldType.DrawFieldMarkings(g);
 
       // Draw the movement lines that show the movement between the current position and
       // the next position in the sequence (these are drawn first so that they appear under
@@ -225,7 +241,7 @@ namespace SportsTacticsBoard
       if ((showMovementLines) && (nextLayout != null)) {
         foreach (FieldObject fieldObject in fieldObjects) {
           if (nextLayout.HasEntry(fieldObject.Tag)) {
-            fieldObject.DrawMovementLine(e.Graphics, 
+            fieldObject.DrawMovementLine(g,
                                          FieldType,
                                          nextLayout.GetEntryPosition(fieldObject.Tag));
           } // endif
@@ -234,8 +250,13 @@ namespace SportsTacticsBoard
 
       // Draw each of the field objects
       foreach (FieldObject fieldObject in fieldObjects) {
-        fieldObject.Draw(e.Graphics, FieldType);
+        fieldObject.Draw(g, FieldType);
       }
+    }
+
+    protected override void OnPaint(PaintEventArgs e)
+    {
+      DrawIntoGraphics(e.Graphics);
     }
 
     protected override void OnSizeChanged(EventArgs e)

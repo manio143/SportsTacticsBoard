@@ -568,5 +568,12 @@ namespace SportsTacticsBoard
       FileNew(false, true);
     }
 
+    private void copyMenuItem_Click(object sender, EventArgs e)
+    {
+      Bitmap bitmap = new Bitmap(fieldControl.Width, fieldControl.Height);
+      fieldControl.DrawIntoImage(bitmap);
+      Clipboard.SetImage(bitmap);
+    }
+
   }
 }
