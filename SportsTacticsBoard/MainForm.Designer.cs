@@ -73,6 +73,8 @@ namespace SportsTacticsBoard
       this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
       this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.editMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.copyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.layoutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.savedCurrentLayoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.removeSavedLayoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -179,6 +181,7 @@ namespace SportsTacticsBoard
       // 
       this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.editMenuItem,
             this.layoutsToolStripMenuItem,
             this.helpToolStripMenuItem});
       resources.ApplyResources(this.menuStrip1, "menuStrip1");
@@ -201,6 +204,7 @@ namespace SportsTacticsBoard
       // 
       this.newToolStripMenuItem.Image = global::SportsTacticsBoard.Properties.Resources.NewDocumentHS;
       this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+      this.newToolStripMenuItem.ShortcutKeyDisplayString = global::SportsTacticsBoard.Properties.Resources.CurrentLayoutNumber_Empty;
       resources.ApplyResources(this.newToolStripMenuItem, "newToolStripMenuItem");
       this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
       // 
@@ -240,6 +244,19 @@ namespace SportsTacticsBoard
       this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
       resources.ApplyResources(this.exitToolStripMenuItem, "exitToolStripMenuItem");
       this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+      // 
+      // editMenuItem
+      // 
+      this.editMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyMenuItem});
+      this.editMenuItem.Name = "editMenuItem";
+      resources.ApplyResources(this.editMenuItem, "editMenuItem");
+      // 
+      // copyMenuItem
+      // 
+      this.copyMenuItem.Name = "copyMenuItem";
+      resources.ApplyResources(this.copyMenuItem, "copyMenuItem");
+      this.copyMenuItem.Click += new System.EventHandler(this.copyMenuItem_Click);
       // 
       // layoutsToolStripMenuItem
       // 
@@ -398,6 +415,8 @@ namespace SportsTacticsBoard
     private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     private System.Windows.Forms.ToolStripButton toolStripButton1;
     private System.Windows.Forms.ToolStripMenuItem newFieldTypeMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem editMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem copyMenuItem;
   }
 }
 
