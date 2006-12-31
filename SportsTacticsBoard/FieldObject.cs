@@ -41,10 +41,9 @@ namespace SportsTacticsBoard
       set { position = value; }
     }
 
-    public float DisplayRadius
+    private float DisplayRadius
     {
       get { return displayRadius; }
-      set { displayRadius = value; }
     }
 
     public virtual string Name {
@@ -65,7 +64,7 @@ namespace SportsTacticsBoard
         position.Y - DisplayRadius, DisplayRadius * 2, DisplayRadius * 2);
     }
 
-    public virtual void Draw(Graphics graphics, IFieldType fieldType)
+    public virtual void Draw(Graphics graphics)
     {
       if (null == graphics) {
         throw new ArgumentNullException("graphics");
@@ -74,8 +73,8 @@ namespace SportsTacticsBoard
       using (Brush fillBrush = new SolidBrush(FillBrushColor)) {
         graphics.FillEllipse(fillBrush, rect);
       }
-      if (fieldType.FieldObjectOutlinePenWidth > 0.0) {
-        using (Pen outlinePen = new Pen(OutlinePenColor, fieldType.FieldObjectOutlinePenWidth)) {
+      if (OutlinePenWidth > 0.0) {
+        using (Pen outlinePen = new Pen(OutlinePenColor, OutlinePenWidth)) {
           graphics.DrawEllipse(outlinePen, rect);
         }
       }
@@ -98,13 +97,13 @@ namespace SportsTacticsBoard
       }
     }
 
-    public virtual void DrawMovementLine(Graphics graphics, IFieldType fieldType, PointF pos)
+    public virtual void DrawMovementLine(Graphics graphics, PointF pos)
     {
       if (null == graphics) {
         throw new ArgumentNullException("graphics");
       }
       PointF endPoint = new PointF(pos.X, pos.Y);
-      graphics.DrawLine(GetMovementPen(fieldType), GetCentre(), endPoint);
+      graphics.DrawLine(GetMovementPen(), GetCentre(), endPoint);
     }
 
     protected FieldObject(float posX, float posY, float dispRadius)
@@ -114,16 +113,29 @@ namespace SportsTacticsBoard
       displayRadius = dispRadius;
     }
 
-    protected abstract Color FillBrushColor { get; }
-
-    protected virtual Color OutlinePenColor
-    {
-      get { return Color.White; }
+    private Color fillBrushColor = Color.White;
+    public Color FillBrushColor {
+      get { return fillBrushColor; }
+      set { fillBrushColor = value; }
     }
 
-    protected virtual Brush LabelBrush
+    private Color outlinePenColor = Color.White;
+    public Color OutlinePenColor
     {
-      get { return Brushes.Black; }
+      get { return outlinePenColor; }
+      set { outlinePenColor = value; }
+    }
+
+    private Color labelBrushColor = Color.Black;
+    public Color LabelBrushColor 
+    {
+      get { return labelBrushColor; }
+      set { labelBrushColor = value; }
+    }
+
+    private Brush LabelBrush
+    {
+      get { return new SolidBrush(LabelBrushColor); }
     }
 
     protected virtual int LabelFontSize
@@ -131,9 +143,25 @@ namespace SportsTacticsBoard
       get { return 9; }
     }
 
-    protected virtual Color MovementPenColor
+    private Color movementPenColor = Color.White;
+    public Color MovementPenColor
     {
-      get { return Color.White; }
+      get { return movementPenColor; }
+      set { movementPenColor = value; }
+    }
+
+    private float outlinePenWidth = 1.0F;
+    public float OutlinePenWidth 
+    {
+      get { return outlinePenWidth; }
+      set { outlinePenWidth = value; }
+    }
+
+    private float movementPenWidth = 3.0F;
+    public float MovementPenWidth 
+    {
+      get { return movementPenWidth; }
+      set { movementPenWidth = value; }
     }
 
     protected virtual float[] MovementPenDashPattern
@@ -143,10 +171,7 @@ namespace SportsTacticsBoard
 
     private bool HasLabel
     {
-      get
-      {
-        return ((Label != null) && (Label.Length > 0));
-      }
+      get { return !String.IsNullOrEmpty(Label); }
     }
 
     private PointF GetCentre()
@@ -154,9 +179,9 @@ namespace SportsTacticsBoard
       return new PointF(position.X, position.Y);
     }
 
-    private Pen GetMovementPen(IFieldType fieldType)
+    private Pen GetMovementPen()
     {
-      Pen p = new Pen(MovementPenColor, fieldType.FieldObjectMovementPenWidth);
+      Pen p = new Pen(MovementPenColor, MovementPenWidth);
       p.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
       p.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
       float[] dashPattern = MovementPenDashPattern;
@@ -167,6 +192,6 @@ namespace SportsTacticsBoard
     }
 
     private PointF position;
-    private float displayRadius = 1.15F;
+    private float displayRadius = 1.0F;
   }
 }

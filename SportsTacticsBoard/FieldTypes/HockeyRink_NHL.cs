@@ -70,6 +70,10 @@ namespace SportsTacticsBoard.FieldTypes
     private const float creaseWidth       = goalWidth + (1.0F * 2.0F);
     private const float creaseArcRadius   = 6.0F;
     private const float createEdgeLength  = 4.5F;
+    private const float playerSize        = 2.5F;
+    private const float puckSize          = 0.7F;
+    private const float fieldObjectOutlinePenWidth = 3.0F / 12.0F;
+    private const float fieldObjectMovementPenWidth = fieldObjectOutlinePenWidth * 3.0F;
 
     private const int playersPerTeam = 5;
 
@@ -106,64 +110,36 @@ namespace SportsTacticsBoard.FieldTypes
       get { return Color.LightGray; } 
     }
 
-    public float FieldObjectOutlinePenWidth
-    {
-      get
-      {
-        return 3.0F / 12.0F;
-      }
-    }
-
-    public float FieldObjectMovementPenWidth
-    {
-      get
-      {
-        return FieldObjectOutlinePenWidth * 3.0F;
-      }
-    }
-
     public Collection<FieldObject> StandardFieldObjects
     {
       get {
-        const float personSize = 2.5F;
-
         List<FieldObject> fieldObjects = new List<FieldObject>();
 
         // Create the outfield players
         for (int i = 1; i <= playersPerTeam; i++) {
-          FieldObjects.Player attackingPlayer = new FieldObjects.Player(i, FieldObjects.Player.TeamId.Attacking, 0.0F, 0.0F);
-          attackingPlayer.DisplayRadius = personSize;
-          FieldObjects.Player defendingPlayer = new FieldObjects.Player(i, FieldObjects.Player.TeamId.Defending, 0.0F, 0.0F);
-          defendingPlayer.DisplayRadius = personSize;
-          fieldObjects.Add(attackingPlayer);
-          fieldObjects.Add(defendingPlayer);
+          fieldObjects.Add(new FieldObjects.Player(i, FieldObjects.Player.TeamId.Attacking, playerSize));
+          fieldObjects.Add(new FieldObjects.Player(i, FieldObjects.Player.TeamId.Defending, playerSize));
         }
 
         // Create the goalies
-        FieldObjects.Player goalie1 = new FieldObjects.Player(0, FieldObjects.Player.TeamId.Attacking, 0.0F, 0.0F);
-        goalie1.DisplayRadius = personSize;
-        fieldObjects.Add(goalie1);
-        FieldObjects.Player goalie2 = new FieldObjects.Player(0, FieldObjects.Player.TeamId.Defending, 0.0F, 0.0F);
-        goalie2.DisplayRadius = personSize;
-        fieldObjects.Add(goalie2);
+        fieldObjects.Add(new FieldObjects.Player(0, FieldObjects.Player.TeamId.Attacking, playerSize));
+        fieldObjects.Add(new FieldObjects.Player(0, FieldObjects.Player.TeamId.Defending, playerSize));
 
         // Add the puck
-        fieldObjects.Add(new FieldObjects.Puck(FieldLength / 2, FieldWidth / 2));
+        fieldObjects.Add(new FieldObjects.Puck(FieldLength / 2, FieldWidth / 2, puckSize));
 
         // Add the referees
-        FieldObjects.Referee ref1 = new FieldObjects.Referee("R1", "Referee_Hockey_1", distanceOfBlueLineFromEndOfRink - 10.0F, FieldWidth - 7.5F);
-        ref1.DisplayRadius = personSize;
-        fieldObjects.Add(ref1);
-        FieldObjects.Referee ref2 = new FieldObjects.Referee("R2", "Referee_Hockey_2", FieldLength - distanceOfBlueLineFromEndOfRink + 10.0F, 7.5F);
-        ref2.DisplayRadius = personSize;
-        fieldObjects.Add(ref2);
+        fieldObjects.Add(new FieldObjects.Referee("R1", "Referee_Hockey_1", distanceOfBlueLineFromEndOfRink - 10.0F, FieldWidth - 7.5F, playerSize));
+        fieldObjects.Add(new FieldObjects.Referee("R2", "Referee_Hockey_2", FieldLength - distanceOfBlueLineFromEndOfRink + 10.0F, 7.5F, playerSize));
+        fieldObjects.Add(new FieldObjects.Referee("L1", "Referee_Hockey_L1", distanceOfBlueLineFromEndOfRink - 3.0F, 2.75F, playerSize));
+        fieldObjects.Add(new FieldObjects.Referee("L2", "Referee_Hockey_L2", FieldLength - distanceOfBlueLineFromEndOfRink + 3.0F, FieldWidth - 2.75F, playerSize));
 
-        FieldObjects.Referee line1 = new FieldObjects.Referee("L1", "Referee_Hockey_L1", distanceOfBlueLineFromEndOfRink - 3.0F, 2.75F);
-        line1.DisplayRadius = personSize;
-        fieldObjects.Add(line1);
-        FieldObjects.Referee line2 = new FieldObjects.Referee("L2", "Referee_Hockey_L2", FieldLength - distanceOfBlueLineFromEndOfRink + 3.0F, FieldWidth - 2.75F);
-        line2.DisplayRadius = personSize;
-        fieldObjects.Add(line2);
+        // Adjust various parameters for all the field objects
+        foreach (FieldObject fo in fieldObjects) {
+          fo.OutlinePenWidth = fieldObjectOutlinePenWidth;
+          fo.MovementPenWidth = fieldObjectMovementPenWidth;
+          fo.OutlinePenColor = Color.Black;
+        }
 
         return new Collection<FieldObject>(fieldObjects);
       }
@@ -172,7 +148,20 @@ namespace SportsTacticsBoard.FieldTypes
     public FieldObjectLayout DefaultLayout
     { 
       get {
-        return null;
+        FieldObjectLayout layout = new FieldObjectLayout();
+        layout.AddEntry("Player_Attacking_0", distanceOfGoalLineFromEndOfRink + playerSize, FieldWidth / 2.0F);
+        layout.AddEntry("Player_Attacking_1", distanceOfBlueLineFromEndOfRink + 3.0F, FieldWidth / 3.0F);
+        layout.AddEntry("Player_Attacking_2", distanceOfBlueLineFromEndOfRink + 3.0F, 2.0F * (FieldWidth / 3.0F));
+        layout.AddEntry("Player_Attacking_3", (FieldLength / 2.0F) - playerSize, (FieldWidth / 2.0F) - faceOffCircleRadius - playerSize);
+        layout.AddEntry("Player_Attacking_4", (FieldLength / 2.0F) - playerSize, (FieldWidth / 2.0F));
+        layout.AddEntry("Player_Attacking_5", (FieldLength / 2.0F) - playerSize, (FieldWidth / 2.0F) + faceOffCircleRadius + playerSize);
+        layout.AddEntry("Player_Defending_0", FieldLength - (distanceOfGoalLineFromEndOfRink + playerSize), FieldWidth / 2.0F);
+        layout.AddEntry("Player_Defending_1", FieldLength - (distanceOfBlueLineFromEndOfRink + 3.0F), FieldWidth / 3.0F);
+        layout.AddEntry("Player_Defending_2", FieldLength - (distanceOfBlueLineFromEndOfRink + 3.0F), 2.0F * (FieldWidth / 3.0F));
+        layout.AddEntry("Player_Defending_3", (FieldLength / 2.0F) + playerSize, (FieldWidth / 2.0F) - faceOffCircleRadius - playerSize);
+        layout.AddEntry("Player_Defending_4", (FieldLength / 2.0F) + playerSize, (FieldWidth / 2.0F));
+        layout.AddEntry("Player_Defending_5", (FieldLength / 2.0F) + playerSize, (FieldWidth / 2.0F) + faceOffCircleRadius + playerSize);
+        return layout;
       } 
     }
 
@@ -191,20 +180,28 @@ namespace SportsTacticsBoard.FieldTypes
     private Color pms186 = Color.FromArgb(0xff, 0xf5, 0x00, 0x2f); // red lines
     private Color pms298 = Color.FromArgb(0xff, 0x4f, 0xed, 0xff); // goal crease
 
-    private static void DrawFaceOffSpot(Graphics g, PointF position, Brush brush, float diameter)
+    private static void DrawFaceOffSpot(Graphics g, PointF position, Brush brush, float diameter, bool solid)
     {
-      // TODO: Draw this properly (as per NHL standards - as a circle with a thick vertical line through it)
       float radius = diameter / 2.0F;
-      g.FillEllipse(brush,
-                    position.X - radius,
-                    position.Y - radius,
-                    diameter,
-                    diameter);
+      if (solid) {
+        g.FillEllipse(brush,
+                      position.X - radius,
+                      position.Y - radius,
+                      diameter,
+                      diameter);
+      } else {
+        // TODO: Draw this properly (as per NHL standards - as a circle with a thick vertical line through it)
+        g.FillEllipse(brush,
+                      position.X - radius,
+                      position.Y - radius,
+                      diameter,
+                      diameter);
+      }
     }
 
     private static void DrawFaceOffArea(Graphics g, PointF position, Brush spotBrush, Pen linePen)
     {
-      DrawFaceOffSpot(g, position, spotBrush, faceOffSpotDiameter);
+      DrawFaceOffSpot(g, position, spotBrush, faceOffSpotDiameter, false);
 
       // Draw the hash marks around the spot
       PointF pos = position;
@@ -468,7 +465,7 @@ namespace SportsTacticsBoard.FieldTypes
                  rinkWidth);
 
       // Draw the centre face-off spot
-      DrawFaceOffSpot(graphics, centreOfIce, blueBrush, centreFaceOffSpotDiameter);
+      DrawFaceOffSpot(graphics, centreOfIce, blueBrush, centreFaceOffSpotDiameter, true);
 
       // Draw the "Referee's crease" (a semi-circle zone on one side at centre ice)
       graphics.DrawArc(redThinLinePen,
@@ -531,7 +528,7 @@ namespace SportsTacticsBoard.FieldTypes
         new PointF(rinkLength - distanceOfNeutralZoneFaceOffSpotsFromEndOfRink, (rinkWidth / 2.0F) + distanceOfFaceOffSpotsFromCentreOfRink)
       };
       foreach (PointF faceOffSpot in faceOffSpots) {
-        DrawFaceOffSpot(graphics, faceOffSpot, redBrush, faceOffSpotDiameter);
+        DrawFaceOffSpot(graphics, faceOffSpot, redBrush, faceOffSpotDiameter, false);
       }
 
       // Restore clipping region to draw the boards and the stuff outside the boards

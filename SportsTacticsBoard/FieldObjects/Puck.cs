@@ -42,24 +42,12 @@ namespace SportsTacticsBoard.FieldObjects
       get { return "Puck"; }
     }
 
-    protected override Color FillBrushColor
+    public Puck(float posX, float posY, float dispRadius) :
+      base(posX, posY, dispRadius)
     {
-      get { return Color.Black; }
-    }
-
-    protected override Color OutlinePenColor
-    {
-      get { return Color.Black; }
-    }
-
-    protected override Color MovementPenColor
-    {
-      get { return Color.Black; }
-    }
-
-    public Puck(float posX, float posY) :
-      base(posX, posY, 0.7F)
-    {
+      OutlinePenColor = Color.Black;
+      MovementPenColor = Color.Black;
+      FillBrushColor = Color.Black;
     }
 
     protected override float[] MovementPenDashPattern

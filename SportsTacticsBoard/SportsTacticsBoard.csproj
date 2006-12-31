@@ -58,6 +58,7 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="FieldObjectLayoutEntry.cs" />
     <Compile Include="FieldObjects\Puck.cs" />
     <Compile Include="FieldTypes\HockeyRink_NHL.cs" />
     <Compile Include="IFieldType.cs" />

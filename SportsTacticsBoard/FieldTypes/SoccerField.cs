@@ -41,6 +41,10 @@ namespace SportsTacticsBoard.FieldTypes
     private const float penaltyMarkRadius = 5.0F / 36.0F;
     private const float penaltyMarkDiameter = penaltyMarkRadius * 2.0F;
     private const float centreTickLength = penaltyMarkRadius;
+    private const float playerSize = 1.15F;
+    private const float ballSize = 0.75F;
+    private const float fieldObjectOutlinePenWidth = 3.0F / 36.0F;
+    private const float fieldObjectMovementPenWidth = fieldObjectOutlinePenWidth * 3.0F;
     private const int playersPerTeam = 11;
 
     public float FieldLength
@@ -75,21 +79,6 @@ namespace SportsTacticsBoard.FieldTypes
       }
     }
 
-    public float FieldObjectOutlinePenWidth
-    {
-      get {
-        return 3.0F / 36.0F;
-      }
-    }
-
-    public float FieldObjectMovementPenWidth
-    {
-      get
-      {
-        return FieldObjectOutlinePenWidth * 3.0F;
-      }
-    }
-
     public Collection<FieldObject> StandardFieldObjects
     {
       get
@@ -98,18 +87,24 @@ namespace SportsTacticsBoard.FieldTypes
 
         // Create the players
         for (int i = 1; i <= playersPerTeam; i++) {
-          fieldObjects.Add(new FieldObjects.Player(i, FieldObjects.Player.TeamId.Attacking, 0.0F, 0.0F));
-          fieldObjects.Add(new FieldObjects.Player(i, FieldObjects.Player.TeamId.Defending, 0.0F, 0.0F));
+          fieldObjects.Add(new FieldObjects.Player(i, FieldObjects.Player.TeamId.Attacking, playerSize));
+          fieldObjects.Add(new FieldObjects.Player(i, FieldObjects.Player.TeamId.Defending, playerSize));
         }
 
         // Add the ball
-        fieldObjects.Add(new FieldObjects.Ball(FieldLength / 2, FieldWidth / 2));
+        fieldObjects.Add(new FieldObjects.Ball(FieldLength / 2, FieldWidth / 2, ballSize));
 
         // Add the referees
-        fieldObjects.Add(new FieldObjects.Referee("CR", "Referee_Soccer_CR", (FieldLength / 2F) + 5.0F, (FieldWidth / 2F) + 5.0F));
-        fieldObjects.Add(new FieldObjects.Referee("AR", "Referee_Soccer_AR1", FieldLength / 4F, -2.0F));
-        fieldObjects.Add(new FieldObjects.Referee("AR", "Referee_Soccer_AR2", FieldLength * 3.0F / 4.0F, FieldWidth + 2.0F));
-        fieldObjects.Add(new FieldObjects.Referee("4", "Referee_Soccer_4th", FieldLength / 2.0F, FieldWidth + 3.0F));
+        fieldObjects.Add(new FieldObjects.Referee("CR", "Referee_Soccer_CR", (FieldLength / 2F) + 5.0F, (FieldWidth / 2F) + 5.0F, playerSize));
+        fieldObjects.Add(new FieldObjects.Referee("AR", "Referee_Soccer_AR1", FieldLength / 4F, -2.0F, playerSize));
+        fieldObjects.Add(new FieldObjects.Referee("AR", "Referee_Soccer_AR2", FieldLength * 3.0F / 4.0F, FieldWidth + 2.0F, playerSize));
+        fieldObjects.Add(new FieldObjects.Referee("4", "Referee_Soccer_4th", FieldLength / 2.0F, FieldWidth + 3.0F, playerSize));
+
+        // Adjust various parameters for all the field objects
+        foreach (FieldObject fo in fieldObjects) {
+          fo.OutlinePenWidth = fieldObjectOutlinePenWidth;
+          fo.MovementPenWidth = fieldObjectMovementPenWidth;
+        }
 
         return new Collection<FieldObject>(fieldObjects);
       }

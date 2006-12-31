@@ -32,8 +32,8 @@ namespace SportsTacticsBoard.FieldObjects
 {
   abstract class Person : FieldObject
   {
-    protected Person(float posX, float posY) :
-      base(posX, posY, 1.15F)
+    protected Person(float posX, float posY, float dispRadius) :
+      base(posX, posY, dispRadius)
     {
     }
   }

@@ -44,21 +44,6 @@ namespace SportsTacticsBoard.FieldObjects
       get { return tag; }
     }
 
-    protected override Color FillBrushColor
-    {
-      get { return Color.Black; }
-    }
-
-    protected override Color MovementPenColor
-    {
-      get { return Color.Black; }
-    }
-
-    protected override Brush LabelBrush
-    {
-      get { return Brushes.White; }
-    }
-
     protected override int LabelFontSize
     {
       get {
@@ -70,11 +55,14 @@ namespace SportsTacticsBoard.FieldObjects
       }
     }
 
-    public Referee(string _label, string _tag, float posX, float posY) :
-      base(posX, posY)
+    public Referee(string _label, string _tag, float posX, float posY, float dispRadius) :
+      base(posX, posY, dispRadius)
     {
       label = _label;
       tag = _tag;
+      FillBrushColor = Color.Black;
+      MovementPenColor = Color.Black;
+      LabelBrushColor = Color.White;
     }
   }
 }
