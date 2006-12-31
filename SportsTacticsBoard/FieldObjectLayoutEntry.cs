@@ -24,36 +24,54 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Xml.Serialization;
+using System.Diagnostics.CodeAnalysis;
 
-namespace SportsTacticsBoard.FieldObjects
+namespace SportsTacticsBoard
 {
-  class Ball : FieldObject
+  [XmlType(TypeName = "FieldObjectLayoutEntry")]
+  public class FieldObjectLayoutEntry
   {
-    public override string Label
-    {
-      get { return ""; }
+    public FieldObjectLayoutEntry() {
+      tag = "";
     }
 
-    public override string Tag
-    {
-      get { return "Ball"; }
+    public FieldObjectLayoutEntry(string _tag, float posX, float posY) {
+      tag = _tag;
+      positionX = posX;
+      positionY = posY;
     }
 
-    public Ball(float posX, float posY, float dispRadius) :
-      base(posX, posY, dispRadius)
-    {
-      OutlinePenColor = Color.Black;
-      FillBrushColor = Color.White;
+    public FieldObjectLayoutEntry(string _tag, PointF pt) {
+      tag = _tag;
+      positionX = pt.X;
+      positionY = pt.Y;
     }
 
-    protected override float[] MovementPenDashPattern
-    {
-      get { 
-        return new float[] { 3.0F, 2.0F }; 
-      }
+    [XmlAttribute(AttributeName = "tag")]
+    public string Tag {
+      get { return tag; }
+      set { tag = value; }
     }
+
+    [XmlAttribute(AttributeName = "x")]
+    public float PositionX {
+      get { return positionX; }
+      set { positionX = value; }
+    }
+
+    [XmlAttribute(AttributeName = "y")]
+    public float PositionY {
+      get { return positionY; }
+      set { positionY = value; }
+    }
+
+    private string tag;
+    private float positionX;
+    private float positionY;
   }
 }

@@ -95,8 +95,10 @@ namespace SportsTacticsBoard
       // 
       // SelectFieldType
       // 
+      this.AcceptButton = this.okButton;
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.CancelButton = this.cancelButton;
       this.Controls.Add(this.saveAsDefaultCheckBox);
       this.Controls.Add(this.fieldTypeComboBox);
       this.Controls.Add(this.label1);

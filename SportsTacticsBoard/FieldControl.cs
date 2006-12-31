@@ -241,16 +241,14 @@ namespace SportsTacticsBoard
       if ((showMovementLines) && (nextLayout != null)) {
         foreach (FieldObject fieldObject in fieldObjects) {
           if (nextLayout.HasEntry(fieldObject.Tag)) {
-            fieldObject.DrawMovementLine(g,
-                                         FieldType,
-                                         nextLayout.GetEntryPosition(fieldObject.Tag));
+            fieldObject.DrawMovementLine(g, nextLayout.GetEntryPosition(fieldObject.Tag));
           } // endif
         }
       }
 
       // Draw each of the field objects
       foreach (FieldObject fieldObject in fieldObjects) {
-        fieldObject.Draw(g, FieldType);
+        fieldObject.Draw(g);
       }
     }
 

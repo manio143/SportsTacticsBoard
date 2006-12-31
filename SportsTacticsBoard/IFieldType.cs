@@ -38,8 +38,6 @@ namespace SportsTacticsBoard
     float FieldWidth { get; }
     float Margin { get; }
     Color FieldSurfaceColor { get; }
-    float FieldObjectOutlinePenWidth { get; }
-    float FieldObjectMovementPenWidth { get; }
 
     Collection<FieldObject> StandardFieldObjects { get; }
     FieldObjectLayout DefaultLayout { get; }

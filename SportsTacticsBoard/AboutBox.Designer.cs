@@ -58,6 +58,7 @@ namespace SportsTacticsBoard
       this.label2 = new System.Windows.Forms.Label();
       this.versionLabel = new System.Windows.Forms.Label();
       this.label3 = new System.Windows.Forms.Label();
+      this.licenseTextBox = new System.Windows.Forms.TextBox();
       this.SuspendLayout();
       // 
       // label1
@@ -80,10 +81,20 @@ namespace SportsTacticsBoard
       resources.ApplyResources(this.label3, "label3");
       this.label3.Name = "label3";
       // 
+      // licenseTextBox
+      // 
+      resources.ApplyResources(this.licenseTextBox, "licenseTextBox");
+      this.licenseTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.licenseTextBox.CausesValidation = false;
+      this.licenseTextBox.Name = "licenseTextBox";
+      this.licenseTextBox.ReadOnly = true;
+      this.licenseTextBox.TabStop = false;
+      // 
       // AboutBox
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.licenseTextBox);
       this.Controls.Add(this.label3);
       this.Controls.Add(this.versionLabel);
       this.Controls.Add(this.label2);
@@ -107,5 +118,6 @@ namespace SportsTacticsBoard
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Label versionLabel;
     private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.TextBox licenseTextBox;
   }
 }

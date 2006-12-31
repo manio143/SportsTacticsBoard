@@ -140,8 +140,10 @@ namespace SportsTacticsBoard
       // 
       // SavedLayoutInformation
       // 
+      this.AcceptButton = this.okButton;
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.CancelButton = this.cancelButton;
       this.Controls.Add(this.categoryComboBox);
       this.Controls.Add(this.categoryLabel);
       this.Controls.Add(this.entriesListBox);
