@@ -156,13 +156,13 @@
     <value>13, 62</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>251, 13</value>
+    <value>278, 13</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
-    <value>Copyright © 2006 Robert Turner. All rights reserved.</value>
+    <value>Copyright © 2006-2007 Robert Turner. All rights reserved.</value>
   </data>
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>

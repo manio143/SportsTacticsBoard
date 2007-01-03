@@ -25,7 +25,7 @@ Table of Contents
 1. Copyrights
 -------------
 
-Copyright (C) 2006 Robert Turner
+Copyright (C) 2006-2007 Robert Turner
 
 
 2. License
