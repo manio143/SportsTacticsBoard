@@ -73,7 +73,7 @@ namespace SportsTacticsBoard
       this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
       this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.editMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.exportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.copyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.layoutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.savedCurrentLayoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,6 +89,10 @@ namespace SportsTacticsBoard
       this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+      this.saveSequenceToImageFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+      this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
       this.fieldControl = new SportsTacticsBoard.FieldControl();
       this.toolStrip1.SuspendLayout();
       this.menuStrip1.SuspendLayout();
@@ -181,7 +185,7 @@ namespace SportsTacticsBoard
       // 
       this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editMenuItem,
+            this.exportMenuItem,
             this.layoutsToolStripMenuItem,
             this.helpToolStripMenuItem});
       resources.ApplyResources(this.menuStrip1, "menuStrip1");
@@ -191,8 +195,10 @@ namespace SportsTacticsBoard
       // 
       this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
-            this.newFieldTypeMenuItem,
             this.openToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.newFieldTypeMenuItem,
+            this.toolStripSeparator7,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.toolStripSeparator3,
@@ -245,12 +251,14 @@ namespace SportsTacticsBoard
       resources.ApplyResources(this.exitToolStripMenuItem, "exitToolStripMenuItem");
       this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
       // 
-      // editMenuItem
+      // exportMenuItem
       // 
-      this.editMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyMenuItem});
-      this.editMenuItem.Name = "editMenuItem";
-      resources.ApplyResources(this.editMenuItem, "editMenuItem");
+      this.exportMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyMenuItem,
+            this.toolStripSeparator6,
+            this.saveSequenceToImageFilesToolStripMenuItem});
+      this.exportMenuItem.Name = "exportMenuItem";
+      resources.ApplyResources(this.exportMenuItem, "exportMenuItem");
       // 
       // copyMenuItem
       // 
@@ -350,6 +358,27 @@ namespace SportsTacticsBoard
       resources.ApplyResources(this.toolStripButton1, "toolStripButton1");
       this.toolStripButton1.Name = "toolStripButton1";
       // 
+      // toolStripSeparator6
+      // 
+      this.toolStripSeparator6.Name = "toolStripSeparator6";
+      resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
+      // 
+      // saveSequenceToImageFilesToolStripMenuItem
+      // 
+      this.saveSequenceToImageFilesToolStripMenuItem.Name = "saveSequenceToImageFilesToolStripMenuItem";
+      resources.ApplyResources(this.saveSequenceToImageFilesToolStripMenuItem, "saveSequenceToImageFilesToolStripMenuItem");
+      this.saveSequenceToImageFilesToolStripMenuItem.Click += new System.EventHandler(this.saveSequenceToImageFilesToolStripMenuItem_Click);
+      // 
+      // toolStripSeparator7
+      // 
+      this.toolStripSeparator7.Name = "toolStripSeparator7";
+      resources.ApplyResources(this.toolStripSeparator7, "toolStripSeparator7");
+      // 
+      // toolStripSeparator8
+      // 
+      this.toolStripSeparator8.Name = "toolStripSeparator8";
+      resources.ApplyResources(this.toolStripSeparator8, "toolStripSeparator8");
+      // 
       // fieldControl
       // 
       resources.ApplyResources(this.fieldControl, "fieldControl");
@@ -415,8 +444,12 @@ namespace SportsTacticsBoard
     private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     private System.Windows.Forms.ToolStripButton toolStripButton1;
     private System.Windows.Forms.ToolStripMenuItem newFieldTypeMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem editMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem exportMenuItem;
     private System.Windows.Forms.ToolStripMenuItem copyMenuItem;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+    private System.Windows.Forms.ToolStripMenuItem saveSequenceToImageFilesToolStripMenuItem;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
   }
 }
 
