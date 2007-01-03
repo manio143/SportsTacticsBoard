@@ -548,6 +548,7 @@ namespace SportsTacticsBoard
     }
 
     private void removeSavedLayoutMenuItem_Click(object sender, EventArgs e) {
+      NotImplementedYet();
     }
 
     private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
