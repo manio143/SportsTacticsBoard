@@ -59,6 +59,7 @@ namespace SportsTacticsBoard
       this.versionLabel = new System.Windows.Forms.Label();
       this.label3 = new System.Windows.Forms.Label();
       this.licenseTextBox = new System.Windows.Forms.TextBox();
+      this.webSiteLinkLabel = new System.Windows.Forms.LinkLabel();
       this.SuspendLayout();
       // 
       // label1
@@ -90,10 +91,18 @@ namespace SportsTacticsBoard
       this.licenseTextBox.ReadOnly = true;
       this.licenseTextBox.TabStop = false;
       // 
+      // webSiteLinkLabel
+      // 
+      resources.ApplyResources(this.webSiteLinkLabel, "webSiteLinkLabel");
+      this.webSiteLinkLabel.Name = "webSiteLinkLabel";
+      this.webSiteLinkLabel.TabStop = true;
+      this.webSiteLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.webSiteLinkLabel_LinkClicked);
+      // 
       // AboutBox
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.webSiteLinkLabel);
       this.Controls.Add(this.licenseTextBox);
       this.Controls.Add(this.label3);
       this.Controls.Add(this.versionLabel);
@@ -119,5 +128,6 @@ namespace SportsTacticsBoard
     private System.Windows.Forms.Label versionLabel;
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.TextBox licenseTextBox;
+    private System.Windows.Forms.LinkLabel webSiteLinkLabel;
   }
 }

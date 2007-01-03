@@ -46,16 +46,14 @@ namespace SportsTacticsBoard
     private string fileFilter = Properties.Resources.ResourceManager.GetString("FileFilter");
     private string originalCaption;
 
-    public MainForm()
-    {
+    public MainForm() {
       savedLayouts = new List<SavedLayout>();
       InitializeComponent();
       originalCaption = Text;
       fieldControl.IsDirtyChanged += new EventHandler(fieldControl_IsDirtyChanged);
     }
 
-    private void recordNewPositionButton_Click(object sender, EventArgs e)
-    {
+    private void recordNewPositionButton_Click(object sender, EventArgs e) {
       if (null != currentSequence) {
         positionInSequence = RecordPositionToSequence(false, positionInSequence + 1, currentSequence);
         fieldControl.SetNextLayout(currentSequence.GetLayout(positionInSequence + 1));
@@ -63,16 +61,14 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void fieldControl_IsDirtyChanged(object sender, EventArgs e)
-    {
+    private void fieldControl_IsDirtyChanged(object sender, EventArgs e) {
       UpdateSequenceControls();
       UpdateFileMenuItems();
     }
 
-    private void RestoreSavedLayout(string name)
-    {
+    private void RestoreSavedLayout(string name) {
       foreach (SavedLayout savedLayout in savedLayouts) {
-        if ((MatchesCurrentFieldType(savedLayout.FieldTypeTag)) && 
+        if ((MatchesCurrentFieldType(savedLayout.FieldTypeTag)) &&
             (savedLayout.Name == name)) {
           fieldControl.SetLayout(savedLayout.Layout);
           return;
@@ -80,8 +76,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    private bool MatchesCurrentFieldType(string fieldTypeTag)
-    {
+    private bool MatchesCurrentFieldType(string fieldTypeTag) {
       if (String.IsNullOrEmpty(fieldTypeTag)) {
         return false;
       }
@@ -92,25 +87,21 @@ namespace SportsTacticsBoard
       return fieldType.Tag == fieldTypeTag;
     }
 
-    private void savedLayoutMenuItem_Click(object sender, EventArgs e)
-    {
+    private void savedLayoutMenuItem_Click(object sender, EventArgs e) {
       ToolStripMenuItem mi = (ToolStripMenuItem)sender;
       RestoreSavedLayout(mi.Text);
     }
 
-    private void UpdateFileMenuItems()
-    {
+    private void UpdateFileMenuItems() {
       saveAsToolStripMenuItem.Enabled = (fieldControl.FieldType != null);
       saveToolStripMenuItem.Enabled = (fieldControl.FieldType != null);
     }
 
-    private void UpdateLayoutMenuItems()
-    {
+    private void UpdateLayoutMenuItems() {
       savedCurrentLayoutMenuItem.Enabled = (fieldControl.FieldType != null);
     }
 
-    private void UpdateSavedLayoutMenuItems()
-    {
+    private void UpdateSavedLayoutMenuItems() {
       Dictionary<string, ToolStripMenuItem> categorySubMenus = new Dictionary<string, ToolStripMenuItem>();
       savedLayoutsMenuItem.DropDownItems.Clear();
       bool itemsInserted = false;
@@ -153,8 +144,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    private string[] GetCurrentSavedLayoutCategories()
-    {
+    private string[] GetCurrentSavedLayoutCategories() {
       List<string> result = new List<string>();
       foreach (SavedLayout savedLayout in savedLayouts) {
         if ((MatchesCurrentFieldType(savedLayout.FieldTypeTag)) &&
@@ -165,8 +155,7 @@ namespace SportsTacticsBoard
       return result.ToArray();
     }
 
-    private void SaveCurrentLayout()
-    {
+    private void SaveCurrentLayout() {
       SavedLayout sl =
         SavedLayoutInformation.AskUserForSavedLayoutDetails(fieldControl.FieldLayout,
                                                             fieldControl.FieldType.Tag,
@@ -177,8 +166,7 @@ namespace SportsTacticsBoard
       UpdateSavedLayoutMenuItems();
     }
 
-    private void UpdateSequenceControls()
-    {
+    private void UpdateSequenceControls() {
       if (null != currentSequence) {
         if (currentSequence.NumberOfLayouts == 0) {
           currentLayoutNumber.Text =
@@ -192,7 +180,7 @@ namespace SportsTacticsBoard
         previousLayoutInSequence.Enabled = (positionInSequence > 0);
         nextLayoutInSequence.Enabled = ((positionInSequence + 1) < currentSequence.NumberOfLayouts);
         revertCurrentLayoutToSavedButton.Enabled = (currentSequence.NumberOfLayouts > 0) && (fieldControl.IsDirty);
-        removeCurrentPositionFromSequenceButton.Enabled = (currentSequence.NumberOfLayouts > 0);
+        removeCurrentPositionFromSequenceButton.Enabled = (currentSequence.NumberOfLayouts > 1);
         showMovementButton.Checked = fieldControl.ShowMovementLines;
         showMovementButton.Enabled = true;
         recordOverCurrentPositionButton.Enabled = true;
@@ -209,13 +197,11 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void previousLayoutInSequence_Click(object sender, EventArgs e)
-    {
+    private void previousLayoutInSequence_Click(object sender, EventArgs e) {
       MoveToPreviousLayout();
     }
 
-    private void MoveToPreviousLayout()
-    {
+    private void MoveToPreviousLayout() {
       if (null == currentSequence) {
         return;
       }
@@ -243,13 +229,11 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void nextLayoutInSequence_Click(object sender, EventArgs e)
-    {
+    private void nextLayoutInSequence_Click(object sender, EventArgs e) {
       MoveToNextLayout();
     }
 
-    private void MoveToNextLayout()
-    {
+    private void MoveToNextLayout() {
       if (null == currentSequence) {
         return;
       }
@@ -277,17 +261,15 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void recordOverCurrentPositionButton_Click(object sender, EventArgs e)
-    {
+    private void recordOverCurrentPositionButton_Click(object sender, EventArgs e) {
       if (null != currentSequence) {
         RecordPositionToSequence(true, positionInSequence, currentSequence);
         UpdateSequenceControls();
       }
     }
 
-    private void removeCurrentPositionFromSequenceButton_Click(object sender, EventArgs e)
-    {
-      if (null != currentSequence) {
+    private void removeCurrentPositionFromSequenceButton_Click(object sender, EventArgs e) {
+      if ((null != currentSequence) && (currentSequence.NumberOfLayouts > 0)) {
         currentSequence.RemoveFromSequence(positionInSequence);
         if (positionInSequence >= currentSequence.NumberOfLayouts) {
           positionInSequence--;
@@ -297,47 +279,40 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void revertCurrentLayoutToSavedButton_Click(object sender, EventArgs e)
-    {
+    private void revertCurrentLayoutToSavedButton_Click(object sender, EventArgs e) {
       if (null != currentSequence) {
         RestorePositionFromSequence(positionInSequence, currentSequence, currentSequence.GetLayout(positionInSequence + 1));
         UpdateSequenceControls();
       }
     }
 
-    private void MoveAllPlayersToBench()
-    {
+    private void MoveAllPlayersToBench() {
       if (null != fieldControl.FieldType) {
         fieldControl.ApplyLayoutAlgorithm(new LayoutAlgorithms.BenchLayoutAlgorithm(fieldControl.FieldType));
       }
     }
 
-    private void playersonBenchToolStripMenuItem_Click(object sender, EventArgs e)
-    {
+    private void playersonBenchToolStripMenuItem_Click(object sender, EventArgs e) {
       MoveAllPlayersToBench();
     }
 
-    private void startingPositionToolStripMenuItem_Click(object sender, EventArgs e)
-    {
+    private void startingPositionToolStripMenuItem_Click(object sender, EventArgs e) {
       if (null != fieldControl.FieldType) {
         fieldControl.ApplyLayoutAlgorithm(new LayoutAlgorithms.FourFourTwoLayoutAlgorithm_StartPos(fieldControl.FieldType));
       }
     }
 
-    private void gamePositionToolStripMenuItem1_Click(object sender, EventArgs e)
-    {
+    private void gamePositionToolStripMenuItem1_Click(object sender, EventArgs e) {
       if (null != fieldControl.FieldType) {
         fieldControl.ApplyLayoutAlgorithm(new LayoutAlgorithms.FourFourTwoLayoutAlgorithm_GamePos(fieldControl.FieldType));
       }
     }
 
-    private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-    {
+    private void exitToolStripMenuItem_Click(object sender, EventArgs e) {
       Application.Exit();
     }
 
-    private void UpdateCaption()
-    {
+    private void UpdateCaption() {
       string title = originalCaption;
       if (!string.IsNullOrEmpty(fileName)) {
         int idx = fileName.LastIndexOf('\\');
@@ -352,8 +327,7 @@ namespace SportsTacticsBoard
       Text = title;
     }
 
-    private void openToolStripMenuItem_Click(object sender, EventArgs e)
-    {
+    private void openToolStripMenuItem_Click(object sender, EventArgs e) {
       OpenFileDialog openFileDialog = new OpenFileDialog();
       openFileDialog.CheckFileExists = true;
       openFileDialog.Filter = fileFilter;
@@ -407,8 +381,7 @@ namespace SportsTacticsBoard
                 (MessageBoxOptions)0);
             }
           }
-        }
-        catch (System.IO.IOException /*exception*/) {
+        } catch (System.IO.IOException /*exception*/) {
           string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
           GlobalizationAwareMessageBox.Show(
             this,
@@ -422,8 +395,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-    {
+    private void saveToolStripMenuItem_Click(object sender, EventArgs e) {
       if (string.IsNullOrEmpty(fileName)) {
         FileSaveAs();
       } else {
@@ -431,13 +403,11 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
-    {
+    private void saveAsToolStripMenuItem_Click(object sender, EventArgs e) {
       FileSaveAs();
     }
 
-    private void FileSave()
-    {
+    private void FileSave() {
       if (null != currentSequence) {
         XmlSerializer serializer = new XmlSerializer(typeof(FieldObjectLayoutSequence));
         using (TextWriter writer = new StreamWriter(fileName)) {
@@ -448,8 +418,7 @@ namespace SportsTacticsBoard
       UpdateFileMenuItems();
     }
 
-    private void FileSaveAs()
-    {
+    private void FileSaveAs() {
       SaveFileDialog saveFileDialog = new SaveFileDialog();
       saveFileDialog.Filter = fileFilter;
       saveFileDialog.RestoreDirectory = true;
@@ -463,15 +432,12 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void newToolStripMenuItem_Click(object sender, EventArgs e)
-    {
+    private void newToolStripMenuItem_Click(object sender, EventArgs e) {
       FileNew(true, false);
     }
 
-    internal static List<IFieldType> AvailableFieldTypes
-    {
-      get
-      {
+    internal static List<IFieldType> AvailableFieldTypes {
+      get {
         List<IFieldType> fieldTypes = new List<IFieldType>();
 
         // TODO: Enumerate these using reflection on the current assembly
@@ -483,8 +449,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    private static IFieldType FindFieldType(string tag)
-    {
+    private static IFieldType FindFieldType(string tag) {
       List<IFieldType> fieldTypes = AvailableFieldTypes;
       foreach (IFieldType ft in fieldTypes) {
         if (ft.Tag == tag) {
@@ -494,8 +459,7 @@ namespace SportsTacticsBoard
       return null;
     }
 
-    private static IFieldType LoadDefaultFieldType()
-    {
+    private static IFieldType LoadDefaultFieldType() {
       string defaultFieldType = global::SportsTacticsBoard.Properties.Settings.Default.DefaultFieldType;
       if (defaultFieldType.Length == 0) {
         return null;
@@ -509,8 +473,7 @@ namespace SportsTacticsBoard
       return null;
     }
 
-    private void FileNew(bool saveAsDefaultChecked, bool alwaysAskForFieldType)
-    {
+    private void FileNew(bool saveAsDefaultChecked, bool alwaysAskForFieldType) {
       IFieldType newFieldType = fieldControl.FieldType;
       if (newFieldType == null) {
         newFieldType = LoadDefaultFieldType();
@@ -528,6 +491,7 @@ namespace SportsTacticsBoard
       fieldControl.IsDirty = false;
       positionInSequence = 0;
       currentSequence = new FieldObjectLayoutSequence(fieldControl.FieldType.Tag);
+      RecordPositionToSequence(false, positionInSequence, currentSequence);
       UpdateCaption();
       UpdateFileMenuItems();
       UpdateLayoutMenuItems();
@@ -535,15 +499,13 @@ namespace SportsTacticsBoard
       UpdateSequenceControls();
     }
 
-    private void showMovementButton_Click(object sender, EventArgs e)
-    {
+    private void showMovementButton_Click(object sender, EventArgs e) {
       ToolStripButton b = (ToolStripButton)sender;
       fieldControl.ShowMovementLines = !fieldControl.ShowMovementLines;
       b.Checked = fieldControl.ShowMovementLines;
     }
 
-    private void fieldControl_KeyDown(object sender, KeyEventArgs e)
-    {
+    private void fieldControl_KeyDown(object sender, KeyEventArgs e) {
       if (!e.Handled && !e.Shift && !e.Alt && !e.Control) {
         if (e.KeyCode == Keys.Left) {
           MoveToPreviousLayout();
@@ -553,8 +515,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    private int RecordPositionToSequence(bool replace, int index, FieldObjectLayoutSequence sequence)
-    {
+    private int RecordPositionToSequence(bool replace, int index, FieldObjectLayoutSequence sequence) {
       FieldObjectLayout layout = fieldControl.FieldLayout;
       fieldControl.IsDirty = false;
       if (replace) {
@@ -565,19 +526,16 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void RestorePositionFromSequence(int index, FieldObjectLayoutSequence sequence, FieldObjectLayout _nextLayout)
-    {
+    private void RestorePositionFromSequence(int index, FieldObjectLayoutSequence sequence, FieldObjectLayout _nextLayout) {
       fieldControl.SetLayouts(sequence.GetLayout(index), _nextLayout);
       fieldControl.IsDirty = false;
     }
 
-    private void savedCurrentLayoutMenuItem_Click(object sender, EventArgs e)
-    {
+    private void savedCurrentLayoutMenuItem_Click(object sender, EventArgs e) {
       SaveCurrentLayout();
     }
 
-    private void removeSavedLayoutMenuItem_Click(object sender, EventArgs e)
-    {
+    private void NotImplementedYet() {
       string msg = Properties.Resources.ResourceManager.GetString("NotImplementedYet");
       GlobalizationAwareMessageBox.Show(
         this,
@@ -589,14 +547,15 @@ namespace SportsTacticsBoard
         (MessageBoxOptions)0);
     }
 
-    private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-    {
+    private void removeSavedLayoutMenuItem_Click(object sender, EventArgs e) {
+    }
+
+    private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
       AboutBox aboutBox = new AboutBox();
       aboutBox.ShowDialog();
     }
 
-    private void MainForm_Shown(object sender, EventArgs e)
-    {
+    private void MainForm_Shown(object sender, EventArgs e) {
       UpdateFileMenuItems();
       UpdateLayoutMenuItems();
       UpdateSavedLayoutMenuItems();
@@ -606,17 +565,18 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void newFieldTypeMenuItem_Click(object sender, EventArgs e)
-    {
+    private void newFieldTypeMenuItem_Click(object sender, EventArgs e) {
       FileNew(false, true);
     }
 
-    private void copyMenuItem_Click(object sender, EventArgs e)
-    {
+    private void copyMenuItem_Click(object sender, EventArgs e) {
       Bitmap bitmap = new Bitmap(fieldControl.Width, fieldControl.Height);
       fieldControl.DrawIntoImage(bitmap);
       Clipboard.SetImage(bitmap);
     }
 
+    private void saveSequenceToImageFilesToolStripMenuItem_Click(object sender, EventArgs e) {
+      NotImplementedYet();
+    }
   }
 }

@@ -38,11 +38,19 @@ namespace SportsTacticsBoard
     public AboutBox()
     {
       InitializeComponent();
+      webSiteLinkLabel.Links[0].LinkData = 
+        webSiteLinkLabel.Text.Substring(webSiteLinkLabel.Links[0].Start, webSiteLinkLabel.Links[0].Length);
     }
 
     private void AboutBox_Load(object sender, EventArgs e)
     {
       versionLabel.Text = typeof(Program).Assembly.GetName().Version.ToString();
+    }
+
+    private void webSiteLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+      string url = e.Link.LinkData as string;
+      System.Diagnostics.Process.Start(url);
+      this.webSiteLinkLabel.Links[webSiteLinkLabel.Links.IndexOf(e.Link)].Visited = true;
     }
   }
 }
