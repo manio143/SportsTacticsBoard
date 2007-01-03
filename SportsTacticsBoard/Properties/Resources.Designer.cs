@@ -113,7 +113,7 @@ namespace SportsTacticsBoard.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Player - {0} - #{1}.
+        ///   Looks up a localized string similar to Player - {0} - {1}.
         /// </summary>
         internal static string FieldObject_Player_Name_Format {
             get {
