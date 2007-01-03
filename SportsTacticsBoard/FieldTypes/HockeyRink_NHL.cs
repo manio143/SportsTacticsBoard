@@ -110,20 +110,22 @@ namespace SportsTacticsBoard.FieldTypes
       get { return Color.LightGray; } 
     }
 
+    private static void CreateTeam(ref List<FieldObject> fieldObjects, FieldObjects.Player.TeamId team) {
+      fieldObjects.Add(new FieldObjects.LabelledPlayer("LW", team, playerSize));
+      fieldObjects.Add(new FieldObjects.LabelledPlayer("C", team, playerSize));
+      fieldObjects.Add(new FieldObjects.LabelledPlayer("RW", team, playerSize));
+      fieldObjects.Add(new FieldObjects.LabelledPlayer("LD", team, playerSize));
+      fieldObjects.Add(new FieldObjects.LabelledPlayer("RD", team, playerSize));
+      fieldObjects.Add(new FieldObjects.LabelledPlayer("G", team, playerSize));
+    }
+
     public Collection<FieldObject> StandardFieldObjects
     {
       get {
         List<FieldObject> fieldObjects = new List<FieldObject>();
 
-        // Create the outfield players
-        for (int i = 1; i <= playersPerTeam; i++) {
-          fieldObjects.Add(new FieldObjects.Player(i, FieldObjects.Player.TeamId.Attacking, playerSize));
-          fieldObjects.Add(new FieldObjects.Player(i, FieldObjects.Player.TeamId.Defending, playerSize));
-        }
-
-        // Create the goalies
-        fieldObjects.Add(new FieldObjects.Player(0, FieldObjects.Player.TeamId.Attacking, playerSize));
-        fieldObjects.Add(new FieldObjects.Player(0, FieldObjects.Player.TeamId.Defending, playerSize));
+        CreateTeam(ref fieldObjects, SportsTacticsBoard.FieldObjects.Player.TeamId.Attacking);
+        CreateTeam(ref fieldObjects, SportsTacticsBoard.FieldObjects.Player.TeamId.Defending);
 
         // Add the puck
         fieldObjects.Add(new FieldObjects.Puck(FieldLength / 2, FieldWidth / 2, puckSize));
@@ -149,18 +151,18 @@ namespace SportsTacticsBoard.FieldTypes
     { 
       get {
         FieldObjectLayout layout = new FieldObjectLayout();
-        layout.AddEntry("Player_Attacking_0", distanceOfGoalLineFromEndOfRink + playerSize, FieldWidth / 2.0F);
-        layout.AddEntry("Player_Attacking_1", distanceOfBlueLineFromEndOfRink + 3.0F, FieldWidth / 3.0F);
-        layout.AddEntry("Player_Attacking_2", distanceOfBlueLineFromEndOfRink + 3.0F, 2.0F * (FieldWidth / 3.0F));
-        layout.AddEntry("Player_Attacking_3", (FieldLength / 2.0F) - playerSize, (FieldWidth / 2.0F) - faceOffCircleRadius - playerSize);
-        layout.AddEntry("Player_Attacking_4", (FieldLength / 2.0F) - playerSize, (FieldWidth / 2.0F));
-        layout.AddEntry("Player_Attacking_5", (FieldLength / 2.0F) - playerSize, (FieldWidth / 2.0F) + faceOffCircleRadius + playerSize);
-        layout.AddEntry("Player_Defending_0", FieldLength - (distanceOfGoalLineFromEndOfRink + playerSize), FieldWidth / 2.0F);
-        layout.AddEntry("Player_Defending_1", FieldLength - (distanceOfBlueLineFromEndOfRink + 3.0F), FieldWidth / 3.0F);
-        layout.AddEntry("Player_Defending_2", FieldLength - (distanceOfBlueLineFromEndOfRink + 3.0F), 2.0F * (FieldWidth / 3.0F));
-        layout.AddEntry("Player_Defending_3", (FieldLength / 2.0F) + playerSize, (FieldWidth / 2.0F) - faceOffCircleRadius - playerSize);
-        layout.AddEntry("Player_Defending_4", (FieldLength / 2.0F) + playerSize, (FieldWidth / 2.0F));
-        layout.AddEntry("Player_Defending_5", (FieldLength / 2.0F) + playerSize, (FieldWidth / 2.0F) + faceOffCircleRadius + playerSize);
+        layout.AddEntry("Player_Attacking_G", distanceOfGoalLineFromEndOfRink + playerSize, FieldWidth / 2.0F);
+        layout.AddEntry("Player_Attacking_LD", distanceOfBlueLineFromEndOfRink + 3.0F, FieldWidth / 3.0F);
+        layout.AddEntry("Player_Attacking_RD", distanceOfBlueLineFromEndOfRink + 3.0F, 2.0F * (FieldWidth / 3.0F));
+        layout.AddEntry("Player_Attacking_LW", (FieldLength / 2.0F) - playerSize, (FieldWidth / 2.0F) - faceOffCircleRadius - playerSize);
+        layout.AddEntry("Player_Attacking_C", (FieldLength / 2.0F) - playerSize, (FieldWidth / 2.0F));
+        layout.AddEntry("Player_Attacking_RW", (FieldLength / 2.0F) - playerSize, (FieldWidth / 2.0F) + faceOffCircleRadius + playerSize);
+        layout.AddEntry("Player_Defending_G", FieldLength - (distanceOfGoalLineFromEndOfRink + playerSize), FieldWidth / 2.0F);
+        layout.AddEntry("Player_Defending_RD", FieldLength - (distanceOfBlueLineFromEndOfRink + 3.0F), FieldWidth / 3.0F);
+        layout.AddEntry("Player_Defending_LD", FieldLength - (distanceOfBlueLineFromEndOfRink + 3.0F), 2.0F * (FieldWidth / 3.0F));
+        layout.AddEntry("Player_Defending_RW", (FieldLength / 2.0F) + playerSize, (FieldWidth / 2.0F) - faceOffCircleRadius - playerSize);
+        layout.AddEntry("Player_Defending_C", (FieldLength / 2.0F) + playerSize, (FieldWidth / 2.0F));
+        layout.AddEntry("Player_Defending_LW", (FieldLength / 2.0F) + playerSize, (FieldWidth / 2.0F) + faceOffCircleRadius + playerSize);
         return layout;
       } 
     }

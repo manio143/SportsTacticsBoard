@@ -137,7 +137,7 @@
     <value>Player</value>
   </data>
   <data name="FieldObject_Player_Name_Format" xml:space="preserve">
-    <value>Player - {0} - #{1}</value>
+    <value>Player - {0} - {1}</value>
   </data>
   <data name="FieldObject_Puck" xml:space="preserve">
     <value>Puck</value>

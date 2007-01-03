@@ -60,7 +60,7 @@ namespace SportsTacticsBoard.LayoutAlgorithms
 
       foreach (string p in playersToPosition)
       {
-        int playerNumber = FieldObjects.Player.ExtractPlayerNumberFromTag(p);
+        int playerNumber = FieldObjects.NumberedPlayer.ExtractPlayerNumberFromTag(p);
         if (playerNumber >= 0)
         {
           layout.AddEntry(p, benchStartPos + (spacing * playerNumber), benchY);

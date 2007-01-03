@@ -31,7 +31,7 @@ using System.Globalization;
 
 namespace SportsTacticsBoard.FieldObjects
 {
-  class Player : Person
+  abstract class Player : Person
   {
     public enum TeamId {
       Attacking,
@@ -44,40 +44,29 @@ namespace SportsTacticsBoard.FieldObjects
       get { return team; }
     }
 
-    private int number;
-    public int Number
-    {
-      get { return number; }
-    }
-
-    public override string Label
-    {
-      get { return number.ToString(CultureInfo.CurrentUICulture); }
-    }
-
     public override string Tag
     {
-      get { return ComposeTag(Team, Number); }
+      get { return ComposeTag(Team, Label); }
     }
 
     public override string Name
     {
-      get { return ComposeName(Team, Number); }
+      get { return ComposeName(Team, Label); }
     }
 
-    public static string ComposeName(TeamId team, int playerNumber)
+    public static string ComposeName(TeamId team, string playerLabel)
     {
       string nameFormat = Properties.Resources.ResourceManager.GetString("FieldObject_Player_Name_Format");
       string teamName = Properties.Resources.ResourceManager.GetString("TeamName_" + team.ToString());
-      return String.Format(CultureInfo.CurrentUICulture, nameFormat, teamName, playerNumber);
+      return String.Format(CultureInfo.CurrentUICulture, nameFormat, teamName, playerLabel);
     }
 
-    public static string ComposeTag(TeamId team, int playerNumber)
+    public static string ComposeTag(TeamId team, string playerLabel)
     {
-      return "Player_" + team.ToString() + "_" + playerNumber.ToString(CultureInfo.InvariantCulture);
+      return "Player_" + team.ToString() + "_" + playerLabel;
     }
 
-    public static int ExtractPlayerNumberFromTag(string playerTag)
+    public static string ExtractPlayerLabelFromTag(string playerTag)
     {
       if (null == playerTag) {
         throw new ArgumentNullException("playerTag");
@@ -85,9 +74,9 @@ namespace SportsTacticsBoard.FieldObjects
       int hashIndex = playerTag.LastIndexOf('_');
       if (hashIndex < 0)
       {
-        return -1;
+        return "";
       }
-      return int.Parse(playerTag.Substring(hashIndex + 1), CultureInfo.InvariantCulture);
+      return playerTag.Substring(hashIndex + 1);
     }
 
     private static Color GetTeamColor(TeamId team)
@@ -101,11 +90,10 @@ namespace SportsTacticsBoard.FieldObjects
       }
     }
 
-    public Player(int _number, TeamId _team, float dispRadius) :
+    public Player(TeamId _team, float dispRadius) :
       base(0.0F, 0.0F, dispRadius)
     {
       team = _team;
-      number = _number;
       OutlinePenColor = Color.White;
       MovementPenColor = GetTeamColor(team);
       FillBrushColor = GetTeamColor(team);

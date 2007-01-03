@@ -87,8 +87,8 @@ namespace SportsTacticsBoard.FieldTypes
 
         // Create the players
         for (int i = 1; i <= playersPerTeam; i++) {
-          fieldObjects.Add(new FieldObjects.Player(i, FieldObjects.Player.TeamId.Attacking, playerSize));
-          fieldObjects.Add(new FieldObjects.Player(i, FieldObjects.Player.TeamId.Defending, playerSize));
+          fieldObjects.Add(new FieldObjects.NumberedPlayer(i, FieldObjects.Player.TeamId.Attacking, playerSize));
+          fieldObjects.Add(new FieldObjects.NumberedPlayer(i, FieldObjects.Player.TeamId.Defending, playerSize));
         }
 
         // Add the ball
@@ -123,7 +123,7 @@ namespace SportsTacticsBoard.FieldTypes
     {
       List<string> playersOnTeam = new List<string>();
       for (int i = 1; i <= playersPerTeam; i++) {
-        playersOnTeam.Add(FieldObjects.Player.ComposeTag(team, i));
+        playersOnTeam.Add(FieldObjects.NumberedPlayer.ComposeTag(team, i));
       }
       return new ReadOnlyCollection<string>(playersOnTeam);
     }
