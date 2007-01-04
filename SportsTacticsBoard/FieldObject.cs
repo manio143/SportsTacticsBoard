@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2007 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -60,16 +60,26 @@ namespace SportsTacticsBoard
 
     public RectangleF GetRectangle()
     {
-      return new RectangleF(position.X - DisplayRadius,
-        position.Y - DisplayRadius, DisplayRadius * 2, DisplayRadius * 2);
+      return GetRectangleAt(position);
     }
 
-    public virtual void Draw(Graphics graphics)
+    private RectangleF GetRectangleAt(PointF pos)
+    {
+      return new RectangleF(pos.X - DisplayRadius,
+        pos.Y - DisplayRadius, DisplayRadius * 2, DisplayRadius * 2);
+    }
+
+    public void Draw(Graphics graphics)
+    {
+      DrawAt(graphics, Position);
+    }
+
+    public void DrawAt(Graphics graphics, PointF pos)
     {
       if (null == graphics) {
         throw new ArgumentNullException("graphics");
       }
-      RectangleF rect = GetRectangle();
+      RectangleF rect = GetRectangleAt(pos);
       using (Brush fillBrush = new SolidBrush(FillBrushColor)) {
         graphics.FillEllipse(fillBrush, rect);
       }
@@ -97,13 +107,17 @@ namespace SportsTacticsBoard
       }
     }
 
-    public virtual void DrawMovementLine(Graphics graphics, PointF pos)
+    public void DrawMovementLine(Graphics graphics, PointF endPoint)
+    {
+      DrawMovementLineFrom(graphics, Position, endPoint);
+    }
+
+    public void DrawMovementLineFrom(Graphics graphics, PointF startPoint, PointF endPoint)
     {
       if (null == graphics) {
         throw new ArgumentNullException("graphics");
       }
-      PointF endPoint = new PointF(pos.X, pos.Y);
-      graphics.DrawLine(GetMovementPen(), GetCentre(), endPoint);
+      graphics.DrawLine(GetMovementPen(), startPoint, endPoint);
     }
 
     protected FieldObject(float posX, float posY, float dispRadius)
@@ -172,11 +186,6 @@ namespace SportsTacticsBoard
     private bool HasLabel
     {
       get { return !String.IsNullOrEmpty(Label); }
-    }
-
-    private PointF GetCentre()
-    {
-      return new PointF(position.X, position.Y);
     }
 
     private Pen GetMovementPen()

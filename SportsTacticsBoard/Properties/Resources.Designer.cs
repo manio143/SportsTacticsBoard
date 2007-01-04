@@ -250,6 +250,15 @@ namespace SportsTacticsBoard.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to  - {0}.
+        /// </summary>
+        internal static string ImageFileNamePattern {
+            get {
+                return ResourceManager.GetString("ImageFileNamePattern", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap NavBack {
             get {
                 object obj = ResourceManager.GetObject("NavBack", resourceCulture);
@@ -303,10 +312,37 @@ namespace SportsTacticsBoard.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Windows Bitmap (BMP)|*.bmp|Graphics Interchange Format (GIF)|*.gif|Portable Network Graphics (PNG)|*.png|Joint Photographic Experts Group (JPEG)|*.jpg.
+        /// </summary>
+        internal static string SaveAsImageFileFilter {
+            get {
+                return ResourceManager.GetString("SaveAsImageFileFilter", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap saveHS {
             get {
                 object obj = ResourceManager.GetObject("saveHS", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save As Image File.
+        /// </summary>
+        internal static string SaveImageDialogTitle {
+            get {
+                return ResourceManager.GetString("SaveImageDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Sequence As Image Files.
+        /// </summary>
+        internal static string SaveImageSequenceDialogTitle {
+            get {
+                return ResourceManager.GetString("SaveImageSequenceDialogTitle", resourceCulture);
             }
         }
         

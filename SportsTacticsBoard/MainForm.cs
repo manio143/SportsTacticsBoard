@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2007 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@ namespace SportsTacticsBoard
     private int positionInSequence;
     private string fileName = "";
     private string fileFilter = Properties.Resources.ResourceManager.GetString("FileFilter");
+    private string saveAsImageFileFilter = Properties.Resources.ResourceManager.GetString("SaveAsImageFileFilter");
     private string originalCaption;
 
     public MainForm() {
@@ -56,9 +57,14 @@ namespace SportsTacticsBoard
     private void recordNewPositionButton_Click(object sender, EventArgs e) {
       if (null != currentSequence) {
         positionInSequence = RecordPositionToSequence(false, positionInSequence + 1, currentSequence);
-        fieldControl.SetNextLayout(currentSequence.GetLayout(positionInSequence + 1));
+        fieldControl.SetNextLayout(GetNextLayout());
         UpdateSequenceControls();
       }
+    }
+
+    private FieldObjectLayout GetNextLayout()
+    {
+      return currentSequence.GetLayout(positionInSequence + 1);
     }
 
     private void fieldControl_IsDirtyChanged(object sender, EventArgs e) {
@@ -224,7 +230,7 @@ namespace SportsTacticsBoard
           }
         }
         positionInSequence--;
-        RestorePositionFromSequence(positionInSequence, currentSequence, currentSequence.GetLayout(positionInSequence + 1));
+        RestorePositionFromSequence(positionInSequence, currentSequence, GetNextLayout());
         UpdateSequenceControls();
       }
     }
@@ -256,7 +262,7 @@ namespace SportsTacticsBoard
           }
         }
         positionInSequence++;
-        RestorePositionFromSequence(positionInSequence, currentSequence, currentSequence.GetLayout(positionInSequence + 1));
+        RestorePositionFromSequence(positionInSequence, currentSequence, GetNextLayout());
         UpdateSequenceControls();
       }
     }
@@ -274,14 +280,14 @@ namespace SportsTacticsBoard
         if (positionInSequence >= currentSequence.NumberOfLayouts) {
           positionInSequence--;
         }
-        fieldControl.SetNextLayout(currentSequence.GetLayout(positionInSequence + 1));
+        fieldControl.SetNextLayout(GetNextLayout());
         UpdateSequenceControls();
       }
     }
 
     private void revertCurrentLayoutToSavedButton_Click(object sender, EventArgs e) {
       if (null != currentSequence) {
-        RestorePositionFromSequence(positionInSequence, currentSequence, currentSequence.GetLayout(positionInSequence + 1));
+        RestorePositionFromSequence(positionInSequence, currentSequence, GetNextLayout());
         UpdateSequenceControls();
       }
     }
@@ -361,7 +367,7 @@ namespace SportsTacticsBoard
                 fieldControl.IsDirty = false;
                 positionInSequence = 0;
                 currentSequence = seq;
-                RestorePositionFromSequence(positionInSequence, currentSequence, currentSequence.GetLayout(positionInSequence + 1));
+                RestorePositionFromSequence(positionInSequence, currentSequence, GetNextLayout());
                 fileName = openFileDialog.FileName;
                 UpdateCaption();
                 UpdateFileMenuItems();
@@ -572,12 +578,82 @@ namespace SportsTacticsBoard
 
     private void copyMenuItem_Click(object sender, EventArgs e) {
       Bitmap bitmap = new Bitmap(fieldControl.Width, fieldControl.Height);
-      fieldControl.DrawIntoImage(bitmap);
+      FieldObjectLayout nextLayout = null;
+      if (fieldControl.ShowMovementLines) {
+        nextLayout = GetNextLayout();
+      }
+      fieldControl.DrawIntoImage(bitmap, fieldControl.FieldLayout, nextLayout);
       Clipboard.SetImage(bitmap);
     }
 
+    private void SaveSequenceEntryToFile(string fileName, FieldObjectLayout layout, FieldObjectLayout nextLayoutInSequence, System.Drawing.Imaging.ImageFormat imageFormat)
+    {
+      Bitmap bitmap = new Bitmap(fieldControl.Width, fieldControl.Height);
+      FieldObjectLayout nextLayout = null;
+      if (fieldControl.ShowMovementLines) {
+        nextLayout = nextLayoutInSequence;
+      }
+      fieldControl.DrawIntoImage(bitmap, layout, nextLayout);
+      bitmap.Save(fileName, imageFormat);
+    }
+
+    private void SaveImagesToFile(bool saveEntireSequence)
+    {
+      SaveFileDialog saveFileDialog = new SaveFileDialog();
+      saveFileDialog.Filter = saveAsImageFileFilter;
+      saveFileDialog.FilterIndex = 3; // set to PNG by default
+      saveFileDialog.RestoreDirectory = true;
+      saveFileDialog.OverwritePrompt = !saveEntireSequence;
+      if (saveEntireSequence) {
+        saveFileDialog.Title = Properties.Resources.ResourceManager.GetString("SaveImageSequenceDialogTitle");
+      } else {
+        saveFileDialog.Title = Properties.Resources.ResourceManager.GetString("SaveImageDialogTitle");
+      }
+      DialogResult res = saveFileDialog.ShowDialog();
+      if (res != DialogResult.OK) {
+        return;
+      }
+
+      System.Drawing.Imaging.ImageFormat imageFormat = System.Drawing.Imaging.ImageFormat.Png;
+      switch (saveFileDialog.FilterIndex) {
+        case 1:
+          imageFormat = System.Drawing.Imaging.ImageFormat.Bmp;
+          break;
+        case 2:
+          imageFormat = System.Drawing.Imaging.ImageFormat.Gif;
+          break;
+        case 3:
+        default:
+          imageFormat = System.Drawing.Imaging.ImageFormat.Png;
+          break;
+        case 4:
+          imageFormat = System.Drawing.Imaging.ImageFormat.Jpeg;
+          break;
+      }
+
+      if (saveEntireSequence) {
+        string fileNamePattern = saveFileDialog.FileName;
+        int idx = fileNamePattern.LastIndexOf(".");
+        if (idx < 0) {
+          idx = fileNamePattern.Length;
+        }
+        fileNamePattern = fileNamePattern.Insert(idx, Properties.Resources.ResourceManager.GetString("ImageFileNamePattern"));
+        for (int sequenceIndex = 0; sequenceIndex < currentSequence.NumberOfLayouts; sequenceIndex++) {
+          string fileName = string.Format(CultureInfo.CurrentUICulture, fileNamePattern, sequenceIndex + 1);
+          SaveSequenceEntryToFile(fileName, currentSequence.GetLayout(sequenceIndex), currentSequence.GetLayout(sequenceIndex + 1), imageFormat);
+        }
+      } else {
+        SaveSequenceEntryToFile(saveFileDialog.FileName, fieldControl.FieldLayout, GetNextLayout(), imageFormat);
+      }
+    }
+
     private void saveSequenceToImageFilesToolStripMenuItem_Click(object sender, EventArgs e) {
-      NotImplementedYet();
+      SaveImagesToFile(true);
+    }
+
+    private void saveTofileToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      SaveImagesToFile(false);
     }
   }
 }

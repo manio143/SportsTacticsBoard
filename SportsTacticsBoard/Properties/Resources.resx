@@ -184,6 +184,9 @@
   <data name="Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\help.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ImageFileNamePattern" xml:space="preserve">
+    <value> - {0}</value>
+  </data>
   <data name="NavBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\navback.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -205,8 +208,17 @@
   <data name="RestartHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\restarths.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="SaveAsImageFileFilter" xml:space="preserve">
+    <value>Windows Bitmap (BMP)|*.bmp|Graphics Interchange Format (GIF)|*.gif|Portable Network Graphics (PNG)|*.png|Joint Photographic Experts Group (JPEG)|*.jpg</value>
+  </data>
   <data name="saveHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\savehs.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SaveImageDialogTitle" xml:space="preserve">
+    <value>Save As Image File</value>
+  </data>
+  <data name="SaveImageSequenceDialogTitle" xml:space="preserve">
+    <value>Save Sequence As Image Files</value>
   </data>
   <data name="SaveSequenceEntryBeforeSwitchingEntries" xml:space="preserve">
     <value>Save your current layout in place of the current sequence entry?</value>
