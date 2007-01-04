@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2007 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -67,7 +67,6 @@ namespace SportsTacticsBoard
       {
         showMovementLines = value;
         Invalidate();
-        Refresh();
       }
     }
 
@@ -92,7 +91,6 @@ namespace SportsTacticsBoard
         }
 
         Invalidate();
-        Refresh();
       }
       get { return fieldType; }
     }
@@ -121,7 +119,6 @@ namespace SportsTacticsBoard
           }
         }
         Invalidate();
-        Refresh();
       }
     }
 
@@ -131,7 +128,6 @@ namespace SportsTacticsBoard
     {
       nextLayout = layout;
       Invalidate();
-      Refresh();
     }
 
     public void SetLayouts(FieldObjectLayout layout, FieldObjectLayout newNextLayout)
@@ -204,7 +200,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    public void DrawIntoImage(Image image)
+    public void DrawIntoImage(Image image, FieldObjectLayout layoutToDraw, FieldObjectLayout nextLayoutData)
     {
       using (Graphics graphics = Graphics.FromImage(image)) {
         if (image.GetType() == typeof(Bitmap)) {
@@ -216,11 +212,11 @@ namespace SportsTacticsBoard
           }
           graphics.FillRectangle(brush, 0, 0, image.Width, image.Height);
         }
-        DrawIntoGraphics(graphics);
+        DrawLayoutIntoGraphics(graphics, layoutToDraw, nextLayoutData);
       }
     }
 
-    protected void DrawIntoGraphics(Graphics g)
+    private void DrawLayoutIntoGraphics(Graphics g, FieldObjectLayout layoutToDraw, FieldObjectLayout nextLayoutData)
     {
       if (null == FieldType) {
         return;
@@ -238,23 +234,35 @@ namespace SportsTacticsBoard
       // Draw the movement lines that show the movement between the current position and
       // the next position in the sequence (these are drawn first so that they appear under
       // the players)
-      if ((showMovementLines) && (nextLayout != null)) {
+      if (nextLayoutData != null) {
         foreach (FieldObject fieldObject in fieldObjects) {
-          if (nextLayout.HasEntry(fieldObject.Tag)) {
-            fieldObject.DrawMovementLine(g, nextLayout.GetEntryPosition(fieldObject.Tag));
+          if (nextLayoutData.HasEntry(fieldObject.Tag)) {
+            if (null != layoutToDraw) {
+              fieldObject.DrawMovementLineFrom(g, layoutToDraw.GetEntryPosition(fieldObject.Tag), nextLayoutData.GetEntryPosition(fieldObject.Tag));
+            } else {
+              fieldObject.DrawMovementLine(g, nextLayoutData.GetEntryPosition(fieldObject.Tag));
+            }
           } // endif
         }
       }
 
       // Draw each of the field objects
       foreach (FieldObject fieldObject in fieldObjects) {
-        fieldObject.Draw(g);
+        if (null != layoutToDraw) {
+          fieldObject.DrawAt(g, layoutToDraw.GetEntryPosition(fieldObject.Tag));
+        } else {
+          fieldObject.Draw(g);
+        }
       }
     }
 
     protected override void OnPaint(PaintEventArgs e)
     {
-      DrawIntoGraphics(e.Graphics);
+      FieldObjectLayout nextLayoutData = null;
+      if (showMovementLines) {
+        nextLayoutData = nextLayout;
+      }
+      DrawLayoutIntoGraphics(e.Graphics, null, nextLayoutData);
     }
 
     protected override void OnSizeChanged(EventArgs e)
