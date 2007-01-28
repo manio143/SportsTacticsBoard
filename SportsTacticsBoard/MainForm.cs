@@ -99,8 +99,8 @@ namespace SportsTacticsBoard
     }
 
     private void UpdateFileMenuItems() {
-      saveAsToolStripMenuItem.Enabled = (fieldControl.FieldType != null);
-      saveToolStripMenuItem.Enabled = (fieldControl.FieldType != null);
+      saveSequenceAsMenuItem.Enabled = (fieldControl.FieldType != null);
+      saveSequenceMenuItem.Enabled = (fieldControl.FieldType != null);
     }
 
     private void UpdateLayoutMenuItems() {
@@ -572,7 +572,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void newFieldTypeMenuItem_Click(object sender, EventArgs e) {
+    private void newPlayingSurfaceTypeMenuItem_Click(object sender, EventArgs e) {
       FileNew(false, true);
     }
 

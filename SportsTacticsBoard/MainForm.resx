@@ -156,19 +156,19 @@
     <value>Transparent</value>
   </data>
   <data name="recordNewPositionButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 22</value>
+    <value>69, 22</value>
   </data>
   <data name="recordNewPositionButton.Text" xml:space="preserve">
-    <value>Record New Position</value>
+    <value>Record New</value>
   </data>
   <data name="recordOverCurrentPositionButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Transparent</value>
   </data>
   <data name="recordOverCurrentPositionButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>112, 22</value>
   </data>
   <data name="recordOverCurrentPositionButton.Text" xml:space="preserve">
-    <value>Record Over Current Position</value>
+    <value>Record Over Current</value>
   </data>
   <data name="removeCurrentPositionFromSequenceButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Transparent</value>
@@ -228,71 +228,86 @@
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>0, 0</value>
   </metadata>
-  <data name="newToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+  <data name="changePlayingSurfaceTypeMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 22</value>
+  </data>
+  <data name="changePlayingSurfaceTypeMenuItem.Text" xml:space="preserve">
+    <value>Change &amp;type...</value>
+  </data>
+  <data name="toolStripSeparator9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 6</value>
+  </data>
+  <data name="exitMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 22</value>
+  </data>
+  <data name="exitMenuItem.Text" xml:space="preserve">
+    <value>E&amp;xit</value>
+  </data>
+  <data name="playingSurfaceMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>93, 20</value>
+  </data>
+  <data name="playingSurfaceMenuItem.Text" xml:space="preserve">
+    <value>&amp;Playing Surface</value>
+  </data>
+  <data name="newSequenceMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+N</value>
   </data>
-  <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+  <data name="newSequenceMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 22</value>
   </data>
-  <data name="newToolStripMenuItem.Text" xml:space="preserve">
+  <data name="newSequenceMenuItem.Text" xml:space="preserve">
     <value>&amp;New</value>
   </data>
-  <data name="openToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+  <data name="openSequenceMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+O</value>
   </data>
-  <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+  <data name="openSequenceMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 22</value>
   </data>
-  <data name="openToolStripMenuItem.Text" xml:space="preserve">
+  <data name="openSequenceMenuItem.Text" xml:space="preserve">
     <value>&amp;Open...</value>
   </data>
   <data name="toolStripSeparator8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 6</value>
+    <value>192, 6</value>
   </data>
-  <data name="newFieldTypeMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+  <data name="exportSequenceToImageFilesMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 22</value>
   </data>
-  <data name="newFieldTypeMenuItem.Text" xml:space="preserve">
-    <value>Change &amp;field type...</value>
+  <data name="exportSequenceToImageFilesMenuItem.Text" xml:space="preserve">
+    <value>Export to &amp;image files...</value>
+  </data>
+  <data name="exportSequenceToImageFilesMenuItem.ToolTipText" xml:space="preserve">
+    <value>Exports the current tactical sequence as a series of image files.</value>
   </data>
   <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 6</value>
+    <value>192, 6</value>
   </data>
-  <data name="saveToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+  <data name="saveSequenceMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+S</value>
   </data>
-  <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+  <data name="saveSequenceMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 22</value>
   </data>
-  <data name="saveToolStripMenuItem.Text" xml:space="preserve">
+  <data name="saveSequenceMenuItem.Text" xml:space="preserve">
     <value>&amp;Save</value>
   </data>
-  <data name="saveAsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+  <data name="saveSequenceAsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 22</value>
   </data>
-  <data name="saveAsToolStripMenuItem.Text" xml:space="preserve">
+  <data name="saveSequenceAsMenuItem.Text" xml:space="preserve">
     <value>Save &amp;As...</value>
   </data>
-  <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 6</value>
+  <data name="sequenceMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 20</value>
   </data>
-  <data name="exitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
-  </data>
-  <data name="exitToolStripMenuItem.Text" xml:space="preserve">
-    <value>E&amp;xit</value>
-  </data>
-  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 20</value>
-  </data>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;File</value>
+  <data name="sequenceMenuItem.Text" xml:space="preserve">
+    <value>&amp;Sequence</value>
   </data>
   <data name="copyMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+C</value>
   </data>
   <data name="copyMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>236, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="copyMenuItem.Text" xml:space="preserve">
     <value>&amp;Copy to clipboard</value>
@@ -301,55 +316,40 @@
     <value>Copies the current layout to the clipboard</value>
   </data>
   <data name="saveTofileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>236, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="saveTofileToolStripMenuItem.Text" xml:space="preserve">
-    <value>Save to image &amp;file...</value>
+    <value>Export to image &amp;file...</value>
   </data>
-  <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>233, 6</value>
-  </data>
-  <data name="saveSequenceToImageFilesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>236, 22</value>
-  </data>
-  <data name="saveSequenceToImageFilesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Save se&amp;quence to image files...</value>
-  </data>
-  <data name="saveSequenceToImageFilesToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Saves the current tactical sequence as a series of image files.</value>
-  </data>
-  <data name="exportMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 20</value>
-  </data>
-  <data name="exportMenuItem.Text" xml:space="preserve">
-    <value>&amp;Export</value>
+  <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>205, 6</value>
   </data>
   <data name="savedCurrentLayoutMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>201, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="savedCurrentLayoutMenuItem.Text" xml:space="preserve">
-    <value>&amp;Save current layout...</value>
+    <value>&amp;Save current...</value>
   </data>
   <data name="removeSavedLayoutMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>201, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="removeSavedLayoutMenuItem.Text" xml:space="preserve">
-    <value>&amp;Remove saved layout...</value>
+    <value>&amp;Remove saved...</value>
   </data>
   <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 6</value>
+    <value>205, 6</value>
   </data>
   <data name="savedLayoutsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>201, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="savedLayoutsMenuItem.Text" xml:space="preserve">
-    <value>Saved &amp;layouts</value>
+    <value>&amp;Library</value>
   </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 6</value>
+    <value>205, 6</value>
   </data>
   <data name="playersonBenchToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>201, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="playersonBenchToolStripMenuItem.Text" xml:space="preserve">
     <value>Players on Bench</value>
@@ -367,16 +367,16 @@
     <value>Game Position</value>
   </data>
   <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>201, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="toolStripMenuItem2.Text" xml:space="preserve">
     <value>4-4-2</value>
   </data>
   <data name="layoutsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 20</value>
+    <value>52, 20</value>
   </data>
   <data name="layoutsToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Layouts</value>
+    <value>&amp;Layout</value>
   </data>
   <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>126, 22</value>
@@ -457,7 +457,7 @@
     <value>fieldControl</value>
   </data>
   <data name="&gt;&gt;fieldControl.Type" xml:space="preserve">
-    <value>SportsTacticsBoard.FieldControl, SportsTacticsBoard, Version=0.1.90.41048, Culture=neutral, PublicKeyToken=bc918eff40de88ed</value>
+    <value>SportsTacticsBoard.FieldControl, SportsTacticsBoard, Version=0.1.90.24885, Culture=neutral, PublicKeyToken=bc918eff40de88ed</value>
   </data>
   <data name="&gt;&gt;fieldControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -539,9 +539,6 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 </value>
   </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Sports Tactics Board</value>
   </data>
@@ -605,22 +602,46 @@
   <data name="&gt;&gt;showMovementButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;fileToolStripMenuItem.Name" xml:space="preserve">
-    <value>fileToolStripMenuItem</value>
+  <data name="&gt;&gt;playingSurfaceMenuItem.Name" xml:space="preserve">
+    <value>playingSurfaceMenuItem</value>
   </data>
-  <data name="&gt;&gt;fileToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;playingSurfaceMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;newToolStripMenuItem.Name" xml:space="preserve">
-    <value>newToolStripMenuItem</value>
+  <data name="&gt;&gt;changePlayingSurfaceTypeMenuItem.Name" xml:space="preserve">
+    <value>changePlayingSurfaceTypeMenuItem</value>
   </data>
-  <data name="&gt;&gt;newToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;changePlayingSurfaceTypeMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;openToolStripMenuItem.Name" xml:space="preserve">
-    <value>openToolStripMenuItem</value>
+  <data name="&gt;&gt;toolStripSeparator9.Name" xml:space="preserve">
+    <value>toolStripSeparator9</value>
   </data>
-  <data name="&gt;&gt;openToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;toolStripSeparator9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;exitMenuItem.Name" xml:space="preserve">
+    <value>exitMenuItem</value>
+  </data>
+  <data name="&gt;&gt;exitMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;sequenceMenuItem.Name" xml:space="preserve">
+    <value>sequenceMenuItem</value>
+  </data>
+  <data name="&gt;&gt;sequenceMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;newSequenceMenuItem.Name" xml:space="preserve">
+    <value>newSequenceMenuItem</value>
+  </data>
+  <data name="&gt;&gt;newSequenceMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;openSequenceMenuItem.Name" xml:space="preserve">
+    <value>openSequenceMenuItem</value>
+  </data>
+  <data name="&gt;&gt;openSequenceMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator8.Name" xml:space="preserve">
@@ -629,10 +650,10 @@
   <data name="&gt;&gt;toolStripSeparator8.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;newFieldTypeMenuItem.Name" xml:space="preserve">
-    <value>newFieldTypeMenuItem</value>
+  <data name="&gt;&gt;exportSequenceToImageFilesMenuItem.Name" xml:space="preserve">
+    <value>exportSequenceToImageFilesMenuItem</value>
   </data>
-  <data name="&gt;&gt;newFieldTypeMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;exportSequenceToImageFilesMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator7.Name" xml:space="preserve">
@@ -641,34 +662,22 @@
   <data name="&gt;&gt;toolStripSeparator7.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;saveToolStripMenuItem.Name" xml:space="preserve">
-    <value>saveToolStripMenuItem</value>
+  <data name="&gt;&gt;saveSequenceMenuItem.Name" xml:space="preserve">
+    <value>saveSequenceMenuItem</value>
   </data>
-  <data name="&gt;&gt;saveToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;saveSequenceMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;saveAsToolStripMenuItem.Name" xml:space="preserve">
-    <value>saveAsToolStripMenuItem</value>
+  <data name="&gt;&gt;saveSequenceAsMenuItem.Name" xml:space="preserve">
+    <value>saveSequenceAsMenuItem</value>
   </data>
-  <data name="&gt;&gt;saveAsToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;saveSequenceAsMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
-    <value>toolStripSeparator3</value>
+  <data name="&gt;&gt;layoutsToolStripMenuItem.Name" xml:space="preserve">
+    <value>layoutsToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;exitToolStripMenuItem.Name" xml:space="preserve">
-    <value>exitToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;exitToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;exportMenuItem.Name" xml:space="preserve">
-    <value>exportMenuItem</value>
-  </data>
-  <data name="&gt;&gt;exportMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;layoutsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;copyMenuItem.Name" xml:space="preserve">
@@ -677,23 +686,17 @@
   <data name="&gt;&gt;copyMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator6.Name" xml:space="preserve">
-    <value>toolStripSeparator6</value>
+  <data name="&gt;&gt;saveTofileToolStripMenuItem.Name" xml:space="preserve">
+    <value>saveTofileToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator6.Type" xml:space="preserve">
+  <data name="&gt;&gt;saveTofileToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
+    <value>toolStripSeparator3</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;saveSequenceToImageFilesToolStripMenuItem.Name" xml:space="preserve">
-    <value>saveSequenceToImageFilesToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;saveSequenceToImageFilesToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;layoutsToolStripMenuItem.Name" xml:space="preserve">
-    <value>layoutsToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;layoutsToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;savedCurrentLayoutMenuItem.Name" xml:space="preserve">
     <value>savedCurrentLayoutMenuItem</value>
@@ -772,12 +775,6 @@
   </data>
   <data name="&gt;&gt;toolStripButton1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;saveTofileToolStripMenuItem.Name" xml:space="preserve">
-    <value>saveTofileToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;saveTofileToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
