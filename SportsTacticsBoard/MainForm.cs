@@ -39,7 +39,7 @@ namespace SportsTacticsBoard
 {
   public partial class MainForm : Form
   {
-    private List<SavedLayout> savedLayouts;
+    private SavedLayoutManager savedLayoutManager;
     private FieldObjectLayoutSequence currentSequence;
     private int positionInSequence;
     private string fileName = "";
@@ -48,7 +48,7 @@ namespace SportsTacticsBoard
     private string originalCaption;
 
     public MainForm() {
-      savedLayouts = new List<SavedLayout>();
+      savedLayoutManager = new SavedLayoutManager();
       InitializeComponent();
       originalCaption = Text;
       fieldControl.IsDirtyChanged += new EventHandler(fieldControl_IsDirtyChanged);
@@ -72,30 +72,10 @@ namespace SportsTacticsBoard
       UpdateFileMenuItems();
     }
 
-    private void RestoreSavedLayout(string name) {
-      foreach (SavedLayout savedLayout in savedLayouts) {
-        if ((MatchesCurrentFieldType(savedLayout.FieldTypeTag)) &&
-            (savedLayout.Name == name)) {
-          fieldControl.SetLayout(savedLayout.Layout);
-          return;
-        }
-      }
-    }
-
-    private bool MatchesCurrentFieldType(string fieldTypeTag) {
-      if (String.IsNullOrEmpty(fieldTypeTag)) {
-        return false;
-      }
-      IFieldType fieldType = fieldControl.FieldType;
-      if (fieldType == null) {
-        return false;
-      }
-      return fieldType.Tag == fieldTypeTag;
-    }
-
     private void savedLayoutMenuItem_Click(object sender, EventArgs e) {
       ToolStripMenuItem mi = (ToolStripMenuItem)sender;
-      RestoreSavedLayout(mi.Text);
+      FieldObjectLayout layout = savedLayoutManager.GetLayoutForMenuItem(mi, SafeGetCurrentFieldTypeTag());
+      fieldControl.SetLayout(layout);
     }
 
     private void UpdateFileMenuItems() {
@@ -104,71 +84,26 @@ namespace SportsTacticsBoard
     }
 
     private void UpdateLayoutMenuItems() {
-      savedCurrentLayoutMenuItem.Enabled = (fieldControl.FieldType != null);
+      saveCurrentLayoutMenuItem.Enabled = (fieldControl.FieldType != null);
     }
 
     private void UpdateSavedLayoutMenuItems() {
-      Dictionary<string, ToolStripMenuItem> categorySubMenus = new Dictionary<string, ToolStripMenuItem>();
-      savedLayoutsMenuItem.DropDownItems.Clear();
-      bool itemsInserted = false;
-      if (savedLayouts.Count > 0) {
-        foreach (SavedLayout savedLayout in savedLayouts) {
-          if (MatchesCurrentFieldType(savedLayout.FieldTypeTag)) {
-            ToolStripMenuItem menuToInsertIn = savedLayoutsMenuItem;
-            if (!string.IsNullOrEmpty(savedLayout.Category)) {
-              if (categorySubMenus.ContainsKey(savedLayout.Category)) {
-                menuToInsertIn = categorySubMenus[savedLayout.Category];
-              } else {
-                menuToInsertIn = new ToolStripMenuItem(savedLayout.Category);
-                categorySubMenus.Add(savedLayout.Category, menuToInsertIn);
-              }
-            }
-            ToolStripMenuItem mi = new ToolStripMenuItem(savedLayout.Name, null, new EventHandler(savedLayoutMenuItem_Click));
-            if (savedLayout.Description.Length > 0) {
-              mi.ToolTipText = savedLayout.Description;
-            }
-            menuToInsertIn.DropDownItems.Add(mi);
-            itemsInserted = true;
-          }
-        }
-      }
-      if (categorySubMenus.Count > 0) {
-        int index = 0;
-        foreach (ToolStripMenuItem menuItem in categorySubMenus.Values) {
-          savedLayoutsMenuItem.DropDownItems.Insert(index, menuItem);
-          index++;
-        }
-      }
-      if (itemsInserted) {
+      if (savedLayoutManager.UpdateMenu(savedLayoutsMenuItem, SafeGetCurrentFieldTypeTag(), new EventHandler(savedLayoutMenuItem_Click))) {
         removeSavedLayoutMenuItem.Enabled = true;
       } else {
-        string menuItemStr = Properties.Resources.ResourceManager.GetString("NoSavedLayoutsMenuItemText");
-        ToolStripMenuItem mi = new ToolStripMenuItem(menuItemStr);
-        mi.Enabled = false;
-        savedLayoutsMenuItem.DropDownItems.Add(mi);
         removeSavedLayoutMenuItem.Enabled = false;
-      }
+      } // endif
     }
 
-    private string[] GetCurrentSavedLayoutCategories() {
-      List<string> result = new List<string>();
-      foreach (SavedLayout savedLayout in savedLayouts) {
-        if ((MatchesCurrentFieldType(savedLayout.FieldTypeTag)) &&
-            (!string.IsNullOrEmpty(savedLayout.Category))) {
-          result.Add(savedLayout.Category);
-        }
+    private string SafeGetCurrentFieldTypeTag() {
+      if (fieldControl.FieldType == null) {
+        return null;
       }
-      return result.ToArray();
+      return fieldControl.FieldType.Tag;
     }
 
     private void SaveCurrentLayout() {
-      SavedLayout sl =
-        SavedLayoutInformation.AskUserForSavedLayoutDetails(fieldControl.FieldLayout,
-                                                            fieldControl.FieldType.Tag,
-                                                            GetCurrentSavedLayoutCategories());
-      if (null != sl) {
-        savedLayouts.Add(sl);
-      }
+      savedLayoutManager.SaveCurrentLayout(fieldControl.FieldLayout, SafeGetCurrentFieldTypeTag());
       UpdateSavedLayoutMenuItems();
     }
 
