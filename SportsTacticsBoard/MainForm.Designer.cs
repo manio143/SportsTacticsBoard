@@ -81,7 +81,7 @@ namespace SportsTacticsBoard
       this.copyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.saveTofileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-      this.savedCurrentLayoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.saveCurrentLayoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.removeSavedLayoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
       this.savedLayoutsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -281,7 +281,7 @@ namespace SportsTacticsBoard
             this.copyMenuItem,
             this.saveTofileToolStripMenuItem,
             this.toolStripSeparator3,
-            this.savedCurrentLayoutMenuItem,
+            this.saveCurrentLayoutMenuItem,
             this.removeSavedLayoutMenuItem,
             this.toolStripSeparator4,
             this.savedLayoutsMenuItem,
@@ -310,9 +310,9 @@ namespace SportsTacticsBoard
       // 
       // savedCurrentLayoutMenuItem
       // 
-      this.savedCurrentLayoutMenuItem.Name = "savedCurrentLayoutMenuItem";
-      resources.ApplyResources(this.savedCurrentLayoutMenuItem, "savedCurrentLayoutMenuItem");
-      this.savedCurrentLayoutMenuItem.Click += new System.EventHandler(this.savedCurrentLayoutMenuItem_Click);
+      this.saveCurrentLayoutMenuItem.Name = "savedCurrentLayoutMenuItem";
+      resources.ApplyResources(this.saveCurrentLayoutMenuItem, "savedCurrentLayoutMenuItem");
+      this.saveCurrentLayoutMenuItem.Click += new System.EventHandler(this.savedCurrentLayoutMenuItem_Click);
       // 
       // removeSavedLayoutMenuItem
       // 
@@ -440,7 +440,7 @@ namespace SportsTacticsBoard
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     private System.Windows.Forms.ToolStripButton showMovementButton;
     private FieldControl fieldControl;
-    private System.Windows.Forms.ToolStripMenuItem savedCurrentLayoutMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem saveCurrentLayoutMenuItem;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     private System.Windows.Forms.ToolStripMenuItem savedLayoutsMenuItem;
     private System.Windows.Forms.ToolStripMenuItem removeSavedLayoutMenuItem;

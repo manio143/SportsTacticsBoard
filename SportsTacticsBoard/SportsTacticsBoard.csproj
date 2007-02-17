@@ -140,6 +140,7 @@
     <Compile Include="SavedLayoutInformation.Designer.cs">
       <DependentUpon>SavedLayoutInformation.cs</DependentUpon>
     </Compile>
+    <Compile Include="SavedLayoutManager.cs" />
     <Compile Include="SelectFieldType.cs">
       <SubType>Form</SubType>
     </Compile>
