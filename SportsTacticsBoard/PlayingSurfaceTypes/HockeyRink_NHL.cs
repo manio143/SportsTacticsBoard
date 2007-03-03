@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2007 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -28,13 +28,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SportsTacticsBoard.FieldTypes
+namespace SportsTacticsBoard.PlayingSurfaceTypes
 {
   /// <summary>
   /// Hockey rink dimensions and details taken from: 
   ///   http://en.wikipedia.org/wiki/Hockey_rink
   /// </summary>
-  class HockeyRink_NHL : IFieldType
+  class HockeyRink_NHL : IPlayingSurfaceType
   {
     // NHL hockey rink units are in feet (or inches)
     private const float rinkLength        = 200.0F;
@@ -91,12 +91,12 @@ namespace SportsTacticsBoard.FieldTypes
       } 
     }
 
-    public float FieldLength
+    public float Length
     {
       get { return rinkLength; }
     }
 
-    public float FieldWidth {
+    public float Width {
       get { return rinkWidth; }
     }
 
@@ -105,7 +105,7 @@ namespace SportsTacticsBoard.FieldTypes
       get { return margin; }
     }
 
-    public Color FieldSurfaceColor
+    public Color SurfaceColor
     {
       get { return Color.LightGray; } 
     }
@@ -119,7 +119,7 @@ namespace SportsTacticsBoard.FieldTypes
       fieldObjects.Add(new FieldObjects.LabelledPlayer("G", team, playerSize));
     }
 
-    public Collection<FieldObject> StandardFieldObjects
+    public Collection<FieldObject> StandardObjects
     {
       get {
         List<FieldObject> fieldObjects = new List<FieldObject>();
@@ -128,13 +128,13 @@ namespace SportsTacticsBoard.FieldTypes
         CreateTeam(ref fieldObjects, SportsTacticsBoard.FieldObjects.Player.TeamId.Defending);
 
         // Add the puck
-        fieldObjects.Add(new FieldObjects.Puck(FieldLength / 2, FieldWidth / 2, puckSize));
+        fieldObjects.Add(new FieldObjects.Puck(Length / 2, Width / 2, puckSize));
 
         // Add the referees
-        fieldObjects.Add(new FieldObjects.Referee("R1", "Referee_Hockey_1", distanceOfBlueLineFromEndOfRink - 10.0F, FieldWidth - 7.5F, playerSize));
-        fieldObjects.Add(new FieldObjects.Referee("R2", "Referee_Hockey_2", FieldLength - distanceOfBlueLineFromEndOfRink + 10.0F, 7.5F, playerSize));
+        fieldObjects.Add(new FieldObjects.Referee("R1", "Referee_Hockey_1", distanceOfBlueLineFromEndOfRink - 10.0F, Width - 7.5F, playerSize));
+        fieldObjects.Add(new FieldObjects.Referee("R2", "Referee_Hockey_2", Length - distanceOfBlueLineFromEndOfRink + 10.0F, 7.5F, playerSize));
         fieldObjects.Add(new FieldObjects.Referee("L1", "Referee_Hockey_L1", distanceOfBlueLineFromEndOfRink - 3.0F, 2.75F, playerSize));
-        fieldObjects.Add(new FieldObjects.Referee("L2", "Referee_Hockey_L2", FieldLength - distanceOfBlueLineFromEndOfRink + 3.0F, FieldWidth - 2.75F, playerSize));
+        fieldObjects.Add(new FieldObjects.Referee("L2", "Referee_Hockey_L2", Length - distanceOfBlueLineFromEndOfRink + 3.0F, Width - 2.75F, playerSize));
 
         // Adjust various parameters for all the field objects
         foreach (FieldObject fo in fieldObjects) {
@@ -147,22 +147,22 @@ namespace SportsTacticsBoard.FieldTypes
       }
     }
 
-    public FieldObjectLayout DefaultLayout
+    public Layout DefaultLayout
     { 
       get {
-        FieldObjectLayout layout = new FieldObjectLayout();
-        layout.AddEntry("Player_Attacking_G", distanceOfGoalLineFromEndOfRink + playerSize, FieldWidth / 2.0F);
-        layout.AddEntry("Player_Attacking_LD", distanceOfBlueLineFromEndOfRink + 3.0F, FieldWidth / 3.0F);
-        layout.AddEntry("Player_Attacking_RD", distanceOfBlueLineFromEndOfRink + 3.0F, 2.0F * (FieldWidth / 3.0F));
-        layout.AddEntry("Player_Attacking_LW", (FieldLength / 2.0F) - playerSize, (FieldWidth / 2.0F) - faceOffCircleRadius - playerSize);
-        layout.AddEntry("Player_Attacking_C", (FieldLength / 2.0F) - playerSize, (FieldWidth / 2.0F));
-        layout.AddEntry("Player_Attacking_RW", (FieldLength / 2.0F) - playerSize, (FieldWidth / 2.0F) + faceOffCircleRadius + playerSize);
-        layout.AddEntry("Player_Defending_G", FieldLength - (distanceOfGoalLineFromEndOfRink + playerSize), FieldWidth / 2.0F);
-        layout.AddEntry("Player_Defending_RD", FieldLength - (distanceOfBlueLineFromEndOfRink + 3.0F), FieldWidth / 3.0F);
-        layout.AddEntry("Player_Defending_LD", FieldLength - (distanceOfBlueLineFromEndOfRink + 3.0F), 2.0F * (FieldWidth / 3.0F));
-        layout.AddEntry("Player_Defending_RW", (FieldLength / 2.0F) + playerSize, (FieldWidth / 2.0F) - faceOffCircleRadius - playerSize);
-        layout.AddEntry("Player_Defending_C", (FieldLength / 2.0F) + playerSize, (FieldWidth / 2.0F));
-        layout.AddEntry("Player_Defending_LW", (FieldLength / 2.0F) + playerSize, (FieldWidth / 2.0F) + faceOffCircleRadius + playerSize);
+        Layout layout = new Layout();
+        layout.AddEntry("Player_Attacking_G", distanceOfGoalLineFromEndOfRink + playerSize, Width / 2.0F);
+        layout.AddEntry("Player_Attacking_LD", distanceOfBlueLineFromEndOfRink + 3.0F, Width / 3.0F);
+        layout.AddEntry("Player_Attacking_RD", distanceOfBlueLineFromEndOfRink + 3.0F, 2.0F * (Width / 3.0F));
+        layout.AddEntry("Player_Attacking_LW", (Length / 2.0F) - playerSize, (Width / 2.0F) - faceOffCircleRadius - playerSize);
+        layout.AddEntry("Player_Attacking_C", (Length / 2.0F) - playerSize, (Width / 2.0F));
+        layout.AddEntry("Player_Attacking_RW", (Length / 2.0F) - playerSize, (Width / 2.0F) + faceOffCircleRadius + playerSize);
+        layout.AddEntry("Player_Defending_G", Length - (distanceOfGoalLineFromEndOfRink + playerSize), Width / 2.0F);
+        layout.AddEntry("Player_Defending_RD", Length - (distanceOfBlueLineFromEndOfRink + 3.0F), Width / 3.0F);
+        layout.AddEntry("Player_Defending_LD", Length - (distanceOfBlueLineFromEndOfRink + 3.0F), 2.0F * (Width / 3.0F));
+        layout.AddEntry("Player_Defending_RW", (Length / 2.0F) + playerSize, (Width / 2.0F) - faceOffCircleRadius - playerSize);
+        layout.AddEntry("Player_Defending_C", (Length / 2.0F) + playerSize, (Width / 2.0F));
+        layout.AddEntry("Player_Defending_LW", (Length / 2.0F) + playerSize, (Width / 2.0F) + faceOffCircleRadius + playerSize);
         return layout;
       } 
     }
@@ -261,8 +261,9 @@ namespace SportsTacticsBoard.FieldTypes
       circlePath.CloseFigure();
 
       // Clip the area of the circle so that we can draw the hash-marks nicely
+      Region clipRegion = new Region(circlePath);
       Region oldClip = g.Clip;
-      g.ExcludeClip(new Region(circlePath));
+      g.ExcludeClip(clipRegion);
 
       // Draw the hash-marks outside the circle
       float lengthFromCentre = faceOffCircleRadius + outerHashLengthY;
@@ -282,9 +283,11 @@ namespace SportsTacticsBoard.FieldTypes
 
       // Draw the circle
       g.DrawEllipse(linePen, circleRectangle);
+
+      clipRegion.Dispose();
     }
 
-    public void DrawFieldMarkings(Graphics graphics)
+    public void DrawMarkings(Graphics graphics)
     {
       // Create the pens for drawing the lines with
       Pen boardsPen = new Pen(Color.Black, boardsPenWidth);
@@ -575,6 +578,20 @@ namespace SportsTacticsBoard.FieldTypes
 
       // Draw the boards
       graphics.DrawPath(boardsPen, rink);
+
+      // Dispose of resources
+      boardsPen.Dispose();
+      blueLinePen.Dispose();
+      redLinePen.Dispose();
+      blueThinLinePen.Dispose();
+      redThinLinePen.Dispose();
+      blueBrush.Dispose();
+      redBrush.Dispose();
+      creaseBrush.Dispose();
+      iceBrush.Dispose();
+      goalBrush.Dispose();
+      benchBrush.Dispose();
+      rink.Dispose();
     }
 
   }

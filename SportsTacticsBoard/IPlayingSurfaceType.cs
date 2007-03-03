@@ -1,4 +1,4 @@
-// Sports Tactics Board
+﻿// Sports Tactics Board
 //
 // http://sportstacticsbd.sourceforge.net/
 // http://sourceforge.net/projects/sportstacticsbd/
@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2007 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,52 +26,23 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using System.Xml.Serialization;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SportsTacticsBoard
 {
-  [XmlType(TypeName = "FieldObjectLayoutEntry")]
-  public class FieldObjectLayoutEntry
+  interface IPlayingSurfaceType
   {
-    public FieldObjectLayoutEntry() {
-      tag = "";
-    }
+    string Tag { get; }
+    string Name { get; }
+    float Length { get; }
+    float Width { get; }
+    float Margin { get; }
+    Color SurfaceColor { get; }
 
-    public FieldObjectLayoutEntry(string _tag, float posX, float posY) {
-      tag = _tag;
-      positionX = posX;
-      positionY = posY;
-    }
+    Collection<FieldObject> StandardObjects { get; }
+    Layout DefaultLayout { get; }
 
-    public FieldObjectLayoutEntry(string _tag, PointF pt) {
-      tag = _tag;
-      positionX = pt.X;
-      positionY = pt.Y;
-    }
-
-    [XmlAttribute(AttributeName = "tag")]
-    public string Tag {
-      get { return tag; }
-      set { tag = value; }
-    }
-
-    [XmlAttribute(AttributeName = "x")]
-    public float PositionX {
-      get { return positionX; }
-      set { positionX = value; }
-    }
-
-    [XmlAttribute(AttributeName = "y")]
-    public float PositionY {
-      get { return positionY; }
-      set { positionY = value; }
-    }
-
-    private string tag;
-    private float positionX;
-    private float positionY;
+    ReadOnlyCollection<string> GetTeam(FieldObjects.Player.TeamId team);
+    void DrawMarkings(Graphics graphics);
   }
 }

@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2007 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -33,30 +33,30 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SportsTacticsBoard
 {
-  public class FieldObjectLayout
+  public class Layout
   {
     [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
     [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-    public List<FieldObjectLayoutEntry> entries;
+    public List<LayoutEntry> entries;
 
-    public FieldObjectLayout()
+    public Layout()
     {
-      entries = new List<FieldObjectLayoutEntry>();
+      entries = new List<LayoutEntry>();
     }
 
     public void AddEntry(string tag, PointF pos)
     {
-      entries.Add(new FieldObjectLayoutEntry(tag, pos));
+      entries.Add(new LayoutEntry(tag, pos));
     }
 
     public void AddEntry(string tag, float posX, float posY)
     {
-      entries.Add(new FieldObjectLayoutEntry(tag, posX, posY));
+      entries.Add(new LayoutEntry(tag, posX, posY));
     }
 
-    private FieldObjectLayoutEntry FindEntry(string tag)
+    private LayoutEntry FindEntry(string tag)
     {
-      return entries.Find(delegate(FieldObjectLayoutEntry entry) { return (entry.Tag == tag); });
+      return entries.Find(delegate(LayoutEntry entry) { return (entry.Tag == tag); });
     }
 
     public bool HasEntry(string tag)
@@ -66,7 +66,7 @@ namespace SportsTacticsBoard
 
     public PointF GetEntryPosition(string tag)
     {
-      FieldObjectLayoutEntry e = FindEntry(tag);
+      LayoutEntry e = FindEntry(tag);
       return new PointF(e.PositionX, e.PositionY);
     }
 
@@ -81,7 +81,7 @@ namespace SportsTacticsBoard
     {
       get {
         List<string> l = new List<string>();
-        foreach (FieldObjectLayoutEntry e in entries) {
+        foreach (LayoutEntry e in entries) {
           l.Add(e.Tag);
         }
         return l;

@@ -32,7 +32,7 @@ namespace SportsTacticsBoard.LayoutAlgorithms
 {
   internal abstract class FourFourTwoLayoutAlgorithm : GenericColumnBasedLayoutAlgorithm
   {
-    public FourFourTwoLayoutAlgorithm(IFieldType _fieldType) :
+    public FourFourTwoLayoutAlgorithm(IPlayingSurfaceType _fieldType) :
       base(_fieldType)
     {
     }
