@@ -49,7 +49,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 3. Supported Platforms
 ----------------------
 
-Windows XP Home SP2, Windows XP Pro SP2, Windows Server 2003 SP1
+Windows XP SP2, Windows Server 2003 SP1, Windows Vista
 
 
 3.2 Requirements
@@ -92,10 +92,17 @@ be able to compile from source:
       Downloadable from:
          http://www.microsoft.com/downloads/details.aspx?familyid=fe6f2099-b7b4-4f47-a244-c96d69c35dec&displaylang=en
 
+  - Microsoft Windows SDK for Windows Vista
+      No-cost SDK for Windows and .NET development (may require Microsoft 
+      Genuine Advantage validation to download)
+      Downloadable from:
+         http://www.microsoft.com/downloads/details.aspx?FamilyId=7614FE22-8A64-4DFB-AA0C-DB53035F40A0&displaylang=en
+        OR
+         http://www.microsoft.com/downloads/details.aspx?FamilyId=C2B1E300-F358-4523-B479-F53D234CDCCF&displaylang=en
+
 It may be possible to compile under the most recent versions of Mono. 
 You will need support for System.Windows.Forms for this program to work.
-The original author has not tried this yet, but does plan on trying it
-when he finds the time.
+The original author has not tried this yet.
 
 
 4.2 Procedure
@@ -112,11 +119,13 @@ See the appropriate section below that corresponds to the environment you have.
    Solution or Batch Build from the Build menu).
 
 
-4.2.2 .NET Framework SDK & MSBuild
-----------------------------------
+4.2.2 .NET Framework SDK or Windows SDK & MSBuild
+-------------------------------------------------
 
-1. Open an "SDK Command Prompt" window from 
-   Start | Programs | Microsoft .NET Framework SDK v2.0
+1. Open an "SDK Command Prompt" or "CMD Shell" window from 
+     Start | Programs | Microsoft .NET Framework SDK v2.0
+   OR
+     Start | Programs | Microsoft Windows SDK
 2. Change working directories to the folder with the complete 
    source tree extracted to.
     e.g.:   CD /D C:\SportsTacticsBoard-src
