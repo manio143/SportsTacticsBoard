@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2007 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -32,23 +32,23 @@ using System.Diagnostics.CodeAnalysis;
 namespace SportsTacticsBoard
 {
   [XmlType(TypeName = "SportsTacticsBoardDocument")]
-  public class FieldObjectLayoutSequence
+  public class LayoutSequence
   {
     [XmlElement(ElementName="fieldType")]
     public string fieldTypeTag;
 
     [XmlElement(ElementName = "layoutSequence")]
     [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-    public List<FieldObjectLayout> layoutSequence;
+    public List<Layout> layoutSequence;
 
-    public FieldObjectLayoutSequence()
+    public LayoutSequence()
     {
-      layoutSequence = new List<FieldObjectLayout>();
+      layoutSequence = new List<Layout>();
     }
 
-    public FieldObjectLayoutSequence(string _fieldTypeTag)
+    public LayoutSequence(string _fieldTypeTag)
     {
-      layoutSequence = new List<FieldObjectLayout>();
+      layoutSequence = new List<Layout>();
       fieldTypeTag = _fieldTypeTag;
     }
 
@@ -57,7 +57,7 @@ namespace SportsTacticsBoard
       get { return layoutSequence.Count; }
     }
 
-    public FieldObjectLayout GetLayout(int index)
+    public Layout GetLayout(int index)
     {
       if ((index >= 0) && (index < layoutSequence.Count)) {
         return layoutSequence[index];
@@ -66,14 +66,14 @@ namespace SportsTacticsBoard
       }
     }
 
-    public void SetLayout(int index, FieldObjectLayout layout)
+    public void SetLayout(int index, Layout layout)
     {
       if ((index >= 0) && (index < layoutSequence.Count)) {
         layoutSequence[index] = layout;
       }
     }
 
-    public int AddNewLayout(int index, FieldObjectLayout layout)
+    public int AddNewLayout(int index, Layout layout)
     {
       if (index >= layoutSequence.Count) {
         layoutSequence.Add(layout);

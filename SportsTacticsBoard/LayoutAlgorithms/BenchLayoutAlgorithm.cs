@@ -32,7 +32,7 @@ namespace SportsTacticsBoard.LayoutAlgorithms
 {
   internal class BenchLayoutAlgorithm : TeamLayoutAlgorithm
   {
-    public BenchLayoutAlgorithm(IFieldType _fieldType)
+    public BenchLayoutAlgorithm(IPlayingSurfaceType _fieldType)
       :
       base(_fieldType)
     {
@@ -46,7 +46,7 @@ namespace SportsTacticsBoard.LayoutAlgorithms
       }
     }
 
-    protected override void AppendPlayerPositions(FieldObjectLayout layout, ReadOnlyCollection<string> playersToPosition, bool putOnLeftSide)
+    protected override void AppendPlayerPositions(Layout layout, ReadOnlyCollection<string> playersToPosition, bool putOnLeftSide)
     {
       const float spacing = 3.25F;
       const float benchIndent = 5.0F;

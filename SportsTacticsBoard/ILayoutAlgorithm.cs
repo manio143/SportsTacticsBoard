@@ -31,6 +31,6 @@ namespace SportsTacticsBoard
   interface ILayoutAlgorithm
   {
     ReadOnlyCollection<string> SupportedFieldTypes { get; }
-    FieldObjectLayout GetLayout(IFieldType fieldType);
+    Layout GetLayout(IPlayingSurfaceType fieldType);
   }
 }

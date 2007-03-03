@@ -39,7 +39,7 @@ namespace SportsTacticsBoard
     private float ratio;
     private Point fieldOriginInDisplayUnits = new Point(0, 0);
     private bool dirty;
-    private IFieldType fieldType;
+    private IPlayingSurfaceType fieldType;
 
     public bool IsDirty
     {
@@ -75,7 +75,7 @@ namespace SportsTacticsBoard
       InitializeComponent();
     }
 
-    public IFieldType FieldType
+    public IPlayingSurfaceType FieldType
     {
       set
       {
@@ -84,9 +84,9 @@ namespace SportsTacticsBoard
 
         fieldType = value;
         if (null != fieldType) {
-          BackColor = fieldType.FieldSurfaceColor;
+          BackColor = fieldType.SurfaceColor;
           CalculateFieldGeometry(Size);
-          fieldObjects = fieldType.StandardFieldObjects;
+          fieldObjects = fieldType.StandardObjects;
           SetLayout(fieldType.DefaultLayout);
         }
 
@@ -97,11 +97,11 @@ namespace SportsTacticsBoard
 
     private Collection<FieldObject> fieldObjects;
 
-    public FieldObjectLayout FieldLayout
+    public Layout FieldLayout
     {
       get
       {
-        FieldObjectLayout layout = new FieldObjectLayout();
+        Layout layout = new Layout();
         foreach (FieldObject fo in fieldObjects) {
           layout.AddEntry(fo.Tag, fo.Position);
         }
@@ -109,7 +109,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    public void SetLayout(FieldObjectLayout layout)
+    public void SetLayout(Layout layout)
     {
       if (null != layout) {
         foreach (FieldObject fo in fieldObjects) {
@@ -122,15 +122,15 @@ namespace SportsTacticsBoard
       }
     }
 
-    private FieldObjectLayout nextLayout;
+    private Layout nextLayout;
 
-    public void SetNextLayout(FieldObjectLayout layout)
+    public void SetNextLayout(Layout layout)
     {
       nextLayout = layout;
       Invalidate();
     }
 
-    public void SetLayouts(FieldObjectLayout layout, FieldObjectLayout newNextLayout)
+    public void SetLayouts(Layout layout, Layout newNextLayout)
     {
       nextLayout = newNextLayout;
       SetLayout(layout);
@@ -184,23 +184,23 @@ namespace SportsTacticsBoard
 
     private void CalculateFieldGeometry(Size windowSize)
     {
-      IFieldType ft = FieldType;
+      IPlayingSurfaceType ft = FieldType;
       if (null != ft) {
         // Calculate the ratio used to scale "yards" into pixels
-        float ratioX = windowSize.Width / (ft.FieldLength + (ft.Margin * 2.0F));
-        float ratioY = windowSize.Height / (ft.FieldWidth + (ft.Margin * 2.0F));
+        float ratioX = windowSize.Width / (ft.Length + (ft.Margin * 2.0F));
+        float ratioY = windowSize.Height / (ft.Width + (ft.Margin * 2.0F));
         ratio = (ratioX < ratioY) ? ratioX : ratioY;
 
         fieldOriginInDisplayUnits = 
-          new Point((windowSize.Width - (int)Math.Round(ft.FieldLength * ratio)) / 2,
-                    (windowSize.Height - (int)Math.Round(ft.FieldWidth * ratio)) / 2);
+          new Point((windowSize.Width - (int)Math.Round(ft.Length * ratio)) / 2,
+                    (windowSize.Height - (int)Math.Round(ft.Width * ratio)) / 2);
       } else {
         ratio = 1.0F;
         fieldOriginInDisplayUnits = new Point(0, 0);
       }
     }
 
-    public void DrawIntoImage(Image image, FieldObjectLayout layoutToDraw, FieldObjectLayout nextLayoutData)
+    public void DrawIntoImage(Image image, Layout layoutToDraw, Layout nextLayoutData)
     {
       using (Graphics graphics = Graphics.FromImage(image)) {
         if (image.GetType() == typeof(Bitmap)) {
@@ -208,7 +208,7 @@ namespace SportsTacticsBoard
           if (null == FieldType) {
             brush = new SolidBrush(Color.White);
           } else {
-            brush = new SolidBrush(this.FieldType.FieldSurfaceColor);
+            brush = new SolidBrush(this.FieldType.SurfaceColor);
           }
           graphics.FillRectangle(brush, 0, 0, image.Width, image.Height);
         }
@@ -216,7 +216,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void DrawLayoutIntoGraphics(Graphics g, FieldObjectLayout layoutToDraw, FieldObjectLayout nextLayoutData)
+    private void DrawLayoutIntoGraphics(Graphics g, Layout layoutToDraw, Layout nextLayoutData)
     {
       if (null == FieldType) {
         return;
@@ -229,7 +229,7 @@ namespace SportsTacticsBoard
       g.TranslateTransform(fieldOriginInDisplayUnits.X, fieldOriginInDisplayUnits.Y);
       g.ScaleTransform(ratio, ratio);
 
-      FieldType.DrawFieldMarkings(g);
+      FieldType.DrawMarkings(g);
 
       // Draw the movement lines that show the movement between the current position and
       // the next position in the sequence (these are drawn first so that they appear under
@@ -258,7 +258,7 @@ namespace SportsTacticsBoard
 
     protected override void OnPaint(PaintEventArgs e)
     {
-      FieldObjectLayout nextLayoutData = null;
+      Layout nextLayoutData = null;
       if (showMovementLines) {
         nextLayoutData = nextLayout;
       }

@@ -36,7 +36,7 @@ namespace SportsTacticsBoard.LayoutAlgorithms
 
     protected abstract int[] PlayerToColumnIndexes { get; }
 
-    public GenericColumnBasedLayoutAlgorithm(IFieldType _fieldType) :
+    public GenericColumnBasedLayoutAlgorithm(IPlayingSurfaceType _fieldType) :
       base(_fieldType)
     {
     }
@@ -51,12 +51,12 @@ namespace SportsTacticsBoard.LayoutAlgorithms
       return ptci[playerNumber - 1];
     }
 
-    protected override void AppendPlayerPositions(FieldObjectLayout layout, ReadOnlyCollection<string> playersToPosition, bool putOnLeftSide)
+    protected override void AppendPlayerPositions(Layout layout, ReadOnlyCollection<string> playersToPosition, bool putOnLeftSide)
     {
       PositionPlayers(layout, playersToPosition, putOnLeftSide, PositionIndents);            
     }
 
-    private void PositionPlayers(FieldObjectLayout layout, ReadOnlyCollection<string> playersToPosition, bool putOnLeftSide, float[] indents)
+    private void PositionPlayers(Layout layout, ReadOnlyCollection<string> playersToPosition, bool putOnLeftSide, float[] indents)
     {
       // Put the players in "columns"
       List<string>[] columns = new List<string>[indents.Length];

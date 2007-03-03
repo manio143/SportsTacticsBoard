@@ -31,7 +31,7 @@ namespace SportsTacticsBoard.LayoutAlgorithms
 {
   internal class FourFourTwoLayoutAlgorithm_GamePos : FourFourTwoLayoutAlgorithm
   {
-    public FourFourTwoLayoutAlgorithm_GamePos(IFieldType _fieldType) :
+    public FourFourTwoLayoutAlgorithm_GamePos(IPlayingSurfaceType _fieldType) :
       base(_fieldType)
     {
     }

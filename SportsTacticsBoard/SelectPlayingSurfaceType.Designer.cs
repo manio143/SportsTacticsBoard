@@ -25,7 +25,7 @@
 //
 namespace SportsTacticsBoard
 {
-  partial class SelectFieldType
+  partial class SelectPlayingSurfaceType
   {
     /// <summary>
     /// Required designer variable.
@@ -52,7 +52,7 @@ namespace SportsTacticsBoard
     /// </summary>
     private void InitializeComponent()
     {
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectFieldType));
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectPlayingSurfaceType));
       this.okButton = new System.Windows.Forms.Button();
       this.cancelButton = new System.Windows.Forms.Button();
       this.label1 = new System.Windows.Forms.Label();

@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2007 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -33,16 +33,16 @@ using System.Windows.Forms;
 
 namespace SportsTacticsBoard
 {
-  public partial class SelectFieldType : Form
+  public partial class SelectPlayingSurfaceType : Form
   {
-    public SelectFieldType()
+    public SelectPlayingSurfaceType()
     {
       InitializeComponent();
     }
 
-    internal static IFieldType AskUserForFieldType(bool saveAsDefaultChecked)
+    internal static IPlayingSurfaceType AskUserForFieldType(bool saveAsDefaultChecked)
     {
-      SelectFieldType sftDialog = new SelectFieldType();
+      SelectPlayingSurfaceType sftDialog = new SelectPlayingSurfaceType();
       sftDialog.saveAsDefaultCheckBox.Checked = saveAsDefaultChecked;
       sftDialog.fieldTypeComboBox.DataSource = MainForm.AvailableFieldTypes;
       sftDialog.fieldTypeComboBox.DisplayMember = "Name";
@@ -60,7 +60,7 @@ namespace SportsTacticsBoard
       if (sftDialog.ShowDialog() != DialogResult.OK) {
         return null;
       }
-      IFieldType selectedFieldType = (IFieldType)sftDialog.fieldTypeComboBox.SelectedItem;
+      IPlayingSurfaceType selectedFieldType = (IPlayingSurfaceType)sftDialog.fieldTypeComboBox.SelectedItem;
       if (sftDialog.saveAsDefaultCheckBox.Checked) {
         global::SportsTacticsBoard.Properties.Settings.Default.DefaultFieldType =
           selectedFieldType.Name;

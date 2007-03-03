@@ -32,33 +32,33 @@ namespace SportsTacticsBoard.LayoutAlgorithms
 {
   abstract class TeamLayoutAlgorithm : ILayoutAlgorithm
   {
-    private IFieldType fieldType;
+    private IPlayingSurfaceType fieldType;
 
-    protected TeamLayoutAlgorithm(IFieldType _fieldType)
+    protected TeamLayoutAlgorithm(IPlayingSurfaceType _fieldType)
     {
       fieldType = _fieldType;
     }
 
-    public FieldObjectLayout GetLayout(IFieldType fieldType)
+    public Layout GetLayout(IPlayingSurfaceType theFieldType)
     {
-      FieldObjectLayout layout = new FieldObjectLayout();
-      AppendPlayerPositions(layout, fieldType.GetTeam(FieldObjects.Player.TeamId.Attacking), true);
-      AppendPlayerPositions(layout, fieldType.GetTeam(FieldObjects.Player.TeamId.Defending), false);
+      Layout layout = new Layout();
+      AppendPlayerPositions(layout, theFieldType.GetTeam(FieldObjects.Player.TeamId.Attacking), true);
+      AppendPlayerPositions(layout, theFieldType.GetTeam(FieldObjects.Player.TeamId.Defending), false);
       return layout;
     }
 
     public abstract ReadOnlyCollection<string> SupportedFieldTypes { get; }
 
-    protected abstract void AppendPlayerPositions(FieldObjectLayout layout, ReadOnlyCollection<string> playersToPosition, bool putOnLeftSide);
+    protected abstract void AppendPlayerPositions(Layout layout, ReadOnlyCollection<string> playersToPosition, bool putOnLeftSide);
 
     protected float FieldLength
     {
-      get { return fieldType.FieldLength; }
+      get { return fieldType.Length; }
     }
 
     protected float FieldWidth
     {
-      get { return fieldType.FieldWidth; }
+      get { return fieldType.Width; }
     }
 
     protected float FlipToSide(float pos, bool putOnLeftSize)

@@ -58,15 +58,15 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="FieldObjectLayoutEntry.cs" />
+    <Compile Include="LayoutEntry.cs" />
     <Compile Include="FieldObjects\LabelledPlayer.cs" />
     <Compile Include="FieldObjects\NumberedPlayer.cs" />
     <Compile Include="FieldObjects\Puck.cs" />
-    <Compile Include="FieldTypes\HockeyRink_NHL.cs" />
-    <Compile Include="IFieldType.cs" />
+    <Compile Include="PlayingSurfaceTypes\HockeyRink_NHL.cs" />
+    <Compile Include="IPlayingSurfaceType.cs" />
     <Compile Include="ILayoutAlgorithm.cs" />
     <Compile Include="FieldObjects\Ball.cs" />
-    <Compile Include="FieldTypes\SoccerField.cs" />
+    <Compile Include="PlayingSurfaceTypes\SoccerField.cs" />
     <Compile Include="LayoutAlgorithms\BenchLayoutAlgorithm.cs" />
     <Compile Include="LayoutAlgorithms\FourFourTwoLayoutAlgorithm_GamePos.cs" />
     <Compile Include="LayoutAlgorithms\FourFourTwoLayoutAlgorithm_StartPos.cs" />
@@ -104,9 +104,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>SavedLayoutInformation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SelectFieldType.resx">
+    <EmbeddedResource Include="SelectPlayingSurfaceType.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>SelectFieldType.cs</DependentUpon>
+      <DependentUpon>SelectPlayingSurfaceType.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -123,14 +123,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="FieldObjects\Referee.cs" />
-    <Compile Include="FieldObjectLayout.cs" />
+    <Compile Include="Layout.cs" />
     <Compile Include="FieldControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="FieldControl.Designer.cs">
       <DependentUpon>FieldControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="FieldObjectLayoutSequence.cs" />
+    <Compile Include="LayoutSequence.cs" />
     <Compile Include="LayoutAlgorithms\TeamLayoutAlgorithm.cs" />
     <Compile Include="GlobalizationAwareMessageBox.cs" />
     <Compile Include="SavedLayout.cs" />
@@ -141,11 +141,11 @@
       <DependentUpon>SavedLayoutInformation.cs</DependentUpon>
     </Compile>
     <Compile Include="SavedLayoutManager.cs" />
-    <Compile Include="SelectFieldType.cs">
+    <Compile Include="SelectPlayingSurfaceType.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SelectFieldType.Designer.cs">
-      <DependentUpon>SelectFieldType.cs</DependentUpon>
+    <Compile Include="SelectPlayingSurfaceType.Designer.cs">
+      <DependentUpon>SelectPlayingSurfaceType.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
   </ItemGroup>

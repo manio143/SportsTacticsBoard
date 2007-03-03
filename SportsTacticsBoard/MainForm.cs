@@ -40,7 +40,7 @@ namespace SportsTacticsBoard
   public partial class MainForm : Form
   {
     private SavedLayoutManager savedLayoutManager;
-    private FieldObjectLayoutSequence currentSequence;
+    private LayoutSequence currentSequence;
     private int positionInSequence;
     private string fileName = "";
     private string fileFilter = Properties.Resources.ResourceManager.GetString("FileFilter");
@@ -62,7 +62,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    private FieldObjectLayout GetNextLayout()
+    private Layout GetNextLayout()
     {
       return currentSequence.GetLayout(positionInSequence + 1);
     }
@@ -74,7 +74,7 @@ namespace SportsTacticsBoard
 
     private void savedLayoutMenuItem_Click(object sender, EventArgs e) {
       ToolStripMenuItem mi = (ToolStripMenuItem)sender;
-      FieldObjectLayout layout = savedLayoutManager.GetLayoutForMenuItem(mi, SafeGetCurrentFieldTypeTag());
+      Layout layout = savedLayoutManager.GetLayoutForMenuItem(mi, SafeGetCurrentFieldTypeTag());
       fieldControl.SetLayout(layout);
     }
 
@@ -279,13 +279,13 @@ namespace SportsTacticsBoard
       DialogResult res = openFileDialog.ShowDialog();
       if (res == DialogResult.OK) {
         try {
-          XmlSerializer serializer = new XmlSerializer(typeof(FieldObjectLayoutSequence));
+          XmlSerializer serializer = new XmlSerializer(typeof(LayoutSequence));
           using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open)) {
-            FieldObjectLayoutSequence seq = (FieldObjectLayoutSequence)serializer.Deserialize(fs);
+            LayoutSequence seq = (LayoutSequence)serializer.Deserialize(fs);
             if (seq != null) {
               // Locate the field type interface for the field specified by
               // this saved file
-              IFieldType newFieldType = FindFieldType(seq.fieldTypeTag);
+              IPlayingSurfaceType newFieldType = FindFieldType(seq.fieldTypeTag);
               if (newFieldType == null) {
                 string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
                 GlobalizationAwareMessageBox.Show(
@@ -350,7 +350,7 @@ namespace SportsTacticsBoard
 
     private void FileSave() {
       if (null != currentSequence) {
-        XmlSerializer serializer = new XmlSerializer(typeof(FieldObjectLayoutSequence));
+        XmlSerializer serializer = new XmlSerializer(typeof(LayoutSequence));
         using (TextWriter writer = new StreamWriter(fileName)) {
           serializer.Serialize(writer, currentSequence);
           writer.Close();
@@ -377,22 +377,22 @@ namespace SportsTacticsBoard
       FileNew(true, false);
     }
 
-    internal static List<IFieldType> AvailableFieldTypes {
+    internal static List<IPlayingSurfaceType> AvailableFieldTypes {
       get {
-        List<IFieldType> fieldTypes = new List<IFieldType>();
+        List<IPlayingSurfaceType> fieldTypes = new List<IPlayingSurfaceType>();
 
         // TODO: Enumerate these using reflection on the current assembly
 
-        fieldTypes.Add(new FieldTypes.SoccerField());
-        fieldTypes.Add(new FieldTypes.HockeyRink_NHL());
+        fieldTypes.Add(new PlayingSurfaceTypes.SoccerField());
+        fieldTypes.Add(new PlayingSurfaceTypes.HockeyRink_NHL());
 
         return fieldTypes;
       }
     }
 
-    private static IFieldType FindFieldType(string tag) {
-      List<IFieldType> fieldTypes = AvailableFieldTypes;
-      foreach (IFieldType ft in fieldTypes) {
+    private static IPlayingSurfaceType FindFieldType(string tag) {
+      List<IPlayingSurfaceType> fieldTypes = AvailableFieldTypes;
+      foreach (IPlayingSurfaceType ft in fieldTypes) {
         if (ft.Tag == tag) {
           return ft;
         }
@@ -400,13 +400,13 @@ namespace SportsTacticsBoard
       return null;
     }
 
-    private static IFieldType LoadDefaultFieldType() {
+    private static IPlayingSurfaceType LoadDefaultFieldType() {
       string defaultFieldType = global::SportsTacticsBoard.Properties.Settings.Default.DefaultFieldType;
       if (defaultFieldType.Length == 0) {
         return null;
       };
-      List<IFieldType> fieldTypes = AvailableFieldTypes;
-      foreach (IFieldType ft in fieldTypes) {
+      List<IPlayingSurfaceType> fieldTypes = AvailableFieldTypes;
+      foreach (IPlayingSurfaceType ft in fieldTypes) {
         if (ft.Name == defaultFieldType) {
           return ft;
         }
@@ -415,12 +415,12 @@ namespace SportsTacticsBoard
     }
 
     private void FileNew(bool saveAsDefaultChecked, bool alwaysAskForFieldType) {
-      IFieldType newFieldType = fieldControl.FieldType;
+      IPlayingSurfaceType newFieldType = fieldControl.FieldType;
       if (newFieldType == null) {
         newFieldType = LoadDefaultFieldType();
       }
       if ((newFieldType == null) || (alwaysAskForFieldType)) {
-        newFieldType = SelectFieldType.AskUserForFieldType(saveAsDefaultChecked);
+        newFieldType = SelectPlayingSurfaceType.AskUserForFieldType(saveAsDefaultChecked);
         if (null == newFieldType) {
           return;
         }
@@ -431,7 +431,7 @@ namespace SportsTacticsBoard
       fieldControl.SetNextLayout(null);
       fieldControl.IsDirty = false;
       positionInSequence = 0;
-      currentSequence = new FieldObjectLayoutSequence(fieldControl.FieldType.Tag);
+      currentSequence = new LayoutSequence(fieldControl.FieldType.Tag);
       RecordPositionToSequence(false, positionInSequence, currentSequence);
       UpdateCaption();
       UpdateFileMenuItems();
@@ -456,8 +456,8 @@ namespace SportsTacticsBoard
       }
     }
 
-    private int RecordPositionToSequence(bool replace, int index, FieldObjectLayoutSequence sequence) {
-      FieldObjectLayout layout = fieldControl.FieldLayout;
+    private int RecordPositionToSequence(bool replace, int index, LayoutSequence sequence) {
+      Layout layout = fieldControl.FieldLayout;
       fieldControl.IsDirty = false;
       if (replace) {
         sequence.SetLayout(index, layout);
@@ -467,7 +467,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void RestorePositionFromSequence(int index, FieldObjectLayoutSequence sequence, FieldObjectLayout _nextLayout) {
+    private void RestorePositionFromSequence(int index, LayoutSequence sequence, Layout _nextLayout) {
       fieldControl.SetLayouts(sequence.GetLayout(index), _nextLayout);
       fieldControl.IsDirty = false;
     }
@@ -513,7 +513,7 @@ namespace SportsTacticsBoard
 
     private void copyMenuItem_Click(object sender, EventArgs e) {
       Bitmap bitmap = new Bitmap(fieldControl.Width, fieldControl.Height);
-      FieldObjectLayout nextLayout = null;
+      Layout nextLayout = null;
       if (fieldControl.ShowMovementLines) {
         nextLayout = GetNextLayout();
       }
@@ -521,15 +521,15 @@ namespace SportsTacticsBoard
       Clipboard.SetImage(bitmap);
     }
 
-    private void SaveSequenceEntryToFile(string fileName, FieldObjectLayout layout, FieldObjectLayout nextLayoutInSequence, System.Drawing.Imaging.ImageFormat imageFormat)
+    private void SaveSequenceEntryToFile(string imageFileName, Layout layout, Layout nextLayout, System.Drawing.Imaging.ImageFormat imageFormat)
     {
       Bitmap bitmap = new Bitmap(fieldControl.Width, fieldControl.Height);
-      FieldObjectLayout nextLayout = null;
+      Layout nl = null;
       if (fieldControl.ShowMovementLines) {
-        nextLayout = nextLayoutInSequence;
+        nl = nextLayout;
       }
-      fieldControl.DrawIntoImage(bitmap, layout, nextLayout);
-      bitmap.Save(fileName, imageFormat);
+      fieldControl.DrawIntoImage(bitmap, layout, nl);
+      bitmap.Save(imageFileName, imageFormat);
     }
 
     private void SaveImagesToFile(bool saveEntireSequence)
@@ -574,8 +574,8 @@ namespace SportsTacticsBoard
         }
         fileNamePattern = fileNamePattern.Insert(idx, Properties.Resources.ResourceManager.GetString("ImageFileNamePattern"));
         for (int sequenceIndex = 0; sequenceIndex < currentSequence.NumberOfLayouts; sequenceIndex++) {
-          string fileName = string.Format(CultureInfo.CurrentUICulture, fileNamePattern, sequenceIndex + 1);
-          SaveSequenceEntryToFile(fileName, currentSequence.GetLayout(sequenceIndex), currentSequence.GetLayout(sequenceIndex + 1), imageFormat);
+          string entryFileName = string.Format(CultureInfo.CurrentUICulture, fileNamePattern, sequenceIndex + 1);
+          SaveSequenceEntryToFile(entryFileName, currentSequence.GetLayout(sequenceIndex), currentSequence.GetLayout(sequenceIndex + 1), imageFormat);
         }
       } else {
         SaveSequenceEntryToFile(saveFileDialog.FileName, fieldControl.FieldLayout, GetNextLayout(), imageFormat);

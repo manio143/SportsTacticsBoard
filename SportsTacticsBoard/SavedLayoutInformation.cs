@@ -40,7 +40,7 @@ namespace SportsTacticsBoard
       InitializeComponent();
     }
 
-    internal static SavedLayout AskUserForSavedLayoutDetails(FieldObjectLayout layout, string fieldTypeTag, string[] existingLayoutCategories)
+    internal static SavedLayout AskUserForSavedLayoutDetails(Layout layout, string fieldTypeTag, string[] existingLayoutCategories)
     {
       SavedLayoutInformation dialog = new SavedLayoutInformation();
       foreach (string entryTag in layout.Tags) {
