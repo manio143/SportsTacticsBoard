@@ -30,18 +30,18 @@
       <ul>
         <li>Copying current layout to clipboard as an image for easily importing into other programs, such as PowerPoint. <i>Done</i></li>
         <li>Ensure that &quot;Saved Layouts&quot; are only available for the currently selected sports field type. <i>Done</i></li> 
-        <li>Implement saving and loading of &quot;Saved Layouts&quot; as they currently don't save to disk.</li>
-        <li>Improve layout sequence creation and management. <i>Started</i></li>
-        <li>Support for &quot;views&quot; of sections of the playing field, including rotation.</li>
-        <li>Improve drawing of fields, players and movement lines. <i>Started</i></li>
+        <li>Improve layout sequence creation and management. <i>Done</i></li>
         <li>Exporting image sequences as bitmaps. <i>Done</i></li>
         <li>Clean up initial hockey player placement, bench layout and devise new labelling system to support sports like hockey. <i>Done</i></li>
+        <li>Implement saving and loading of &quot;Saved Layouts&quot; as they currently don't save to disk.</li>
       </ul>
 
       <h3>Release 0.3</h3>
       <ul>
-        <li>Support NFL football or NBA basketball.</li>
+        <li>Improve drawing of fields, players and movement lines.</li>
+        <li>Support for &quot;views&quot; of sections of the playing field, including rotation.</li>
         <li>Support for predefined &quot;Field Views&quot; for limited views of areas of the playing field.</li>
+        <li>Support NFL football or NBA basketball.</li>
         <li>Movement line types, allowing for passing, carrying, dribbling, heading, etc to be distinguished more easily.</li>
       </ul>
 
