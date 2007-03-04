@@ -19,7 +19,7 @@
     </td>
     <td width="10"">&nbsp;</td>
     <td valign="middle" align="right">
-      <img src="http://sourceforge.net/dbimage.php?id=113972" width="100" height="99" alt="Small screenshot" />
+      <img src="http://sourceforge.net/dbimage.php?id=113972" width="100" height="74" alt="Small screenshot" />
     </td>
     <td width="10"">&nbsp;</td>
     <td width="1" bgcolor="#3366cc"><img width="1" height="1" alt=""></td>
