@@ -31,8 +31,20 @@ using System.Windows.Forms;
 namespace SportsTacticsBoard.PlayingSurfaceTypes
 {
   /// <summary>
+  /// Implements a standard NHL Ice Hockey rink.
+  /// 
   /// Hockey rink dimensions and details taken from: 
   ///   http://en.wikipedia.org/wiki/Hockey_rink
+  /// Along with information from the official NHL 
+  /// rules (2006 season).
+  /// 
+  /// Playing surface units are in feet. A few compromises
+  /// have been made to simplify drawing:
+  ///   - Goals are not not drawn precisely as described in the rules.
+  ///   - Face off spots do not have the correct circle with a stripe, 
+  ///     instead they are drawn as a solid circle.
+  ///   - The centre line is draw solid rather than dashed.
+  ///   - Goal crease "tick marks" are missing.
   /// </summary>
   class HockeyRink_NHL : IPlayingSurfaceType
   {
@@ -579,7 +591,9 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
       // Draw the boards
       graphics.DrawPath(boardsPen, rink);
 
-      // Dispose of resources
+      // Dispose of resources (note that we don't dispose of 
+      // the system brushes otherwise we don't seem to get 
+      // them back - i.e. it releases the system brush)
       boardsPen.Dispose();
       blueLinePen.Dispose();
       redLinePen.Dispose();
@@ -588,9 +602,6 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
       blueBrush.Dispose();
       redBrush.Dispose();
       creaseBrush.Dispose();
-      iceBrush.Dispose();
-      goalBrush.Dispose();
-      benchBrush.Dispose();
       rink.Dispose();
     }
 
