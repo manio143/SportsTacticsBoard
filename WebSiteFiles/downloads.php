@@ -13,7 +13,7 @@
 
       <h3>Windows Installation Package</h3>
       <p>This will be the preferred method of installation for most people as it's the easiest to install and uninstall.</p>
-      <p>The most current release: <a href=http://downloads.sourceforge.net/sportstacticsbd/SportsTacticsBoard-0.2.0.msi">SportsTacticsBoard-0.2.0.msi</a></p>
+      <p>The most current release: <a href="http://downloads.sourceforge.net/sportstacticsbd/SportsTacticsBoard-0.2.0.msi">SportsTacticsBoard-0.2.0.msi</a></p>
 
       <h3>Binaries</h3>
       <p>The most current release is: <a href="http://downloads.sourceforge.net/sportstacticsbd/SportsTacticsBoard-0.2.0-bin.zip">SportsTacticsBoard-0.2.0-bin.zip</a></p>
