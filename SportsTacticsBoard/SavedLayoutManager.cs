@@ -28,9 +28,16 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace SportsTacticsBoard
 {
+  /// <summary>
+  /// This class provides management of saved layout sets. Each 
+  /// saved layout set is loaded from a chosen folder on disk, and
+  /// subsequently added layouts are saved to that location.
+  /// </summary>
   class SavedLayoutManager
   {
     /// <summary>
@@ -41,18 +48,190 @@ namespace SportsTacticsBoard
     /// <summary>
     /// Default constructor for the saved layout manager.
     /// </summary>
-    public SavedLayoutManager() {
-      savedLayouts = new List<SavedLayout>();
-      ReloadLayouts();
+    public SavedLayoutManager(string layoutFolderPath) {
+      LayoutPath = layoutFolderPath;
     }
 
     /// <summary>
     /// Loads the layouts from disk into local data members.
+    /// This can be used to refresh the current layouts from the
+    /// data stored on disk. This is useful if files are being
+    /// modified while the program is running.
     /// </summary>
-    public void ReloadLayouts()
+    public void LoadLayouts()
     {
-      // TODO: Load the layouts from disk.
       savedLayouts = new List<SavedLayout>();
+      RecursivelyLoadLayoutsFromFolder(LayoutPath);
+    }
+
+    /// <summary>
+    /// Data member that stores the layout path.
+    /// </summary>
+    private string layoutPath;
+
+    /// <summary>
+    /// Retrieves the folder path name that this layout manager is
+    /// saving/loading layouts to/from.
+    /// </summary>
+    public string LayoutPath
+    {
+      get { return layoutPath; }
+      private set { 
+        layoutPath = value;
+        LoadLayouts();
+      }
+    }
+
+    /// <summary>
+    /// Helper method that constructs a standard path to the layout folder
+    /// based on a "special folder" type.
+    /// </summary>
+    /// <param name="specialFolder">Identifies which folder to base the path on.</param>
+    /// <returns>The full path to the desired layout folder.</returns>
+    private static string BuildLayoutPath(Environment.SpecialFolder specialFolder)
+    {
+      string fn1 = Environment.GetFolderPath(specialFolder);
+      fn1 = Path.Combine(fn1, "Sports Tactics Board");
+      fn1 = Path.Combine(fn1, "Layouts");
+      return fn1;
+    }
+
+    /// <summary>
+    /// Provides the layout path for the layout library (shared/common saved layouts).
+    /// This can be passed as the folder name to the constructor of this class when
+    /// it is instantiated.
+    /// </summary>
+    public static string CommonLayoutPath
+    {
+      get
+      {
+        return BuildLayoutPath(Environment.SpecialFolder.CommonApplicationData);
+      }
+    }
+
+    /// <summary>
+    /// Provides the layout path for the user's saved layouts.
+    /// This can be passed as the folder name to the constructor of this class when
+    /// it is instantiated.
+    /// </summary>
+    public static string UserLayoutPath
+    {
+      get
+      {
+        return BuildLayoutPath(Environment.SpecialFolder.MyDocuments);
+      }
+    }
+
+    /// <summary>
+    /// The file extension for files used to store saved layouts in.
+    /// </summary>
+    private const string FileExtension = ".layout.xml";
+
+    /// <summary>
+    /// Contructs the filename, including sub-folders, for the saved layout.
+    /// By default, layouts are saved in separate folders for each playing 
+    /// surface type and each category.
+    /// </summary>
+    /// <param name="layout">The layout to generate a file name for.</param>
+    /// <returns>The file name for the layout file.</returns>
+    private string GetFileNameForLayout(SavedLayout layout)
+    {
+      if (string.IsNullOrEmpty(layout.FieldTypeTag)) {
+        string msg = Properties.Resources.ResourceManager.GetString("ExceptionMessage_LayoutFieldTagInvalid");
+        throw new ArgumentException(msg, "layout");
+      }
+      if (string.IsNullOrEmpty(layout.Name)) {
+        string msg = Properties.Resources.ResourceManager.GetString("ExceptionMessage_LayoutNameInvalid");
+        throw new ArgumentException(msg, "layout");
+      }
+      string fn = Path.Combine(LayoutPath, layout.FieldTypeTag);
+      if (!string.IsNullOrEmpty(layout.Category)) {
+        fn = Path.Combine(fn, layout.Category);
+      }
+      fn = Path.Combine(fn, layout.Name + FileExtension);
+      return fn;
+    }
+
+    /// <summary>
+    /// Reads a saved layout from a file. This method catches most exceptions and
+    /// masks any errors that occur and returns a null layout if an error occurs.
+    /// </summary>
+    /// <param name="fileName">The file to read the layout from.</param>
+    /// <returns>A saved layout or null if the file could not be loaded properly.</returns>
+    private static SavedLayout ReadLayoutFromFile(string fileName)
+    {
+      try {
+        XmlSerializer serializer = new XmlSerializer(typeof(SavedLayout));
+        using (FileStream fs = new FileStream(fileName, FileMode.Open)) {
+          SavedLayout layout = (SavedLayout)serializer.Deserialize(fs);
+          if ((string.IsNullOrEmpty(layout.FieldTypeTag)) ||
+              (string.IsNullOrEmpty(layout.Name))) {
+            return null;
+          }
+          return layout;
+        }
+      }
+      catch (System.InvalidOperationException) {
+        return null;
+      }
+      catch (System.Xml.XmlException) {
+        return null;
+      }
+      catch (System.IO.IOException) {
+        return null;
+      }
+    }
+
+    /// <summary>
+    /// Saves the supplied layout to the specified file.
+    /// </summary>
+    /// <param name="layout">The saved layout object to write to the file.</param>
+    /// <param name="fileName">The name of the file to write.</param>
+    /// <returns>true if the file was written, false if an error occured.</returns>
+    private static bool SaveLayoutToFile(SavedLayout layout, string fileName)
+    {
+      try {
+        XmlSerializer serializer = new XmlSerializer(typeof(SavedLayout));
+        using (TextWriter writer = new StreamWriter(fileName)) {
+          serializer.Serialize(writer, layout);
+          writer.Close();
+        }
+        return true;
+      }
+      catch (System.IO.IOException) {
+        return false;
+      }
+    }
+
+    private void AddLayout(SavedLayout layout)
+    {
+      // TODO: See if the layout already "exists" in our set of layouts
+      savedLayouts.Add(layout);
+    }
+
+    /// <summary>
+    /// Loads all layouts located in the supplied folder into the class data member. 
+    /// This method recusively scans subfolders to locate the layout files.
+    /// </summary>
+    /// <param name="folderName">The folder to load layouts from.</param>
+    private void RecursivelyLoadLayoutsFromFolder(string folderName)
+    {
+      try {
+        // Load the layouts from disk.
+        foreach (string fileName in Directory.GetFiles(folderName, "*" + FileExtension, SearchOption.AllDirectories)) {
+          // Load each file
+          SavedLayout layout = ReadLayoutFromFile(fileName);
+          if (null != layout) {
+            AddLayout(layout);
+          } else {
+            System.Diagnostics.Trace.TraceWarning("Unable to load layout file '{0}'", fileName);
+          }
+        }
+      }
+      catch (DirectoryNotFoundException) {
+        // Ignore errors if the folder doesn't exist
+        System.Diagnostics.Trace.TraceInformation("Layout folder '{0}' does not exist", folderName);
+      }
     }
 
     /// <summary>
@@ -142,8 +321,19 @@ namespace SportsTacticsBoard
                                                             fieldTypeTag,
                                                             GetCurrentSavedLayoutCategories(fieldTypeTag));
       if (null != sl) {
-        // TODO: Save the layout to disk
-        savedLayouts.Add(sl);
+        // Save the layout to disk
+        string fileName = GetFileNameForLayout(sl);
+        {
+          string folderName = Path.GetDirectoryName(fileName);
+          if (!Directory.Exists(folderName)) {
+            Directory.CreateDirectory(folderName);
+          }
+        }
+        bool saveResult = SaveLayoutToFile(sl, fileName);
+        if (saveResult) {
+          // Add the layout to our internal list
+          AddLayout(sl);
+        }
       }
     }
 

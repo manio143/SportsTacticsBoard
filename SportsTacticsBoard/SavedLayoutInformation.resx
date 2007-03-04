@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="okButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>128, 330</value>
+    <value>126, 324</value>
   </data>
   <data name="okButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -151,7 +151,7 @@
     <value>Bottom, Right</value>
   </data>
   <data name="cancelButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 330</value>
+    <value>207, 324</value>
   </data>
   <data name="cancelButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -235,7 +235,7 @@
     <value>119, 14</value>
   </data>
   <data name="nameTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>165, 20</value>
+    <value>163, 20</value>
   </data>
   <data name="nameTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -262,7 +262,7 @@
     <value>True</value>
   </data>
   <data name="descriptionTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>165, 43</value>
+    <value>163, 43</value>
   </data>
   <data name="descriptionTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -316,7 +316,7 @@
     <value>119, 116</value>
   </data>
   <data name="entriesListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>165, 208</value>
+    <value>163, 202</value>
   </data>
   <data name="entriesListBox.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -343,13 +343,16 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>311, 365</value>
+    <value>309, 359</value>
+  </data>
+  <data name="categoryComboBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="categoryComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>119, 40</value>
   </data>
   <data name="categoryComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>164, 21</value>
+    <value>162, 21</value>
   </data>
   <data name="categoryComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>

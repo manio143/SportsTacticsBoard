@@ -131,10 +131,10 @@ namespace SportsTacticsBoard
       // 
       // categoryComboBox
       // 
+      resources.ApplyResources(this.categoryComboBox, "categoryComboBox");
       this.categoryComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
       this.categoryComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.categoryComboBox.FormattingEnabled = true;
-      resources.ApplyResources(this.categoryComboBox, "categoryComboBox");
       this.categoryComboBox.Name = "categoryComboBox";
       this.categoryComboBox.Sorted = true;
       // 

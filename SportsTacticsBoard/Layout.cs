@@ -37,6 +37,7 @@ namespace SportsTacticsBoard
   {
     [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
     [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+    [XmlElement(ElementName = "Entry")]
     public List<LayoutEntry> entries;
 
     public Layout()

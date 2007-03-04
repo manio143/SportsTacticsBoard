@@ -84,16 +84,12 @@ namespace SportsTacticsBoard
       this.saveCurrentLayoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.removeSavedLayoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-      this.savedLayoutsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-      this.playersonBenchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-      this.startingPositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.gamePositionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+      this.commonSavedLayoutsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+      this.userSavedLayoutsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.fieldControl = new SportsTacticsBoard.FieldControl();
       this.toolStrip1.SuspendLayout();
       this.menuStrip1.SuspendLayout();
@@ -284,10 +280,8 @@ namespace SportsTacticsBoard
             this.saveCurrentLayoutMenuItem,
             this.removeSavedLayoutMenuItem,
             this.toolStripSeparator4,
-            this.savedLayoutsMenuItem,
-            this.toolStripSeparator5,
-            this.playersonBenchToolStripMenuItem,
-            this.toolStripMenuItem2});
+            this.userSavedLayoutsMenuItem,
+            this.commonSavedLayoutsMenuItem});
       this.layoutsToolStripMenuItem.Name = "layoutsToolStripMenuItem";
       resources.ApplyResources(this.layoutsToolStripMenuItem, "layoutsToolStripMenuItem");
       // 
@@ -308,10 +302,10 @@ namespace SportsTacticsBoard
       this.toolStripSeparator3.Name = "toolStripSeparator3";
       resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
       // 
-      // savedCurrentLayoutMenuItem
+      // saveCurrentLayoutMenuItem
       // 
-      this.saveCurrentLayoutMenuItem.Name = "savedCurrentLayoutMenuItem";
-      resources.ApplyResources(this.saveCurrentLayoutMenuItem, "savedCurrentLayoutMenuItem");
+      this.saveCurrentLayoutMenuItem.Name = "saveCurrentLayoutMenuItem";
+      resources.ApplyResources(this.saveCurrentLayoutMenuItem, "saveCurrentLayoutMenuItem");
       this.saveCurrentLayoutMenuItem.Click += new System.EventHandler(this.savedCurrentLayoutMenuItem_Click);
       // 
       // removeSavedLayoutMenuItem
@@ -325,41 +319,10 @@ namespace SportsTacticsBoard
       this.toolStripSeparator4.Name = "toolStripSeparator4";
       resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
       // 
-      // savedLayoutsMenuItem
+      // commonSavedLayoutsMenuItem
       // 
-      this.savedLayoutsMenuItem.Name = "savedLayoutsMenuItem";
-      resources.ApplyResources(this.savedLayoutsMenuItem, "savedLayoutsMenuItem");
-      // 
-      // toolStripSeparator5
-      // 
-      this.toolStripSeparator5.Name = "toolStripSeparator5";
-      resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
-      // 
-      // playersonBenchToolStripMenuItem
-      // 
-      this.playersonBenchToolStripMenuItem.Name = "playersonBenchToolStripMenuItem";
-      resources.ApplyResources(this.playersonBenchToolStripMenuItem, "playersonBenchToolStripMenuItem");
-      this.playersonBenchToolStripMenuItem.Click += new System.EventHandler(this.playersonBenchToolStripMenuItem_Click);
-      // 
-      // toolStripMenuItem2
-      // 
-      this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startingPositionToolStripMenuItem,
-            this.gamePositionToolStripMenuItem1});
-      this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-      resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
-      // 
-      // startingPositionToolStripMenuItem
-      // 
-      this.startingPositionToolStripMenuItem.Name = "startingPositionToolStripMenuItem";
-      resources.ApplyResources(this.startingPositionToolStripMenuItem, "startingPositionToolStripMenuItem");
-      this.startingPositionToolStripMenuItem.Click += new System.EventHandler(this.startingPositionToolStripMenuItem_Click);
-      // 
-      // gamePositionToolStripMenuItem1
-      // 
-      this.gamePositionToolStripMenuItem1.Name = "gamePositionToolStripMenuItem1";
-      resources.ApplyResources(this.gamePositionToolStripMenuItem1, "gamePositionToolStripMenuItem1");
-      this.gamePositionToolStripMenuItem1.Click += new System.EventHandler(this.gamePositionToolStripMenuItem1_Click);
+      this.commonSavedLayoutsMenuItem.Name = "commonSavedLayoutsMenuItem";
+      resources.ApplyResources(this.commonSavedLayoutsMenuItem, "commonSavedLayoutsMenuItem");
       // 
       // helpToolStripMenuItem
       // 
@@ -386,6 +349,11 @@ namespace SportsTacticsBoard
       this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
       resources.ApplyResources(this.toolStripButton1, "toolStripButton1");
       this.toolStripButton1.Name = "toolStripButton1";
+      // 
+      // userSavedLayoutsMenuItem
+      // 
+      this.userSavedLayoutsMenuItem.Name = "userSavedLayoutsMenuItem";
+      resources.ApplyResources(this.userSavedLayoutsMenuItem, "userSavedLayoutsMenuItem");
       // 
       // fieldControl
       // 
@@ -432,19 +400,14 @@ namespace SportsTacticsBoard
     private System.Windows.Forms.ToolStripMenuItem saveSequenceMenuItem;
     private System.Windows.Forms.ToolStripMenuItem saveSequenceAsMenuItem;
     private System.Windows.Forms.ToolStripMenuItem layoutsToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem playersonBenchToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-    private System.Windows.Forms.ToolStripMenuItem startingPositionToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem gamePositionToolStripMenuItem1;
     private System.Windows.Forms.ToolStripMenuItem newSequenceMenuItem;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     private System.Windows.Forms.ToolStripButton showMovementButton;
     private FieldControl fieldControl;
     private System.Windows.Forms.ToolStripMenuItem saveCurrentLayoutMenuItem;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-    private System.Windows.Forms.ToolStripMenuItem savedLayoutsMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem commonSavedLayoutsMenuItem;
     private System.Windows.Forms.ToolStripMenuItem removeSavedLayoutMenuItem;
-    private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
@@ -459,6 +422,7 @@ namespace SportsTacticsBoard
     private System.Windows.Forms.ToolStripMenuItem copyMenuItem;
     private System.Windows.Forms.ToolStripMenuItem saveTofileToolStripMenuItem;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+    private System.Windows.Forms.ToolStripMenuItem userSavedLayoutsMenuItem;
   }
 }
 

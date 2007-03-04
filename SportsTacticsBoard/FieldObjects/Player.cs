@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2007 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -64,19 +64,6 @@ namespace SportsTacticsBoard.FieldObjects
     public static string ComposeTag(TeamId team, string playerLabel)
     {
       return "Player_" + team.ToString() + "_" + playerLabel;
-    }
-
-    public static string ExtractPlayerLabelFromTag(string playerTag)
-    {
-      if (null == playerTag) {
-        throw new ArgumentNullException("playerTag");
-      }
-      int hashIndex = playerTag.LastIndexOf('_');
-      if (hashIndex < 0)
-      {
-        return "";
-      }
-      return playerTag.Substring(hashIndex + 1);
     }
 
     private static Color GetTeamColor(TeamId team)
