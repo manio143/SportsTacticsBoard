@@ -22,12 +22,7 @@
       <h2>How do I get a copy to use?</h2>
       <ol>
         <li>Get the Microsoft .NET 2.0 Framework</li>
-        <li>Download a binary release of Sports Tactics Board from the <a href="downloads.php">Downloads</a> page.</li>
-        <li>Extract and run the downloaded software.</li>
-          <ol>
-            <li>Extract the files into a folder, e.g.: <kbd>C:\Program Files\Sports Tactics Board</kbd></li>
-            <li>Run the program by double-clicking on <kbd>SportsTacticsBoard.exe</kbd></li>
-          </ol>
+        <li>Download a release of Sports Tactics Board from the <a href="downloads.php">Downloads</a> page.</li>
       </ol>
       <p>The Microsoft&nbsp;.NET&nbsp;2.0&nbsp;Framework can be downloaded 
       from Microsoft using Windows Update or from
