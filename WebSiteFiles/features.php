@@ -33,7 +33,8 @@
         <li>Improve layout sequence creation and management. <i>Done</i></li>
         <li>Exporting image sequences as bitmaps. <i>Done</i></li>
         <li>Clean up initial hockey player placement, bench layout and devise new labelling system to support sports like hockey. <i>Done</i></li>
-        <li>Implement saving and loading of &quot;Saved Layouts&quot; as they currently don't save to disk.</li>
+        <li>Implement saving and loading of &quot;Saved Layouts&quot; as they currently don't save to disk. <i>Done</i></li>
+        <li>Provide sample layouts for library and improved installation and usage instructions related to the library and file locations.</li>
       </ul>
 
       <h3>Release 0.3</h3>
