@@ -1,0 +1,19 @@
+
+0.2.0 - First useful version
+FEAT - Copying current layout to clipboard as an image for easily importing into other programs, such as PowerPoint.
+FEAT - Ensure that "Saved Layouts" are only available for the currently selected sports field type.
+FEAT - Improve layout sequence creation and management.
+FEAT - Exporting image sequences as bitmaps.
+FEAT - Clean up initial hockey player placement, bench layout and devise new labelling system to support sports like hockey.
+FEAT - Implement saving and loading of "Saved Layouts" as they currently don't save to disk.
+FEAT - Provide sample layouts for library and improved installation and usage instructions related to the library and file locations. 
+FEAT - Added Windows installer
+FIX - Corrected missing centre line on soccer field.
+
+0.1.1 - Minor fixes and features
+
+0.1.0 - Initial Release
+FEAT - Supports more than one sport (currently Soccer and Hockey), more to be added. 
+FEAT - Records sequences of positions for documenting tactical strategies or plays. 
+FEAT - Save and loads tactical sequences from files - allows building a library of plays or drills. 
+FEAT - Supports pre-defined layouts that position players, ball/puck and officials. 

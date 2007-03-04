@@ -3,7 +3,7 @@
   <Product Id="e4488465-0238-411a-b000-4579722a8f2c"
            Name="Sports Tactics Board"
            Language="1033"
-           Version="0.1.90.0"
+           Version="0.2.0.0"
            Manufacturer="Sports Tactics Board"
            UpgradeCode="3cb2cabc-7021-4a3a-a1f5-fe05627d6bf6">
     <Package InstallerVersion="300" Compressed="yes" />
@@ -43,7 +43,14 @@
                   DiskId="1" 
                   Source="..\readme.txt" />
           </Component>
-          
+
+          <Component Id="ChangeLog" Guid="A5DE9560-BDB7-47ae-B341-D0C5E8A8B0D8">
+            <File Id="changelog_txt"
+                  Name="changelog.txt"
+                  DiskId="1"
+                  Source="..\changelog.txt" />
+          </Component>
+
           <Component Id="LicenseTxt" Guid="99C00BEB-F4EA-4b39-A734-B8C9E1F537FA">
             <File Id="license_txt" 
                   Name="license.txt" 
@@ -115,6 +122,7 @@
 		  <ComponentRef Id="MainProgram" />
       <ComponentRef Id="MainProgramConfig" />
       <ComponentRef Id="ReadMe" />
+      <ComponentRef Id="ChangeLog" />
       <ComponentRef Id="LicenseTxt" />
       <ComponentRef Id="LicenseRtf" />
     </Feature>
@@ -129,6 +137,13 @@
     </Feature>
 
     <Icon Id="Program.ico" SourceFile="..\SportsTacticsBoard\Program.ico" />
+
+    <Condition Message='This program requires Windows XP Service Pack 2 or later to run.'>
+      <![CDATA[(VersionNT = 501 AND ServicePackLevel = 2) OR (VersionNT > 501)]]>
+    </Condition>
+    <Condition Message='This program requires the .NET Framework 2.0 or higher.'>
+      <![CDATA[MsiNetAssemblySupport >= "2.0.50727"]]>
+    </Condition>
 
     <CustomAction Id="SetARPReadme" Return="check" Property="ARPREADME" Value="[INSTALLLOCATION]readme.txt" />
     <CustomAction Id="SetARPInstallLocation" Return="check" Property="ARPINSTALLLOCATION" Value="[INSTALLLOCATION]" />

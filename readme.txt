@@ -15,12 +15,16 @@ Table of Contents
 2. License
 3. Supported Platforms
  3.2 Requirements
-4. Compiling From Source Code
- 4.1 Requirements
- 4.2 Procedure
-  4.2.1 No Development Environment on Windows with .NET 2.0 Runtime Installed
-  4.2.2 Visual Studio (any version supporting C#)
-  4.2.3 .NET Framework SDK or Windows SDK
+4. Installation
+ 4.1 Windows Installer (MSI file)
+ 4.2 Binary installation
+ 4.3 Source installation
+5. Compiling From Source Code
+ 5.1 Requirements
+ 5.2 Procedure
+  5.2.1 No Development Environment on Windows with .NET 2.0 Runtime Installed
+  5.2.2 Visual Studio (any version supporting C#)
+  5.2.3 .NET Framework SDK or Windows SDK
 
 
 1. Copyrights
@@ -64,7 +68,45 @@ Windows Update or Microsoft Update, or directly from Microsoft from:
 http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5&displaylang=en
 
 
-4. Compiling From Source Code
+4. Installation
+---------------
+
+There are three different methods of installation. The preferred and the easiest is
+using the Windows Installer (MSI). Most uses shoudl use this method.
+
+
+4.1 Windows Installer (MSI file)
+--------------------------------
+
+1. Ensure that the Microsoft .NET 2.0 Framework runtime is installed on your computer.
+2. Download the MSI file from the downloads area.
+     http://sportstacticsbd.sourceforge.net/downloads.php
+3. Save the download to your computer.
+4. Open the MSI file (e.g. by double-clicking on it in Windows Explorer) to install
+5. Follow the instructions in the installer.
+
+
+4.2 Binary installation
+-----------------------
+
+1. Ensure that the Microsoft .NET 2.0 Framework runtime is installed on your computer.
+2. Download the ZIP file containing the binaries from the downloads area.
+     http://sportstacticsbd.sourceforge.net/downloads.php
+3. Extract the files into a folder, e.g.: C:\Program Files\Sports Tactics Board 
+4. Run the program by double-clicking on SportsTacticsBoard.exe
+
+
+4.3 Source installation
+-----------------------
+
+1. Ensure that the Microsoft .NET 2.0 Framework runtime is installed on your computer.
+2. Download the ZIP file containing the source code from the downloads area.
+     http://sportstacticsbd.sourceforge.net/downloads.php
+3. Extract the source code to a folder, e.g.: C:\Source\SportsTacticsBoard
+4. Follow the instructions in section 5. Compiling From Source Code
+
+
+5. Compiling From Source Code
 -----------------------------
 
 Source code can be obtained from SourceForge.net. See the following URLs and 
@@ -74,7 +116,7 @@ follow standard SourceForge process for obtaining source code:
   http://sourceforge.net/projects/sportstacticsbd/
 
 
-4.1 Requirements
+5.1 Requirements
 ----------------
 
 There is no need for any special development environment to compile or
@@ -113,12 +155,12 @@ You will need support for System.Windows.Forms for this program to work.
 The original author has not tried this yet.
 
 
-4.2 Procedure
+5.2 Procedure
 -------------
 
 See the appropriate section below that corresponds to the environment you have.
 
-4.2.1 No Development Environment on Windows with .NET 2.0 Runtime Installed
+5.2.1 No Development Environment on Windows with .NET 2.0 Runtime Installed
 ---------------------------------------------------------------------------
 
 1. Open a command shell:
@@ -131,7 +173,7 @@ See the appropriate section below that corresponds to the environment you have.
      build-net20-runtime
    in the command shell and hitting enter.
 
-4.2.2 Visual Studio (any version supporting C#)
+5.2.2 Visual Studio (any version supporting C#)
 -----------------------------------------------
 
 1. Open the solution file (.SLN file) from the root folder of the 
@@ -140,7 +182,7 @@ See the appropriate section below that corresponds to the environment you have.
    Solution or Batch Build from the Build menu).
 
 
-4.2.3 .NET Framework SDK or Windows SDK
+5.2.3 .NET Framework SDK or Windows SDK
 ---------------------------------------
 
 1. Open an "SDK Command Prompt" or "CMD Shell" window from 

@@ -8,13 +8,15 @@
 <?php include("header.php"); ?>
 
 
-      <h2>Features (Release 0.1.1)</h2>
+      <h2>Features (Release 0.2.0)</h2>
       <ul>
         <li>Supports more than one sport (currently Soccer and Hockey), more to be added.</li>
         <li>Records sequences of positions for documenting tactical strategies or plays.</li>
         <li>Save and loads tactical sequences from files - allows building a library of plays or drills.</li>
-        <li>Supports pre-defined layouts that position players, ball/puck and officials.</li>
+	<li>Supports pre-defined layouts that position players, ball/puck and officials.</li>
+	<li>Supports exporting images and image sequences to files or clipboard.</li>
       </ul>
+      <p>See the <a href="changelog.txt">change log</a> for more details.</p>
       
       <br />
       
@@ -23,19 +25,6 @@
       <p>The following are descriptions of the planned content of upcoming releases. Projected dates for these
       releases are not possible at this time due to limited programming resources. They will be released when the 
       features are complete.</p>
-
-      <h3>Release 0.2</h3>
-      <p>Items marked as <i>Done</i> are already completed and the code is available from the Subversion respository. 
-      Similarily, items marked as started are partially implemented in the code in the respository.</p>
-      <ul>
-        <li>Copying current layout to clipboard as an image for easily importing into other programs, such as PowerPoint. <i>Done</i></li>
-        <li>Ensure that &quot;Saved Layouts&quot; are only available for the currently selected sports field type. <i>Done</i></li> 
-        <li>Improve layout sequence creation and management. <i>Done</i></li>
-        <li>Exporting image sequences as bitmaps. <i>Done</i></li>
-        <li>Clean up initial hockey player placement, bench layout and devise new labelling system to support sports like hockey. <i>Done</i></li>
-        <li>Implement saving and loading of &quot;Saved Layouts&quot; as they currently don't save to disk. <i>Done</i></li>
-        <li>Provide sample layouts for library and improved installation and usage instructions related to the library and file locations.</li>
-      </ul>
 
       <h3>Release 0.3</h3>
       <ul>
