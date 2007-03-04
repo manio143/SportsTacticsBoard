@@ -17,6 +17,7 @@
       
       <h3>Source Code</h3>
       <p>The most current release is: <a href="http://downloads.sourceforge.net/sportstacticsbd/SportsTacticsBoard-0.1.1-src.zip">SportsTacticsBoard-0.1.1-src.zip</a>
+      <p>Source code can be compiled on Windows without any need for a development environment. You only need the .NET 2.0 Framework runtime installed. A batch file is included in the source tree (see notes in ReadMe.txt file) to build the program.</p>
       <p>Source code can also be downloaded using normal SourceForge.NET repository 
       access methods. 
       See <a href="http://sourceforge.net/svn/?group_id=181975">here</a> for more details.</p>
