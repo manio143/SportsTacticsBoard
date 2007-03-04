@@ -61,7 +61,9 @@ namespace SportsTacticsBoard
     public void LoadLayouts()
     {
       savedLayouts = new List<SavedLayout>();
-      RecursivelyLoadLayoutsFromFolder(LayoutPath);
+      if (!string.IsNullOrEmpty(LayoutPath)) {
+        RecursivelyLoadLayoutsFromFolder(LayoutPath);
+      }
     }
 
     /// <summary>
@@ -83,29 +85,24 @@ namespace SportsTacticsBoard
     }
 
     /// <summary>
-    /// Helper method that constructs a standard path to the layout folder
-    /// based on a "special folder" type.
-    /// </summary>
-    /// <param name="specialFolder">Identifies which folder to base the path on.</param>
-    /// <returns>The full path to the desired layout folder.</returns>
-    private static string BuildLayoutPath(Environment.SpecialFolder specialFolder)
-    {
-      string fn1 = Environment.GetFolderPath(specialFolder);
-      fn1 = Path.Combine(fn1, "Sports Tactics Board");
-      fn1 = Path.Combine(fn1, "Layouts");
-      return fn1;
-    }
-
-    /// <summary>
     /// Provides the layout path for the layout library (shared/common saved layouts).
     /// This can be passed as the folder name to the constructor of this class when
     /// it is instantiated.
+    /// This first loads a value from the configuration file, if that's set, it uses
+    /// it, otherwise it attempts to construct the path from the location of the
+    /// program binary (which only works for installed copies using the MSI installer).
     /// </summary>
     public static string CommonLayoutPath
     {
       get
       {
-        return BuildLayoutPath(Environment.SpecialFolder.CommonApplicationData);
+        string path = SportsTacticsBoard.Properties.Settings.Default.CommonLibraryFolder;
+        if (string.IsNullOrEmpty(path)) {
+          path = Path.GetDirectoryName(Application.ExecutablePath);
+          path = Path.Combine(path, "Library");
+        }
+        path = Path.Combine(path, "Layouts");
+        return path;
       }
     }
 
@@ -118,7 +115,10 @@ namespace SportsTacticsBoard
     {
       get
       {
-        return BuildLayoutPath(Environment.SpecialFolder.MyDocuments);
+        string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        path = Path.Combine(path, "Sports Tactics Board");
+        path = Path.Combine(path, "Layouts");
+        return path;
       }
     }
 
@@ -216,6 +216,9 @@ namespace SportsTacticsBoard
     /// <param name="folderName">The folder to load layouts from.</param>
     private void RecursivelyLoadLayoutsFromFolder(string folderName)
     {
+      if (string.IsNullOrEmpty(folderName)) {
+        return;
+      }
       try {
         // Load the layouts from disk.
         foreach (string fileName in Directory.GetFiles(folderName, "*" + FileExtension, SearchOption.AllDirectories)) {
@@ -316,6 +319,10 @@ namespace SportsTacticsBoard
     /// current positions of the field objects.</param>
     /// <param name="fieldTypeTag">Identifies the field type of the layout.</param>
     public void SaveCurrentLayout(Layout layoutToSave, string fieldTypeTag) {
+      if (string.IsNullOrEmpty(layoutPath)) {
+        // TODO: Display an error message to the user
+        return;
+      }
       SavedLayout sl =
         SavedLayoutInformation.AskUserForSavedLayoutDetails(layoutToSave,
                                                             fieldTypeTag,
@@ -333,6 +340,8 @@ namespace SportsTacticsBoard
         if (saveResult) {
           // Add the layout to our internal list
           AddLayout(sl);
+        } else {
+          // TODO: Display an error message to the user
         }
       }
     }

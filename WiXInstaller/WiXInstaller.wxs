@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="e4488465-0238-411a-b000-4579722a8f2c"
+           Name="Sports Tactics Board"
+           Language="1033"
+           Version="0.1.90.0"
+           Manufacturer="Sports Tactics Board"
+           UpgradeCode="3cb2cabc-7021-4a3a-a1f5-fe05627d6bf6">
+    <Package InstallerVersion="300" Compressed="yes" />
+
+    <Media Id="1" Cabinet="SportsTacticsBoard.cab" EmbedCab="yes" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLLOCATION" Name="Sports Tactics Board">
+
+          <Component Id="MainProgram" Guid="dc856848-df1a-4cb3-ae75-70f4c22effe6">
+            <CreateFolder />
+            <File Id="SportsTacticsBoard_exe"
+                  Name="SportsTacticsBoard.exe"
+                  DiskId="1"
+                  Source="..\SportsTacticsBoard\bin\release\SportsTacticsBoard.exe"
+                  Vital="yes" />
+            <Shortcut Id="SportsTacticsBoard_exe_shortcut"
+                      Advertise="yes"
+                      Name="Sports Tactics Board"
+                      Directory="ProgramMenuFolder"
+                      Description="Sports Tactics Board is a utility that allows coaches, trainers and officials to describe sports tactics, strategies and positioning using a magnetic or chalk-board style approach."
+                      Icon="Program.ico" />
+          </Component>
+
+          <Component Id="MainProgramConfig" Guid="D733E3CD-3337-40f3-B8FB-CF3AAE7EEB29">
+            <File Id="SportsTacticsBoard_exe_config"
+                  Name="SportsTacticsBoard.exe.config"
+                  DiskId="1"
+                  Source="..\SportsTacticsBoard\bin\release\SportsTacticsBoard.exe.config"
+                  Vital="yes" />
+          </Component>
+          
+          <Component Id="ReadMe" Guid="155771D0-A49D-4418-8D8F-626BE072F5CD">
+            <File Id="readme_txt" 
+                  Name="readme.txt" 
+                  DiskId="1" 
+                  Source="..\readme.txt" />
+          </Component>
+          
+          <Component Id="LicenseTxt" Guid="99C00BEB-F4EA-4b39-A734-B8C9E1F537FA">
+            <File Id="license_txt" 
+                  Name="license.txt" 
+                  DiskId="1" 
+                  Source="..\license.txt" />
+          </Component>
+
+          <Component Id="LicenseRtf" Guid="99BB79C8-EF45-465b-84CF-927427933B14">
+            <File Id="license_rtf"
+                  Name="license.rtf"
+                  DiskId="1"
+                  Source="..\license.rtf" />
+          </Component>
+
+          <Directory Id="Library" Name="Library">
+            <Directory Id="Library_Layouts" Name="Layouts">
+              <Directory Id="Library_Layouts_Soccer" Name="Soccer">
+                
+                <Directory Id="Library_Layouts_Soccer_442" Name="4-4-2">
+                  <Component Id="Soccer_442_StartingPositionLayout" Guid="65A439AA-8133-421c-8ACC-B13558B684D0">
+                    <CreateFolder />
+                    <File Id="Typical_Starting_Position_layout_xml"
+                          Name="Typical Starting Position.layout.xml"
+                          DiskId="1"
+                          Source="..\Library\Layouts\Soccer\4-4-2\Typical Starting Position.layout.xml" />
+                  </Component>
+                  <Component Id="Soccer_442_GamePositionLayout" Guid="6C20BC0E-4DA7-41b7-802A-AD45F92B74A8">
+                    <CreateFolder />
+                    <File Id="Game_Position_layout_xml"
+                          Name="Game Position.layout.xml"
+                          DiskId="1"
+                          Source="..\Library\Layouts\Soccer\4-4-2\Game Position.layout.xml" />
+                  </Component>
+                </Directory>
+
+                <Component Id="Soccer_PlayersOnBenchLayout" Guid="ED406B70-9800-4077-A7BA-C49C28B8E1CC">
+                  <CreateFolder />
+                  <File Id="Players_on_Bench_layout_xml" 
+                        Name="Players on Bench.layout.xml" 
+                        DiskId="1" 
+                        Source="..\Library\Layouts\Soccer\Players on Bench.layout.xml" />
+                </Component>
+              </Directory>
+              
+              <Directory Id="Library_Layouts_Hockey_NHL" Name="Hockey_NHL">
+
+              </Directory>
+            </Directory>
+            
+            <Directory Id="Library_Sequences" Name="Sequences">
+              <Directory Id="Library_Sequences_Soccer" Name="Soccer">
+
+              </Directory>
+              
+              <Directory Id="Library_Sequences_Hockey_NHL" Name="Hockey_NHL">
+
+              </Directory>
+            </Directory>
+          </Directory>
+
+        </Directory>
+			</Directory>
+      
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+      </Directory>
+    </Directory>
+
+    <Feature Id="CoreProgram" Title="Program" Level="1">
+		  <ComponentRef Id="MainProgram" />
+      <ComponentRef Id="MainProgramConfig" />
+      <ComponentRef Id="ReadMe" />
+      <ComponentRef Id="LicenseTxt" />
+      <ComponentRef Id="LicenseRtf" />
+    </Feature>
+
+    <Feature Id="SoccerLibrary" Title="Library - Soccer" Level="1">
+      <ComponentRef Id="Soccer_PlayersOnBenchLayout" />
+      <ComponentRef Id="Soccer_442_StartingPositionLayout" />
+      <ComponentRef Id="Soccer_442_GamePositionLayout" />
+    </Feature>
+
+    <Feature Id="NHLHockeyLibrary" Title="Library - Hockey - NHL" Level="1">
+    </Feature>
+
+    <Icon Id="Program.ico" SourceFile="..\SportsTacticsBoard\Program.ico" />
+
+    <CustomAction Id="SetARPReadme" Return="check" Property="ARPREADME" Value="[INSTALLLOCATION]readme.txt" />
+    <CustomAction Id="SetARPInstallLocation" Return="check" Property="ARPINSTALLLOCATION" Value="[INSTALLLOCATION]" />
+
+    <InstallExecuteSequence>
+      <Custom Action="SetARPReadme" After="CostFinalize" />
+      <Custom Action="SetARPInstallLocation" After="CostFinalize" />
+    </InstallExecuteSequence>
+
+    <Property Id='ARPURLUPDATEINFO'>http://sportstacticsbd.sourceforge.net/</Property>
+    <Property Id='ARPPRODUCTICON'>Program.ico</Property>
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />      
+    <WixVariable Id="WixUILicenseRtf" Value="..\license.rtf" />
+      
+    <UIRef Id="WixUI_InstallDir" />
+    <UIRef Id="WixUI_ErrorProgressText" />
+
+  </Product>
+</Wix>
