@@ -30,6 +30,15 @@ using System.Windows.Forms;
 
 namespace SportsTacticsBoard.PlayingSurfaceTypes
 {
+  /// <summary>
+  /// Implements a standard FIFA soccer field.
+  /// 
+  /// Playing surface units are in yards and the default field 
+  /// dimensions are 100 yards by 60 yards. Field is draw to
+  /// correct dimensions without any specific compromises.
+  /// 
+  /// 4 referee field objects are supported for referee training.
+  /// </summary>
   class SoccerField : SportsTacticsBoard.IPlayingSurfaceType
   {
     private const float fieldLength = 100.0F;
@@ -111,12 +120,32 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
       }
     }
 
+    private void AppendPlayerPositions(Layout layout, FieldObjects.Player.TeamId teamId, bool putOnLeftSide)
+    {
+      const float spacing = 3.25F;
+      const float benchIndent = 5.0F;
+      const float benchDistanceFromField = 5.25F;
+
+      float benchY = Width + benchDistanceFromField;
+      float benchStartPos = benchIndent;
+      if (!putOnLeftSide) {
+        benchStartPos += Length / 2.0F;
+      }
+
+      for (int playerNumber = 1; playerNumber <= playersPerTeam; playerNumber++) {
+        string playerTag = FieldObjects.NumberedPlayer.ComposeTag(teamId, playerNumber);
+        layout.AddEntry(playerTag, benchStartPos + (spacing * playerNumber), benchY);
+      }
+    }
+
     public Layout DefaultLayout
     {
       get
       {
-        LayoutAlgorithms.BenchLayoutAlgorithm defaultLayoutAlgorithm = new LayoutAlgorithms.BenchLayoutAlgorithm(this);
-        return defaultLayoutAlgorithm.GetLayout(this);
+        Layout layout = new Layout();
+        AppendPlayerPositions(layout, SportsTacticsBoard.FieldObjects.Player.TeamId.Attacking, true);
+        AppendPlayerPositions(layout, SportsTacticsBoard.FieldObjects.Player.TeamId.Defending, false);
+        return layout;
       }
     }
 

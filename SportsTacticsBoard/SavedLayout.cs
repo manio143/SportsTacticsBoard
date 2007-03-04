@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2007 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,10 +26,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace SportsTacticsBoard
 {
-  class SavedLayout
+  [XmlType(TypeName = "SavedLayout")]
+  public class SavedLayout
   {
     private string fieldTypeTag;
     private string name;
@@ -37,29 +39,39 @@ namespace SportsTacticsBoard
     private string description;
     private Layout layout;
 
+    [XmlElement(ElementName = "FieldTypeTag")]
     public string FieldTypeTag
     {
       get { return fieldTypeTag; }
+      set { fieldTypeTag = value; }
     }
 
+    [XmlElement(ElementName = "Name")]
     public string Name
     {
       get { return name; }
+      set { name = value; }
     }
 
+    [XmlElement(ElementName = "Category")]
     public string Category
     {
       get { return category; }
+      set { category = value; }
     }
 
+    [XmlElement(ElementName = "Description")]
     public string Description
     {
       get { return description; }
+      set { description = value; }
     }
 
+    [XmlElement(ElementName = "Layout")]
     public Layout Layout
     {
       get { return layout; }
+      set { layout = value; }
     }
 
     public SavedLayout()

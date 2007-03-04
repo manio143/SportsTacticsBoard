@@ -64,15 +64,9 @@
     <Compile Include="FieldObjects\Puck.cs" />
     <Compile Include="PlayingSurfaceTypes\HockeyRink_NHL.cs" />
     <Compile Include="IPlayingSurfaceType.cs" />
-    <Compile Include="ILayoutAlgorithm.cs" />
     <Compile Include="FieldObjects\Ball.cs" />
     <Compile Include="PlayingSurfaceTypes\SoccerField.cs" />
-    <Compile Include="LayoutAlgorithms\BenchLayoutAlgorithm.cs" />
-    <Compile Include="LayoutAlgorithms\FourFourTwoLayoutAlgorithm_GamePos.cs" />
-    <Compile Include="LayoutAlgorithms\FourFourTwoLayoutAlgorithm_StartPos.cs" />
     <Compile Include="FieldObject.cs" />
-    <Compile Include="LayoutAlgorithms\FourFourTwoLayoutAlgorithm.cs" />
-    <Compile Include="LayoutAlgorithms\GenericColumnBasedLayoutAlgorithm.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,7 +125,6 @@
       <DependentUpon>FieldControl.cs</DependentUpon>
     </Compile>
     <Compile Include="LayoutSequence.cs" />
-    <Compile Include="LayoutAlgorithms\TeamLayoutAlgorithm.cs" />
     <Compile Include="GlobalizationAwareMessageBox.cs" />
     <Compile Include="SavedLayout.cs" />
     <Compile Include="SavedLayoutInformation.cs">

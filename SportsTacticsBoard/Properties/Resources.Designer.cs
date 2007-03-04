@@ -86,6 +86,24 @@ namespace SportsTacticsBoard.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Layout field type tag is not valid.
+        /// </summary>
+        internal static string ExceptionMessage_LayoutFieldTagInvalid {
+            get {
+                return ResourceManager.GetString("ExceptionMessage_LayoutFieldTagInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Layout name is not valid.
+        /// </summary>
+        internal static string ExceptionMessage_LayoutNameInvalid {
+            get {
+                return ResourceManager.GetString("ExceptionMessage_LayoutNameInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to open file {0}.
         /// </summary>
         internal static string FailedToOpenFileFormatStr {

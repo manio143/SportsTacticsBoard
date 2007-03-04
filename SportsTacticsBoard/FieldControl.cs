@@ -136,13 +136,6 @@ namespace SportsTacticsBoard
       SetLayout(layout);
     }
 
-    internal void ApplyLayoutAlgorithm(ILayoutAlgorithm layoutAlgorithm)
-    {
-      if (null != FieldType) {
-        SetLayout(layoutAlgorithm.GetLayout(FieldType));
-      }
-    }
-
     private int FieldUnitsToDisplayUnits(float fieldUnits)
     {
       return (int)Math.Round(fieldUnits * ratio);

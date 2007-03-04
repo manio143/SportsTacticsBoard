@@ -183,7 +183,7 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
     {
       List<string> t = new List<string>();
       
-      // Fill in the list of players on the specified team
+      // TODO: Fill in the list of players on the specified team
 
       return new ReadOnlyCollection<string>(t);
     }

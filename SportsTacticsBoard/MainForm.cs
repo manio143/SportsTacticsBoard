@@ -39,7 +39,8 @@ namespace SportsTacticsBoard
 {
   public partial class MainForm : Form
   {
-    private SavedLayoutManager savedLayoutManager;
+    private SavedLayoutManager commonSavedLayoutManager;
+    private SavedLayoutManager userSavedLayoutManager;
     private LayoutSequence currentSequence;
     private int positionInSequence;
     private string fileName = "";
@@ -48,7 +49,8 @@ namespace SportsTacticsBoard
     private string originalCaption;
 
     public MainForm() {
-      savedLayoutManager = new SavedLayoutManager();
+      commonSavedLayoutManager = new SavedLayoutManager(SavedLayoutManager.CommonLayoutPath);
+      userSavedLayoutManager = new SavedLayoutManager(SavedLayoutManager.UserLayoutPath);
       InitializeComponent();
       originalCaption = Text;
       fieldControl.IsDirtyChanged += new EventHandler(fieldControl_IsDirtyChanged);
@@ -72,13 +74,21 @@ namespace SportsTacticsBoard
       UpdateFileMenuItems();
     }
 
-    private void savedLayoutMenuItem_Click(object sender, EventArgs e) {
+    private void commonSavedLayoutMenuItem_Click(object sender, EventArgs e) {
       ToolStripMenuItem mi = (ToolStripMenuItem)sender;
-      Layout layout = savedLayoutManager.GetLayoutForMenuItem(mi, SafeGetCurrentFieldTypeTag());
+      Layout layout = commonSavedLayoutManager.GetLayoutForMenuItem(mi, SafeGetCurrentFieldTypeTag());
       fieldControl.SetLayout(layout);
     }
 
-    private void UpdateFileMenuItems() {
+    private void userSavedLayoutMenuItem_Click(object sender, EventArgs e)
+    {
+      ToolStripMenuItem mi = (ToolStripMenuItem)sender;
+      Layout layout = userSavedLayoutManager.GetLayoutForMenuItem(mi, SafeGetCurrentFieldTypeTag());
+      fieldControl.SetLayout(layout);
+    }
+
+    private void UpdateFileMenuItems()
+    {
       saveSequenceAsMenuItem.Enabled = (fieldControl.FieldType != null);
       saveSequenceMenuItem.Enabled = (fieldControl.FieldType != null);
     }
@@ -87,15 +97,21 @@ namespace SportsTacticsBoard
       saveCurrentLayoutMenuItem.Enabled = (fieldControl.FieldType != null);
     }
 
-    private void UpdateSavedLayoutMenuItems() {
-      if (savedLayoutManager.UpdateMenu(savedLayoutsMenuItem, SafeGetCurrentFieldTypeTag(), new EventHandler(savedLayoutMenuItem_Click))) {
+    private void UpdateCommonSavedLayoutMenuItems() {
+      commonSavedLayoutManager.UpdateMenu(commonSavedLayoutsMenuItem, SafeGetCurrentFieldTypeTag(), new EventHandler(commonSavedLayoutMenuItem_Click));
+    }
+
+    private void UpdateUserSavedLayoutMenuItems()
+    {
+      if (userSavedLayoutManager.UpdateMenu(userSavedLayoutsMenuItem, SafeGetCurrentFieldTypeTag(), new EventHandler(userSavedLayoutMenuItem_Click))) {
         removeSavedLayoutMenuItem.Enabled = true;
       } else {
         removeSavedLayoutMenuItem.Enabled = false;
       } // endif
     }
 
-    private string SafeGetCurrentFieldTypeTag() {
+    private string SafeGetCurrentFieldTypeTag()
+    {
       if (fieldControl.FieldType == null) {
         return null;
       }
@@ -103,8 +119,8 @@ namespace SportsTacticsBoard
     }
 
     private void SaveCurrentLayout() {
-      savedLayoutManager.SaveCurrentLayout(fieldControl.FieldLayout, SafeGetCurrentFieldTypeTag());
-      UpdateSavedLayoutMenuItems();
+      userSavedLayoutManager.SaveCurrentLayout(fieldControl.FieldLayout, SafeGetCurrentFieldTypeTag());
+      UpdateUserSavedLayoutMenuItems();
     }
 
     private void UpdateSequenceControls() {
@@ -227,28 +243,6 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void MoveAllPlayersToBench() {
-      if (null != fieldControl.FieldType) {
-        fieldControl.ApplyLayoutAlgorithm(new LayoutAlgorithms.BenchLayoutAlgorithm(fieldControl.FieldType));
-      }
-    }
-
-    private void playersonBenchToolStripMenuItem_Click(object sender, EventArgs e) {
-      MoveAllPlayersToBench();
-    }
-
-    private void startingPositionToolStripMenuItem_Click(object sender, EventArgs e) {
-      if (null != fieldControl.FieldType) {
-        fieldControl.ApplyLayoutAlgorithm(new LayoutAlgorithms.FourFourTwoLayoutAlgorithm_StartPos(fieldControl.FieldType));
-      }
-    }
-
-    private void gamePositionToolStripMenuItem1_Click(object sender, EventArgs e) {
-      if (null != fieldControl.FieldType) {
-        fieldControl.ApplyLayoutAlgorithm(new LayoutAlgorithms.FourFourTwoLayoutAlgorithm_GamePos(fieldControl.FieldType));
-      }
-    }
-
     private void exitToolStripMenuItem_Click(object sender, EventArgs e) {
       Application.Exit();
     }
@@ -275,6 +269,7 @@ namespace SportsTacticsBoard
       openFileDialog.RestoreDirectory = true;
       openFileDialog.SupportMultiDottedExtensions = true;
       openFileDialog.Multiselect = false;
+      openFileDialog.InitialDirectory = GetDefaultSequenceSaveLocation(true);
 
       DialogResult res = openFileDialog.ShowDialog();
       if (res == DialogResult.OK) {
@@ -307,7 +302,8 @@ namespace SportsTacticsBoard
                 UpdateCaption();
                 UpdateFileMenuItems();
                 UpdateLayoutMenuItems();
-                UpdateSavedLayoutMenuItems();
+                UpdateCommonSavedLayoutMenuItems();
+                UpdateUserSavedLayoutMenuItems();
                 UpdateSequenceControls();
               }
             } else {
@@ -359,11 +355,30 @@ namespace SportsTacticsBoard
       UpdateFileMenuItems();
     }
 
+    private static string GetDefaultSequenceSaveLocation(bool attemptToCreate)
+    {
+      string fn1 = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+      fn1 = Path.Combine(fn1, "Sports Tactics Board");
+      fn1 = Path.Combine(fn1, "Sequences");
+      if (attemptToCreate) {
+        // Ensure we have a folder to save files in
+        if (!System.IO.Directory.Exists(fn1)) {
+          try {
+            System.IO.Directory.CreateDirectory(fn1);
+          }
+          catch (System.IO.IOException) {
+          }
+        }
+      }
+      return fn1;
+    }
+
     private void FileSaveAs() {
       SaveFileDialog saveFileDialog = new SaveFileDialog();
       saveFileDialog.Filter = fileFilter;
       saveFileDialog.RestoreDirectory = true;
       saveFileDialog.SupportMultiDottedExtensions = true;
+      saveFileDialog.InitialDirectory = GetDefaultSequenceSaveLocation(true);
 
       DialogResult res = saveFileDialog.ShowDialog();
       if (res == DialogResult.OK) {
@@ -377,16 +392,27 @@ namespace SportsTacticsBoard
       FileNew(true, false);
     }
 
+    static private List<IPlayingSurfaceType> FindPlayingSurfacesInAssembly(Assembly a)
+    {
+      List<IPlayingSurfaceType> surfaceTypes = new List<IPlayingSurfaceType>();
+
+      Type[] types = a.GetTypes();
+      for (int i = 0; i < types.Length; i++) {
+        if ((types[i].IsClass) && (!types[i].IsAbstract)) {
+          Type iface = types[i].GetInterface(typeof(IPlayingSurfaceType).Name);
+          if (iface != null) {
+            IPlayingSurfaceType surfaceType = Activator.CreateInstance(types[i]) as IPlayingSurfaceType;
+            surfaceTypes.Add(surfaceType);
+          }
+        }
+      }
+
+      return surfaceTypes;
+    }
+
     internal static List<IPlayingSurfaceType> AvailableFieldTypes {
       get {
-        List<IPlayingSurfaceType> fieldTypes = new List<IPlayingSurfaceType>();
-
-        // TODO: Enumerate these using reflection on the current assembly
-
-        fieldTypes.Add(new PlayingSurfaceTypes.SoccerField());
-        fieldTypes.Add(new PlayingSurfaceTypes.HockeyRink_NHL());
-
-        return fieldTypes;
+        return FindPlayingSurfacesInAssembly(Assembly.GetExecutingAssembly());
       }
     }
 
@@ -436,7 +462,8 @@ namespace SportsTacticsBoard
       UpdateCaption();
       UpdateFileMenuItems();
       UpdateLayoutMenuItems();
-      UpdateSavedLayoutMenuItems();
+      UpdateCommonSavedLayoutMenuItems();
+      UpdateUserSavedLayoutMenuItems();
       UpdateSequenceControls();
     }
 
@@ -500,7 +527,8 @@ namespace SportsTacticsBoard
     private void MainForm_Shown(object sender, EventArgs e) {
       UpdateFileMenuItems();
       UpdateLayoutMenuItems();
-      UpdateSavedLayoutMenuItems();
+      UpdateCommonSavedLayoutMenuItems();
+      UpdateUserSavedLayoutMenuItems();
       UpdateSequenceControls();
       if (null == fieldControl.FieldType) {
         FileNew(true, false);

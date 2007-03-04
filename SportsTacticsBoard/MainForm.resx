@@ -324,10 +324,10 @@
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
     <value>205, 6</value>
   </data>
-  <data name="savedCurrentLayoutMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="saveCurrentLayoutMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 22</value>
   </data>
-  <data name="savedCurrentLayoutMenuItem.Text" xml:space="preserve">
+  <data name="saveCurrentLayoutMenuItem.Text" xml:space="preserve">
     <value>&amp;Save current...</value>
   </data>
   <data name="removeSavedLayoutMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -339,38 +339,17 @@
   <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
     <value>205, 6</value>
   </data>
-  <data name="savedLayoutsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="userSavedLayoutsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 22</value>
   </data>
-  <data name="savedLayoutsMenuItem.Text" xml:space="preserve">
+  <data name="userSavedLayoutsMenuItem.Text" xml:space="preserve">
+    <value>&amp;My layouts</value>
+  </data>
+  <data name="commonSavedLayoutsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 22</value>
+  </data>
+  <data name="commonSavedLayoutsMenuItem.Text" xml:space="preserve">
     <value>&amp;Library</value>
-  </data>
-  <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>205, 6</value>
-  </data>
-  <data name="playersonBenchToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 22</value>
-  </data>
-  <data name="playersonBenchToolStripMenuItem.Text" xml:space="preserve">
-    <value>Players on Bench</value>
-  </data>
-  <data name="startingPositionToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 22</value>
-  </data>
-  <data name="startingPositionToolStripMenuItem.Text" xml:space="preserve">
-    <value>Starting Position</value>
-  </data>
-  <data name="gamePositionToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 22</value>
-  </data>
-  <data name="gamePositionToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Game Position</value>
-  </data>
-  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 22</value>
-  </data>
-  <data name="toolStripMenuItem2.Text" xml:space="preserve">
-    <value>4-4-2</value>
   </data>
   <data name="layoutsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>52, 20</value>
@@ -457,7 +436,7 @@
     <value>fieldControl</value>
   </data>
   <data name="&gt;&gt;fieldControl.Type" xml:space="preserve">
-    <value>SportsTacticsBoard.FieldControl, SportsTacticsBoard, Version=0.1.90.24885, Culture=neutral, PublicKeyToken=bc918eff40de88ed</value>
+    <value>SportsTacticsBoard.FieldControl, SportsTacticsBoard, Version=0.1.90.39197, Culture=neutral, PublicKeyToken=bc918eff40de88ed</value>
   </data>
   <data name="&gt;&gt;fieldControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -538,6 +517,9 @@
         AgIC//////////////////8CAgICAgICAgICAgICAgICAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 </value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Sports Tactics Board</value>
@@ -698,10 +680,10 @@
   <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;savedCurrentLayoutMenuItem.Name" xml:space="preserve">
-    <value>savedCurrentLayoutMenuItem</value>
+  <data name="&gt;&gt;saveCurrentLayoutMenuItem.Name" xml:space="preserve">
+    <value>saveCurrentLayoutMenuItem</value>
   </data>
-  <data name="&gt;&gt;savedCurrentLayoutMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;saveCurrentLayoutMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;removeSavedLayoutMenuItem.Name" xml:space="preserve">
@@ -716,40 +698,10 @@
   <data name="&gt;&gt;toolStripSeparator4.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;savedLayoutsMenuItem.Name" xml:space="preserve">
-    <value>savedLayoutsMenuItem</value>
+  <data name="&gt;&gt;commonSavedLayoutsMenuItem.Name" xml:space="preserve">
+    <value>commonSavedLayoutsMenuItem</value>
   </data>
-  <data name="&gt;&gt;savedLayoutsMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator5.Name" xml:space="preserve">
-    <value>toolStripSeparator5</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;playersonBenchToolStripMenuItem.Name" xml:space="preserve">
-    <value>playersonBenchToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;playersonBenchToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripMenuItem2.Name" xml:space="preserve">
-    <value>toolStripMenuItem2</value>
-  </data>
-  <data name="&gt;&gt;toolStripMenuItem2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;startingPositionToolStripMenuItem.Name" xml:space="preserve">
-    <value>startingPositionToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;startingPositionToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;gamePositionToolStripMenuItem1.Name" xml:space="preserve">
-    <value>gamePositionToolStripMenuItem1</value>
-  </data>
-  <data name="&gt;&gt;gamePositionToolStripMenuItem1.Type" xml:space="preserve">
+  <data name="&gt;&gt;commonSavedLayoutsMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;helpToolStripMenuItem.Name" xml:space="preserve">
@@ -775,6 +727,12 @@
   </data>
   <data name="&gt;&gt;toolStripButton1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;userSavedLayoutsMenuItem.Name" xml:space="preserve">
+    <value>userSavedLayoutsMenuItem</value>
+  </data>
+  <data name="&gt;&gt;userSavedLayoutsMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
