@@ -18,8 +18,9 @@ Table of Contents
 4. Compiling From Source Code
  4.1 Requirements
  4.2 Procedure
-  4.2.1 Visual Studio
-  4.2.2 .NET Framework SDK & MSBuild
+  4.2.1 No Development Environment on Windows with .NET 2.0 Runtime Installed
+  4.2.2 Visual Studio (any version supporting C#)
+  4.2.3 .NET Framework SDK or Windows SDK
 
 
 1. Copyrights
@@ -49,7 +50,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 3. Supported Platforms
 ----------------------
 
-Windows XP SP2, Windows Server 2003 SP1, Windows Vista
+- Windows XP SP2
+- Windows Server 2003 SP1
+- Windows Vista
 
 
 3.2 Requirements
@@ -74,8 +77,13 @@ follow standard SourceForge process for obtaining source code:
 4.1 Requirements
 ----------------
 
-You must have one of the following compile/development environments to 
-be able to compile from source:
+There is no need for any special development environment to compile or
+build this program from source code. If you have any supported Windows
+platform with the .NET 2.0 runtime installed, you can compile this 
+program from source code.
+
+The following development tools can also be used to modify and compile
+the program:
 
   - Visual Studio 2005 Professional 
       Commerical product available from Microsoft and resellers.
@@ -110,8 +118,21 @@ The original author has not tried this yet.
 
 See the appropriate section below that corresponds to the environment you have.
 
-4.2.1 Visual Studio
--------------------
+4.2.1 No Development Environment on Windows with .NET 2.0 Runtime Installed
+---------------------------------------------------------------------------
+
+1. Open a command shell:
+     Start | Run...
+   Type: "cmd", hit OK
+2. Change working directories to the folder with the complete 
+   source tree extracted to.
+    e.g.:   CD /D C:\SportsTacticsBoard-src
+3. Run build-net20-runtime.bat by typing:
+     build-net20-runtime
+   in the command shell and hitting enter.
+
+4.2.2 Visual Studio (any version supporting C#)
+-----------------------------------------------
 
 1. Open the solution file (.SLN file) from the root folder of the 
    repository.
@@ -119,8 +140,8 @@ See the appropriate section below that corresponds to the environment you have.
    Solution or Batch Build from the Build menu).
 
 
-4.2.2 .NET Framework SDK or Windows SDK & MSBuild
--------------------------------------------------
+4.2.3 .NET Framework SDK or Windows SDK
+---------------------------------------
 
 1. Open an "SDK Command Prompt" or "CMD Shell" window from 
      Start | Programs | Microsoft .NET Framework SDK v2.0
@@ -131,5 +152,4 @@ See the appropriate section below that corresponds to the environment you have.
     e.g.:   CD /D C:\SportsTacticsBoard-src
 3. Run MSBuild for the targets you wish to compile.
     e.g.:   msbuild /p:Configuration=Release
-
 
