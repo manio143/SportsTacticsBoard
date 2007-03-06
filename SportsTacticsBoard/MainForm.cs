@@ -618,5 +618,61 @@ namespace SportsTacticsBoard
     {
       SaveImagesToFile(false);
     }
+
+    private void printMenuItem_Click(object sender, EventArgs e) {
+      NotImplementedYet();
+    }
+
+    private void ShowInstalledDocument(string[] possibleDocumentNames) {
+      string appFolder = Path.GetDirectoryName(Application.ExecutablePath);
+
+      string documentFileName = null;
+      // Locate the document from the list of possible names
+      foreach (string docName in possibleDocumentNames) {
+        documentFileName = Path.Combine(appFolder, docName);
+        if (!File.Exists(documentFileName)) {
+          documentFileName = null;
+        } else {
+          // exit the loop as we have found one that exists
+          break;
+        }
+      }
+
+      // If we located a document, open it. If successful,
+      // exit, otherwise catch the exceptions and display
+      // a generic error message for all errors.
+      if (!string.IsNullOrEmpty(documentFileName)) {
+        try {
+          System.Diagnostics.Process.Start(documentFileName);
+          return;
+        } catch (System.ObjectDisposedException) {
+        } catch (System.InvalidOperationException) {
+        } catch (System.ComponentModel.Win32Exception) {
+        }
+      }
+
+      string msg = Properties.Resources.ResourceManager.GetString("UnableToOpenFile_InstallationMayBeIncomplete");
+      GlobalizationAwareMessageBox.Show(
+        this,
+        msg,
+        this.Text,
+        MessageBoxButtons.OK,
+        MessageBoxIcon.Exclamation,
+        MessageBoxDefaultButton.Button1,
+        (MessageBoxOptions)0);
+      return;
+    }
+
+    private void licenseMenuItem_Click(object sender, EventArgs e) {
+      ShowInstalledDocument(new string[] { "license.rtf", "license.txt" });
+    }
+
+    private void readMeMenuItem_Click(object sender, EventArgs e) {
+      ShowInstalledDocument(new string[] { "readme.txt" });
+    }
+
+    private void changeLogMenuItem_Click(object sender, EventArgs e) {
+      ShowInstalledDocument(new string[] { "changelog.txt" });
+    }
   }
 }

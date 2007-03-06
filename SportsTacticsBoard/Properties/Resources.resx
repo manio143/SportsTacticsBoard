@@ -235,4 +235,7 @@
   <data name="TeamName_Defending" xml:space="preserve">
     <value>Defending</value>
   </data>
+  <data name="UnableToOpenFile_InstallationMayBeIncomplete" xml:space="preserve">
+    <value>Unable to locate document. The installation of this program may not be complete or may have been modified.</value>
+  </data>
 </root>

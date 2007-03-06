@@ -70,9 +70,9 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
     private const float innerHashLengthY  = 3.0F;
     private const float outerHashLengthY  = 2.0F;
     private const float refereesCreaseRadius = 10.0F;
-    private const float playerBenchWidth  = 32.0F;
-    private const float playerBenchDepth  = 4.5F;
-    private const float penaltyBoxWidth   = 10.0F;
+    private const float playerBenchWidth  = 38.0F;
+    private const float playerBenchDepth  = 6.25F;
+    private const float penaltyBoxWidth   = 12.5F;
     private const float penaltyBoxDepth   = playerBenchDepth;
     private const float goalWidth         = 6.0F;
     private const float goalDepth         = 44.0F / 12.0F; // 44 inches
