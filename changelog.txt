@@ -1,4 +1,9 @@
 
+CHG - Made the hockey benches and penalty boxes slightly deeper and wider to fit players better.
+CHG - Moved "root" menu back to "Sequence" menu and moved position of "Playing Surface" menu to end.
+FEAT - Added menu items in Help menu linking to installed documents (readme, changelog, license)
+
+
 0.2.0 - First useful version
 FEAT - Copying current layout to clipboard as an image for easily importing into other programs, such as PowerPoint.
 FEAT - Ensure that "Saved Layouts" are only available for the currently selected sports field type.

@@ -390,5 +390,14 @@ namespace SportsTacticsBoard.Properties {
                 return ResourceManager.GetString("TeamName_Defending", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to locate document. The installation of this program may not be complete or may have been modified..
+        /// </summary>
+        internal static string UnableToOpenFile_InstallationMayBeIncomplete {
+            get {
+                return ResourceManager.GetString("UnableToOpenFile_InstallationMayBeIncomplete", resourceCulture);
+            }
+        }
     }
 }
