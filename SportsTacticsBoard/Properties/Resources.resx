@@ -172,11 +172,32 @@
   <data name="FieldObject_Referee_Soccer_CR" xml:space="preserve">
     <value>Referee - Centre</value>
   </data>
+  <data name="FieldObject_Referee_Volleyball_N" xml:space="preserve">
+    <value>Referee - Main</value>
+  </data>
+  <data name="FieldObject_Referee_Volleyball_NE" xml:space="preserve">
+    <value>Referee - Line #2</value>
+  </data>
+  <data name="FieldObject_Referee_Volleyball_NW" xml:space="preserve">
+    <value>Referee - Line #1</value>
+  </data>
+  <data name="FieldObject_Referee_Volleyball_S" xml:space="preserve">
+    <value>Referee - Assistant</value>
+  </data>
+  <data name="FieldObject_Referee_Volleyball_SE" xml:space="preserve">
+    <value>Referee - Line #4</value>
+  </data>
+  <data name="FieldObject_Referee_Volleyball_SW" xml:space="preserve">
+    <value>Referee - Line #3</value>
+  </data>
   <data name="FieldType_Hockey_NHL" xml:space="preserve">
     <value>Hockey - NHL</value>
   </data>
   <data name="FieldType_Soccer" xml:space="preserve">
     <value>Soccer</value>
+  </data>
+  <data name="FieldType_Volleyball" xml:space="preserve">
+    <value>Volleyball</value>
   </data>
   <data name="FileFilter" xml:space="preserve">
     <value>Sports Tactics Board files (*.stb.xml)|*.stb.xml|All files (*.*)|*.*</value>
@@ -239,3 +260,4 @@
     <value>Unable to locate document. The installation of this program may not be complete or may have been modified.</value>
   </data>
 </root>
+

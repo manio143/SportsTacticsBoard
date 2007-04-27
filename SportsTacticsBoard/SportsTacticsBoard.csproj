@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="FieldObjects\Person.cs" />
     <Compile Include="FieldObjects\Player.cs" />
+    <Compile Include="PlayingSurfaceTypes\VolleyballCourt.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AboutBox.resx">

@@ -48,7 +48,7 @@ namespace SportsTacticsBoard.FieldObjects
     {
       get {
         if (Label.Length > 1) {
-          return 7;
+          return 6;
         } else {
           return 9;
         }
