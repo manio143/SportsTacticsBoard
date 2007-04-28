@@ -235,6 +235,9 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
 
       linePen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
       #endregion
+
+      linePen.Dispose();
+      courtBrush.Dispose();
     }
 
   }
