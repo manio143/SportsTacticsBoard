@@ -7,12 +7,13 @@
     <OutputName>SportsTacticsBoard</OutputName>
     <OutputType>Package</OutputType>
     <WixToolPath>C:\Program Files\Windows Installer XML v3\bin\</WixToolPath>
+    <IncludeSearchPaths>..\Version</IncludeSearchPaths>
+    <DefineConstants>$(DefineConstants);TargetDir=$(OutputPath)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>
-    </OutputPath>
+    <OutputPath>..\Build\Debug\</OutputPath>
     <IntermediateOutputPath>obj\Debug\</IntermediateOutputPath>
-    <DefineConstants>Debug</DefineConstants>
+    <DefineConstants>Debug;BuildDir=..\Build\Debug;RootDir=..</DefineConstants>
     <AllowIdenticalRows>False</AllowIdenticalRows>
     <CabinetCachePath>
     </CabinetCachePath>
@@ -43,10 +44,17 @@
     <LinkerVerboseOutput>False</LinkerVerboseOutput>
     <WixVariables>
     </WixVariables>
+    <IncludeSearchPaths>..\Version</IncludeSearchPaths>
+    <Pedantic>False</Pedantic>
+    <ShowSourceTrace>False</ShowSourceTrace>
+    <SuppressSchemaValidation>False</SuppressSchemaValidation>
+    <SuppressSpecificWarnings>
+    </SuppressSpecificWarnings>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <VerboseOutput>False</VerboseOutput>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>
-    </OutputPath>
+    <OutputPath>..\Build\Release\</OutputPath>
     <IntermediateOutputPath>obj\Release\</IntermediateOutputPath>
     <AllowIdenticalRows>False</AllowIdenticalRows>
     <CabinetCachePath>
@@ -78,6 +86,15 @@
     <LinkerVerboseOutput>False</LinkerVerboseOutput>
     <WixVariables>
     </WixVariables>
+    <DefineConstants>BuildDir=..\Build\Release;RootDir=..</DefineConstants>
+    <IncludeSearchPaths>..\Version</IncludeSearchPaths>
+    <Pedantic>False</Pedantic>
+    <ShowSourceTrace>False</ShowSourceTrace>
+    <SuppressSchemaValidation>False</SuppressSchemaValidation>
+    <SuppressSpecificWarnings>
+    </SuppressSpecificWarnings>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <VerboseOutput>False</VerboseOutput>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="WiXInstaller.wxs" />
