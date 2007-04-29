@@ -25,6 +25,7 @@ Table of Contents
   5.2.1 No Development Environment on Windows with .NET 2.0 Runtime Installed
   5.2.2 Visual Studio (any version supporting C#)
   5.2.3 .NET Framework SDK or Windows SDK
+  5.2.4 NAnt
 
 
 1. Copyrights
@@ -120,9 +121,11 @@ follow standard SourceForge process for obtaining source code:
 ----------------
 
 There is no need for any special development environment to compile or
-build this program from source code. If you have any supported Windows
-platform with the .NET 2.0 runtime installed, you can compile this 
-program from source code.
+build this program from source code. However you will need other tools
+to build the installers or other outputs.
+
+If you have any supported Windows platform with the .NET 2.0 runtime 
+installed, you can compile this program from source code.
 
 The following development tools can also be used to modify and compile
 the program:
@@ -150,9 +153,27 @@ the program:
         OR
          http://www.microsoft.com/downloads/details.aspx?FamilyId=C2B1E300-F358-4523-B479-F53D234CDCCF&displaylang=en
 
-It may be possible to compile under the most recent versions of Mono. 
-You will need support for System.Windows.Forms for this program to work.
-The original author has not tried this yet.
+
+In order to build the installer and other targets, you will need the following:
+
+  - NAnt 0.85
+      NAnt is a free .NET build tool. In theory it is kind of like make without 
+      make's wrinkles.
+      Downloadable from:
+         http://nant.sourceforge.net/
+      Installation Notes:
+       - Must be in your executable path
+
+  - Windows Installer XML Toolset (WiX) v3.0.2420
+      The Windows Installer XML (WiX) is a toolset that builds Windows installation 
+      packages from XML source code.
+      Downloadable from:
+         http://wix.sourceforge.net/
+      Installation Notes:
+       - Requires Votive to be installed and registered with Visual Studio.
+       - This aspect has only been validated with Visual Studio 2005 Professional.
+       - Default installation path of C:\Program Files\Windows Installer XML v3
+         is the easiest, otherwise you may have to modify files.
 
 
 5.2 Procedure
@@ -195,3 +216,20 @@ See the appropriate section below that corresponds to the environment you have.
 3. Run MSBuild for the targets you wish to compile.
     e.g.:   msbuild /p:Configuration=Release
 
+
+5.2.4 NAnt
+----------
+
+Note: Ensure NAnt is in your PATH before you start, otherwise you will need to 
+      specify the full path to the program to run it.
+  e.g.:  PATH %PATH%;C:\NAnt-0.85\bin
+
+1. Open a "Visual Studio 2005 Command Prompt"
+     Start | Programs | Microsoft Visual Studio 2005 | Visual Studio Tools | Visual Studio 2005 Command Prompt
+2. Change working directories to the folder with the complete 
+   source tree extracted to.
+    e.g.:   CD /D C:\SportsTacticsBoard-src
+3. Run NAnt, specifying the targets and the "flavor"
+    e.g.:   nant 
+    e.g.:   nant -D:flavor=debug build
+    e.g.:   nant -D:flavor=ship rebuild

@@ -21,7 +21,8 @@
   <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
  </ProjectOptions>
  <Targets>
-  <Target Name="$(ProjectDir)/SportsTacticsBoard/bin/Release/SportsTacticsBoard.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/Build/Debug/SportsTacticsBoard.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/Build/Release/SportsTacticsBoard.exe" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
   <RuleFiles>

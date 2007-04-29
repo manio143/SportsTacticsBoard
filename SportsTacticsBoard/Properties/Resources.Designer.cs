@@ -221,6 +221,60 @@ namespace SportsTacticsBoard.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Referee - Main.
+        /// </summary>
+        internal static string FieldObject_Referee_Volleyball_N {
+            get {
+                return ResourceManager.GetString("FieldObject_Referee_Volleyball_N", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referee - Line #2.
+        /// </summary>
+        internal static string FieldObject_Referee_Volleyball_NE {
+            get {
+                return ResourceManager.GetString("FieldObject_Referee_Volleyball_NE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referee - Line #1.
+        /// </summary>
+        internal static string FieldObject_Referee_Volleyball_NW {
+            get {
+                return ResourceManager.GetString("FieldObject_Referee_Volleyball_NW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referee - Assistant.
+        /// </summary>
+        internal static string FieldObject_Referee_Volleyball_S {
+            get {
+                return ResourceManager.GetString("FieldObject_Referee_Volleyball_S", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referee - Line #4.
+        /// </summary>
+        internal static string FieldObject_Referee_Volleyball_SE {
+            get {
+                return ResourceManager.GetString("FieldObject_Referee_Volleyball_SE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referee - Line #3.
+        /// </summary>
+        internal static string FieldObject_Referee_Volleyball_SW {
+            get {
+                return ResourceManager.GetString("FieldObject_Referee_Volleyball_SW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hockey - NHL.
         /// </summary>
         internal static string FieldType_Hockey_NHL {
@@ -235,6 +289,15 @@ namespace SportsTacticsBoard.Properties {
         internal static string FieldType_Soccer {
             get {
                 return ResourceManager.GetString("FieldType_Soccer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volleyball.
+        /// </summary>
+        internal static string FieldType_Volleyball {
+            get {
+                return ResourceManager.GetString("FieldType_Volleyball", resourceCulture);
             }
         }
         
