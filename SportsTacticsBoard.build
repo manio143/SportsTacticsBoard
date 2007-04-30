@@ -15,7 +15,8 @@
   <property name="dir.wixpath.bin" value="${dir.wixpath}\Bin"/>
 
   <!-- Load the custom tasks for WiX -->
-  <loadtasks assembly="${dir.wixpath.bin}\Microsoft.Tools.WindowsInstallerXml.NAntTasks.dll"/>
+<!-- Not used yet as the WiX NAnt tasks do not support WiX Extensions -->
+<!--  <loadtasks assembly="${dir.wixpath.bin}\Microsoft.Tools.WindowsInstallerXml.NAntTasks.dll"/> -->
 
   <property name="flavor" value="debug" overwrite="false" />
   <if test="${flavor != 'debug' and flavor != 'ship'}">
@@ -26,10 +27,14 @@
   <property name="dir.target" value="${dir.root.target}\${flavor}" readonly="true"/>
   <property name="dir.build" value="${dir.root.build}\Release" readonly="true" if="${flavor == 'ship'}"/>
   <property name="dir.build" value="${dir.root.build}\Debug" readonly="true" if="${flavor == 'debug'}"/>
+  <property name="dir.install" value="${dir.root}\WiXInstaller" readonly="true"/>
+  <property name="dir.install.target" value="${dir.build}" readonly="true"/>
+  <property name="dir.install.build" value="${dir.install}\obj\Release" readonly="true" if="${flavor == 'ship'}"/>
+  <property name="dir.install.build" value="${dir.install}\obj\Debug" readonly="true" if="${flavor == 'debug'}"/>
 
   <!-- Define some of the file names we will be working with/on -->
-  <property name="file.build.msi" value="${dir.build}\SportsTacticsBoard.msi" readonly="true"/>
-  <property name="file.build.setup.exe" value="${dir.build}\SportsTacticsBoard-setup.exe" readonly="true"/>
+  <property name="file.build.msi" value="${dir.install.target}\SportsTacticsBoard.msi" readonly="true"/>
+  <property name="file.build.setup.exe" value="${dir.install.target}\SportsTacticsBoard-setup.exe" readonly="true"/>
   <property name="file.version.cs" value="${dir.version}\ver.cs"/>
   <property name="file.version.wxi" value="${dir.version}\ver.wxi"/>
   <property name="file.version.wxi.template" value="${dir.version}\ver.template.wxi"/>
@@ -40,20 +45,35 @@
   <property name="version" value="${version_major}.${version_minor}.${version_build}.${version_rev}" />
   <property name="version.withoutrev" value="${version_major}.${version_minor}.${version_build}" />
 
+  <!-- Define some re-used file sets -->
+  <fileset id="library_file_set" basedir="${dir.library}">
+    <include name="**/*"/>
+  </fileset>
+  <fileset id="docs_file_set" basedir="${dir.root}">
+    <include name="changelog.txt"/>
+    <include name="readme.txt"/>
+    <include name="license.txt"/>
+    <include name="license.rtf"/>
+  </fileset>
+  <fileset id="binaries_file_set" basedir="${dir.build}">
+    <include name="SportsTacticsBoard.exe"/>
+    <include name="SportsTacticsBoard.exe.config"/>
+  </fileset>
+
   <!-- === MAIN TARGETS === -->
 
   <target name="clean" description="Cleans all output from all targets"
           depends="version_files.clean,
                    solution.clean,
-                   bootstrapper.clean,
+                   installer.clean,
                    release_files.clean"/>
 
 	<target name="build" description="Builds all unbuilt targets"
           depends="version_files,
                    solution,
-                   bootstrapper,
+                   installer,
                    release_files"/>
-
+  
 	<target name="rebuild" depends="clean, build" description="Rebuilds all output for all targets"/>
 
   <!-- === INCREMENT BUILD NUMBER === -->
@@ -89,7 +109,10 @@
 
   <target name="version_files">
     <!-- Write out the WiX include file with the version information in -->
-    <copy file="${file.version.wxi.template}" tofile="${file.version.wxi}" overwrite="true">
+    <copy file="${file.version.wxi.template}" tofile="${file.version.wxi}" 
+          unless="${file::exists(file.version.wxi) and
+                    file::up-to-date(file.version.cs, file.version.wxi)}"
+          overwrite="true">
       <filterchain>
         <expandproperties />
       </filterchain>
@@ -108,7 +131,7 @@
   <property name="file.target.msi" value="${dir.version.folder}\SportsTacticsBoard-${version.withoutrev}.msi" readonly="true" />
   <property name="file.target.setup.exe" value="${dir.version.folder}\SportsTacticsBoard-${version.withoutrev}-setup.exe" readonly="true" />
 
-  <target name="release_files" depends="solution,bootstrapper" description="Creates files used for releasing the program">
+  <target name="release_files" depends="solution,installer" description="Creates files used for releasing the program">
     <mkdir dir="${dir.target}"/>
     <mkdir dir="${dir.version.folder}"/>
     
@@ -118,20 +141,18 @@
 
     <!-- Build the bin ZIP file for those that don't like MSI installers -->
     <zip zipfile="${file.target.bin.zip}">
+      <fileset prefix="Library" basedir="${dir.library}">
+        <include name="**/*"/>
+      </fileset>
       <fileset basedir="${dir.root}">
         <include name="changelog.txt"/>
         <include name="readme.txt"/>
         <include name="license.txt"/>
         <include name="license.rtf"/>
       </fileset>
-
       <fileset basedir="${dir.build}">
         <include name="SportsTacticsBoard.exe"/>
         <include name="SportsTacticsBoard.exe.config"/>
-      </fileset>
-
-      <fileset prefix="Library" basedir="${dir.library}">
-        <include name="**/*"/>
       </fileset>
     </zip>
 
@@ -199,21 +220,119 @@
     <delete dir="${dir.target}"/>
   </target>
   
-  <!-- === INSTALL BOOTSTRAPPER === -->
+  <!-- === INSTALLER === -->
+  
+  <target name="installer" depends="installer.msi,installer.bootstrapper"/>
+  <target name="installer.clean" depends="installer.msi.clean,installer.bootstrapper.clean"/>
 
-  <target name="bootstrapper" depends="solution">
-    <exec program="setupbld.exe" basedir="${dir.wixpath.bin}" failonerror="true">
-      <arg value="-out"/>
-      <arg file="${file.build.setup.exe}"/>
-      <arg value="-mcus"/>
-      <arg file="${file.build.msi}"/>
-      <arg value="-setup"/>
-      <arg file="${dir.wixpath.bin}\setup.exe"/>
-    </exec>
+  <!-- === INSTALLER BOOTSTRAPPER === -->
+
+  <target name="installer.bootstrapper" depends="installer.msi">
+    <if test="${not file::exists(file.build.setup.exe) or
+              not file::up-to-date(file.build.msi, file.build.setup.exe) or
+              not file::up-to-date(dir.wixpath.bin + '\setup.exe', file.build.setup.exe)}">
+      <echo level="Info" message="Creating ${file.build.setup.exe}"/>
+      <exec program="setupbld.exe" basedir="${dir.wixpath.bin}" failonerror="true">
+        <arg value="-out"/>
+        <arg file="${file.build.setup.exe}"/>
+        <arg value="-mcus"/>
+        <arg file="${file.build.msi}"/>
+        <arg value="-setup"/>
+        <arg file="${dir.wixpath.bin}\setup.exe"/>
+      </exec>
+    </if>
   </target>
 
-  <target name="bootstrapper.clean">
+  <target name="installer.bootstrapper.clean">
     <delete file="${file.build.setup.exe}"/>
+  </target>
+  
+  <!-- === INSTALLER MSI === -->
+
+  <target name="installer.msi" depends="version_files,solution" description="Builds the installer MSI files">
+    <mkdir dir="${dir.install.build}"/>
+
+    <!-- Create a file set containing the list of source files -->
+    <fileset basedir="${dir.install}" id="wix_source_file_set">
+      <include name="*.wxs"/>
+    </fileset>
+    
+    <!-- Compile each of the source files to object files -->
+    <foreach item="File" property="wix_source_file">
+      <in>
+        <items refid="wix_source_file_set"/>
+      </in>
+      <do>
+        <property name="wix_object_file" value="${path::combine(dir.install.build, path::get-file-name-without-extension(wix_source_file) + '.wixobj')}"/>
+        <exec program="candle.exe" basedir="${dir.wixpath.bin}" failonerror="true"
+            workingdir="${dir.install}"
+            unless="${file::up-to-date(wix_source_file, wix_object_file)}">
+          <arg value="-nologo"/>
+          <arg value='-dBuildDir="${dir.build}"'/>
+          <arg value='-dRootDir="${dir.root}"'/>
+          <arg value='-I"${dir.version}"'/>
+          <arg value='-ext "${dir.wixpath.bin}\WixUIExtension.dll"'/>
+          <arg value='-out "${wix_object_file}"'/>
+          <arg file="${wix_source_file}"/>
+        </exec>
+      </do>
+    </foreach>
+
+    <!-- Define a file set containing the object files -->
+    <fileset basedir="${dir.install.build}" id="wix_object_file_set">
+      <include name="*.wixobj"/>
+    </fileset>
+
+    <!-- Create the parameter for light containing the list of object files -->
+    <property name="wix_object_file_list" value=""/>
+    <foreach item="File" property="wix_object_file">
+      <in>
+        <items refid="wix_object_file_set"/>
+      </in>
+      <do>
+        <property name="wix_object_file_list" value="${wix_object_file_list} ${wix_object_file}"/>
+      </do>
+    </foreach>
+    
+    <!-- Determine if any dependant files have changed -->
+    <fileset id="target_msi_file_set">
+      <include name="${file.build.msi}"/>
+    </fileset>
+    <uptodate property="msi_uptodate.wix_objects">
+      <sourcefiles refid="wix_object_file_set"/>
+      <targetfiles refid="target_msi_file_set"/>
+    </uptodate>
+    <uptodate property="msi_uptodate.binaries">
+      <sourcefiles refid="binaries_file_set"/>
+      <targetfiles refid="target_msi_file_set"/>
+    </uptodate>
+    <uptodate property="msi_uptodate.docs">
+      <sourcefiles refid="docs_file_set"/>
+      <targetfiles refid="target_msi_file_set"/>
+    </uptodate>
+    <uptodate property="msi_uptodate.library">
+      <sourcefiles refid="library_file_set"/>
+      <targetfiles refid="target_msi_file_set"/>
+    </uptodate>
+
+    <!-- Link the object files together and build the MSI output file -->
+    <if test="${not (msi_uptodate.wix_objects and msi_uptodate.binaries and msi_uptodate.docs and msi_uptodate.library)}">
+      <echo level="Info" message="Creating ${file.build.msi}"/>
+      <exec program="light.exe" basedir="${dir.wixpath.bin}" failonerror="true"
+            workingdir="${dir.install}">
+        <arg value="-nologo"/>
+        <arg value="-cultures:en-US"/>
+        <arg value='-ext "${dir.wixpath.bin}\WixUIExtension.dll"'/>
+        <arg value='-out "${file.build.msi}"'/>
+        <arg file="${wix_object_file_list}"/>
+      </exec>
+    </if>
+
+  </target>
+
+  <target name="installer.msi.clean">
+    <delete file="${file.build.msi}"/>
+    <delete dir="${dir.install.build}"/>
   </target>
 
   <!-- === VISUAL STUDIO SOLUTION === -->
