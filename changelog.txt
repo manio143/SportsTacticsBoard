@@ -1,6 +1,8 @@
 
-CHG - Added NAnt build files to build main targets and build "release" target files.
-CHG - Various modifications to version generation, MSI installer building.
+BUILD - Removed Votive project from solution to allow building solution without WiX.
+BUILD - Added WiX build to NAnt build files, re-organized installer building slightly.
+BUILD - Added NAnt build files to build main targets and build "release" target files.
+BUILD - Various modifications to version generation, MSI installer building.
 FEAT - Added Volleyball court - code courtesy of Lukas Kawalec (kadeon)
 CHG - Made the hockey benches and penalty boxes slightly deeper and wider to fit players better.
 CHG - Moved "root" menu back to "Sequence" menu and moved position of "Playing Surface" menu to end.
