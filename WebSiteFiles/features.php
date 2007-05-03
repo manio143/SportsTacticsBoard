@@ -28,6 +28,7 @@
 
       <h3>Release 0.3</h3>
       <ul>
+        <li>Support for Volleyball court. <i>Done - Courtesy of Lukas Kawalec (kadeon)</i></li>
         <li>Improve drawing of fields, players and movement lines.</li>
         <li>Support for &quot;views&quot; of sections of the playing field, including rotation.</li>
         <li>Support for predefined &quot;Field Views&quot; for limited views of areas of the playing field.</li>

@@ -229,7 +229,13 @@ Note: Ensure NAnt is in your PATH before you start, otherwise you will need to
 2. Change working directories to the folder with the complete 
    source tree extracted to.
     e.g.:   CD /D C:\SportsTacticsBoard-src
-3. Run NAnt, specifying the targets and the "flavor"
+3. You have two choices:
+   a) Run build.bat, optionally specifying "build" or "ship", 
+      optionally specifying a build target:
+    e.g.:   build
+    e.g.:   build debug build
+    e.g.:   build ship rebuild
+   b) Run NAnt, specifying the targets and the "flavor":
     e.g.:   nant 
     e.g.:   nant -D:flavor=debug build
     e.g.:   nant -D:flavor=ship rebuild
