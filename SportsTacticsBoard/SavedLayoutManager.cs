@@ -98,8 +98,16 @@ namespace SportsTacticsBoard
       {
         string path = SportsTacticsBoard.Properties.Settings.Default.CommonLibraryFolder;
         if (string.IsNullOrEmpty(path)) {
-          path = Path.GetDirectoryName(Application.ExecutablePath);
-          path = Path.Combine(path, "Library");
+          string exeDir = Path.GetDirectoryName(Application.ExecutablePath);
+          string installDir = Path.GetDirectoryName(exeDir);
+          path = Path.Combine(installDir, "Library");
+          if (!Directory.Exists(path)) {
+            string rootProjectDir = Path.GetDirectoryName(installDir);
+            path = Path.Combine(rootProjectDir, "Library");
+            if (!Directory.Exists(path)) {
+              return null;
+            }
+          }
         }
         path = Path.Combine(path, "Layouts");
         return path;
