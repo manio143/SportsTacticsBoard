@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="Sports Tactics Board" default="build" xmlns="http://nant.sf.net/release/0.85/nant.xsd">
 
-  <!-- You will need to change this if you installed WiX somewhere else -->
-  <property name="dir.wixpath" value="C:\Program Files\Windows Installer XML v3" overwrite="false"/>
+  <!-- You will need to change this if you installed WiX or FxCop somewhere else -->
+  <property name="dir.wixpath" value="${environment::get-variable('ProgramFiles')}\Windows Installer XML v3" overwrite="false"/>
+  <property name="dir.fxcoppath" value="${environment::get-variable('ProgramFiles')}\Microsoft FxCop 1.35" overwrite="false"/>
 
   <!-- Define various root directory names -->
   <property name="dir.root" value="${project::get-base-directory()}" overwrite="false"/>
@@ -362,13 +363,15 @@
   <!-- === CODE ANALYSIS === -->
 
   <target name="analysis" depends="solution" description="Runs FxCop code analysis on the project">
+    <property name="file.fxcop.input" value="${dir.build}\SportsTacticsBoard.exe" readonly="true"/>
+    <property name="file.fxcop.output" value="${dir.build}\fxcop.xml" readonly="true"/>
     <exec program="FxCopCmd.exe" 
-	  basedir="${environment::get-variable('ProgramFiles')}\Microsoft FxCop 1.35" 
+	  basedir="${dir.fxcoppath}" 
 	  failonerror="true" 
-	  if="${file::exists(environment::get-variable('ProgramFiles') + '\Microsoft FxCop 1.35\FxCopCmd.exe')}">
-      <arg value="/file:${dir.build}\SportsTacticsBoard.exe"/>
-      <arg value="/console" unless="${environment::variable-exists('CCNetProject')}"/>
-      <arg value="/out:${dir.build}\fxcop.xml" if="${environment::variable-exists('CCNetProject')}"/>
+	  if="${file::exists(dir.fxcoppath + '\FxCopCmd.exe') and not file::up-to-date(file.fxcop.input, file.fxcop.output)}">
+      <arg value="/file:${file.fxcop.input}"/>
+      <arg value="/out:${file.fxcop.output}"/>
+      <arg value="/forceoutput"/>
       <arg value="/summary"/>
     </exec>
   </target>
