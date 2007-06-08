@@ -17,18 +17,26 @@
       
       <p>For a list of current and planned features, 
       please look <a href="features.php">here</a>.</p>
-     
-      
+
+      <p>You can also take a look at the <a href="readme.txt">readme.txt</a> file 
+      which provides more information on the tool.</p>
+    
       <h2>How do I get a copy to use?</h2>
       <ol>
-        <li>Get the Microsoft .NET 2.0 Framework</li>
+        <li>Get the Microsoft .NET 2.0 Framework - often already installed on up-to-date Windows computers.</li>
         <li>Download a release of Sports Tactics Board from the <a href="downloads.php">Downloads</a> page.</li>
       </ol>
       <p>The Microsoft&nbsp;.NET&nbsp;2.0&nbsp;Framework can be downloaded 
-      from Microsoft using Windows Update or from
+      from Microsoft using Windows Update or Microsoft Update, or from
       the <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5&displaylang=en">Microsoft Download Center</a>.</p>
       <p>You can also obtain the source code for Sports Tactics Board using Subversion by 
       following the instructions on <a href="http://sourceforge.net/svn/?group_id=181975">this page</a>.</p>
+
+      <h2>Documentation</h2>
+      <p>No documentation is available at this time. However, the program is fairly simple and strait-forward to use. Try it to see.</p>
+
+      <h2>License</h2>
+      <p>Sports Tactics Board is distributed under the <a href="http://www.gnu.org/copyleft/gpl.html">GPL v2</a> license.</p>
 
       <h2>How do I get help, report bugs or request features?</h2>
       <p>You can request help using the <a href="http://sourceforge.net/forum/?group_id=181975">discussion forums</a>.</p>
@@ -50,7 +58,7 @@
       <p>It is important that the tactics come from your own experience, as they cannot
       be copied directly from books or other places due to copyright reasons. You 
       will also have to be willing to release your tactics libraries under the 
-      GPLv2 license. You still retain copyright under that license.</p>
+      GPLv2 license.</p>
 
 
 <?php include("footer.php"); ?>

@@ -127,6 +127,10 @@ to build the installers or other outputs.
 If you have any supported Windows platform with the .NET 2.0 runtime 
 installed, you can compile this program from source code.
 
+NAnt build script is the most complete, and supports building
+installers and release files for web site upload. The NAnt build script
+is considered the primary technique for building this tool.
+
 The following development tools can also be used to modify and compile
 the program:
 
@@ -164,16 +168,38 @@ In order to build the installer and other targets, you will need the following:
       Installation Notes:
        - Must be in your executable path
 
+  - NAnt Contrib 0.85
+      NAnt Contrib is a free add-on the NAnt.
+      Downloadable from:
+         http://nantcontrib.sourceforge.net/
+      Installation Notes:
+       - Must be installed into NAnt install
+
   - Windows Installer XML Toolset (WiX) v3.0.2420
       The Windows Installer XML (WiX) is a toolset that builds Windows installation 
       packages from XML source code.
       Downloadable from:
          http://wix.sourceforge.net/
       Installation Notes:
-       - Requires Votive to be installed and registered with Visual Studio.
-       - This aspect has only been validated with Visual Studio 2005 Professional.
        - Default installation path of C:\Program Files\Windows Installer XML v3
          is the easiest, otherwise you may have to modify files.
+       - Builds automatically from NAnt build script.
+
+Optionally, you can install the following:
+
+  - FxCop 1.35
+      A code analysis tool provided by Microsoft for .NET assembly code analysis.
+      Downloadable from:
+         http://www.gotdotnet.com/team/fxcop/
+      or downloadable from (as part of the Windows SDK):
+         http://www.microsoft.com/downloads/details.aspx?FamilyId=7614FE22-8A64-4DFB-AA0C-DB53035F40A0&displaylang=en
+        OR
+         http://www.microsoft.com/downloads/details.aspx?FamilyId=C2B1E300-F358-4523-B479-F53D234CDCCF&displaylang=en
+      Installation Notes:
+       - Default installation path of C:\Program Files\Microsoft FxCop 1.35
+         is the easiest, otherwise you may have to modify files.
+       - Runs automatically from NAnt build script.
+         
 
 
 5.2 Procedure
