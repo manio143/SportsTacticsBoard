@@ -1,3 +1,4 @@
+-- Changes committed to source control since previous release
 
 BUILD - Added code analysis using FxCop to build process.
 BUILD - Removed Votive project from solution to allow building solution without WiX.

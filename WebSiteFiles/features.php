@@ -16,7 +16,7 @@
 	<li>Supports pre-defined layouts that position players, ball/puck and officials.</li>
 	<li>Supports exporting images and image sequences to files or clipboard.</li>
       </ul>
-      <p>See the <a href="changelog.txt">change log</a> for more details.</p>
+      <p>See the <a href="changelog.txt">change log</a> for more details. This documents all changes committed to source control, which may include additional functionality after the release above.</p>
       
       <br />
       
