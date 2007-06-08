@@ -1,4 +1,5 @@
 
+BUILD - Added code analysis using FxCop to build process.
 BUILD - Removed Votive project from solution to allow building solution without WiX.
 BUILD - Added WiX build to NAnt build files, re-organized installer building slightly.
 BUILD - Added NAnt build files to build main targets and build "release" target files.
