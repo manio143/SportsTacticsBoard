@@ -65,16 +65,18 @@
   <target name="clean" description="Cleans all output from all targets"
           depends="version_files.clean,
                    solution.clean,
+	  	   analysis.clean,
                    installer.clean,
                    release_files.clean"/>
 
-	<target name="build" description="Builds all unbuilt targets"
+  <target name="build" description="Builds all unbuilt targets"
           depends="version_files,
-                   solution,
+	           solution,
+	  	   analysis,
                    installer,
                    release_files"/>
   
-	<target name="rebuild" depends="clean, build" description="Rebuilds all output for all targets"/>
+  <target name="rebuild" depends="clean, build" description="Rebuilds all output for all targets"/>
 
   <!-- === INCREMENT BUILD NUMBER === -->
   <!-- 
@@ -355,6 +357,24 @@
       <arg value="/target:Clean"/>
       <arg file="${dir.root}/SportsTacticsBoard.sln"/>
     </exec>
+  </target>
+
+  <!-- === CODE ANALYSIS === -->
+
+  <target name="analysis" depends="solution" description="Runs FxCop code analysis on the project">
+    <exec program="FxCopCmd.exe" 
+	  basedir="${environment::get-variable('ProgramFiles')}\Microsoft FxCop 1.35" 
+	  failonerror="true" 
+	  if="${file::exists(environment::get-variable('ProgramFiles') + '\Microsoft FxCop 1.35\FxCopCmd.exe')}">
+      <arg value="/file:${dir.build}\SportsTacticsBoard.exe"/>
+      <arg value="/console" unless="${environment::variable-exists('CCNetProject')}"/>
+      <arg value="/out:${dir.build}\fxcop.xml" if="${environment::variable-exists('CCNetProject')}"/>
+      <arg value="/summary"/>
+    </exec>
+  </target>
+
+  <target name="analysis.clean">
+    <delete file="${dir.build}\fxcop.xml"/>
   </target>
 
 </project>
