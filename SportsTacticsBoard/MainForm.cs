@@ -624,16 +624,34 @@ namespace SportsTacticsBoard
     }
 
     private void ShowInstalledDocument(string[] possibleDocumentNames) {
-      string appFolder = Path.GetDirectoryName(Application.ExecutablePath);
+      string exePath = Application.ExecutablePath;
+      string binDir = Path.GetDirectoryName(exePath);
+      string installDir = Path.GetDirectoryName(binDir);
+#if DEBUG
+      string rootProjectDir = Path.GetDirectoryName(installDir);
+#endif
+      string[] appFolders = new string[] { 
+        installDir
+        ,binDir
+#if DEBUG
+        ,rootProjectDir
+#endif
+      };
 
       string documentFileName = null;
       // Locate the document from the list of possible names
       foreach (string docName in possibleDocumentNames) {
-        documentFileName = Path.Combine(appFolder, docName);
-        if (!File.Exists(documentFileName)) {
-          documentFileName = null;
-        } else {
-          // exit the loop as we have found one that exists
+        foreach (string appFolder in appFolders) {
+          documentFileName = Path.Combine(appFolder, docName);
+          if (!File.Exists(documentFileName)) {
+            documentFileName = null;
+          } else {
+            // exit the inner loop as we have found one that exists
+            break;
+          }
+        }
+        if (documentFileName != null) {
+          // exit the outer loop as we have found one that exists
           break;
         }
       }
