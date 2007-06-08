@@ -1,5 +1,6 @@
 -- Changes committed to source control since previous release
 
+FIX - Exit menu item wasn't working. 
 FIX - Fixed locating of installed documents and library files when installed using updated installers (that have bin folder).
 BUILD - Added code analysis using FxCop to build process.
 BUILD - Removed Votive project from solution to allow building solution without WiX.

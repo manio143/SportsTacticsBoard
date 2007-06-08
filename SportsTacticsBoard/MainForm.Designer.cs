@@ -87,15 +87,15 @@ namespace SportsTacticsBoard
       this.userSavedLayoutsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.commonSavedLayoutsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.changeLogMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.readMeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.licenseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
       this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.playingSurfaceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.changePlayingSurfaceTypeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-      this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-      this.licenseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.readMeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.changeLogMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.fieldControl = new SportsTacticsBoard.FieldControl();
       this.sequenceToolString.SuspendLayout();
       this.mainMenuStrip.SuspendLayout();
@@ -275,6 +275,7 @@ namespace SportsTacticsBoard
       // 
       this.exitMenuItem.Name = "exitMenuItem";
       resources.ApplyResources(this.exitMenuItem, "exitMenuItem");
+      this.exitMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
       // 
       // layoutsToolStripMenuItem
       // 
@@ -347,6 +348,29 @@ namespace SportsTacticsBoard
       this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
       resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
       // 
+      // changeLogMenuItem
+      // 
+      this.changeLogMenuItem.Name = "changeLogMenuItem";
+      resources.ApplyResources(this.changeLogMenuItem, "changeLogMenuItem");
+      this.changeLogMenuItem.Click += new System.EventHandler(this.changeLogMenuItem_Click);
+      // 
+      // readMeMenuItem
+      // 
+      this.readMeMenuItem.Name = "readMeMenuItem";
+      resources.ApplyResources(this.readMeMenuItem, "readMeMenuItem");
+      this.readMeMenuItem.Click += new System.EventHandler(this.readMeMenuItem_Click);
+      // 
+      // licenseMenuItem
+      // 
+      this.licenseMenuItem.Name = "licenseMenuItem";
+      resources.ApplyResources(this.licenseMenuItem, "licenseMenuItem");
+      this.licenseMenuItem.Click += new System.EventHandler(this.licenseMenuItem_Click);
+      // 
+      // toolStripSeparator6
+      // 
+      this.toolStripSeparator6.Name = "toolStripSeparator6";
+      resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
+      // 
       // aboutToolStripMenuItem
       // 
       this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
@@ -376,29 +400,6 @@ namespace SportsTacticsBoard
       this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
       resources.ApplyResources(this.toolStripButton1, "toolStripButton1");
       this.toolStripButton1.Name = "toolStripButton1";
-      // 
-      // toolStripSeparator6
-      // 
-      this.toolStripSeparator6.Name = "toolStripSeparator6";
-      resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
-      // 
-      // licenseMenuItem
-      // 
-      this.licenseMenuItem.Name = "licenseMenuItem";
-      resources.ApplyResources(this.licenseMenuItem, "licenseMenuItem");
-      this.licenseMenuItem.Click += new System.EventHandler(this.licenseMenuItem_Click);
-      // 
-      // readMeMenuItem
-      // 
-      this.readMeMenuItem.Name = "readMeMenuItem";
-      resources.ApplyResources(this.readMeMenuItem, "readMeMenuItem");
-      this.readMeMenuItem.Click += new System.EventHandler(this.readMeMenuItem_Click);
-      // 
-      // changeLogMenuItem
-      // 
-      this.changeLogMenuItem.Name = "changeLogMenuItem";
-      resources.ApplyResources(this.changeLogMenuItem, "changeLogMenuItem");
-      this.changeLogMenuItem.Click += new System.EventHandler(this.changeLogMenuItem_Click);
       // 
       // fieldControl
       // 
