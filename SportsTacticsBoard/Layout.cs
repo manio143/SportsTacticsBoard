@@ -29,20 +29,28 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Xml.Serialization;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SportsTacticsBoard
 {
   public class Layout
   {
-    [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-    [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
     [XmlElement(ElementName = "Entry")]
-    public List<LayoutEntry> entries;
+    public Collection<LayoutEntry> Entries
+    {
+      get
+      {
+        return entries;
+      }
+      set
+      {
+        entries = value;
+      }
+    }
+    private Collection<LayoutEntry> entries;
 
     public Layout()
     {
-      entries = new List<LayoutEntry>();
+      entries = new Collection<LayoutEntry>();
     }
 
     public void AddEntry(string tag, PointF pos)
@@ -57,7 +65,12 @@ namespace SportsTacticsBoard
 
     private LayoutEntry FindEntry(string tag)
     {
-      return entries.Find(delegate(LayoutEntry entry) { return (entry.Tag == tag); });
+      foreach (LayoutEntry entry in entries) {
+        if (entry.Tag == tag) {
+          return entry;
+        }
+      }
+      return null;
     }
 
     public bool HasEntry(string tag)
