@@ -24,10 +24,9 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Xml.Serialization;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SportsTacticsBoard
 {
@@ -38,29 +37,39 @@ namespace SportsTacticsBoard
     public string fieldTypeTag;
 
     [XmlElement(ElementName = "layoutSequence")]
-    [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-    public List<Layout> layoutSequence;
+    public Collection<Layout> Sequence
+    {
+      get
+      {
+        return sequence;
+      }
+      set
+      {
+        sequence = value;
+      }
+    }
+    private Collection<Layout> sequence;
 
     public LayoutSequence()
     {
-      layoutSequence = new List<Layout>();
+      sequence = new Collection<Layout>();
     }
 
     public LayoutSequence(string _fieldTypeTag)
     {
-      layoutSequence = new List<Layout>();
+      sequence = new Collection<Layout>();
       fieldTypeTag = _fieldTypeTag;
     }
 
     public int NumberOfLayouts
     {
-      get { return layoutSequence.Count; }
+      get { return sequence.Count; }
     }
 
     public Layout GetLayout(int index)
     {
-      if ((index >= 0) && (index < layoutSequence.Count)) {
-        return layoutSequence[index];
+      if ((index >= 0) && (index < sequence.Count)) {
+        return sequence[index];
       } else {
         return null;
       }
@@ -68,26 +77,26 @@ namespace SportsTacticsBoard
 
     public void SetLayout(int index, Layout layout)
     {
-      if ((index >= 0) && (index < layoutSequence.Count)) {
-        layoutSequence[index] = layout;
+      if ((index >= 0) && (index < sequence.Count)) {
+        sequence[index] = layout;
       }
     }
 
     public int AddNewLayout(int index, Layout layout)
     {
-      if (index >= layoutSequence.Count) {
-        layoutSequence.Add(layout);
-        return layoutSequence.Count - 1;
+      if (index >= sequence.Count) {
+        sequence.Add(layout);
+        return sequence.Count - 1;
       } else {
-        layoutSequence.Insert(index, layout);
+        sequence.Insert(index, layout);
         return index;
       }
     }
 
     public void RemoveFromSequence(int index)
     {
-      if ((index >= 0) && (index < layoutSequence.Count)) {
-        layoutSequence.RemoveAt(index);
+      if ((index >= 0) && (index < sequence.Count)) {
+        sequence.RemoveAt(index);
       }
     }
   }
