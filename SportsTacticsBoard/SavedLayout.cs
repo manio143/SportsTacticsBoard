@@ -37,7 +37,7 @@ namespace SportsTacticsBoard
     private string name;
     private string category;
     private string description;
-    private Layout layout;
+    private FieldLayout layout;
 
     [XmlElement(ElementName = "FieldTypeTag")]
     public string FieldTypeTag
@@ -68,7 +68,7 @@ namespace SportsTacticsBoard
     }
 
     [XmlElement(ElementName = "Layout")]
-    public Layout Layout
+    public FieldLayout Layout
     {
       get { return layout; }
       set { layout = value; }
@@ -79,17 +79,17 @@ namespace SportsTacticsBoard
       name = "";
       category = "";
       description = "";
-      layout = new Layout();
+      layout = new FieldLayout();
       fieldTypeTag = "";
     }
 
-    public SavedLayout(string _name, string _category, string _description, Layout _layout, string _fieldTypeTag)
+    public SavedLayout(string name, string category, string description, FieldLayout layout, string fieldTypeTag)
     {
-      name = _name;
-      category = _category;
-      description = _description;
-      layout = _layout;
-      fieldTypeTag = _fieldTypeTag;
+      this.name = name;
+      this.category = category;
+      this.description = description;
+      this.layout = layout;
+      this.fieldTypeTag = fieldTypeTag;
     }
   }
 }

@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006-2007 Robert Turner
+// Copyright (C) 2006-2009 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Resources;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -36,7 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SoccerTacticsBoard")]
-[assembly: AssemblyCopyright("Copyright © 2006-2007 Robert Turner. All rights reserved.")]
+[assembly: AssemblyCopyright("Copyright © 2006-2009 Robert Turner. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -47,3 +48,4 @@ using System.Runtime.InteropServices;
 
 // Mark the assembly as being CLS compliant
 [assembly: CLSCompliant(true)]
+[assembly: NeutralResourcesLanguageAttribute("en-US")]

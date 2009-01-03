@@ -1,6 +1,6 @@
 @echo off
 setlocal
-set WINSCP="%ProgramFiles%\WinSCP3\WinSCP3.com"
+set WINSCP="%ProgramFiles%\WinSCP\WinSCP.com"
 
 xcopy /D /Y /R changelog.txt WebSiteFiles
 xcopy /D /Y /R readme.txt WebSiteFiles

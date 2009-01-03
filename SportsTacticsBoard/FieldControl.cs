@@ -97,11 +97,11 @@ namespace SportsTacticsBoard
 
     private Collection<FieldObject> fieldObjects;
 
-    public Layout FieldLayout
+    public FieldLayout FieldLayout
     {
       get
       {
-        Layout layout = new Layout();
+        FieldLayout layout = new FieldLayout();
         foreach (FieldObject fo in fieldObjects) {
           layout.AddEntry(fo.Tag, fo.Position);
         }
@@ -109,7 +109,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    public void SetLayout(Layout layout)
+    public void SetLayout(FieldLayout layout)
     {
       if (null != layout) {
         foreach (FieldObject fo in fieldObjects) {
@@ -122,15 +122,15 @@ namespace SportsTacticsBoard
       }
     }
 
-    private Layout nextLayout;
+    private FieldLayout nextLayout;
 
-    public void SetNextLayout(Layout layout)
+    public void SetNextLayout(FieldLayout layout)
     {
       nextLayout = layout;
       Invalidate();
     }
 
-    public void SetLayouts(Layout layout, Layout newNextLayout)
+    public void SetLayouts(FieldLayout layout, FieldLayout newNextLayout)
     {
       nextLayout = newNextLayout;
       SetLayout(layout);
@@ -193,7 +193,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    public void DrawIntoImage(Image image, Layout layoutToDraw, Layout nextLayoutData)
+    public void DrawIntoImage(Image image, FieldLayout layoutToDraw, FieldLayout nextLayoutData)
     {
       using (Graphics graphics = Graphics.FromImage(image)) {
         if (image.GetType() == typeof(Bitmap)) {
@@ -209,7 +209,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void DrawLayoutIntoGraphics(Graphics g, Layout layoutToDraw, Layout nextLayoutData)
+    private void DrawLayoutIntoGraphics(Graphics g, FieldLayout layoutToDraw, FieldLayout nextLayoutData)
     {
       if (null == FieldType) {
         return;
@@ -251,7 +251,7 @@ namespace SportsTacticsBoard
 
     protected override void OnPaint(PaintEventArgs e)
     {
-      Layout nextLayoutData = null;
+      FieldLayout nextLayoutData = null;
       if (showMovementLines) {
         nextLayoutData = nextLayout;
       }

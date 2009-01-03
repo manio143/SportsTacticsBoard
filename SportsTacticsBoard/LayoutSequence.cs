@@ -33,32 +33,34 @@ namespace SportsTacticsBoard
   [XmlType(TypeName = "SportsTacticsBoardDocument")]
   public class LayoutSequence
   {
-    [XmlElement(ElementName="fieldType")]
-    public string fieldTypeTag;
+    private string fieldTypeTag;
+
+    [XmlElement(ElementName = "fieldType")]
+    public string FieldTypeTag
+    {
+      get { return fieldTypeTag; }
+      set { fieldTypeTag = value; }
+    }
 
     [XmlElement(ElementName = "layoutSequence")]
-    public Collection<Layout> Sequence
+    public Collection<FieldLayout> Sequence
     {
       get
       {
         return sequence;
       }
-      set
-      {
-        sequence = value;
-      }
     }
-    private Collection<Layout> sequence;
+    private Collection<FieldLayout> sequence;
 
     public LayoutSequence()
     {
-      sequence = new Collection<Layout>();
+      sequence = new Collection<FieldLayout>();
     }
 
-    public LayoutSequence(string _fieldTypeTag)
+    public LayoutSequence(string fieldTypeTag)
     {
-      sequence = new Collection<Layout>();
-      fieldTypeTag = _fieldTypeTag;
+      sequence = new Collection<FieldLayout>();
+      this.fieldTypeTag = fieldTypeTag;
     }
 
     public int NumberOfLayouts
@@ -66,7 +68,7 @@ namespace SportsTacticsBoard
       get { return sequence.Count; }
     }
 
-    public Layout GetLayout(int index)
+    public FieldLayout GetLayout(int index)
     {
       if ((index >= 0) && (index < sequence.Count)) {
         return sequence[index];
@@ -75,14 +77,14 @@ namespace SportsTacticsBoard
       }
     }
 
-    public void SetLayout(int index, Layout layout)
+    public void SetLayout(int index, FieldLayout layout)
     {
       if ((index >= 0) && (index < sequence.Count)) {
         sequence[index] = layout;
       }
     }
 
-    public int AddNewLayout(int index, Layout layout)
+    public int AddNewLayout(int index, FieldLayout layout)
     {
       if (index >= sequence.Count) {
         sequence.Add(layout);

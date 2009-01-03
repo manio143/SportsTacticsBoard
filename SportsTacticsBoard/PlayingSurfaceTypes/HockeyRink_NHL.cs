@@ -159,10 +159,10 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
       }
     }
 
-    public Layout DefaultLayout
+    public FieldLayout DefaultLayout
     { 
       get {
-        Layout layout = new Layout();
+        FieldLayout layout = new FieldLayout();
         layout.AddEntry("Player_Attacking_G", distanceOfGoalLineFromEndOfRink + playerSize, Width / 2.0F);
         layout.AddEntry("Player_Attacking_LD", distanceOfBlueLineFromEndOfRink + 3.0F, Width / 3.0F);
         layout.AddEntry("Player_Attacking_RD", distanceOfBlueLineFromEndOfRink + 3.0F, 2.0F * (Width / 3.0F));

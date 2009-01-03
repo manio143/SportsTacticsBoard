@@ -85,7 +85,7 @@ namespace SportsTacticsBoard
     /// <summary>
     /// Retrieves the initial layout of the objects on the field.
     /// </summary>
-    Layout DefaultLayout { get; }
+    FieldLayout DefaultLayout { get; }
 
     /// <summary>
     /// Retrieves a collection of field object tag strings representing
