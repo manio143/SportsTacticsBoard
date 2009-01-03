@@ -1,5 +1,9 @@
 -- Changes committed to source control since previous release
+None yet.
 
+
+0.2.1005 - Various minor fixes and lots of build/release improvements
+BUILD - Updated build environment to use more recent tools, Visual Studio 2008, .NET 3.5, Wix 3.0.4805.0, FxCop 1.36, and NAnt 0.86 Beta1
 FIX - Exit menu item wasn't working. 
 FIX - Fixed locating of installed documents and library files when installed using updated installers (that have bin folder).
 BUILD - Added code analysis using FxCop to build process.

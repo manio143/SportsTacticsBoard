@@ -120,7 +120,7 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
       }
     }
 
-    private void AppendPlayerPositions(Layout layout, FieldObjects.Player.TeamId teamId, bool putOnLeftSide)
+    private void AppendPlayerPositions(FieldLayout layout, FieldObjects.Player.TeamId teamId, bool putOnLeftSide)
     {
       const float spacing = 3.25F;
       const float benchIndent = 5.0F;
@@ -138,11 +138,11 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
       }
     }
 
-    public Layout DefaultLayout
+    public FieldLayout DefaultLayout
     {
       get
       {
-        Layout layout = new Layout();
+        FieldLayout layout = new FieldLayout();
         AppendPlayerPositions(layout, SportsTacticsBoard.FieldObjects.Player.TeamId.Attacking, true);
         AppendPlayerPositions(layout, SportsTacticsBoard.FieldObjects.Player.TeamId.Defending, false);
         return layout;

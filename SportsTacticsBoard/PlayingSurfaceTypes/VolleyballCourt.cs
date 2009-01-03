@@ -123,7 +123,7 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
     /// Append players to layout on standart positions
     /// </summary>
     /// <param name="layout">Layout</param>
-    private void AppendPlayerPositions(Layout layout)
+    private void AppendPlayerPositions(FieldLayout layout)
     {
       // Add attacking players
       SportsTacticsBoard.FieldObjects.Player.TeamId teamId = SportsTacticsBoard.FieldObjects.Player.TeamId.Attacking;
@@ -157,11 +157,11 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
 
     }
 
-    public Layout DefaultLayout
+    public FieldLayout DefaultLayout
     {
       get
       {
-        Layout layout = new Layout();
+        FieldLayout layout = new FieldLayout();
         AppendPlayerPositions(layout);
         return layout;
       }

@@ -40,14 +40,14 @@ namespace SportsTacticsBoard
       tag = "";
     }
 
-    public LayoutEntry(string _tag, float posX, float posY) {
-      tag = _tag;
+    public LayoutEntry(string tag, float posX, float posY) {
+      this.tag = tag;
       positionX = posX;
       positionY = posY;
     }
 
-    public LayoutEntry(string _tag, PointF pt) {
-      tag = _tag;
+    public LayoutEntry(string tag, PointF pt) {
+      this.tag = tag;
       positionX = pt.X;
       positionY = pt.Y;
     }

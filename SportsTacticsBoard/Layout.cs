@@ -32,7 +32,8 @@ using System.Xml.Serialization;
 
 namespace SportsTacticsBoard
 {
-  public class Layout
+  [XmlType(TypeName = "Layout")]
+  public class FieldLayout
   {
     [XmlElement(ElementName = "Entry")]
     public Collection<LayoutEntry> Entries
@@ -41,14 +42,10 @@ namespace SportsTacticsBoard
       {
         return entries;
       }
-      set
-      {
-        entries = value;
-      }
     }
     private Collection<LayoutEntry> entries;
 
-    public Layout()
+    public FieldLayout()
     {
       entries = new Collection<LayoutEntry>();
     }

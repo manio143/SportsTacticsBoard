@@ -2,8 +2,8 @@
 <project name="Sports Tactics Board" default="build" xmlns="http://nant.sf.net/release/0.85/nant.xsd">
 
   <!-- You will need to change this if you installed WiX or FxCop somewhere else -->
-  <property name="dir.wixpath" value="${environment::get-variable('ProgramFiles')}\Windows Installer XML v3" overwrite="false"/>
-  <property name="dir.fxcoppath" value="${environment::get-variable('ProgramFiles')}\Microsoft FxCop 1.35" overwrite="false"/>
+  <property name="dir.wixpath" value="${environment::get-variable('WIX')}" overwrite="false"/>
+  <property name="dir.fxcoppath" value="${environment::get-variable('ProgramFiles')}\Microsoft FxCop 1.36" overwrite="false"/>
 
   <!-- Define various root directory names -->
   <property name="dir.root" value="${project::get-base-directory()}" overwrite="false"/>
@@ -91,7 +91,7 @@
   <target name="increment_build_number" description="Increments the build number and re-writes the version files.">
     <!-- Generate the new build number and the complete version string -->
     <property name="version_build.new" value="${int::to-string(int::parse(version_build) + 1)}"/>
-    <property name="version.new" value="${version_major}.${version_minor}.${version_build.new}.0"/>
+    <property name="version.new" value="${version_major}.${version_minor}.${version_build.new}.${version_rev}"/>
     
     <!-- Write out the new assembly information file with the version information in -->
     <asminfo output="${file.version.cs}" language="CSharp">
@@ -341,7 +341,7 @@
   <!-- === VISUAL STUDIO SOLUTION === -->
 
   <target name="solution" depends="version_files" description="Builds the Visual Studio based solution using MSBuild">
-    <exec program="MSBuild.exe" basedir="${framework::get-framework-directory('net-2.0')}" failonerror="true">
+    <exec program="MSBuild.exe" basedir="${framework::get-framework-directory('net-3.5')}" failonerror="true">
       <arg value="/nologo"/>
       <arg value="/property:Configuration=Release" if="${flavor == 'ship'}"/>
       <arg value="/property:Configuration=Debug" if="${flavor == 'debug'}"/>
@@ -351,7 +351,7 @@
   </target>
 
   <target name="solution.clean" description="Cleans the Visual Studio based solution using MSBuild">
-    <exec program="MSBuild.exe" basedir="${framework::get-framework-directory('net-2.0')}" failonerror="true">
+    <exec program="MSBuild.exe" basedir="${framework::get-framework-directory('net-3.5')}" failonerror="true">
       <arg value="/nologo"/>
       <arg value="/property:Configuration=Release" if="${flavor == 'ship'}"/>
       <arg value="/property:Configuration=Debug" if="${flavor == 'debug'}"/>

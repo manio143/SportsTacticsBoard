@@ -31,7 +31,7 @@ Table of Contents
 1. Copyrights
 -------------
 
-Copyright (C) 2006-2007 Robert Turner
+Copyright (C) 2006-2009 Robert Turner
 
 
 2. License
@@ -134,33 +134,24 @@ is considered the primary technique for building this tool.
 The following development tools can also be used to modify and compile
 the program:
 
-  - Visual Studio 2005 Professional 
+  - Visual Studio 2008 Professional 
       Commerical product available from Microsoft and resellers.
       For more information see: 
          http://msdn.microsoft.com/vstudio/default.aspx
 
-  - Visual C# 2005 Express Edition
+  - Visual C# 2008 Express Edition
       No-cost product available from Microsoft.
       For more information see:
          http://msdn.microsoft.com/vstudio/express/visualcsharp/
 
-  - Microsoft .NET Framework 2.0 SDK
-      No-cost development .NET development SDK.
+  - Microsoft Windows SDK 6.1
+      No-cost SDK for Windows and .NET development
       Downloadable from:
-         http://www.microsoft.com/downloads/details.aspx?familyid=fe6f2099-b7b4-4f47-a244-c96d69c35dec&displaylang=en
-
-  - Microsoft Windows SDK for Windows Vista
-      No-cost SDK for Windows and .NET development (may require Microsoft 
-      Genuine Advantage validation to download)
-      Downloadable from:
-         http://www.microsoft.com/downloads/details.aspx?FamilyId=7614FE22-8A64-4DFB-AA0C-DB53035F40A0&displaylang=en
-        OR
-         http://www.microsoft.com/downloads/details.aspx?FamilyId=C2B1E300-F358-4523-B479-F53D234CDCCF&displaylang=en
-
+         http://www.microsoft.com/downloads/details.aspx?FamilyId=F26B1AA4-741A-433A-9BE5-FA919850BDBF&displaylang=en
 
 In order to build the installer and other targets, you will need the following:
 
-  - NAnt 0.85
+  - NAnt 0.86-beta1
       NAnt is a free .NET build tool. In theory it is kind of like make without 
       make's wrinkles.
       Downloadable from:
@@ -168,14 +159,14 @@ In order to build the installer and other targets, you will need the following:
       Installation Notes:
        - Must be in your executable path
 
-  - NAnt Contrib 0.85
+  - NAnt Contrib 0.86 -- Not yet released - Use a recent nightly build
       NAnt Contrib is a free add-on the NAnt.
       Downloadable from:
          http://nantcontrib.sourceforge.net/
       Installation Notes:
        - Must be installed into NAnt install
 
-  - Windows Installer XML Toolset (WiX) v3.0.2420
+  - Windows Installer XML Toolset (WiX) v3.0.4805.0
       The Windows Installer XML (WiX) is a toolset that builds Windows installation 
       packages from XML source code.
       Downloadable from:
@@ -187,16 +178,12 @@ In order to build the installer and other targets, you will need the following:
 
 Optionally, you can install the following:
 
-  - FxCop 1.35
+  - FxCop 1.36
       A code analysis tool provided by Microsoft for .NET assembly code analysis.
       Downloadable from:
-         http://www.gotdotnet.com/team/fxcop/
-      or downloadable from (as part of the Windows SDK):
-         http://www.microsoft.com/downloads/details.aspx?FamilyId=7614FE22-8A64-4DFB-AA0C-DB53035F40A0&displaylang=en
-        OR
-         http://www.microsoft.com/downloads/details.aspx?FamilyId=C2B1E300-F358-4523-B479-F53D234CDCCF&displaylang=en
+         http://www.microsoft.com/downloads/details.aspx?FamilyID=9aeaa970-f281-4fb0-aba1-d59d7ed09772&DisplayLang=en
       Installation Notes:
-       - Default installation path of C:\Program Files\Microsoft FxCop 1.35
+       - Default installation path of C:\Program Files\Microsoft FxCop 1.36
          is the easiest, otherwise you may have to modify files.
        - Runs automatically from NAnt build script.
          
@@ -207,7 +194,7 @@ Optionally, you can install the following:
 
 See the appropriate section below that corresponds to the environment you have.
 
-5.2.1 No Development Environment on Windows with .NET 2.0 Runtime Installed
+5.2.1 No Development Environment on Windows with .NET 3.5 Runtime Installed
 ---------------------------------------------------------------------------
 
 1. Open a command shell:
@@ -216,12 +203,12 @@ See the appropriate section below that corresponds to the environment you have.
 2. Change working directories to the folder with the complete 
    source tree extracted to.
     e.g.:   CD /D C:\SportsTacticsBoard-src
-3. Run build-net20-runtime.bat by typing:
-     build-net20-runtime
+3. Run build-net35-runtime.bat by typing:
+     build-net35-runtime
    in the command shell and hitting enter.
 
-5.2.2 Visual Studio (any version supporting C#)
------------------------------------------------
+5.2.2 Visual Studio 2008 (any version supporting C#)
+----------------------------------------------------
 
 1. Open the solution file (.SLN file) from the root folder of the 
    repository.
@@ -233,7 +220,7 @@ See the appropriate section below that corresponds to the environment you have.
 ---------------------------------------
 
 1. Open an "SDK Command Prompt" or "CMD Shell" window from 
-     Start | Programs | Microsoft .NET Framework SDK v2.0
+     Start | Programs | Microsoft .NET Framework SDK v3.5
    OR
      Start | Programs | Microsoft Windows SDK
 2. Change working directories to the folder with the complete 
@@ -248,10 +235,10 @@ See the appropriate section below that corresponds to the environment you have.
 
 Note: Ensure NAnt is in your PATH before you start, otherwise you will need to 
       specify the full path to the program to run it.
-  e.g.:  PATH %PATH%;C:\NAnt-0.85\bin
+  e.g.:  PATH %PATH%;C:\NAnt-0.86-beta1\bin
 
-1. Open a "Visual Studio 2005 Command Prompt"
-     Start | Programs | Microsoft Visual Studio 2005 | Visual Studio Tools | Visual Studio 2005 Command Prompt
+1. Open a "Visual Studio 2008 Command Prompt"
+     Start | Programs | Microsoft Visual Studio 2008 | Visual Studio Tools | Visual Studio 2008 Command Prompt
 2. Change working directories to the folder with the complete 
    source tree extracted to.
     e.g.:   CD /D C:\SportsTacticsBoard-src

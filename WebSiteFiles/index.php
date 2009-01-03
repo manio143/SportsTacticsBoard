@@ -23,12 +23,12 @@
     
       <h2>How do I get a copy to use?</h2>
       <ol>
-        <li>Get the Microsoft .NET 2.0 Framework - often already installed on up-to-date Windows computers.</li>
+        <li>Get the Microsoft .NET 3.5 Framework - often already installed on up-to-date Windows computers.</li>
         <li>Download a release of Sports Tactics Board from the <a href="downloads.php">Downloads</a> page.</li>
       </ol>
-      <p>The Microsoft&nbsp;.NET&nbsp;2.0&nbsp;Framework can be downloaded 
+      <p>The Microsoft&nbsp;.NET&nbsp;3.5&nbsp;Framework can be downloaded 
       from Microsoft using Windows Update or Microsoft Update, or from
-      the <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5&displaylang=en">Microsoft Download Center</a>.</p>
+      the <a href="http://www.microsoft.com/downloads/details.aspx?familyid=AB99342F-5D1A-413D-8319-81DA479AB0D7&displaylang=en">Microsoft Download Center</a>.</p>
       <p>You can also obtain the source code for Sports Tactics Board using Subversion by 
       following the instructions on <a href="http://sourceforge.net/svn/?group_id=181975">this page</a>.</p>
 

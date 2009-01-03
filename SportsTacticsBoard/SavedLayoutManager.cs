@@ -307,7 +307,7 @@ namespace SportsTacticsBoard
     /// <param name="fieldTypeTag">The field type that the layout must apply to.</param>
     /// <returns>The field object layout for the menu item. Returns null if no layout is 
     /// found or does not apply for the supplied field type.</returns>
-    public Layout GetLayoutForMenuItem(ToolStripMenuItem menuItem, string fieldTypeTag) {
+    public FieldLayout GetLayoutForMenuItem(ToolStripMenuItem menuItem, string fieldTypeTag) {
       string name = menuItem.Text;
       foreach (SavedLayout savedLayout in savedLayouts) {
         if ((MatchesFieldTypeTag(fieldTypeTag, savedLayout.FieldTypeTag)) &&
@@ -326,7 +326,7 @@ namespace SportsTacticsBoard
     /// <param name="layoutToSave">The layout to be saved which describes the 
     /// current positions of the field objects.</param>
     /// <param name="fieldTypeTag">Identifies the field type of the layout.</param>
-    public void SaveCurrentLayout(Layout layoutToSave, string fieldTypeTag) {
+    public void SaveCurrentLayout(FieldLayout layoutToSave, string fieldTypeTag) {
       if (string.IsNullOrEmpty(layoutPath)) {
         // TODO: Display an error message to the user
         return;

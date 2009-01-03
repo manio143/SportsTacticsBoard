@@ -64,7 +64,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    private Layout GetNextLayout()
+    private FieldLayout GetNextLayout()
     {
       return currentSequence.GetLayout(positionInSequence + 1);
     }
@@ -76,14 +76,14 @@ namespace SportsTacticsBoard
 
     private void commonSavedLayoutMenuItem_Click(object sender, EventArgs e) {
       ToolStripMenuItem mi = (ToolStripMenuItem)sender;
-      Layout layout = commonSavedLayoutManager.GetLayoutForMenuItem(mi, SafeGetCurrentFieldTypeTag());
+      FieldLayout layout = commonSavedLayoutManager.GetLayoutForMenuItem(mi, SafeGetCurrentFieldTypeTag());
       fieldControl.SetLayout(layout);
     }
 
     private void userSavedLayoutMenuItem_Click(object sender, EventArgs e)
     {
       ToolStripMenuItem mi = (ToolStripMenuItem)sender;
-      Layout layout = userSavedLayoutManager.GetLayoutForMenuItem(mi, SafeGetCurrentFieldTypeTag());
+      FieldLayout layout = userSavedLayoutManager.GetLayoutForMenuItem(mi, SafeGetCurrentFieldTypeTag());
       fieldControl.SetLayout(layout);
     }
 
@@ -280,7 +280,7 @@ namespace SportsTacticsBoard
             if (seq != null) {
               // Locate the field type interface for the field specified by
               // this saved file
-              IPlayingSurfaceType newFieldType = FindFieldType(seq.fieldTypeTag);
+              IPlayingSurfaceType newFieldType = FindFieldType(seq.FieldTypeTag);
               if (newFieldType == null) {
                 string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
                 GlobalizationAwareMessageBox.Show(
@@ -484,7 +484,7 @@ namespace SportsTacticsBoard
     }
 
     private int RecordPositionToSequence(bool replace, int index, LayoutSequence sequence) {
-      Layout layout = fieldControl.FieldLayout;
+      FieldLayout layout = fieldControl.FieldLayout;
       fieldControl.IsDirty = false;
       if (replace) {
         sequence.SetLayout(index, layout);
@@ -494,7 +494,7 @@ namespace SportsTacticsBoard
       }
     }
 
-    private void RestorePositionFromSequence(int index, LayoutSequence sequence, Layout _nextLayout) {
+    private void RestorePositionFromSequence(int index, LayoutSequence sequence, FieldLayout _nextLayout) {
       fieldControl.SetLayouts(sequence.GetLayout(index), _nextLayout);
       fieldControl.IsDirty = false;
     }
@@ -541,7 +541,7 @@ namespace SportsTacticsBoard
 
     private void copyMenuItem_Click(object sender, EventArgs e) {
       Bitmap bitmap = new Bitmap(fieldControl.Width, fieldControl.Height);
-      Layout nextLayout = null;
+      FieldLayout nextLayout = null;
       if (fieldControl.ShowMovementLines) {
         nextLayout = GetNextLayout();
       }
@@ -549,10 +549,10 @@ namespace SportsTacticsBoard
       Clipboard.SetImage(bitmap);
     }
 
-    private void SaveSequenceEntryToFile(string imageFileName, Layout layout, Layout nextLayout, System.Drawing.Imaging.ImageFormat imageFormat)
+    private void SaveSequenceEntryToFile(string imageFileName, FieldLayout layout, FieldLayout nextLayout, System.Drawing.Imaging.ImageFormat imageFormat)
     {
       Bitmap bitmap = new Bitmap(fieldControl.Width, fieldControl.Height);
-      Layout nl = null;
+      FieldLayout nl = null;
       if (fieldControl.ShowMovementLines) {
         nl = nextLayout;
       }
@@ -596,7 +596,7 @@ namespace SportsTacticsBoard
 
       if (saveEntireSequence) {
         string fileNamePattern = saveFileDialog.FileName;
-        int idx = fileNamePattern.LastIndexOf(".");
+        int idx = fileNamePattern.LastIndexOf(".", StringComparison.Ordinal);
         if (idx < 0) {
           idx = fileNamePattern.Length;
         }
