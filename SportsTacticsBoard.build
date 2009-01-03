@@ -275,6 +275,7 @@
           <arg value='-dRootDir="${dir.root}"'/>
           <arg value='-I"${dir.version}"'/>
           <arg value='-ext "${dir.wixpath.bin}\WixUIExtension.dll"'/>
+          <arg value='-ext "${dir.wixpath.bin}\WixNetFxExtension.dll"'/>
           <arg value='-out "${wix_object_file}"'/>
           <arg file="${wix_source_file}"/>
         </exec>
@@ -326,10 +327,20 @@
         <arg value="-nologo"/>
         <arg value="-cultures:en-US"/>
         <arg value='-ext "${dir.wixpath.bin}\WixUIExtension.dll"'/>
+        <arg value='-ext "${dir.wixpath.bin}\WixNetFxExtension.dll"'/>
         <arg value='-out "${file.build.msi}"'/>
         <arg file="${wix_object_file_list}"/>
       </exec>
+      <!-- Run SMOKE on the resulting MSI file and make sure everything is happy -->
+      <echo level="Info" message="Analyzing ${file.build.msi}"/>
+      <exec program="smoke.exe" basedir="${dir.wixpath.bin}" failonerror="true"
+	    workingdir="${dir.install}">
+        <arg value="-nologo"/>
+        <arg value="-wx"/>
+        <arg value='"${file.build.msi}"'/>
+      </exec>
     </if>
+
 
   </target>
 
