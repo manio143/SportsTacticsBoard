@@ -54,23 +54,23 @@ namespace SportsTacticsBoard
     private void InitializeComponent()
     {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
-      this.label1 = new System.Windows.Forms.Label();
-      this.label2 = new System.Windows.Forms.Label();
+      this.titleLabel = new System.Windows.Forms.Label();
+      this.copyrightLabel = new System.Windows.Forms.Label();
       this.versionLabel = new System.Windows.Forms.Label();
       this.label3 = new System.Windows.Forms.Label();
       this.licenseTextBox = new System.Windows.Forms.TextBox();
       this.webSiteLinkLabel = new System.Windows.Forms.LinkLabel();
       this.SuspendLayout();
       // 
-      // label1
+      // titleLabel
       // 
-      resources.ApplyResources(this.label1, "label1");
-      this.label1.Name = "label1";
+      resources.ApplyResources(this.titleLabel, "titleLabel");
+      this.titleLabel.Name = "titleLabel";
       // 
-      // label2
+      // copyrightLabel
       // 
-      resources.ApplyResources(this.label2, "label2");
-      this.label2.Name = "label2";
+      resources.ApplyResources(this.copyrightLabel, "copyrightLabel");
+      this.copyrightLabel.Name = "copyrightLabel";
       // 
       // versionLabel
       // 
@@ -106,8 +106,8 @@ namespace SportsTacticsBoard
       this.Controls.Add(this.licenseTextBox);
       this.Controls.Add(this.label3);
       this.Controls.Add(this.versionLabel);
-      this.Controls.Add(this.label2);
-      this.Controls.Add(this.label1);
+      this.Controls.Add(this.copyrightLabel);
+      this.Controls.Add(this.titleLabel);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
@@ -123,8 +123,8 @@ namespace SportsTacticsBoard
 
     #endregion
 
-    private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Label titleLabel;
+    private System.Windows.Forms.Label copyrightLabel;
     private System.Windows.Forms.Label versionLabel;
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.TextBox licenseTextBox;

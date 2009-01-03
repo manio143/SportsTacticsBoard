@@ -25,21 +25,16 @@
 //
 using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Resources;
+using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SoccerTacticsBoard")]
+[assembly: AssemblyTitle("Sports Tactics Board")]
 [assembly: AssemblyDescription("Sports Tactics Board is a utility that allows coaches, trainers and officials to describe sports tactics, strategies and positioning using a magnetic or chalk-board style approach.")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SoccerTacticsBoard")]
+[assembly: AssemblyProduct("Sports Tactics Board")]
 [assembly: AssemblyCopyright("Copyright © 2006-2009 Robert Turner. All rights reserved.")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM componenets.  If you need to access a type in this assembly from 

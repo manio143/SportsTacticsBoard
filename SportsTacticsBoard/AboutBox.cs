@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2009 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,11 +24,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace SportsTacticsBoard
@@ -45,6 +41,14 @@ namespace SportsTacticsBoard
     private void AboutBox_Load(object sender, EventArgs e)
     {
       versionLabel.Text = typeof(Program).Assembly.GetName().Version.ToString();
+      object[] copyrightAttributes = typeof(Program).Assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+      if (copyrightAttributes.Length > 0) {
+        copyrightLabel.Text = ((AssemblyCopyrightAttribute)copyrightAttributes[0]).Copyright;
+      }
+      object[] titleAttributes = typeof(Program).Assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+      if (titleAttributes.Length > 0) {
+        titleLabel.Text = ((AssemblyTitleAttribute)titleAttributes[0]).Title;
+      }
     }
 
     private void webSiteLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
