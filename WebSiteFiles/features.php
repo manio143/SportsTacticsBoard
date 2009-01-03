@@ -8,9 +8,9 @@
 <?php include("header.php"); ?>
 
 
-      <h2>Features (Release 0.2.0)</h2>
+      <h2>Features (Release 0.2.1005)</h2>
       <ul>
-        <li>Supports more than one sport (currently Soccer and Hockey), more to be added.</li>
+        <li>Supports more than one sport (currently Soccer, Hockey, Volleyball), more to be added.</li>
         <li>Records sequences of positions for documenting tactical strategies or plays.</li>
         <li>Save and loads tactical sequences from files - allows building a library of plays or drills.</li>
 	<li>Supports pre-defined layouts that position players, ball/puck and officials.</li>
@@ -28,7 +28,6 @@
 
       <h3>Release 0.3</h3>
       <ul>
-        <li>Support for Volleyball court. <i>Done - Courtesy of Lukas Kawalec (kadeon)</i></li>
         <li>Improve drawing of fields, players and movement lines.</li>
         <li>Support for &quot;views&quot; of sections of the playing field, including rotation.</li>
         <li>Support for predefined &quot;Field Views&quot; for limited views of areas of the playing field.</li>
