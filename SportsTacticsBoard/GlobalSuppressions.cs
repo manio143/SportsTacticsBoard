@@ -12,3 +12,4 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", MessageId = "sportstacticsbd", Scope = "resource", Target = "SportsTacticsBoard.AboutBox.resources")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", MessageId = "png", Scope = "resource", Target = "SportsTacticsBoard.Properties.Resources.resources")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", MessageId = "stb", Scope = "resource", Target = "SportsTacticsBoard.Properties.Resources.resources")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", MessageId = "Floorball", Scope = "resource", Target = "SportsTacticsBoard.Properties.Resources.resources")]

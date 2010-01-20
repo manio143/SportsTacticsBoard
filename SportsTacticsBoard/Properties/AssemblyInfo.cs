@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006-2009 Robert Turner
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Sports Tactics Board")]
 [assembly: AssemblyDescription("Sports Tactics Board is a utility that allows coaches, trainers and officials to describe sports tactics, strategies and positioning using a magnetic or chalk-board style approach.")]
 [assembly: AssemblyProduct("Sports Tactics Board")]
-[assembly: AssemblyCopyright("Copyright © 2006-2009 Robert Turner. All rights reserved.")]
+[assembly: AssemblyCopyright("Copyright © 2006-2010 Robert Turner. All rights reserved.")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM componenets.  If you need to access a type in this assembly from 

@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006-2007 Robert Turner
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -40,6 +40,16 @@ namespace SportsTacticsBoard
     private Point fieldOriginInDisplayUnits = new Point(0, 0);
     private bool dirty;
     private IPlayingSurfaceType fieldType;
+    private bool allowInteraction = true;
+
+    public bool AllowInteraction
+    {
+      get { return allowInteraction; }
+      set { 
+        allowInteraction = value;
+        this.Cursor = (allowInteraction) ? Cursors.Default : Cursors.No;
+      }
+    }
 
     public bool IsDirty
     {
@@ -290,7 +300,7 @@ namespace SportsTacticsBoard
 
     protected override void OnMouseDown(MouseEventArgs e)
     {
-      if (e.Button == MouseButtons.Left) {
+      if ((AllowInteraction) && (e.Button == MouseButtons.Left)) {
         FieldObject fo = ObjectAtPoint(e.Location);
         if (fo != null) {
           dragObject = fo;

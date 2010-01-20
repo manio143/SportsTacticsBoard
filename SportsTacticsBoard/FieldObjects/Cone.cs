@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006-2010 Robert Turner
+// Copyright (C) 2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -27,7 +27,10 @@ using System.Drawing;
 
 namespace SportsTacticsBoard.FieldObjects
 {
-  class Ball : FieldObject
+  /// <summary>
+  /// Author: Ulrich Jenzer
+  /// </summary>
+  class Cone : FieldObject
   {
     private string label = string.Empty;
     public override string Label
@@ -35,32 +38,40 @@ namespace SportsTacticsBoard.FieldObjects
       get { return label; }
     }
 
-    private string tag = "Ball";
+    private string tag;
     public override string Tag
     {
       get { return tag; }
     }
 
-    public Ball(float posX, float posY, float dispRadius) :
-      base(posX, posY, dispRadius)
+    protected override int LabelFontSize
     {
-      OutlinePenColor = Color.Black;
-      FillBrushColor = Color.White;
+      get { return 8; }
     }
 
-    public Ball(string label, string tag, float posX, float posY, float dispRadius)
+    public Cone(string label, string tag, float posX, float posY, float dispRadius)
       : base(posX, posY, dispRadius)
     {
       OutlinePenColor = Color.Black;
-      FillBrushColor = Color.White;
+      FillBrushColor = Color.Orange;
       this.label = label;
       this.tag = tag;
     }
 
     protected override float[] MovementPenDashPattern
     {
-      get { 
-        return new float[] { 3.0F, 2.0F }; 
+      get { return new float[] { 3.0F, 2.0F }; }
+    }
+
+    public override void DrawAt(Graphics graphics, PointF pos)
+    {
+      base.DrawAt(graphics, pos);
+
+      RectangleF rect = GetRectangleAt(pos);
+      if (OutlinePenWidth > 0.0) {
+        using (Pen outlinePen = new Pen(OutlinePenColor, OutlinePenWidth)) {
+          graphics.DrawRectangle(outlinePen, rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
+        }
       }
     }
   }
