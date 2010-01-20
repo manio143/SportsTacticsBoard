@@ -72,11 +72,13 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="FieldObjects\Cone.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="LayoutEntry.cs" />
     <Compile Include="FieldObjects\LabelledPlayer.cs" />
     <Compile Include="FieldObjects\NumberedPlayer.cs" />
     <Compile Include="FieldObjects\Puck.cs" />
+    <Compile Include="PlayingSurfaceTypes\FloorballField.cs" />
     <Compile Include="PlayingSurfaceTypes\HockeyRink_NHL.cs" />
     <Compile Include="IPlayingSurfaceType.cs" />
     <Compile Include="FieldObjects\Ball.cs" />
@@ -200,6 +202,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\DataContainer_MoveFirstHS.png" />
+    <Content Include="Images\DataContainer_MoveLastHS.png" />
+    <Content Include="Images\DataContainer_MoveNextHS.png" />
+    <Content Include="Images\DataContainer_MovePreviousHS.png" />
+    <Content Include="Images\Edit_UndoHS.png" />
+    <Content Include="Images\PauseHS.png" />
+    <Content Include="Images\PlayHS.png" />
+    <Content Include="Images\RecordHS.png" />
     <Content Include="program.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

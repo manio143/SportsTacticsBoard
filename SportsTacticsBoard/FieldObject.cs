@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006-2007 Robert Turner
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ namespace SportsTacticsBoard
       return GetRectangleAt(position);
     }
 
-    private RectangleF GetRectangleAt(PointF pos)
+    protected RectangleF GetRectangleAt(PointF pos)
     {
       return new RectangleF(pos.X - DisplayRadius,
         pos.Y - DisplayRadius, DisplayRadius * 2, DisplayRadius * 2);
@@ -74,7 +74,7 @@ namespace SportsTacticsBoard
       DrawAt(graphics, Position);
     }
 
-    public void DrawAt(Graphics graphics, PointF pos)
+		public virtual void DrawAt(Graphics graphics, PointF pos)
     {
       if (null == graphics) {
         throw new ArgumentNullException("graphics");

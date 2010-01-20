@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -52,11 +52,16 @@ namespace SportsTacticsBoard
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
       this.sequenceToolString = new System.Windows.Forms.ToolStrip();
+      this.goToFirstToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.previousLayoutInSequence = new System.Windows.Forms.ToolStripButton();
       this.currentLayoutNumber = new System.Windows.Forms.ToolStripTextBox();
       this.nextLayoutInSequence = new System.Windows.Forms.ToolStripButton();
+      this.goToLastToolStripButton = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+      this.playToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.recordNewPositionButton = new System.Windows.Forms.ToolStripButton();
       this.recordOverCurrentPositionButton = new System.Windows.Forms.ToolStripButton();
@@ -64,6 +69,7 @@ namespace SportsTacticsBoard
       this.revertCurrentLayoutToSavedButton = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.showMovementButton = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
       this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
       this.sequenceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.newSequenceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,6 +102,7 @@ namespace SportsTacticsBoard
       this.changePlayingSurfaceTypeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+      this.playSequenceTimer = new System.Windows.Forms.Timer(this.components);
       this.fieldControl = new SportsTacticsBoard.FieldControl();
       this.sequenceToolString.SuspendLayout();
       this.mainMenuStrip.SuspendLayout();
@@ -104,23 +111,36 @@ namespace SportsTacticsBoard
       // sequenceToolString
       // 
       this.sequenceToolString.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.goToFirstToolStripButton,
             this.previousLayoutInSequence,
             this.currentLayoutNumber,
             this.nextLayoutInSequence,
+            this.goToLastToolStripButton,
+            this.toolStripSeparator11,
+            this.playToolStripButton,
             this.toolStripSeparator2,
             this.recordNewPositionButton,
             this.recordOverCurrentPositionButton,
             this.removeCurrentPositionFromSequenceButton,
             this.revertCurrentLayoutToSavedButton,
             this.toolStripSeparator1,
-            this.showMovementButton});
+            this.showMovementButton,
+            this.toolStripSeparator10});
       resources.ApplyResources(this.sequenceToolString, "sequenceToolString");
       this.sequenceToolString.Name = "sequenceToolString";
+      // 
+      // goToFirstToolStripButton
+      // 
+      this.goToFirstToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.goToFirstToolStripButton.Image = global::SportsTacticsBoard.Properties.Resources.DataContainer_MoveFirstHS;
+      this.goToFirstToolStripButton.Name = "goToFirstToolStripButton";
+      resources.ApplyResources(this.goToFirstToolStripButton, "goToFirstToolStripButton");
+      this.goToFirstToolStripButton.Click += new System.EventHandler(this.goToFirstToolStripButton_Click);
       // 
       // previousLayoutInSequence
       // 
       this.previousLayoutInSequence.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.previousLayoutInSequence.Image = global::SportsTacticsBoard.Properties.Resources.GoToPrevious;
+      this.previousLayoutInSequence.Image = global::SportsTacticsBoard.Properties.Resources.DataContainer_MovePreviousHS;
       resources.ApplyResources(this.previousLayoutInSequence, "previousLayoutInSequence");
       this.previousLayoutInSequence.Name = "previousLayoutInSequence";
       this.previousLayoutInSequence.Click += new System.EventHandler(this.previousLayoutInSequence_Click);
@@ -134,10 +154,31 @@ namespace SportsTacticsBoard
       // nextLayoutInSequence
       // 
       this.nextLayoutInSequence.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.nextLayoutInSequence.Image = global::SportsTacticsBoard.Properties.Resources.GoToNextHS;
+      this.nextLayoutInSequence.Image = global::SportsTacticsBoard.Properties.Resources.DataContainer_MoveNextHS;
       resources.ApplyResources(this.nextLayoutInSequence, "nextLayoutInSequence");
       this.nextLayoutInSequence.Name = "nextLayoutInSequence";
       this.nextLayoutInSequence.Click += new System.EventHandler(this.nextLayoutInSequence_Click);
+      // 
+      // goToLastToolStripButton
+      // 
+      this.goToLastToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.goToLastToolStripButton.Image = global::SportsTacticsBoard.Properties.Resources.DataContainer_MoveLastHS;
+      resources.ApplyResources(this.goToLastToolStripButton, "goToLastToolStripButton");
+      this.goToLastToolStripButton.Name = "goToLastToolStripButton";
+      this.goToLastToolStripButton.Click += new System.EventHandler(this.goToLastToolStripButton_Click);
+      // 
+      // toolStripSeparator11
+      // 
+      this.toolStripSeparator11.Name = "toolStripSeparator11";
+      resources.ApplyResources(this.toolStripSeparator11, "toolStripSeparator11");
+      // 
+      // playToolStripButton
+      // 
+      this.playToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.playToolStripButton.Image = global::SportsTacticsBoard.Properties.Resources.PlayHS;
+      this.playToolStripButton.Name = "playToolStripButton";
+      resources.ApplyResources(this.playToolStripButton, "playToolStripButton");
+      this.playToolStripButton.Click += new System.EventHandler(this.playToolStripButton_Click);
       // 
       // toolStripSeparator2
       // 
@@ -146,7 +187,7 @@ namespace SportsTacticsBoard
       // 
       // recordNewPositionButton
       // 
-      this.recordNewPositionButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.recordNewPositionButton.Image = global::SportsTacticsBoard.Properties.Resources.RecordHS;
       resources.ApplyResources(this.recordNewPositionButton, "recordNewPositionButton");
       this.recordNewPositionButton.Name = "recordNewPositionButton";
       this.recordNewPositionButton.Click += new System.EventHandler(this.recordNewPositionButton_Click);
@@ -167,7 +208,7 @@ namespace SportsTacticsBoard
       // 
       // revertCurrentLayoutToSavedButton
       // 
-      this.revertCurrentLayoutToSavedButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.revertCurrentLayoutToSavedButton.Image = global::SportsTacticsBoard.Properties.Resources.Edit_UndoHS;
       resources.ApplyResources(this.revertCurrentLayoutToSavedButton, "revertCurrentLayoutToSavedButton");
       this.revertCurrentLayoutToSavedButton.Name = "revertCurrentLayoutToSavedButton";
       this.revertCurrentLayoutToSavedButton.Click += new System.EventHandler(this.revertCurrentLayoutToSavedButton_Click);
@@ -183,6 +224,11 @@ namespace SportsTacticsBoard
       resources.ApplyResources(this.showMovementButton, "showMovementButton");
       this.showMovementButton.Name = "showMovementButton";
       this.showMovementButton.Click += new System.EventHandler(this.showMovementButton_Click);
+      // 
+      // toolStripSeparator10
+      // 
+      this.toolStripSeparator10.Name = "toolStripSeparator10";
+      resources.ApplyResources(this.toolStripSeparator10, "toolStripSeparator10");
       // 
       // mainMenuStrip
       // 
@@ -401,8 +447,15 @@ namespace SportsTacticsBoard
       resources.ApplyResources(this.toolStripButton1, "toolStripButton1");
       this.toolStripButton1.Name = "toolStripButton1";
       // 
+      // playSequenceTimer
+      // 
+      this.playSequenceTimer.Interval = 1000;
+      this.playSequenceTimer.Tick += new System.EventHandler(this.playSequenceTimer_Tick);
+      // 
       // fieldControl
       // 
+      this.fieldControl.AllowInteraction = true;
+      this.fieldControl.Cursor = System.Windows.Forms.Cursors.Default;
       resources.ApplyResources(this.fieldControl, "fieldControl");
       this.fieldControl.FieldType = null;
       this.fieldControl.IsDirty = false;
@@ -475,6 +528,12 @@ namespace SportsTacticsBoard
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     private System.Windows.Forms.ToolStripMenuItem changeLogMenuItem;
     private System.Windows.Forms.ToolStripMenuItem readMeMenuItem;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+    private System.Windows.Forms.ToolStripButton goToFirstToolStripButton;
+    private System.Windows.Forms.ToolStripButton playToolStripButton;
+    private System.Windows.Forms.Timer playSequenceTimer;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+    private System.Windows.Forms.ToolStripButton goToLastToolStripButton;
   }
 }
 

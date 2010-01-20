@@ -1,6 +1,9 @@
 -- Changes committed to source control since previous release
-None yet.
-
+FEAT - Added Floorball field - code courtesy of Ulrich Jenzer
+FEAT - Added support for "playing back" the sequence - idea and some code courtesy of Ulrich Jenzer
+FIX - Fixed installer on Windows XP SP3
+CHG - Changed/added more icons in tool bar
+FEAT - Added support for moving to the beginning or the end of a sequence
 
 0.2.1005 - Various minor fixes and lots of build/release improvements
 BUILD - Updated build environment to use more recent tools, Visual Studio 2008, .NET 3.5, Wix 3.0.4805.0, FxCop 1.36, and NAnt 0.86 Beta1
