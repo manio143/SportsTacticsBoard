@@ -108,7 +108,7 @@
 
     <Icon Id="Program.ico" SourceFile="..\SportsTacticsBoard\Program.ico" />
 
-    <Condition Message="This program requires Windows XP Service Pack 2 or later to run."><![CDATA[(VersionNT = 501 AND ServicePackLevel = 2) OR (VersionNT > 501)]]></Condition>
+    <Condition Message="This program requires Windows XP Service Pack 2 or later to run."><![CDATA[(VersionNT = 501 AND ServicePackLevel >= 2) OR (VersionNT > 501)]]></Condition>
     <Condition Message="This application requires .NET Framework 3.5. Please install the .NET Framework then run this installer again."><![CDATA[Installed OR NETFRAMEWORK35]]></Condition>
     <Condition Message="A newer version of [ProductName] is installed. If you want to install an older version, please uninstall the newer version first."><![CDATA[NOT NEWERVERSIONDETECTED]]></Condition>
 

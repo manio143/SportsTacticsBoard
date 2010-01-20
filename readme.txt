@@ -31,7 +31,7 @@ Table of Contents
 1. Copyrights
 -------------
 
-Copyright (C) 2006-2009 Robert Turner
+Copyright (C) 2006-2010 Robert Turner
 
 
 2. License
@@ -55,18 +55,21 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 3. Supported Platforms
 ----------------------
 
-- Windows XP SP2
+- Windows XP SP2, SP3
 - Windows Server 2003 SP1
 - Windows Vista
+- Windows Server 2008
+- Windows 7
+- Windows Server 2008 R2
 
 
 3.2 Requirements
 ----------------
 
-Microsoft .NET Framework 2.0 must be installed. It can be downloaded using
+Microsoft .NET Framework 3.5 SP1 must be installed. It can be downloaded using
 Windows Update or Microsoft Update, or directly from Microsoft from:
 
-http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5&displaylang=en
+http://www.microsoft.com/downloads/details.aspx?FamilyID=AB99342F-5D1A-413D-8319-81DA479AB0D7&displaylang=en
 
 
 4. Installation
@@ -79,7 +82,7 @@ using the Windows Installer (MSI). Most uses shoudl use this method.
 4.1 Windows Installer (MSI file)
 --------------------------------
 
-1. Ensure that the Microsoft .NET 2.0 Framework runtime is installed on your computer.
+1. Ensure that the Microsoft .NET 3.5 SP1 Framework runtime is installed on your computer.
 2. Download the MSI file from the downloads area.
      http://sportstacticsbd.sourceforge.net/downloads.php
 3. Save the download to your computer.
@@ -90,7 +93,7 @@ using the Windows Installer (MSI). Most uses shoudl use this method.
 4.2 Binary installation
 -----------------------
 
-1. Ensure that the Microsoft .NET 2.0 Framework runtime is installed on your computer.
+1. Ensure that the Microsoft .NET 3.5 SP1 Framework runtime is installed on your computer.
 2. Download the ZIP file containing the binaries from the downloads area.
      http://sportstacticsbd.sourceforge.net/downloads.php
 3. Extract the files into a folder, e.g.: C:\Program Files\Sports Tactics Board 
@@ -100,7 +103,7 @@ using the Windows Installer (MSI). Most uses shoudl use this method.
 4.3 Source installation
 -----------------------
 
-1. Ensure that the Microsoft .NET 2.0 Framework runtime is installed on your computer.
+1. Ensure that the Microsoft .NET 3.5 SP1 Framework runtime is installed on your computer.
 2. Download the ZIP file containing the source code from the downloads area.
      http://sportstacticsbd.sourceforge.net/downloads.php
 3. Extract the source code to a folder, e.g.: C:\Source\SportsTacticsBoard
@@ -124,7 +127,7 @@ There is no need for any special development environment to compile or
 build this program from source code. However you will need other tools
 to build the installers or other outputs.
 
-If you have any supported Windows platform with the .NET 2.0 runtime 
+If you have any supported Windows platform with the .NET 3.5 SP1 runtime 
 installed, you can compile this program from source code.
 
 NAnt build script is the most complete, and supports building
@@ -157,16 +160,16 @@ In order to build the installer and other targets, you will need the following:
       Downloadable from:
          http://nant.sourceforge.net/
       Installation Notes:
-       - Must be in your executable path
+       - Must be in your executable path (modify PATH environment variable)
 
   - NAnt Contrib 0.86 -- Not yet released - Use a recent nightly build
-      NAnt Contrib is a free add-on the NAnt.
+      NAnt Contrib is a free add-on for NAnt.
       Downloadable from:
          http://nantcontrib.sourceforge.net/
       Installation Notes:
-       - Must be installed into NAnt install
+       - Must be installed into NAnt install folder
 
-  - Windows Installer XML Toolset (WiX) v3.0.4805.0
+  - Windows Installer XML Toolset (WiX) v3.0.5419.0
       The Windows Installer XML (WiX) is a toolset that builds Windows installation 
       packages from XML source code.
       Downloadable from:
@@ -194,8 +197,8 @@ Optionally, you can install the following:
 
 See the appropriate section below that corresponds to the environment you have.
 
-5.2.1 No Development Environment on Windows with .NET 3.5 Runtime Installed
----------------------------------------------------------------------------
+5.2.1 No Development Environment on Windows with .NET 3.5 SP1 Runtime Installed
+-------------------------------------------------------------------------------
 
 1. Open a command shell:
      Start | Run...
