@@ -8,7 +8,6 @@
 
 <?php include("header.php"); ?>
 
-
       <h2>What is it?</h2>
       <p>Sports Tactics Board is a utility that allows coaches, 
       trainers and officials to describe sports tactics, strategies 
@@ -23,7 +22,7 @@
     
       <h2>How do I get a copy to use?</h2>
       <ol>
-        <li>Get the Microsoft .NET 3.5 Framework - often already installed on up-to-date Windows computers.</li>
+        <li>Get the Microsoft .NET 3.5 Framework - this is often already installed on up-to-date Windows computers.</li>
         <li>Download a release of Sports Tactics Board from the <a href="downloads.php">Downloads</a> page.</li>
       </ol>
       <p>The Microsoft&nbsp;.NET&nbsp;3.5&nbsp;Framework can be downloaded 
@@ -39,8 +38,8 @@
       <p>Sports Tactics Board is distributed under the <a href="http://www.gnu.org/copyleft/gpl.html">GPL v2</a> license.</p>
 
       <h2>How do I get help, report bugs or request features?</h2>
-      <p>You can request help using the <a href="http://sourceforge.net/forum/?group_id=181975">discussion forums</a>.</p>
-      <p>You can report bugs or request features using the <a href="http://sourceforge.net/tracker/?group_id=181975">tracker</a>.</p>
+      <p>You can request help, report bugs or request features using the <a href="http://sourceforge.net/tracker/?group_id=181975">tracker</a>.</p>
+      <p>If you do not get a response within a week, please contact <a href="http://sourceforge.net/sendmessage.php?touser=322669">the project administrator</a> in case e-mail notifications are not working properly.</p>
       
       <h2>How do I help out?</h2>
       <p>Help is always desired. First <a href="http://sourceforge.net/account/newuser_emailverify.php">set up an account on SourceForge</a>, then contact <a href="http://sourceforge.net/sendmessage.php?touser=322669">the project administrator</a>
