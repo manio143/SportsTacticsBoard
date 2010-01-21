@@ -11,7 +11,7 @@
     <td width="1" bgcolor="#3366cc"><img width="1" height="1" alt=""></td>
     <td width="10"">&nbsp;</td>
     <td valign="middle">
-      <a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=181975&amp;type=2" width="125" height="37" alt="SourceForge.net Logo" /></a>
+      <a href="http://sourceforge.net/projects/sportstacticsbd"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=181975&amp;type=16" width="150" height="40" alt="Get Sports Tactics Board at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
     </td>
     <td width="10"">&nbsp;</td>
     <td valign="middle" align="center">

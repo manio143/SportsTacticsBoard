@@ -35,7 +35,7 @@
       <p>No documentation is available at this time. However, the program is fairly simple and strait-forward to use. Try it to see.</p>
 
       <h2>License</h2>
-      <p>Sports Tactics Board is distributed under the <a href="http://www.gnu.org/copyleft/gpl.html">GPL v2</a> license.</p>
+      <p>Sports Tactics Board is distributed under the <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GPL v2</a> license.</p>
 
       <h2>How do I get help, report bugs or request features?</h2>
       <p>You can request help, report bugs or request features using the <a href="http://sourceforge.net/tracker/?group_id=181975">tracker</a>.</p>
