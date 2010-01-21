@@ -15,7 +15,7 @@
   <tr bgcolor="#e5ecf9">
     <td width="1" bgcolor="#3366cc"><img width="1" height="1" alt=""></td>
     <td width="5"">&nbsp;</td>
-    <td bgcolor="#e5ecf9" align="center">Sports Tactics Board is distributed under the <a href="http://www.gnu.org/copyleft/gpl.html">GPL v2</a> license.</td>
+    <td bgcolor="#e5ecf9" align="center">Sports Tactics Board is distributed under the <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GPL v2</a> license.</td>
     <td width="5"">&nbsp;</td>
     <td width="1" bgcolor="#3366cc"><img width="1" height="1" alt=""></td>
   </tr>
