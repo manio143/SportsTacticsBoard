@@ -1,6 +1,8 @@
 -- Changes committed to source control since previous release
+FIX - Updated Saved Layout Information dialog to use labels of field objects instead of "tags"
+FEAT - Added German translation of main user interface - translation courtesy of Ralph Rinschen
 FEAT - Added Floorball field - code courtesy of Ulrich Jenzer
-FEAT - Added support for "playing back" the sequence - idea and some code courtesy of Ulrich Jenzer
+FEAT - Added support for "playing back" (or animating) the sequence - idea and some code courtesy of Ulrich Jenzer
 FIX - Fixed installer on Windows XP SP3
 CHG - Changed/added more icons in tool bar
 FEAT - Added support for moving to the beginning or the end of a sequence

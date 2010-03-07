@@ -28,6 +28,13 @@
             <Component Id="MainProgramConfig" Guid="D733E3CD-3337-40f3-B8FB-CF3AAE7EEB29">
               <File Id="SportsTacticsBoard_exe_config" Name="SportsTacticsBoard.exe.config" Vital="yes" />
             </Component>
+            
+            <Directory Id="de" Name="de" FileSource="$(var.BuildDir)\de">
+              <Component Id="Resources_de" Guid="3192E0E3-C997-499b-B619-5EC9DFB5094D">
+                <CreateFolder />
+                <File Id="SportsTacticsBoard_resources_dll" Name="SportsTacticsBoard.resources.dll" />
+              </Component>
+            </Directory>
           </Directory>
 
           <Component Id="ReadMe" Guid="155771D0-A49D-4418-8D8F-626BE072F5CD">
@@ -94,6 +101,10 @@
       <ComponentRef Id="ChangeLog" />
       <ComponentRef Id="LicenseTxt" />
       <ComponentRef Id="LicenseRtf" />
+    </Feature>
+    
+    <Feature Id="OtherLanguages" Title="Additional language files" Level="1">
+      <ComponentRef Id="Resources_de" />
     </Feature>
 
     <Feature Id="SoccerLibrary" Title="Library - Soccer" Level="1">

@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2007 Robert Turner
+// Copyright (C) 2007-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -326,7 +326,7 @@ namespace SportsTacticsBoard
     /// <param name="layoutToSave">The layout to be saved which describes the 
     /// current positions of the field objects.</param>
     /// <param name="fieldTypeTag">Identifies the field type of the layout.</param>
-    public void SaveCurrentLayout(FieldLayout layoutToSave, string fieldTypeTag) {
+    public void SaveCurrentLayout(ICollection<FieldObject> layoutToSave, string fieldTypeTag) {
       if (string.IsNullOrEmpty(layoutPath)) {
         // TODO: Display an error message to the user
         return;

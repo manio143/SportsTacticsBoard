@@ -107,15 +107,28 @@ namespace SportsTacticsBoard
 
     private Collection<FieldObject> fieldObjects;
 
+    static public FieldLayout ConvertFieldObjectsToLayout(ICollection<FieldObject> fieldObjects)
+    {
+      FieldLayout layout = new FieldLayout();
+      foreach (FieldObject fo in fieldObjects) {
+        layout.AddEntry(fo.Tag, fo.Position);
+      }
+      return layout;
+    }
+
     public FieldLayout FieldLayout
     {
       get
       {
-        FieldLayout layout = new FieldLayout();
-        foreach (FieldObject fo in fieldObjects) {
-          layout.AddEntry(fo.Tag, fo.Position);
-        }
-        return layout;
+        return ConvertFieldObjectsToLayout(fieldObjects);
+      }
+    }
+
+    public ICollection<FieldObject> FieldLayoutAsFieldObjects
+    {
+      get
+      {
+        return fieldObjects;
       }
     }
 

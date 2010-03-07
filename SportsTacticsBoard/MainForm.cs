@@ -125,7 +125,7 @@ namespace SportsTacticsBoard
 
     private void SaveCurrentLayout()
     {
-      userSavedLayoutManager.SaveCurrentLayout(fieldControl.FieldLayout, SafeGetCurrentFieldTypeTag());
+      userSavedLayoutManager.SaveCurrentLayout(fieldControl.FieldLayoutAsFieldObjects, SafeGetCurrentFieldTypeTag());
       UpdateUserSavedLayoutMenuItems();
     }
 
