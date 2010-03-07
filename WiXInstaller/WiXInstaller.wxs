@@ -2,13 +2,14 @@
 
 <?include ver.wxi ?>
 <?define ProductName = "Sports Tactics Board" ?>
+<?define Manufacturer = "Sports Tactics Board" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-  <Product Id="e4488465-0238-411a-b000-4579722a8f2c" Name="$(var.ProductName)" Language="1033" Version="$(var.StbVersion)" Manufacturer="Sports Tactics Board" UpgradeCode="3cb2cabc-7021-4a3a-a1f5-fe05627d6bf6">
+  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="$(var.StbVersion)" Manufacturer="$(var.Manufacturer)" UpgradeCode="3cb2cabc-7021-4a3a-a1f5-fe05627d6bf6">
     <Package InstallerVersion="300" Compressed="yes" />
 
     <Upgrade Id="3cb2cabc-7021-4a3a-a1f5-fe05627d6bf6">
-      <UpgradeVersion Property="OLDERVERSIONBEINGUPGRADED" Minimum="0.0.1.0" Maximum="$(var.StbVersion)" />
+      <UpgradeVersion Property="OLDERVERSIONBEINGUPGRADED" Minimum="0.0.1.0" Maximum="$(var.StbVersion)" IncludeMinimum="yes" />
       <UpgradeVersion Property="NEWERVERSIONDETECTED" Minimum="$(var.StbVersion)" OnlyDetect="yes" />
     </Upgrade>
 
@@ -121,7 +122,7 @@
 
     <Condition Message="This program requires Windows XP Service Pack 2 or later to run."><![CDATA[(VersionNT = 501 AND ServicePackLevel >= 2) OR (VersionNT > 501)]]></Condition>
     <Condition Message="This application requires .NET Framework 3.5. Please install the .NET Framework then run this installer again."><![CDATA[Installed OR NETFRAMEWORK35]]></Condition>
-    <Condition Message="A newer version of [ProductName] is installed. If you want to install an older version, please uninstall the newer version first."><![CDATA[NOT NEWERVERSIONDETECTED]]></Condition>
+    <Condition Message="A newer version of [ProductName] is installed. If you want to install an older version, please uninstall the newer version first."><![CDATA[NOT NEWERVERSIONDETECTED Or Installed]]></Condition>
 
     <CustomAction Id="SetARPReadme" Return="check" Property="ARPREADME" Value="[APPLICATIONFOLDER]readme.txt" />
     <CustomAction Id="SetARPInstallLocation" Return="check" Property="ARPINSTALLLOCATION" Value="[APPLICATIONFOLDER]" />
