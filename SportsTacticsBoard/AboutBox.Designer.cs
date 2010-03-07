@@ -64,51 +64,74 @@ namespace SportsTacticsBoard
       // 
       // titleLabel
       // 
+      this.titleLabel.AccessibleDescription = null;
+      this.titleLabel.AccessibleName = null;
       resources.ApplyResources(this.titleLabel, "titleLabel");
       this.titleLabel.Name = "titleLabel";
       // 
       // copyrightLabel
       // 
+      this.copyrightLabel.AccessibleDescription = null;
+      this.copyrightLabel.AccessibleName = null;
       resources.ApplyResources(this.copyrightLabel, "copyrightLabel");
+      this.copyrightLabel.Font = null;
       this.copyrightLabel.Name = "copyrightLabel";
       // 
       // versionLabel
       // 
+      this.versionLabel.AccessibleDescription = null;
+      this.versionLabel.AccessibleName = null;
       resources.ApplyResources(this.versionLabel, "versionLabel");
+      this.versionLabel.Font = null;
       this.versionLabel.Name = "versionLabel";
       // 
       // label3
       // 
+      this.label3.AccessibleDescription = null;
+      this.label3.AccessibleName = null;
       resources.ApplyResources(this.label3, "label3");
+      this.label3.Font = null;
       this.label3.Name = "label3";
       // 
       // licenseTextBox
       // 
+      this.licenseTextBox.AccessibleDescription = null;
+      this.licenseTextBox.AccessibleName = null;
       resources.ApplyResources(this.licenseTextBox, "licenseTextBox");
+      this.licenseTextBox.BackgroundImage = null;
       this.licenseTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
       this.licenseTextBox.CausesValidation = false;
+      this.licenseTextBox.Font = null;
       this.licenseTextBox.Name = "licenseTextBox";
       this.licenseTextBox.ReadOnly = true;
       this.licenseTextBox.TabStop = false;
       // 
       // webSiteLinkLabel
       // 
+      this.webSiteLinkLabel.AccessibleDescription = null;
+      this.webSiteLinkLabel.AccessibleName = null;
       resources.ApplyResources(this.webSiteLinkLabel, "webSiteLinkLabel");
+      this.webSiteLinkLabel.Font = null;
       this.webSiteLinkLabel.Name = "webSiteLinkLabel";
       this.webSiteLinkLabel.TabStop = true;
       this.webSiteLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.webSiteLinkLabel_LinkClicked);
       // 
       // AboutBox
       // 
+      this.AccessibleDescription = null;
+      this.AccessibleName = null;
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.BackgroundImage = null;
       this.Controls.Add(this.webSiteLinkLabel);
       this.Controls.Add(this.licenseTextBox);
       this.Controls.Add(this.label3);
       this.Controls.Add(this.versionLabel);
       this.Controls.Add(this.copyrightLabel);
       this.Controls.Add(this.titleLabel);
+      this.Font = null;
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+      this.Icon = null;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "AboutBox";

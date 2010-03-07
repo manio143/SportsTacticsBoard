@@ -123,173 +123,118 @@
   <data name="CurrentLayoutNumber_Format" xml:space="preserve">
     <value>{0}/{1}</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="DeleteHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\deletehs.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ExceptionMessage_LayoutFieldTagInvalid" xml:space="preserve">
-    <value>Layout field type tag is not valid</value>
+    <value>Anordnungsfeld Typ ist ungültig</value>
   </data>
   <data name="ExceptionMessage_LayoutNameInvalid" xml:space="preserve">
-    <value>Layout name is not valid</value>
+    <value>Anordnungsfeld Name ist ungültig</value>
   </data>
   <data name="FailedToOpenFileFormatStr" xml:space="preserve">
-    <value>Failed to open file {0}</value>
+    <value>Fehler beim Öffnen der Datei {0}</value>
   </data>
   <data name="FieldObject_Ball" xml:space="preserve">
     <value>Ball</value>
   </data>
   <data name="FieldObject_Player" xml:space="preserve">
-    <value>Player</value>
+    <value>Spieler</value>
   </data>
   <data name="FieldObject_Player_Name_Format" xml:space="preserve">
-    <value>Player - {0} - {1}</value>
+    <value>Spieler - {0} - {1}</value>
   </data>
   <data name="FieldObject_Puck" xml:space="preserve">
     <value>Puck</value>
   </data>
   <data name="FieldObject_Referee_Hockey_1" xml:space="preserve">
-    <value>Referee 1</value>
+    <value>Schiedsrichter 1</value>
   </data>
   <data name="FieldObject_Referee_Hockey_2" xml:space="preserve">
-    <value>Referee 2</value>
+    <value>Schiedsrichter 2</value>
   </data>
   <data name="FieldObject_Referee_Hockey_L1" xml:space="preserve">
-    <value>Linesman 1</value>
+    <value>Linienrichter 1</value>
   </data>
   <data name="FieldObject_Referee_Hockey_L2" xml:space="preserve">
-    <value>Linesman 2</value>
+    <value>Linienrichter 2</value>
   </data>
   <data name="FieldObject_Referee_Soccer_4th" xml:space="preserve">
-    <value>Referee - 4th Official</value>
+    <value>Schiedsrichter - 4te Offizielle</value>
   </data>
   <data name="FieldObject_Referee_Soccer_AR1" xml:space="preserve">
-    <value>Referee - Assistant #1</value>
+    <value>Schiedsrichter - Assistent #1</value>
   </data>
   <data name="FieldObject_Referee_Soccer_AR2" xml:space="preserve">
-    <value>Referee - Assistant #2</value>
+    <value>Schiedsrichter - Assistent #2</value>
   </data>
   <data name="FieldObject_Referee_Soccer_CR" xml:space="preserve">
-    <value>Referee - Centre</value>
+    <value>Schiedsrichter - Zentrum</value>
   </data>
   <data name="FieldObject_Referee_Volleyball_N" xml:space="preserve">
-    <value>Referee - Main</value>
+    <value>Hauptschiedsrichter</value>
   </data>
   <data name="FieldObject_Referee_Volleyball_NE" xml:space="preserve">
-    <value>Referee - Line #2</value>
+    <value>Linienschiedsrichter #2</value>
   </data>
   <data name="FieldObject_Referee_Volleyball_NW" xml:space="preserve">
-    <value>Referee - Line #1</value>
+    <value>Linienschiedsrichter #1</value>
   </data>
   <data name="FieldObject_Referee_Volleyball_S" xml:space="preserve">
-    <value>Referee - Assistant</value>
+    <value>Schiedsrichter-Assistent</value>
   </data>
   <data name="FieldObject_Referee_Volleyball_SE" xml:space="preserve">
-    <value>Referee - Line #4</value>
+    <value>Linienschiedsrichter #4</value>
   </data>
   <data name="FieldObject_Referee_Volleyball_SW" xml:space="preserve">
-    <value>Referee - Line #3</value>
+    <value>Linienschiedsrichter #3</value>
   </data>
   <data name="FieldType_Floorball" xml:space="preserve">
-    <value>Floorball</value>
+    <value>Unihockey</value>
   </data>
   <data name="FieldType_Hockey_NHL" xml:space="preserve">
-    <value>Hockey - NHL</value>
+    <value>Eishockey - NHL</value>
   </data>
   <data name="FieldType_Soccer" xml:space="preserve">
-    <value>Soccer</value>
+    <value>Fussball</value>
   </data>
   <data name="FieldType_Volleyball" xml:space="preserve">
     <value>Volleyball</value>
   </data>
   <data name="FileFilter" xml:space="preserve">
-    <value>Sports Tactics Board files (*.stb.xml)|*.stb.xml|All files (*.*)|*.*</value>
-  </data>
-  <data name="GoToNextHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\gotonexths.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="GoToPrevious" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\gotoprevious.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\help.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>Sports Taktiks Board Dateien (*.stb.xml)|*.stb.xml|All files (*.*)|*.*</value>
   </data>
   <data name="ImageFileNamePattern" xml:space="preserve">
     <value> - {0}</value>
   </data>
-  <data name="NavBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\navback.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="NavForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\navforward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="NewDocumentHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\newdocumenths.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="NoSavedLayoutsMenuItemText" xml:space="preserve">
-    <value>&lt;&lt;none&gt;&gt;</value>
+    <value>&lt;&lt;keine&gt;&gt;</value>
   </data>
   <data name="NotImplementedYet" xml:space="preserve">
-    <value>Not implemented yet!</value>
-  </data>
-  <data name="openHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\openhs.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RestartHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\restarths.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>Noch nicht implementiert!</value>
   </data>
   <data name="SaveAsImageFileFilter" xml:space="preserve">
     <value>Windows Bitmap (BMP)|*.bmp|Graphics Interchange Format (GIF)|*.gif|Portable Network Graphics (PNG)|*.png|Joint Photographic Experts Group (JPEG)|*.jpg</value>
   </data>
-  <data name="saveHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\savehs.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SaveImageDialogTitle" xml:space="preserve">
-    <value>Save As Image File</value>
-  </data>
-  <data name="SaveImageSequenceDialogTitle" xml:space="preserve">
-    <value>Save Sequence As Image Files</value>
-  </data>
-  <data name="SaveSequenceEntryBeforeSwitchingEntries" xml:space="preserve">
-    <value>Save your current layout in place of the current sequence entry?</value>
-  </data>
-  <data name="TeamName_Attacking" xml:space="preserve">
-    <value>Attacking</value>
-  </data>
-  <data name="TeamName_Defending" xml:space="preserve">
-    <value>Defending</value>
-  </data>
-  <data name="UnableToOpenFile_InstallationMayBeIncomplete" xml:space="preserve">
-    <value>Unable to locate document. The installation of this program may not be complete or may have been modified.</value>
-  </data>
-  <data name="DataContainer_MoveFirstHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\DataContainer_MoveFirstHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DataContainer_MoveLastHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\DataContainer_MoveLastHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DataContainer_MoveNextHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\DataContainer_MoveNextHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DataContainer_MovePreviousHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\DataContainer_MovePreviousHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PlayHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\PlayHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RecordHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\RecordHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Edit_UndoHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Edit_UndoHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PauseHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\PauseHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="SavedLayoutInformation_ErrorMessage_AtLeastOneItemMustBeChecked" xml:space="preserve">
-    <value>At least one item must be checked.</value>
+    <value>Es muss mindestens ein Begriff ausgewählt werden.</value>
   </data>
   <data name="SavedLayoutInformation_ErrorMessage_NameMustNotBeBlank" xml:space="preserve">
-    <value>Name must not be blank.</value>
+    <value>Name darf nicht leer sein.</value>
+  </data>
+  <data name="SaveImageDialogTitle" xml:space="preserve">
+    <value>Sichern als Image Datei</value>
+  </data>
+  <data name="SaveImageSequenceDialogTitle" xml:space="preserve">
+    <value>Sichere Sequenz als Image Dateien</value>
+  </data>
+  <data name="SaveSequenceEntryBeforeSwitchingEntries" xml:space="preserve">
+    <value>Sicheren der aktuellen Anordnung anstatt der aktuellen Sequenz?</value>
+  </data>
+  <data name="TeamName_Attacking" xml:space="preserve">
+    <value>Angriff</value>
+  </data>
+  <data name="TeamName_Defending" xml:space="preserve">
+    <value>Verteidigung</value>
+  </data>
+  <data name="UnableToOpenFile_InstallationMayBeIncomplete" xml:space="preserve">
+    <value>Das Dokument kann nicht gefunden werden. Wahrscheinlich war die Installation nicht vollständig oder wurde zwischenzeitlich verändert.</value>
   </data>
 </root>

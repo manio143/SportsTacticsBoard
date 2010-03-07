@@ -467,6 +467,24 @@ namespace SportsTacticsBoard.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to At least one item must be checked..
+        /// </summary>
+        internal static string SavedLayoutInformation_ErrorMessage_AtLeastOneItemMustBeChecked {
+            get {
+                return ResourceManager.GetString("SavedLayoutInformation_ErrorMessage_AtLeastOneItemMustBeChecked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name must not be blank..
+        /// </summary>
+        internal static string SavedLayoutInformation_ErrorMessage_NameMustNotBeBlank {
+            get {
+                return ResourceManager.GetString("SavedLayoutInformation_ErrorMessage_NameMustNotBeBlank", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap saveHS {
             get {
                 object obj = ResourceManager.GetObject("saveHS", resourceCulture);
