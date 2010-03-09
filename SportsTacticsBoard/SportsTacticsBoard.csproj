@@ -72,7 +72,9 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="FieldObjects\Cone.cs" />
+    <Compile Include="FieldObjects\BaseCone.cs" />
+    <Compile Include="FieldObjects\CircularConeWithBorder.cs" />
+    <Compile Include="FieldObjects\UnlabelledTriangularCone.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="LayoutEntry.cs" />
     <Compile Include="FieldObjects\LabelledPlayer.cs" />

@@ -157,6 +157,24 @@ namespace SportsTacticsBoard.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to C{0}.
+        /// </summary>
+        internal static string FieldObject_BaseCone_Label_Format {
+            get {
+                return ResourceManager.GetString("FieldObject_BaseCone_Label_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cone - {0}.
+        /// </summary>
+        internal static string FieldObject_BaseCone_Name_Format {
+            get {
+                return ResourceManager.GetString("FieldObject_BaseCone_Name_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Player.
         /// </summary>
         internal static string FieldObject_Player {

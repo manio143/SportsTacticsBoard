@@ -1,4 +1,4 @@
-// Sports Tactics Board
+﻿// Sports Tactics Board
 //
 // http://sportstacticsbd.sourceforge.net/
 // http://sourceforge.net/projects/sportstacticsbd/
@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,24 +23,35 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
+using System.Drawing;
 
-namespace SportsTacticsBoard
+namespace SportsTacticsBoard.FieldObjects
 {
-  static class Program
+  class UnlabelledTriangularCone : BaseCone
   {
-    /// <summary>
-    /// The main entry point for the application.
-    /// </summary>
-    [STAThread]
-    static void Main()
+    public UnlabelledTriangularCone(int coneNumber, float posX, float posY, float dispRadius)
+      : base(coneNumber, posX, posY, dispRadius)
     {
-      System.Diagnostics.Trace.TraceInformation("System.Threading.Thread.CurrentThread.CurrentCulture.Name={0}", System.Threading.Thread.CurrentThread.CurrentCulture.Name);
-      System.Diagnostics.Trace.TraceInformation("System.Threading.Thread.CurrentThread.CurrentUICulture.Name={0}", System.Threading.Thread.CurrentThread.CurrentUICulture.Name);
-      Application.EnableVisualStyles();
-      Application.Run(new MainForm());
+    }
+
+    public override void DrawAt(Graphics graphics, PointF pos)
+    {
+      RectangleF rect = GetRectangleAt(pos);
+      PointF[] trianglePoints = new PointF[] {
+        new PointF(pos.X, rect.Top),
+        new PointF(rect.Left, rect.Bottom),
+        new PointF(rect.Right, rect.Bottom),
+        new PointF(pos.X, rect.Top)
+      };
+
+      using (Brush fillBrush = new SolidBrush(FillBrushColor)) {
+        graphics.FillPolygon(fillBrush, trianglePoints);
+      }
+      if (OutlinePenWidth > 0.0) {
+        using (Pen outlinePen = new Pen(OutlinePenColor, OutlinePenWidth)) {
+          graphics.DrawPolygon(outlinePen, trianglePoints);
+        }
+      }
     }
   }
 }

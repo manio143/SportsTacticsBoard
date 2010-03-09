@@ -54,6 +54,7 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
     private const float ballSize = 0.75F;
     private const float fieldObjectOutlinePenWidth = 3.0F / 36.0F;
     private const float fieldObjectMovementPenWidth = fieldObjectOutlinePenWidth * 3.0F;
+    private const float coneSize = 0.50F;
 
     private const int playersPerTeam = 11;
 
@@ -109,6 +110,14 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
         fieldObjects.Add(new FieldObjects.Referee("AR", "Referee_Soccer_AR1", Length / 4F, -2.0F, playerSize));
         fieldObjects.Add(new FieldObjects.Referee("AR", "Referee_Soccer_AR2", Length * 3.0F / 4.0F, Width + 2.0F, playerSize));
         fieldObjects.Add(new FieldObjects.Referee("4", "Referee_Soccer_4th", Length / 2.0F, Width + 3.0F, playerSize));
+
+        // Add some cones
+        const int NumberOfCones = 20;
+        var xPosition = (Length / 2) - ((NumberOfCones * coneSize * 3F) / 2F);
+        var yPosition = -5.0F;
+        for (int coneNumber = 1; (coneNumber <= NumberOfCones); coneNumber++, xPosition += (coneSize * 3)) {
+          fieldObjects.Add(new FieldObjects.UnlabelledTriangularCone(coneNumber, xPosition, yPosition, coneSize));
+        }
 
         // Adjust various parameters for all the field objects
         foreach (FieldObject fo in fieldObjects) {

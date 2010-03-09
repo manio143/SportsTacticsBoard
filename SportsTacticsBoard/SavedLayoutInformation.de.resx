@@ -175,7 +175,7 @@
     <value>98, 13</value>
   </data>
   <data name="entriesLabel.Text" xml:space="preserve">
-    <value>&amp;Objekt zur Position:</value>
+    <value>&amp;Positionsobjekt:</value>
   </data>
   <data name="descriptionTextBox.Error" xml:space="preserve">
     <value />

@@ -30,37 +30,11 @@ namespace SportsTacticsBoard.FieldObjects
   /// <summary>
   /// Author: Ulrich Jenzer
   /// </summary>
-  class Cone : FieldObject
+  class CircularConeWithBorder : BaseCone
   {
-    private string label = string.Empty;
-    public override string Label
+    public CircularConeWithBorder(int coneNumber, float posX, float posY, float dispRadius)
+      : base(coneNumber, posX, posY, dispRadius)
     {
-      get { return label; }
-    }
-
-    private string tag;
-    public override string Tag
-    {
-      get { return tag; }
-    }
-
-    protected override int LabelFontSize
-    {
-      get { return 8; }
-    }
-
-    public Cone(string label, string tag, float posX, float posY, float dispRadius)
-      : base(posX, posY, dispRadius)
-    {
-      OutlinePenColor = Color.Black;
-      FillBrushColor = Color.Orange;
-      this.label = label;
-      this.tag = tag;
-    }
-
-    protected override float[] MovementPenDashPattern
-    {
-      get { return new float[] { 3.0F, 2.0F }; }
     }
 
     public override void DrawAt(Graphics graphics, PointF pos)
