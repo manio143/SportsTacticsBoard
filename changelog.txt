@@ -1,4 +1,5 @@
 -- Changes committed to source control since previous release
+FEAT - Added 20 triangular cones to the soccer field for documenting drills
 FIX - Updated Saved Layout Information dialog to use labels of field objects instead of "tags"
 FEAT - Added German translation of main user interface - translation courtesy of Ralph Rinschen
 FEAT - Added Floorball field - code courtesy of Ulrich Jenzer
