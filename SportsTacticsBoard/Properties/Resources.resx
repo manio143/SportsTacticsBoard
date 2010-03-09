@@ -292,4 +292,10 @@
   <data name="SavedLayoutInformation_ErrorMessage_NameMustNotBeBlank" xml:space="preserve">
     <value>Name must not be blank.</value>
   </data>
+  <data name="FieldObject_BaseCone_Label_Format" xml:space="preserve">
+    <value>C{0}</value>
+  </data>
+  <data name="FieldObject_BaseCone_Name_Format" xml:space="preserve">
+    <value>Cone - {0}</value>
+  </data>
 </root>

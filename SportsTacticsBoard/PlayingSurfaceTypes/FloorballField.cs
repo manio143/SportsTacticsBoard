@@ -120,13 +120,11 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
         //fieldObjects.Add(new FieldObjects.Referee("N", "Referee_Floorball_N", Length / 2.0F, Width + (Width / 16.0F), playerSize));
 
         // Add the Cones
-        fieldObjects.Add(new FieldObjects.Cone("C1", "Cone_1", HalfLength - 1.0F, -0.5F, coneSize));
-        fieldObjects.Add(new FieldObjects.Cone("C2", "Cone_2", HalfLength - 1.5F, -0.5F, coneSize));
-        fieldObjects.Add(new FieldObjects.Cone("C3", "Cone_3", HalfLength - 2.0F, -0.5F, coneSize));
-        fieldObjects.Add(new FieldObjects.Cone("C4", "Cone_4", HalfLength - 2.5F, -0.5F, coneSize));
-        fieldObjects.Add(new FieldObjects.Cone("C5", "Cone_5", HalfLength - 3.0F, -0.5F, coneSize));
-        fieldObjects.Add(new FieldObjects.Cone("C6", "Cone_6", HalfLength - 3.5F, -0.5F, coneSize));
-
+        var xPosition = HalfLength - 1.0F;
+        var yPosition = -0.5F;
+        for (int coneNumber = 1; (coneNumber <= 6); coneNumber++, xPosition -= (coneSize * 2.5F)) {
+          fieldObjects.Add(new FieldObjects.CircularConeWithBorder(coneNumber, xPosition, yPosition, coneSize));
+        }
 
         // Adjust various parameters for all the field objects
         foreach (FieldObject fo in fieldObjects) {

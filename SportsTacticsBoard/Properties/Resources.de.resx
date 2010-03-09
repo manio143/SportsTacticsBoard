@@ -237,4 +237,10 @@
   <data name="UnableToOpenFile_InstallationMayBeIncomplete" xml:space="preserve">
     <value>Das Dokument kann nicht gefunden werden. Wahrscheinlich war die Installation nicht vollständig oder wurde zwischenzeitlich verändert.</value>
   </data>
+  <data name="FieldObject_BaseCone_Label_Format" xml:space="preserve">
+    <value>K{0}</value>
+  </data>
+  <data name="FieldObject_BaseCone_Name_Format" xml:space="preserve">
+    <value>Kegel - {0}</value>
+  </data>
 </root>
