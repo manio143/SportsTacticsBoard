@@ -13,15 +13,15 @@
 
       <h3>Windows Installation Packages</h3>
       <p>This will be the preferred method of installation for most people as it's the easiest to install and uninstall.</p>
-      <p>Self-extracting installer (easiest): <a href="http://downloads.sourceforge.net/sportstacticsbd/SportsTacticsBoard-0.2.1005-setup.exe">SportsTacticsBoard-0.2.1005-setup.exe</a></p>
-      <p>MSI install file: <a href="http://downloads.sourceforge.net/sportstacticsbd/SportsTacticsBoard-0.2.1005.msi">SportsTacticsBoard-0.2.1005.msi</a></p>
+      <p>Self-extracting installer (easiest): <a href="http://downloads.sourceforge.net/sportstacticsbd/SportsTacticsBoard-0.2.1007-setup.exe">SportsTacticsBoard-0.2.1007-setup.exe</a></p>
+      <p>MSI install file: <a href="http://downloads.sourceforge.net/sportstacticsbd/SportsTacticsBoard-0.2.1007.msi">SportsTacticsBoard-0.2.1007.msi</a></p>
 
       <h3>Binaries</h3>
-      <p><a href="http://downloads.sourceforge.net/sportstacticsbd/SportsTacticsBoard-0.2.1005-bin.zip">SportsTacticsBoard-0.2.1005-bin.zip</a></p>
+      <p><a href="http://downloads.sourceforge.net/sportstacticsbd/SportsTacticsBoard-0.2.1005-bin.zip">SportsTacticsBoard-0.2.1007-bin.zip</a></p>
       <p>See the readme.txt file for installation instructions.</p>
       
       <h3>Source Code</h3>
-      <p><a href="http://downloads.sourceforge.net/sportstacticsbd/SportsTacticsBoard-0.2.1005-src.zip">SportsTacticsBoard-0.2.1005-src.zip</a></p>
+      <p><a href="http://downloads.sourceforge.net/sportstacticsbd/SportsTacticsBoard-0.2.1005-src.zip">SportsTacticsBoard-0.2.1007-src.zip</a></p>
       <p>See the readme.txt file for installation instructions.</p>
       <p>Source code can be compiled on Windows without any need for a development environment. You only need the .NET 3.5 Framework runtime installed. A batch file is included in the source tree (see notes in ReadMe.txt file) to build the program.</p>
       <p>Source code can also be downloaded using normal SourceForge.NET repository 
