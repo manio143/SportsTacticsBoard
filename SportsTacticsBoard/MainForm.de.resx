@@ -143,7 +143,7 @@
     <value>203, 22</value>
   </data>
   <data name="recordOverCurrentPositionButton.Text" xml:space="preserve">
-    <value>Überspielen der aktuellen Aufnahme</value>
+    <value>Neustart der aktuellen Aufnahme</value>
   </data>
   <data name="removeCurrentPositionFromSequenceButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>167, 22</value>
@@ -401,5 +401,11 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Sport Taktik Board</value>
+  </data>
+  <data name="copyMenuItem.ToolTipText" xml:space="preserve">
+    <value>Kopiert das aktuelle Layout in den Zwischenspeicher</value>
+  </data>
+  <data name="exportSequenceToImageFilesMenuItem.ToolTipText" xml:space="preserve">
+    <value>Exportiert die aktuelle taktische Sequenz als Bildserie.</value>
   </data>
 </root>

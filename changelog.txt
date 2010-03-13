@@ -1,4 +1,6 @@
 -- Changes committed to source control since previous release
+
+0.2.1007 - Added German translation, Floorball support, and automated playback. Fixes issues including XP SP3 install issue
 FEAT - Added 20 triangular cones to the soccer field for documenting drills
 FIX - Updated Saved Layout Information dialog to use labels of field objects instead of "tags"
 FEAT - Added German translation of main user interface - translation courtesy of Ralph Rinschen

@@ -66,14 +66,17 @@
   <target name="clean" description="Cleans all output from all targets"
           depends="version_files.clean,
                    solution.clean,
-	  	   analysis.clean,
+	  	             analysis.clean,
                    installer.clean,
-                   release_files.clean"/>
+                   release_files.clean">
+    <delete dir="${dir.target}"/>
+    <delete dir="${dir.build}"/>
+  </target>
 
   <target name="build" description="Builds all unbuilt targets"
           depends="version_files,
-	           solution,
-	  	   analysis,
+	                 solution,
+	  	             analysis,
                    installer,
                    release_files"/>
   
@@ -345,6 +348,11 @@
   </target>
 
   <target name="installer.msi.clean">
+    <delete>
+      <fileset basedir="${dir.install.build}">
+        <include name="*.wixobj"/>
+      </fileset>
+    </delete>
     <delete file="${file.build.msi}"/>
     <delete dir="${dir.install.build}"/>
   </target>
