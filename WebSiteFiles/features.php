@@ -14,7 +14,7 @@
         <li>Save and loads tactical sequences from files - allows building a library of plays or drills.</li>
 	      <li>Supports pre-defined layouts that position players, ball/puck, cones (for some sports) and officials.</li>
 	      <li>Supports exporting images and image sequences to files or clipboard.</li>
-	      <li>English and German translations of the UI</li>
+	      <li>English and German translations of the UI.</li>
       </ul>
       <p>See the <a href="changelog.txt">change log</a> for more details. This documents all changes committed to source control, which may include additional functionality after the release above.</p>
       
