@@ -81,6 +81,7 @@
     <Compile Include="FieldObjects\NumberedPlayer.cs" />
     <Compile Include="FieldObjects\Puck.cs" />
     <Compile Include="PlayingSurfaceTypes\FloorballField.cs" />
+    <Compile Include="PlayingSurfaceTypes\Futsal.cs" />
     <Compile Include="PlayingSurfaceTypes\HockeyRink_NHL.cs" />
     <Compile Include="IPlayingSurfaceType.cs" />
     <Compile Include="FieldObjects\Ball.cs" />

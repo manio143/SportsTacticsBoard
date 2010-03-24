@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006-2007 Robert Turner
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
     // NHL hockey rink units are in feet (or inches)
     private const float rinkLength        = 200.0F;
     private const float rinkWidth         = 85.0F;
-    private const float margin            = 5.0F;
+    private const float margin            = 6.75F;
     private const float boardsPenWidth    = 0.5F;         // 6 inches
     private const float thickLinePenWidth = 1.0F;         // 1 foot
     private const float thinLinePenWidth  = 2.0F / 12.0F; // 2 inches

@@ -1,4 +1,6 @@
 -- Changes committed to source control since previous release
+FEAT - Added Futsal pitch
+CHG - Relabelled sports to be more specific and add governing body designation related to field markings and layout
 
 0.2.1007 - Added German translation, Floorball support, and automated playback. Fixes issues including XP SP3 install issue
 FEAT - Added 20 triangular cones to the soccer field for documenting drills
