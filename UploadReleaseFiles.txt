@@ -1,4 +1,0 @@
-open sftp://rdturner0@frs.sourceforge.net
-cd uploads
-put Release\ship\*
-exit
