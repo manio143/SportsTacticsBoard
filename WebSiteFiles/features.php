@@ -7,7 +7,7 @@
 <body>
 <?php include("header.php"); ?>
 
-      <h2>Features (0.2.?)</h2>
+      <h2>Features (0.2.1008)</h2>
       <ul>
         <li>Supports more than one sport (currently Soccer/Football, Hockey, Volleyball, Floorball, Futsal and American Football).</li>
         <li>Records and plays back sequences of positions for documenting tactical strategies or plays.</li>

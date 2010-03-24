@@ -12,7 +12,8 @@
       <p>Sports Tactics Board is a utility that allows coaches, 
       trainers and officials to describe sports tactics, strategies 
       and positioning using a magnetic or chalk-board style approach. 
-      Supports soccer and hockey so far, other sports can be easily added.</p>
+      Supports soccer/football, ice hockey, futsal, floorball, volleyball 
+      and American football so far, other sports can be easily added.</p>
       
       <p>For a list of current and planned features, 
       please look <a href="features.php">here</a>.</p>
