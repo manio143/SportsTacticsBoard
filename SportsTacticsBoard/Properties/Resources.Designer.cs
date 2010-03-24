@@ -204,6 +204,24 @@ namespace SportsTacticsBoard.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Referee 1.
         /// </summary>
+        internal static string FieldObject_Referee_Futsal_1 {
+            get {
+                return ResourceManager.GetString("FieldObject_Referee_Futsal_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referee 2.
+        /// </summary>
+        internal static string FieldObject_Referee_Futsal_2 {
+            get {
+                return ResourceManager.GetString("FieldObject_Referee_Futsal_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referee 1.
+        /// </summary>
         internal static string FieldObject_Referee_Hockey_1 {
             get {
                 return ResourceManager.GetString("FieldObject_Referee_Hockey_1", resourceCulture);
@@ -337,7 +355,16 @@ namespace SportsTacticsBoard.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hockey - NHL.
+        ///   Looks up a localized string similar to Futsal (FIFA).
+        /// </summary>
+        internal static string FieldType_Futsal {
+            get {
+                return ResourceManager.GetString("FieldType_Futsal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ice Hockey (NHL).
         /// </summary>
         internal static string FieldType_Hockey_NHL {
             get {
@@ -346,7 +373,7 @@ namespace SportsTacticsBoard.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Soccer.
+        ///   Looks up a localized string similar to Football/Soccer (FIFA).
         /// </summary>
         internal static string FieldType_Soccer {
             get {

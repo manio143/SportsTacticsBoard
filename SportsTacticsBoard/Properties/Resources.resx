@@ -194,10 +194,10 @@
     <value>Floorball</value>
   </data>
   <data name="FieldType_Hockey_NHL" xml:space="preserve">
-    <value>Hockey - NHL</value>
+    <value>Ice Hockey (NHL)</value>
   </data>
   <data name="FieldType_Soccer" xml:space="preserve">
-    <value>Soccer</value>
+    <value>Football/Soccer (FIFA)</value>
   </data>
   <data name="FieldType_Volleyball" xml:space="preserve">
     <value>Volleyball</value>
@@ -297,5 +297,14 @@
   </data>
   <data name="FieldObject_BaseCone_Name_Format" xml:space="preserve">
     <value>Cone - {0}</value>
+  </data>
+  <data name="FieldObject_Referee_Futsal_1" xml:space="preserve">
+    <value>Referee 1</value>
+  </data>
+  <data name="FieldObject_Referee_Futsal_2" xml:space="preserve">
+    <value>Referee 2</value>
+  </data>
+  <data name="FieldType_Futsal" xml:space="preserve">
+    <value>Futsal (FIFA)</value>
   </data>
 </root>
