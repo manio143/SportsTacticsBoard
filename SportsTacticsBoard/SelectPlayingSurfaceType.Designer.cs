@@ -62,73 +62,50 @@ namespace SportsTacticsBoard
       // 
       // okButton
       // 
-      this.okButton.AccessibleDescription = null;
-      this.okButton.AccessibleName = null;
       resources.ApplyResources(this.okButton, "okButton");
-      this.okButton.BackgroundImage = null;
       this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-      this.okButton.Font = null;
       this.okButton.Name = "okButton";
       this.okButton.UseVisualStyleBackColor = true;
       // 
       // cancelButton
       // 
-      this.cancelButton.AccessibleDescription = null;
-      this.cancelButton.AccessibleName = null;
       resources.ApplyResources(this.cancelButton, "cancelButton");
-      this.cancelButton.BackgroundImage = null;
       this.cancelButton.CausesValidation = false;
       this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.cancelButton.Font = null;
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.UseVisualStyleBackColor = true;
       // 
       // label1
       // 
-      this.label1.AccessibleDescription = null;
-      this.label1.AccessibleName = null;
       resources.ApplyResources(this.label1, "label1");
-      this.label1.Font = null;
       this.label1.Name = "label1";
       // 
       // fieldTypeComboBox
       // 
-      this.fieldTypeComboBox.AccessibleDescription = null;
-      this.fieldTypeComboBox.AccessibleName = null;
       resources.ApplyResources(this.fieldTypeComboBox, "fieldTypeComboBox");
-      this.fieldTypeComboBox.BackgroundImage = null;
       this.fieldTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.fieldTypeComboBox.Font = null;
       this.fieldTypeComboBox.FormattingEnabled = true;
       this.fieldTypeComboBox.Name = "fieldTypeComboBox";
+      this.fieldTypeComboBox.Sorted = true;
       // 
       // saveAsDefaultCheckBox
       // 
-      this.saveAsDefaultCheckBox.AccessibleDescription = null;
-      this.saveAsDefaultCheckBox.AccessibleName = null;
       resources.ApplyResources(this.saveAsDefaultCheckBox, "saveAsDefaultCheckBox");
-      this.saveAsDefaultCheckBox.BackgroundImage = null;
-      this.saveAsDefaultCheckBox.Font = null;
       this.saveAsDefaultCheckBox.Name = "saveAsDefaultCheckBox";
       this.saveAsDefaultCheckBox.UseVisualStyleBackColor = true;
       // 
       // SelectPlayingSurfaceType
       // 
       this.AcceptButton = this.okButton;
-      this.AccessibleDescription = null;
-      this.AccessibleName = null;
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.BackgroundImage = null;
       this.CancelButton = this.cancelButton;
       this.Controls.Add(this.saveAsDefaultCheckBox);
       this.Controls.Add(this.fieldTypeComboBox);
       this.Controls.Add(this.label1);
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.okButton);
-      this.Font = null;
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-      this.Icon = null;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "SelectPlayingSurfaceType";

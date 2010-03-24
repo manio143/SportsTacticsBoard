@@ -33,7 +33,7 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
   /// Implements a standard FIFA soccer field.
   /// 
   /// Playing surface units are in yards and the default field 
-  /// dimensions are 100 yards by 60 yards. Field is draw to
+  /// dimensions are 100 yards by 60 yards. Field is drawn to
   /// correct dimensions without any specific compromises.
   /// 
   /// 4 referee field objects are supported for referee training.

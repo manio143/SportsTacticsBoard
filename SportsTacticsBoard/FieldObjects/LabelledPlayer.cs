@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,8 +23,6 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
-using System;
-using System.Globalization;
 
 namespace SportsTacticsBoard.FieldObjects
 {
@@ -36,6 +34,8 @@ namespace SportsTacticsBoard.FieldObjects
       get { return label; }
     }
 
+    private string overriddenTag;
+
     protected override int LabelFontSize {
       get {
         if (Label.Length > 1) {
@@ -46,9 +46,28 @@ namespace SportsTacticsBoard.FieldObjects
       }
     }
 
-    public LabelledPlayer(string _label, TeamId _team, float dispRadius)
-      : base(_team, dispRadius) {
-      label = _label;
+    public override string Tag
+    {
+      get
+      {
+        if (string.IsNullOrEmpty(overriddenTag)) {
+          return base.Tag;
+        } else {
+          return ComposeTag(Team, overriddenTag);
+        }
+      }
+    }
+
+    public LabelledPlayer(string label, TeamId team, float dispRadius) :
+      base(team, dispRadius) {
+      this.label = label;
+    }
+
+    public LabelledPlayer(string label, TeamId team, float dispRadius, string overriddenTag) : 
+      base(team, dispRadius)
+    {
+      this.label = label;
+      this.overriddenTag = overriddenTag;
     }
 
   }

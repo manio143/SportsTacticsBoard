@@ -7,9 +7,9 @@
 <body>
 <?php include("header.php"); ?>
 
-      <h2>Features (0.2.1007)</h2>
+      <h2>Features (0.2.?)</h2>
       <ul>
-        <li>Supports more than one sport (currently Soccer, Hockey, Volleyball and Floorball).</li>
+        <li>Supports more than one sport (currently Soccer/Football, Hockey, Volleyball, Floorball, Futsal and American Football).</li>
         <li>Records and plays back sequences of positions for documenting tactical strategies or plays.</li>
         <li>Save and loads tactical sequences from files - allows building a library of plays or drills.</li>
 	      <li>Supports pre-defined layouts that position players, ball/puck, cones (for some sports) and officials.</li>
@@ -26,7 +26,7 @@
         <li>Support for &quot;views&quot; of sections of the playing field, including rotation.</li>
         <li>Support for predefined &quot;Field Views&quot; for limited views of areas of the playing field.</li>
         <li>Movement line types, allowing for passing, carrying, dribbling, heading, etc to be distinguished more easily.</li>
-        <li>Support for additional sports fields (American football, basketball, rugby, etc.).</li>
+        <li>Support for additional sports fields (Basketball, handball, rugby, etc.).</li>
         <li>More configurable and flexible movements lines.</li>
         <li>Support for marker lines associated with field objects (easily show offside line in soccer, etc.).</li>
         <li>Support for annotated descriptions and labels placed on the field of play.</li>

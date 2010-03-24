@@ -33,17 +33,17 @@ namespace SportsTacticsBoard.FieldObjects
 
     public override string Label
     {
-      get { return string.Format(Properties.Resources.FieldObject_BaseCone_Label_Format, ConeNumber); }
+      get { return string.Format(System.Globalization.CultureInfo.CurrentUICulture, Properties.Resources.FieldObject_BaseCone_Label_Format, ConeNumber); }
     }
 
     public override string Tag
     {
-      get { return string.Format("Cone_{0}", ConeNumber); }
+      get { return string.Format(System.Globalization.CultureInfo.InvariantCulture, "Cone_{0}", ConeNumber); }
     }
 
     public override string Name
     {
-      get { return string.Format(Properties.Resources.FieldObject_BaseCone_Name_Format, ConeNumber); }
+      get { return string.Format(System.Globalization.CultureInfo.CurrentUICulture, Properties.Resources.FieldObject_BaseCone_Name_Format, ConeNumber); }
     }
 
     protected override int LabelFontSize

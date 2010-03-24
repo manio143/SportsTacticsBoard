@@ -307,4 +307,7 @@
   <data name="FieldType_Futsal" xml:space="preserve">
     <value>Futsal (FIFA)</value>
   </data>
+  <data name="FieldType_NFLFootball" xml:space="preserve">
+    <value>American Football (NFL)</value>
+  </data>
 </root>

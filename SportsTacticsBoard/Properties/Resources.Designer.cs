@@ -373,6 +373,15 @@ namespace SportsTacticsBoard.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to American Football (NFL).
+        /// </summary>
+        internal static string FieldType_NFLFootball {
+            get {
+                return ResourceManager.GetString("FieldType_NFLFootball", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Football/Soccer (FIFA).
         /// </summary>
         internal static string FieldType_Soccer {
