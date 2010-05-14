@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006-2007 Robert Turner
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -179,65 +179,64 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
     public void DrawMarkings(Graphics graphics)
     {
       // Create the pen for drawing the field lines with
-      Pen linePen = new Pen(Color.White, linePenWidth);
-      Brush courtBrush = new SolidBrush(Color.Orange);
+      using (Pen linePen = new Pen(Color.White, linePenWidth)) {
+        using (Brush courtBrush = new SolidBrush(Color.Orange)) {
 
-      // Draw the court surface
-      graphics.FillRectangle(courtBrush, 0.0F, 0.0F, Length, Width);
+          // Draw the court surface
+          graphics.FillRectangle(courtBrush, 0.0F, 0.0F, Length, Width);
 
-      #region Draw main lines
-      // Draw main lines
-      graphics.DrawRectangle(linePen, 0.0F, 0.0F, Length, Width);
+          #region Draw main lines
+          // Draw main lines
+          graphics.DrawRectangle(linePen, 0.0F, 0.0F, Length, Width);
 
-      // Draw small horizontal main lines extension
-      linePen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-      graphics.DrawLine(linePen, -Length / 32, 0.0F, 0.0F, 0.0F);
-      graphics.DrawLine(linePen, -Length / 32, Width, 0.0F, Width);
-      graphics.DrawLine(linePen, Length, 0.0F, Length + Length / 32, 0.0F);
-      graphics.DrawLine(linePen, Length, Width, Length + Length / 32, Width);
-      linePen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-      #endregion
+          // Draw small horizontal main lines extension
+          linePen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+          graphics.DrawLine(linePen, -Length / 32, 0.0F, 0.0F, 0.0F);
+          graphics.DrawLine(linePen, -Length / 32, Width, 0.0F, Width);
+          graphics.DrawLine(linePen, Length, 0.0F, Length + Length / 32, 0.0F);
+          graphics.DrawLine(linePen, Length, Width, Length + Length / 32, Width);
+          linePen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+          #endregion
 
-      #region Draw central line
-      PointF fieldCenter = new PointF(Length / 2, Width / 2);
-      PointF centerLineTop = new PointF(fieldCenter.X, 0.0F);
-      PointF centerLineBottom = new PointF(fieldCenter.X, Width);
+          #region Draw central line
+          PointF fieldCenter = new PointF(Length / 2, Width / 2);
+          PointF centerLineTop = new PointF(fieldCenter.X, 0.0F);
+          PointF centerLineBottom = new PointF(fieldCenter.X, Width);
 
-      linePen.Width *= 2.0F;
-      graphics.DrawLine(linePen, centerLineTop, centerLineBottom);
-      linePen.Width /= 2.0F;
-      #endregion
+          linePen.Width *= 2.0F;
+          graphics.DrawLine(linePen, centerLineTop, centerLineBottom);
+          linePen.Width /= 2.0F;
+          #endregion
 
-      #region Draw attack line
-      const float distanceFromCentralLine = 3.0F;
-      const float distanceOutsideField = 3.0F;
+          #region Draw attack line
+          const float distanceFromCentralLine = 3.0F;
+          const float distanceOutsideField = 3.0F;
 
-      // Draw left attack line 
-      PointF attackLineTop = new PointF(centerLineTop.X - distanceFromCentralLine, centerLineTop.Y);
-      PointF attackLineBottom = new PointF(centerLineBottom.X - distanceFromCentralLine, centerLineBottom.Y);
-      graphics.DrawLine(linePen, attackLineTop, attackLineBottom);
+          // Draw left attack line 
+          PointF attackLineTop = new PointF(centerLineTop.X - distanceFromCentralLine, centerLineTop.Y);
+          PointF attackLineBottom = new PointF(centerLineBottom.X - distanceFromCentralLine, centerLineBottom.Y);
+          graphics.DrawLine(linePen, attackLineTop, attackLineBottom);
 
-      // Draw left attack line extension
-      linePen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-      graphics.DrawLine(linePen, new PointF(attackLineTop.X, attackLineTop.Y - distanceOutsideField), attackLineTop);
-      graphics.DrawLine(linePen, new PointF(attackLineBottom.X, attackLineBottom.Y + distanceOutsideField), attackLineBottom);
+          // Draw left attack line extension
+          linePen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+          graphics.DrawLine(linePen, new PointF(attackLineTop.X, attackLineTop.Y - distanceOutsideField), attackLineTop);
+          graphics.DrawLine(linePen, new PointF(attackLineBottom.X, attackLineBottom.Y + distanceOutsideField), attackLineBottom);
 
-      // Draw right attack line extension
-      linePen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-      attackLineTop.X = centerLineTop.X + distanceFromCentralLine;
-      attackLineBottom.X = centerLineBottom.X + distanceFromCentralLine;
-      graphics.DrawLine(linePen, attackLineTop, attackLineBottom);
+          // Draw right attack line extension
+          linePen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+          attackLineTop.X = centerLineTop.X + distanceFromCentralLine;
+          attackLineBottom.X = centerLineBottom.X + distanceFromCentralLine;
+          graphics.DrawLine(linePen, attackLineTop, attackLineBottom);
 
-      // Draw right attack line extension
-      linePen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-      graphics.DrawLine(linePen, new PointF(attackLineTop.X, attackLineTop.Y - distanceOutsideField), attackLineTop);
-      graphics.DrawLine(linePen, new PointF(attackLineBottom.X, attackLineBottom.Y + distanceOutsideField), attackLineBottom);
+          // Draw right attack line extension
+          linePen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+          graphics.DrawLine(linePen, new PointF(attackLineTop.X, attackLineTop.Y - distanceOutsideField), attackLineTop);
+          graphics.DrawLine(linePen, new PointF(attackLineBottom.X, attackLineBottom.Y + distanceOutsideField), attackLineBottom);
 
-      linePen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-      #endregion
-
-      linePen.Dispose();
-      courtBrush.Dispose();
+          linePen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+          #endregion
+        }
+      }
     }
 
   }

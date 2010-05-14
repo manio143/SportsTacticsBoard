@@ -158,101 +158,100 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
       const float yardNumbersHeight = 6.0F;
 
       // Create the graphics resources required for drawing the field
-      Brush outOfBoundsBrush = new SolidBrush(Color.White);
-      Pen linePen = new Pen(Color.White, 0.5F);
-      Pen goalPen = new Pen(Color.Gold, 1.0F);
-      Font yardNumbers = new Font(FontFamily.GenericSansSerif, yardNumbersHeight, GraphicsUnit.World);
+      using (Brush outOfBoundsBrush = new SolidBrush(Color.White)) {
+        using (Pen linePen = new Pen(Color.White, 0.5F)) {
+          using (Pen goalPen = new Pen(Color.Gold, 1.0F)) {
+            using (Font yardNumbers = new Font(FontFamily.GenericSansSerif, yardNumbersHeight, GraphicsUnit.World)) {
+              // Draw the out-of-bounds area outside the field
+              Region oldClip = graphics.Clip;
+              RectangleF inBoundsRectangle = new RectangleF(0.0F, 0.0F, fieldLength, fieldWidth);
+              using (Region inBoundsRegion = new Region(inBoundsRectangle)) {
+                graphics.ExcludeClip(inBoundsRegion);
+                RectangleF outOfBoundsRectangle = new RectangleF(inBoundsRectangle.Location, inBoundsRectangle.Size);
+                outOfBoundsRectangle.Inflate(outOfBoundsWidth, outOfBoundsWidth);
+                graphics.FillRectangle(outOfBoundsBrush, outOfBoundsRectangle);
+                graphics.Clip = oldClip;
+              }
 
-      // Draw the out-of-bounds area outside the field
-      Region oldClip = graphics.Clip;
-      RectangleF inBoundsRectangle = new RectangleF(0.0F, 0.0F, fieldLength, fieldWidth);
-      Region inBoundsRegion = new Region(inBoundsRectangle);
-      graphics.ExcludeClip(inBoundsRegion);
-      RectangleF outOfBoundsRectangle = new RectangleF(inBoundsRectangle.Location, inBoundsRectangle.Size);
-      outOfBoundsRectangle.Inflate(outOfBoundsWidth, outOfBoundsWidth);
-      graphics.FillRectangle(outOfBoundsBrush, outOfBoundsRectangle);
-      graphics.Clip = oldClip;
+              // Draw the end-lines, the 10-yard lines, and the hash marks
+              for (float positionX = endZoneDepth; positionX <= fieldLength - endZoneDepth; positionX += 3.0F) {
+                if (positionX % (5.0F * 3) == 0.0F) {
+                  // Draw a full line
+                  float inset = (positionX == endZoneDepth || positionX == fieldLength - endZoneDepth) ? 0.0F : lineInsetDistance;
+                  graphics.DrawLine(linePen, positionX, 0.0F + inset, positionX, fieldWidth - inset);
+                } else {
+                  // Draw hash marks
+                  // ... outer
+                  graphics.DrawLine(linePen, positionX, 0.0F + lineInsetDistance, positionX, 0.0F + lineInsetDistance + hashMarkLength);
+                  graphics.DrawLine(linePen, positionX, fieldWidth - lineInsetDistance - hashMarkLength, positionX, fieldWidth - lineInsetDistance);
+                  // ... inner
+                  graphics.DrawLine(linePen, positionX, 0.0F + innerHashDistance - hashMarkLength, positionX, 0.0F + innerHashDistance);
+                  graphics.DrawLine(linePen, positionX, fieldWidth - innerHashDistance, positionX, fieldWidth - innerHashDistance + hashMarkLength);
+                }
+              }
 
-      // Draw the end-lines, the 10-yard lines, and the hash marks
-      for (float positionX = endZoneDepth; positionX <= fieldLength - endZoneDepth; positionX += 3.0F) {
-        if (positionX % (5.0F * 3) == 0.0F) {
-          // Draw a full line
-          float inset = (positionX == endZoneDepth || positionX == fieldLength - endZoneDepth) ? 0.0F : lineInsetDistance;
-          graphics.DrawLine(linePen, positionX, 0.0F + inset, positionX, fieldWidth - inset);
-        } else {
-          // Draw hash marks
-          // ... outer
-          graphics.DrawLine(linePen, positionX, 0.0F + lineInsetDistance, positionX, 0.0F + lineInsetDistance + hashMarkLength);
-          graphics.DrawLine(linePen, positionX, fieldWidth - lineInsetDistance - hashMarkLength, positionX, fieldWidth - lineInsetDistance);
-          // ... inner
-          graphics.DrawLine(linePen, positionX, 0.0F + innerHashDistance - hashMarkLength, positionX, 0.0F + innerHashDistance);
-          graphics.DrawLine(linePen, positionX, fieldWidth - innerHashDistance, positionX, fieldWidth - innerHashDistance + hashMarkLength);
+              // Draw the yard numbers
+              using (var stringFormat = new StringFormat()) {
+                stringFormat.Alignment = StringAlignment.Center;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                stringFormat.HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.None;
+                const float TextBoxWidth = 10.0F;
+                const float TextBoxHeight = yardNumbersHeight;
+                const float TextInsetDepth = 27.0F;
+                const float arrowOffset = 2.0F;
+                const float arrowWidth = 2.0F;
+                for (int yardMarker = 10; yardMarker <= 90; yardMarker += 10) {
+                  int yardLabel = (yardMarker > 50) ? 100 - yardMarker : yardMarker;
+                  var textRect1 = new RectangleF(endZoneDepth + (3.0F * yardMarker) - (TextBoxWidth / 2), fieldWidth - TextInsetDepth, TextBoxWidth, TextBoxHeight);
+                  var textRect2 = new RectangleF(endZoneDepth + (3.0F * yardMarker) - (TextBoxWidth / 2), TextInsetDepth - TextBoxHeight, TextBoxWidth, TextBoxHeight);
+                  graphics.DrawString(yardLabel.ToString(System.Globalization.CultureInfo.CurrentCulture), yardNumbers, outOfBoundsBrush, textRect1, stringFormat);
+                  graphics.DrawString(yardLabel.ToString(System.Globalization.CultureInfo.CurrentCulture), yardNumbers, outOfBoundsBrush, textRect2, stringFormat);
+                  // Draw triangles pointing towards the end-zones
+                  if (yardMarker <= 40) {
+                    float arrow1MidPoint = (textRect1.Top + textRect1.Bottom) / 2;
+                    float arrow2MidPoint = (textRect2.Top + textRect2.Bottom) / 2;
+                    graphics.FillPolygon(outOfBoundsBrush, new PointF[] {
+                      new PointF(textRect1.Left - arrowOffset - arrowWidth, arrow1MidPoint),
+                      new PointF(textRect1.Left - arrowOffset, arrow1MidPoint - (arrowWidth / 2)),
+                      new PointF(textRect1.Left - arrowOffset, arrow1MidPoint + (arrowWidth / 2)),
+                      new PointF(textRect1.Left - arrowOffset - arrowWidth, arrow1MidPoint)
+                    }, System.Drawing.Drawing2D.FillMode.Alternate);
+                    graphics.FillPolygon(outOfBoundsBrush, new PointF[] {
+                      new PointF(textRect2.Left - arrowOffset - arrowWidth, arrow2MidPoint),
+                      new PointF(textRect2.Left - arrowOffset, arrow2MidPoint - (arrowWidth / 2)),
+                      new PointF(textRect2.Left - arrowOffset, arrow2MidPoint + (arrowWidth / 2)),
+                      new PointF(textRect2.Left - arrowOffset - arrowWidth, arrow2MidPoint)
+                    }, System.Drawing.Drawing2D.FillMode.Alternate);
+                  } else if (yardMarker >= 60) {
+                    float arrow1MidPoint = (textRect1.Top + textRect1.Bottom) / 2;
+                    float arrow2MidPoint = (textRect2.Top + textRect2.Bottom) / 2;
+                    graphics.FillPolygon(outOfBoundsBrush, new PointF[] {
+                      new PointF(textRect1.Right + arrowOffset + arrowWidth, arrow1MidPoint),
+                      new PointF(textRect1.Right + arrowOffset, arrow1MidPoint - (arrowWidth / 2)),
+                      new PointF(textRect1.Right + arrowOffset, arrow1MidPoint + (arrowWidth / 2)),
+                      new PointF(textRect1.Right + arrowOffset + arrowWidth, arrow1MidPoint)
+                    }, System.Drawing.Drawing2D.FillMode.Alternate);
+                    graphics.FillPolygon(outOfBoundsBrush, new PointF[] {
+                      new PointF(textRect2.Right + arrowOffset + arrowWidth, arrow2MidPoint),
+                      new PointF(textRect2.Right + arrowOffset, arrow2MidPoint - (arrowWidth / 2)),
+                      new PointF(textRect2.Right + arrowOffset, arrow2MidPoint + (arrowWidth / 2)),
+                      new PointF(textRect2.Right + arrowOffset + arrowWidth, arrow2MidPoint)
+                    }, System.Drawing.Drawing2D.FillMode.Alternate);
+                  }
+                }
+              }
+
+              // Draw markings to represent the goals
+              const float goalInset = 2.0F;
+              const float goalWidth = 18.5F;
+              graphics.DrawLine(goalPen, 0.0F - goalInset, fieldWidth / 2, 0.0F, fieldWidth / 2);
+              graphics.DrawLine(goalPen, 0.0F, (fieldWidth / 2) - (goalWidth / 2), 0.0F, (fieldWidth / 2) + (goalWidth / 2));
+              graphics.DrawLine(goalPen, fieldLength, fieldWidth / 2, fieldLength + goalInset, fieldWidth / 2);
+              graphics.DrawLine(goalPen, fieldLength, (fieldWidth / 2) - (goalWidth / 2), fieldLength, (fieldWidth / 2) + (goalWidth / 2));
+            }
+          }
         }
       }
-
-      // Draw the yard numbers
-      var stringFormat = new StringFormat();
-      stringFormat.Alignment = StringAlignment.Center;
-      stringFormat.LineAlignment = StringAlignment.Center;
-      stringFormat.HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.None;
-      const float TextBoxWidth = 10.0F;
-      const float TextBoxHeight = yardNumbersHeight;
-      const float TextInsetDepth = 27.0F;
-      const float arrowOffset = 2.0F;
-      const float arrowWidth = 2.0F;
-      for (int yardMarker = 10; yardMarker <= 90; yardMarker += 10) {
-        int yardLabel = (yardMarker > 50) ? 100 - yardMarker : yardMarker;
-        var textRect1 = new RectangleF(endZoneDepth + (3.0F * yardMarker) - (TextBoxWidth / 2), fieldWidth - TextInsetDepth, TextBoxWidth, TextBoxHeight);
-        var textRect2 = new RectangleF(endZoneDepth + (3.0F * yardMarker) - (TextBoxWidth / 2), TextInsetDepth - TextBoxHeight, TextBoxWidth, TextBoxHeight);
-        graphics.DrawString(yardLabel.ToString(System.Globalization.CultureInfo.CurrentUICulture), yardNumbers, outOfBoundsBrush, textRect1, stringFormat);
-        graphics.DrawString(yardLabel.ToString(System.Globalization.CultureInfo.CurrentUICulture), yardNumbers, outOfBoundsBrush, textRect2, stringFormat);
-        // Draw triangles pointing towards the end-zones
-        if (yardMarker <= 40) {
-          float arrow1MidPoint = (textRect1.Top + textRect1.Bottom) / 2;
-          float arrow2MidPoint = (textRect2.Top + textRect2.Bottom) / 2;
-          graphics.FillPolygon(outOfBoundsBrush, new PointF[] {
-            new PointF(textRect1.Left - arrowOffset - arrowWidth, arrow1MidPoint),
-            new PointF(textRect1.Left - arrowOffset, arrow1MidPoint - (arrowWidth / 2)),
-            new PointF(textRect1.Left - arrowOffset, arrow1MidPoint + (arrowWidth / 2)),
-            new PointF(textRect1.Left - arrowOffset - arrowWidth, arrow1MidPoint)
-          }, System.Drawing.Drawing2D.FillMode.Alternate);
-          graphics.FillPolygon(outOfBoundsBrush, new PointF[] {
-            new PointF(textRect2.Left - arrowOffset - arrowWidth, arrow2MidPoint),
-            new PointF(textRect2.Left - arrowOffset, arrow2MidPoint - (arrowWidth / 2)),
-            new PointF(textRect2.Left - arrowOffset, arrow2MidPoint + (arrowWidth / 2)),
-            new PointF(textRect2.Left - arrowOffset - arrowWidth, arrow2MidPoint)
-          }, System.Drawing.Drawing2D.FillMode.Alternate);
-        } else if (yardMarker >= 60) {
-          float arrow1MidPoint = (textRect1.Top + textRect1.Bottom) / 2;
-          float arrow2MidPoint = (textRect2.Top + textRect2.Bottom) / 2;
-          graphics.FillPolygon(outOfBoundsBrush, new PointF[] {
-            new PointF(textRect1.Right + arrowOffset + arrowWidth, arrow1MidPoint),
-            new PointF(textRect1.Right + arrowOffset, arrow1MidPoint - (arrowWidth / 2)),
-            new PointF(textRect1.Right + arrowOffset, arrow1MidPoint + (arrowWidth / 2)),
-            new PointF(textRect1.Right + arrowOffset + arrowWidth, arrow1MidPoint)
-          }, System.Drawing.Drawing2D.FillMode.Alternate);
-          graphics.FillPolygon(outOfBoundsBrush, new PointF[] {
-            new PointF(textRect2.Right + arrowOffset + arrowWidth, arrow2MidPoint),
-            new PointF(textRect2.Right + arrowOffset, arrow2MidPoint - (arrowWidth / 2)),
-            new PointF(textRect2.Right + arrowOffset, arrow2MidPoint + (arrowWidth / 2)),
-            new PointF(textRect2.Right + arrowOffset + arrowWidth, arrow2MidPoint)
-          }, System.Drawing.Drawing2D.FillMode.Alternate);
-        }
-      }
-
-      // Draw markings to represent the goals
-      const float goalInset = 2.0F;
-      const float goalWidth = 18.5F;
-      graphics.DrawLine(goalPen, 0.0F - goalInset, fieldWidth / 2, 0.0F, fieldWidth / 2);
-      graphics.DrawLine(goalPen, 0.0F, (fieldWidth / 2) - (goalWidth / 2), 0.0F, (fieldWidth / 2) + (goalWidth / 2));
-      graphics.DrawLine(goalPen, fieldLength, fieldWidth / 2, fieldLength + goalInset, fieldWidth / 2);
-      graphics.DrawLine(goalPen, fieldLength, (fieldWidth / 2) - (goalWidth / 2), fieldLength, (fieldWidth / 2) + (goalWidth / 2));
-
-      // Release resources
-      outOfBoundsBrush.Dispose();
-      linePen.Dispose();
-      goalPen.Dispose();
-      yardNumbers.Dispose();
     }
   }
 }

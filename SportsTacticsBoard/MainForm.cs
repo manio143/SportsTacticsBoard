@@ -280,14 +280,11 @@ namespace SportsTacticsBoard
     {
       string title = originalCaption;
       if (!string.IsNullOrEmpty(fileName)) {
-        int idx = fileName.LastIndexOf('\\');
-        string name;
-        if (idx >= 0) {
-          name = fileName.Substring(idx + 1);
-        } else {
-          name = fileName;
-        }
-        title += " - " + name;
+        title = string.Format(
+          CultureInfo.CurrentCulture, 
+          Properties.Resources.TitleFormatString, 
+          originalCaption, 
+          System.IO.Path.GetFileName(fileName));
       }
       Text = title;
     }
@@ -296,25 +293,50 @@ namespace SportsTacticsBoard
     {
       StopPlayingSequence();
 
-      OpenFileDialog openFileDialog = new OpenFileDialog();
-      openFileDialog.CheckFileExists = true;
-      openFileDialog.Filter = fileFilter;
-      openFileDialog.RestoreDirectory = true;
-      openFileDialog.SupportMultiDottedExtensions = true;
-      openFileDialog.Multiselect = false;
-      openFileDialog.InitialDirectory = GetDefaultSequenceSaveLocation(true);
+      using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
+        openFileDialog.CheckFileExists = true;
+        openFileDialog.Filter = fileFilter;
+        openFileDialog.RestoreDirectory = true;
+        openFileDialog.SupportMultiDottedExtensions = true;
+        openFileDialog.Multiselect = false;
+        openFileDialog.InitialDirectory = GetDefaultSequenceSaveLocation(true);
 
-      DialogResult res = openFileDialog.ShowDialog();
-      if (res == DialogResult.OK) {
-        try {
-          XmlSerializer serializer = new XmlSerializer(typeof(LayoutSequence));
-          using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open)) {
-            LayoutSequence seq = (LayoutSequence)serializer.Deserialize(fs);
-            if (seq != null) {
-              // Locate the field type interface for the field specified by
-              // this saved file
-              IPlayingSurfaceType newFieldType = FindFieldType(seq.FieldTypeTag);
-              if (newFieldType == null) {
+        DialogResult res = openFileDialog.ShowDialog();
+        if (res == DialogResult.OK) {
+          try {
+            XmlSerializer serializer = new XmlSerializer(typeof(LayoutSequence));
+            using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open)) {
+              LayoutSequence seq = (LayoutSequence)serializer.Deserialize(fs);
+              if (seq != null) {
+                // Locate the field type interface for the field specified by
+                // this saved file
+                IPlayingSurfaceType newFieldType = FindFieldType(seq.FieldTypeTag);
+                if (newFieldType == null) {
+                  string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
+                  GlobalizationAwareMessageBox.Show(
+                    this,
+                    String.Format(CultureInfo.CurrentUICulture, msgFormat, openFileDialog.FileName),
+                    this.Text,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1,
+                    (MessageBoxOptions)0);
+                } else {
+                  fieldControl.FieldType = newFieldType;
+                  fieldControl.SetNextLayout(null);
+                  fieldControl.IsDirty = false;
+                  positionInSequence = 0;
+                  currentSequence = seq;
+                  RestorePositionFromSequence(positionInSequence, currentSequence, GetNextLayout());
+                  fileName = openFileDialog.FileName;
+                  UpdateCaption();
+                  UpdateFileMenuItems();
+                  UpdateLayoutMenuItems();
+                  UpdateCommonSavedLayoutMenuItems();
+                  UpdateUserSavedLayoutMenuItems();
+                  UpdateSequenceControls();
+                }
+              } else {
                 string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
                 GlobalizationAwareMessageBox.Show(
                   this,
@@ -324,43 +346,19 @@ namespace SportsTacticsBoard
                   MessageBoxIcon.Error,
                   MessageBoxDefaultButton.Button1,
                   (MessageBoxOptions)0);
-              } else {
-                fieldControl.FieldType = newFieldType;
-                fieldControl.SetNextLayout(null);
-                fieldControl.IsDirty = false;
-                positionInSequence = 0;
-                currentSequence = seq;
-                RestorePositionFromSequence(positionInSequence, currentSequence, GetNextLayout());
-                fileName = openFileDialog.FileName;
-                UpdateCaption();
-                UpdateFileMenuItems();
-                UpdateLayoutMenuItems();
-                UpdateCommonSavedLayoutMenuItems();
-                UpdateUserSavedLayoutMenuItems();
-                UpdateSequenceControls();
               }
-            } else {
-              string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
-              GlobalizationAwareMessageBox.Show(
-                this,
-                String.Format(CultureInfo.CurrentUICulture, msgFormat, openFileDialog.FileName),
-                this.Text,
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error,
-                MessageBoxDefaultButton.Button1,
-                (MessageBoxOptions)0);
             }
+          } catch (System.IO.IOException /*exception*/) {
+            string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
+            GlobalizationAwareMessageBox.Show(
+              this,
+              String.Format(CultureInfo.CurrentUICulture, msgFormat, openFileDialog.FileName),
+              this.Text,
+              MessageBoxButtons.OK,
+              MessageBoxIcon.Error,
+              MessageBoxDefaultButton.Button1,
+              (MessageBoxOptions)0);
           }
-        } catch (System.IO.IOException /*exception*/) {
-          string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
-          GlobalizationAwareMessageBox.Show(
-            this,
-            String.Format(CultureInfo.CurrentUICulture, msgFormat, openFileDialog.FileName),
-            this.Text,
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Error,
-            MessageBoxDefaultButton.Button1,
-            (MessageBoxOptions)0);
         }
       }
     }
@@ -387,7 +385,6 @@ namespace SportsTacticsBoard
         XmlSerializer serializer = new XmlSerializer(typeof(LayoutSequence));
         using (TextWriter writer = new StreamWriter(fileName)) {
           serializer.Serialize(writer, currentSequence);
-          writer.Close();
         }
       }
       UpdateFileMenuItems();
@@ -414,17 +411,18 @@ namespace SportsTacticsBoard
     {
       StopPlayingSequence();
 
-      SaveFileDialog saveFileDialog = new SaveFileDialog();
-      saveFileDialog.Filter = fileFilter;
-      saveFileDialog.RestoreDirectory = true;
-      saveFileDialog.SupportMultiDottedExtensions = true;
-      saveFileDialog.InitialDirectory = GetDefaultSequenceSaveLocation(true);
+      using (SaveFileDialog saveFileDialog = new SaveFileDialog()) {
+        saveFileDialog.Filter = fileFilter;
+        saveFileDialog.RestoreDirectory = true;
+        saveFileDialog.SupportMultiDottedExtensions = true;
+        saveFileDialog.InitialDirectory = GetDefaultSequenceSaveLocation(true);
 
-      DialogResult res = saveFileDialog.ShowDialog();
-      if (res == DialogResult.OK) {
-        fileName = saveFileDialog.FileName;
-        UpdateCaption();
-        FileSave();
+        DialogResult res = saveFileDialog.ShowDialog();
+        if (res == DialogResult.OK) {
+          fileName = saveFileDialog.FileName;
+          UpdateCaption();
+          FileSave();
+        }
       }
     }
 
@@ -584,8 +582,9 @@ namespace SportsTacticsBoard
 
     private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      AboutBox aboutBox = new AboutBox();
-      aboutBox.ShowDialog();
+      using (AboutBox aboutBox = new AboutBox()) {
+        aboutBox.ShowDialog();
+      }
     }
 
     private void MainForm_Shown(object sender, EventArgs e)
@@ -607,77 +606,82 @@ namespace SportsTacticsBoard
       FileNew(false, true);
     }
 
-    private void copyMenuItem_Click(object sender, EventArgs e)
+    private void RenderToImage(Bitmap bitmap, FieldLayout layout, FieldLayout nextLayout)
     {
-      StopPlayingSequence();
-
-      Bitmap bitmap = new Bitmap(fieldControl.Width, fieldControl.Height);
-      FieldLayout nextLayout = null;
-      if (fieldControl.ShowMovementLines) {
-        nextLayout = GetNextLayout();
-      }
-      fieldControl.DrawIntoImage(bitmap, fieldControl.FieldLayout, nextLayout);
-      Clipboard.SetImage(bitmap);
-    }
-
-    private void SaveSequenceEntryToFile(string imageFileName, FieldLayout layout, FieldLayout nextLayout, System.Drawing.Imaging.ImageFormat imageFormat)
-    {
-      Bitmap bitmap = new Bitmap(fieldControl.Width, fieldControl.Height);
       FieldLayout nl = null;
       if (fieldControl.ShowMovementLines) {
         nl = nextLayout;
       }
       fieldControl.DrawIntoImage(bitmap, layout, nl);
-      bitmap.Save(imageFileName, imageFormat);
+    }
+
+    private void copyMenuItem_Click(object sender, EventArgs e)
+    {
+      StopPlayingSequence();
+
+      Clipboard.Clear();
+      using (Bitmap bitmap = new Bitmap(fieldControl.Width, fieldControl.Height)) {
+        RenderToImage(bitmap, fieldControl.FieldLayout, GetNextLayout());
+        Clipboard.SetImage(bitmap);
+      }
+    }
+
+    private void SaveSequenceEntryToFile(string imageFileName, FieldLayout layout, FieldLayout nextLayout, System.Drawing.Imaging.ImageFormat imageFormat)
+    {
+      using (Bitmap bitmap = new Bitmap(fieldControl.Width, fieldControl.Height)) {
+        RenderToImage(bitmap, layout, nextLayout);
+        bitmap.Save(imageFileName, imageFormat);
+      }
     }
 
     private void SaveImagesToFile(bool saveEntireSequence)
     {
-      SaveFileDialog saveFileDialog = new SaveFileDialog();
-      saveFileDialog.Filter = saveAsImageFileFilter;
-      saveFileDialog.FilterIndex = 3; // set to PNG by default
-      saveFileDialog.RestoreDirectory = true;
-      saveFileDialog.OverwritePrompt = !saveEntireSequence;
-      if (saveEntireSequence) {
-        saveFileDialog.Title = Properties.Resources.ResourceManager.GetString("SaveImageSequenceDialogTitle");
-      } else {
-        saveFileDialog.Title = Properties.Resources.ResourceManager.GetString("SaveImageDialogTitle");
-      }
-      DialogResult res = saveFileDialog.ShowDialog();
-      if (res != DialogResult.OK) {
-        return;
-      }
-
-      System.Drawing.Imaging.ImageFormat imageFormat = System.Drawing.Imaging.ImageFormat.Png;
-      switch (saveFileDialog.FilterIndex) {
-        case 1:
-          imageFormat = System.Drawing.Imaging.ImageFormat.Bmp;
-          break;
-        case 2:
-          imageFormat = System.Drawing.Imaging.ImageFormat.Gif;
-          break;
-        case 3:
-        default:
-          imageFormat = System.Drawing.Imaging.ImageFormat.Png;
-          break;
-        case 4:
-          imageFormat = System.Drawing.Imaging.ImageFormat.Jpeg;
-          break;
-      }
-
-      if (saveEntireSequence) {
-        string fileNamePattern = saveFileDialog.FileName;
-        int idx = fileNamePattern.LastIndexOf(".", StringComparison.Ordinal);
-        if (idx < 0) {
-          idx = fileNamePattern.Length;
+      using (SaveFileDialog saveFileDialog = new SaveFileDialog()) {
+        saveFileDialog.Filter = saveAsImageFileFilter;
+        saveFileDialog.FilterIndex = 3; // set to PNG by default
+        saveFileDialog.RestoreDirectory = true;
+        saveFileDialog.OverwritePrompt = !saveEntireSequence;
+        if (saveEntireSequence) {
+          saveFileDialog.Title = Properties.Resources.ResourceManager.GetString("SaveImageSequenceDialogTitle");
+        } else {
+          saveFileDialog.Title = Properties.Resources.ResourceManager.GetString("SaveImageDialogTitle");
         }
-        fileNamePattern = fileNamePattern.Insert(idx, Properties.Resources.ResourceManager.GetString("ImageFileNamePattern"));
-        for (int sequenceIndex = 0; sequenceIndex < currentSequence.NumberOfLayouts; sequenceIndex++) {
-          string entryFileName = string.Format(CultureInfo.CurrentUICulture, fileNamePattern, sequenceIndex + 1);
-          SaveSequenceEntryToFile(entryFileName, currentSequence.GetLayout(sequenceIndex), currentSequence.GetLayout(sequenceIndex + 1), imageFormat);
+        DialogResult res = saveFileDialog.ShowDialog();
+        if (res != DialogResult.OK) {
+          return;
         }
-      } else {
-        SaveSequenceEntryToFile(saveFileDialog.FileName, fieldControl.FieldLayout, GetNextLayout(), imageFormat);
+
+        System.Drawing.Imaging.ImageFormat imageFormat = System.Drawing.Imaging.ImageFormat.Png;
+        switch (saveFileDialog.FilterIndex) {
+          case 1:
+            imageFormat = System.Drawing.Imaging.ImageFormat.Bmp;
+            break;
+          case 2:
+            imageFormat = System.Drawing.Imaging.ImageFormat.Gif;
+            break;
+          case 3:
+          default:
+            imageFormat = System.Drawing.Imaging.ImageFormat.Png;
+            break;
+          case 4:
+            imageFormat = System.Drawing.Imaging.ImageFormat.Jpeg;
+            break;
+        }
+
+        if (saveEntireSequence) {
+          string fileNamePattern = saveFileDialog.FileName;
+          int idx = fileNamePattern.LastIndexOf(".", StringComparison.Ordinal);
+          if (idx < 0) {
+            idx = fileNamePattern.Length;
+          }
+          fileNamePattern = fileNamePattern.Insert(idx, Properties.Resources.ResourceManager.GetString("ImageFileNamePattern"));
+          for (int sequenceIndex = 0; sequenceIndex < currentSequence.NumberOfLayouts; sequenceIndex++) {
+            string entryFileName = string.Format(CultureInfo.CurrentUICulture, fileNamePattern, sequenceIndex + 1);
+            SaveSequenceEntryToFile(entryFileName, currentSequence.GetLayout(sequenceIndex), currentSequence.GetLayout(sequenceIndex + 1), imageFormat);
+          }
+        } else {
+          SaveSequenceEntryToFile(saveFileDialog.FileName, fieldControl.FieldLayout, GetNextLayout(), imageFormat);
+        }
       }
     }
 

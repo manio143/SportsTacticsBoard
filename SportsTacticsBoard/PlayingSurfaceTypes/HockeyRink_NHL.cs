@@ -91,16 +91,18 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
 
     public string Tag
     {
-      get {
+      get
+      {
         return "Hockey_NHL";
       }
     }
 
     public string Name
-    { 
-      get {
+    {
+      get
+      {
         return Properties.Resources.ResourceManager.GetString("FieldType_" + Tag);
-      } 
+      }
     }
 
     public float Length
@@ -108,7 +110,8 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
       get { return rinkLength; }
     }
 
-    public float Width {
+    public float Width
+    {
       get { return rinkWidth; }
     }
 
@@ -119,10 +122,11 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
 
     public Color SurfaceColor
     {
-      get { return Color.LightGray; } 
+      get { return Color.LightGray; }
     }
 
-    private static void CreateTeam(ref List<FieldObject> fieldObjects, FieldObjects.Player.TeamId team) {
+    private static void CreateTeam(ref List<FieldObject> fieldObjects, FieldObjects.Player.TeamId team)
+    {
       fieldObjects.Add(new FieldObjects.LabelledPlayer("LW", team, playerSize));
       fieldObjects.Add(new FieldObjects.LabelledPlayer("C", team, playerSize));
       fieldObjects.Add(new FieldObjects.LabelledPlayer("RW", team, playerSize));
@@ -133,7 +137,8 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
 
     public Collection<FieldObject> StandardObjects
     {
-      get {
+      get
+      {
         List<FieldObject> fieldObjects = new List<FieldObject>();
 
         CreateTeam(ref fieldObjects, SportsTacticsBoard.FieldObjects.Player.TeamId.Attacking);
@@ -160,8 +165,9 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
     }
 
     public FieldLayout DefaultLayout
-    { 
-      get {
+    {
+      get
+      {
         FieldLayout layout = new FieldLayout();
         layout.AddEntry("Player_Attacking_G", distanceOfGoalLineFromEndOfRink + playerSize, Width / 2.0F);
         layout.AddEntry("Player_Attacking_LD", distanceOfBlueLineFromEndOfRink + 3.0F, Width / 3.0F);
@@ -176,13 +182,13 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
         layout.AddEntry("Player_Defending_C", (Length / 2.0F) + playerSize, (Width / 2.0F));
         layout.AddEntry("Player_Defending_LW", (Length / 2.0F) + playerSize, (Width / 2.0F) + faceOffCircleRadius + playerSize);
         return layout;
-      } 
+      }
     }
 
     public ReadOnlyCollection<string> GetTeam(FieldObjects.Player.TeamId team)
     {
       List<string> t = new List<string>();
-      
+
       // TODO: Fill in the list of players on the specified team
 
       return new ReadOnlyCollection<string>(t);
@@ -224,7 +230,7 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
       float yDistanceFromCentreOnArea = innerHashDistanceFromCentreY + halfOfThinLineWidth;
       float xLength = innerHashLengthX - halfOfThinLineWidth;
       float yLength = innerHashLengthY - halfOfThinLineWidth;
-      g.DrawLines(linePen, 
+      g.DrawLines(linePen,
                   new PointF[] { 
                     new PointF(pos.X + xDistanceFromCentreOnArea, 
                                pos.Y + yDistanceFromCentreOnArea + yLength), 
@@ -267,342 +273,352 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
                        0.0F + position.Y - faceOffCircleRadius,
                        faceOffCircleRadius * 2.0F,
                        faceOffCircleRadius * 2.0F);
-      System.Drawing.Drawing2D.GraphicsPath circlePath = new System.Drawing.Drawing2D.GraphicsPath();
-      circlePath.StartFigure();
-      circlePath.AddEllipse(circleRectangle);
-      circlePath.CloseFigure();
+      using (var circlePath = new System.Drawing.Drawing2D.GraphicsPath()) {
+        circlePath.StartFigure();
+        circlePath.AddEllipse(circleRectangle);
+        circlePath.CloseFigure();
 
-      // Clip the area of the circle so that we can draw the hash-marks nicely
-      Region clipRegion = new Region(circlePath);
-      Region oldClip = g.Clip;
-      g.ExcludeClip(clipRegion);
+        // Clip the area of the circle so that we can draw the hash-marks nicely
+        Region oldClip = g.Clip;
+        using (Region clipRegion = new Region(circlePath)) {
+          g.ExcludeClip(clipRegion);
 
-      // Draw the hash-marks outside the circle
-      float lengthFromCentre = faceOffCircleRadius + outerHashLengthY;
-      g.DrawLine(linePen,
-                 pos.X - xDistanceFromCentreOnArea,
-                 pos.Y - lengthFromCentre,
-                 pos.X - xDistanceFromCentreOnArea,
-                 pos.Y + lengthFromCentre);
-      g.DrawLine(linePen,
-                 pos.X + xDistanceFromCentreOnArea,
-                 pos.Y - lengthFromCentre,
-                 pos.X + xDistanceFromCentreOnArea,
-                 pos.Y + lengthFromCentre);
+          // Draw the hash-marks outside the circle
+          float lengthFromCentre = faceOffCircleRadius + outerHashLengthY;
+          g.DrawLine(linePen,
+                     pos.X - xDistanceFromCentreOnArea,
+                     pos.Y - lengthFromCentre,
+                     pos.X - xDistanceFromCentreOnArea,
+                     pos.Y + lengthFromCentre);
+          g.DrawLine(linePen,
+                     pos.X + xDistanceFromCentreOnArea,
+                     pos.Y - lengthFromCentre,
+                     pos.X + xDistanceFromCentreOnArea,
+                     pos.Y + lengthFromCentre);
 
-      // Restore the clipping region
-      g.Clip = oldClip;
+          // Restore the clipping region
+          g.Clip = oldClip;
+        }
+      }
 
       // Draw the circle
       g.DrawEllipse(linePen, circleRectangle);
+    }
 
-      clipRegion.Dispose();
+    private static System.Drawing.Drawing2D.GraphicsPath CreateRinkPath()
+    {
+      System.Drawing.Drawing2D.GraphicsPath result = null;
+      System.Drawing.Drawing2D.GraphicsPath rink = null;
+      try {
+        const float cornerDiameter = cornerRadiusOfBoards * 2.0F;
+
+        RectangleF topLeftCorner =
+          new RectangleF(0.0F,
+                         0.0F,
+                         cornerDiameter,
+                         cornerDiameter);
+        RectangleF topRightCorner =
+          new RectangleF(rinkLength - cornerDiameter,
+                         0.0F,
+                         cornerDiameter,
+                         cornerDiameter);
+        RectangleF bottomLeftCorner =
+          new RectangleF(0.0F,
+                         rinkWidth - cornerDiameter,
+                         cornerDiameter,
+                         cornerDiameter);
+        RectangleF bottomRightCorner =
+          new RectangleF(rinkLength - cornerDiameter,
+                         rinkWidth - cornerDiameter,
+                         cornerDiameter,
+                         cornerDiameter);
+
+        rink = new System.Drawing.Drawing2D.GraphicsPath();
+        rink.StartFigure();
+        rink.AddArc(topLeftCorner, 180.0F, 90.0F);
+        rink.AddLine(0.0F + cornerRadiusOfBoards,
+                      0.0F,
+                      rinkLength - cornerRadiusOfBoards,
+                      0.0F);
+        rink.AddArc(topRightCorner, 270.0F, 90.0F);
+        rink.AddLine(rinkLength,
+                      0.0F + cornerRadiusOfBoards,
+                      rinkLength,
+                      rinkWidth - cornerRadiusOfBoards);
+        rink.AddArc(bottomRightCorner, 0.0F, 90.0F);
+        rink.AddLine(rinkLength - cornerRadiusOfBoards,
+                      rinkWidth,
+                      0.0F + cornerRadiusOfBoards,
+                      rinkWidth);
+        rink.AddArc(bottomLeftCorner, 90.0F, 90.0F);
+        rink.AddLine(0.0F,
+                      rinkWidth - cornerRadiusOfBoards,
+                      0.0F,
+                      0.0F + cornerRadiusOfBoards);
+        rink.CloseFigure();
+
+        result = rink;
+        rink = null;
+        return result;
+      } finally {
+        if (null != rink) {
+          rink.Dispose();
+        }
+      }
     }
 
     public void DrawMarkings(Graphics graphics)
     {
-      // Create the pens for drawing the lines with
-      Pen boardsPen = new Pen(Color.Black, boardsPenWidth);
-      Pen blueLinePen = new Pen(pms286, thickLinePenWidth);
-      Pen redLinePen = new Pen(pms186, thickLinePenWidth);
-      Pen blueThinLinePen = new Pen(pms286, thinLinePenWidth);
-      Pen redThinLinePen = new Pen(pms186, thinLinePenWidth);
+      const float distanceOfGoalLinesFromEndOfRinkInPixels = distanceOfGoalLineFromEndOfRink;
+      const float distanceOfBlueLineFromEndOfRinkInPixels = distanceOfBlueLineFromEndOfRink - (thickLinePenWidth / 2.0F);
 
-      // Create the brushes to fill areas on the ice with
-      Brush blueBrush = new SolidBrush(pms286);
-      Brush redBrush = new SolidBrush(pms186);
-      Brush creaseBrush = new SolidBrush(pms298);
-      Brush iceBrush = Brushes.White;
-      Brush goalBrush = Brushes.LightGray;
-      Brush benchBrush = Brushes.DarkGray;
+      const float centreCircleRadiusInPixels = faceOffCircleRadius;
+      const float centreCircleDiameterInPixels = faceOffCircleRadius * 2.0F;
 
-      float cornerDiameter = cornerRadiusOfBoards * 2.0F;
+      const float refereesCreaseRadiusInPixels = refereesCreaseRadius;
+      const float refereesCreaseDiameterInPixels = refereesCreaseRadius * 2.0F;
 
-      float distanceOfGoalLinesFromEndOfRinkInPixels = distanceOfGoalLineFromEndOfRink;
-      float distanceOfBlueLineFromEndOfRinkInPixels = distanceOfBlueLineFromEndOfRink - (thickLinePenWidth / 2.0F);
+      const float halfGoalWidth = goalWidth / 2.0F;
 
-      PointF centreOfIce = new PointF(rinkLength / 2.0F, rinkWidth / 2.0F);
+      using (Pen redThinLinePen = new Pen(pms186, thinLinePenWidth)) {
+        Brush iceBrush = Brushes.White;
+        Brush goalBrush = Brushes.LightGray;
+        Brush benchBrush = Brushes.DarkGray;
 
-      float centreCircleRadiusInPixels = faceOffCircleRadius;
-      float centreCircleDiameterInPixels = faceOffCircleRadius * 2.0F;
+        PointF centreOfIce = new PointF(rinkLength / 2.0F, rinkWidth / 2.0F);
 
-      float refereesCreaseRadiusInPixels = refereesCreaseRadius;
-      float refereesCreaseDiameterInPixels = refereesCreaseRadius * 2.0F;
+        // Create the rink path that will be use for drawing the boards
+        // and masking the rink for the goal lines
+        using (var rink = CreateRinkPath()) {
+          // Clip the drawing area to the rink itself
+          Region oldClip = graphics.Clip;
+          graphics.SetClip(rink);
 
-      float halfGoalWidth = goalWidth / 2.0F;
+          // Draw the ice
+          graphics.FillPath(iceBrush, rink);
 
-      // Create the rink path that will be use for drawing the boards
-      // and masking the rink for the goal lines
-      RectangleF topLeftCorner = 
-        new RectangleF(0.0F,
-                       0.0F,
-                       cornerDiameter,
-                       cornerDiameter);
-      RectangleF topRightCorner =
-        new RectangleF(rinkLength - cornerDiameter,
-                       0.0F,
-                       cornerDiameter,
-                       cornerDiameter);
-      RectangleF bottomLeftCorner =
-        new RectangleF(0.0F,
-                       rinkWidth - cornerDiameter,
-                       cornerDiameter,
-                       cornerDiameter);
-      RectangleF bottomRightCorner =
-        new RectangleF(rinkLength - cornerDiameter,
-                       rinkWidth - cornerDiameter,
-                       cornerDiameter,
-                       cornerDiameter);
-      System.Drawing.Drawing2D.GraphicsPath rink = new System.Drawing.Drawing2D.GraphicsPath();
-      rink.StartFigure();
-      rink.AddArc(topLeftCorner, 180.0F, 90.0F);
-      rink.AddLine(0.0F + cornerRadiusOfBoards,
-                   0.0F,
-                   rinkLength - cornerRadiusOfBoards,
-                   0.0F);
-      rink.AddArc(topRightCorner, 270.0F, 90.0F);
-      rink.AddLine(rinkLength,
-                   0.0F + cornerRadiusOfBoards,
-                   rinkLength,
-                   rinkWidth - cornerRadiusOfBoards);
-      rink.AddArc(bottomRightCorner, 0.0F, 90.0F);
-      rink.AddLine(rinkLength - cornerRadiusOfBoards,
-                   rinkWidth,
-                   0.0F + cornerRadiusOfBoards,
-                   rinkWidth);
-      rink.AddArc(bottomLeftCorner, 90.0F, 90.0F);
-      rink.AddLine(0.0F,
-                   rinkWidth - cornerRadiusOfBoards,
-                   0.0F,
-                   0.0F + cornerRadiusOfBoards);
-      rink.CloseFigure();
-
-      // Clip the drawing area to the rink itself
-      Region oldClip = graphics.Clip;
-      graphics.SetClip(rink);
-
-      // Draw the ice
-      graphics.FillPath(iceBrush, rink);
-
-      // Draw the goal creases
-      float halfCreaseWidthInPixels = creaseWidth / 2.0F;
-      float creaseWidthInPixels = creaseWidth;
-      float creaseClipWidth = creaseArcRadius + 0.5F;
-      float creaseArcRadiusInPixels = creaseArcRadius;
-      float creaseArcDiameterInPixels = creaseArcRadius * 2.0F;
-      float creaseEdgeLengthInPixels = createEdgeLength;
-      RectangleF creaseClipRect1 =
-        new RectangleF(0.0F + distanceOfGoalLinesFromEndOfRinkInPixels,
+          // Draw the goal creases
+          using (Brush creaseBrush = new SolidBrush(pms298)) {
+            const float halfCreaseWidthInPixels = creaseWidth / 2.0F;
+            const float creaseWidthInPixels = creaseWidth;
+            const float creaseClipWidth = creaseArcRadius + 0.5F;
+            const float creaseArcRadiusInPixels = creaseArcRadius;
+            const float creaseArcDiameterInPixels = creaseArcRadius * 2.0F;
+            const float creaseEdgeLengthInPixels = createEdgeLength;
+            RectangleF creaseClipRect1 =
+              new RectangleF(0.0F + distanceOfGoalLinesFromEndOfRinkInPixels,
+                             centreOfIce.Y - halfCreaseWidthInPixels,
+                             creaseClipWidth,
+                             creaseWidthInPixels);
+            Region creaseOldClip = graphics.Clip;
+            graphics.SetClip(creaseClipRect1);
+            RectangleF crease1ArcRect =
+              new RectangleF(0.0F + distanceOfGoalLinesFromEndOfRinkInPixels - creaseArcRadiusInPixels,
+                             centreOfIce.Y - creaseArcRadiusInPixels,
+                             creaseArcDiameterInPixels,
+                             creaseArcDiameterInPixels);
+            graphics.FillEllipse(creaseBrush, crease1ArcRect);
+            graphics.DrawEllipse(redThinLinePen, crease1ArcRect);
+            graphics.Clip = creaseOldClip;
+            graphics.DrawLine(redThinLinePen,
+                       0.0F + distanceOfGoalLinesFromEndOfRinkInPixels,
                        centreOfIce.Y - halfCreaseWidthInPixels,
-                       creaseClipWidth,
-                       creaseWidthInPixels);
-      Region creaseOldClip = graphics.Clip;
-      graphics.SetClip(creaseClipRect1);
-      RectangleF crease1ArcRect =
-        new RectangleF(0.0F + distanceOfGoalLinesFromEndOfRinkInPixels - creaseArcRadiusInPixels,
-                       centreOfIce.Y - creaseArcRadiusInPixels,
-                       creaseArcDiameterInPixels,
-                       creaseArcDiameterInPixels);
-      graphics.FillEllipse(creaseBrush, crease1ArcRect);
-      graphics.DrawEllipse(redThinLinePen, crease1ArcRect);
-      graphics.Clip = creaseOldClip;
-      graphics.DrawLine(redThinLinePen,
-                 0.0F + distanceOfGoalLinesFromEndOfRinkInPixels,
-                 centreOfIce.Y - halfCreaseWidthInPixels,
-                 0.0F + distanceOfGoalLinesFromEndOfRinkInPixels + creaseEdgeLengthInPixels,
-                 centreOfIce.Y - halfCreaseWidthInPixels);
-      graphics.DrawLine(redThinLinePen,
-                 0.0F + distanceOfGoalLinesFromEndOfRinkInPixels,
-                 centreOfIce.Y + halfCreaseWidthInPixels,
-                 0.0F + distanceOfGoalLinesFromEndOfRinkInPixels + creaseEdgeLengthInPixels,
-                 centreOfIce.Y + halfCreaseWidthInPixels);
-      RectangleF creaseClipRect2 =
-        new RectangleF(rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels - creaseClipWidth,
+                       0.0F + distanceOfGoalLinesFromEndOfRinkInPixels + creaseEdgeLengthInPixels,
+                       centreOfIce.Y - halfCreaseWidthInPixels);
+            graphics.DrawLine(redThinLinePen,
+                       0.0F + distanceOfGoalLinesFromEndOfRinkInPixels,
+                       centreOfIce.Y + halfCreaseWidthInPixels,
+                       0.0F + distanceOfGoalLinesFromEndOfRinkInPixels + creaseEdgeLengthInPixels,
+                       centreOfIce.Y + halfCreaseWidthInPixels);
+            RectangleF creaseClipRect2 =
+              new RectangleF(rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels - creaseClipWidth,
+                             centreOfIce.Y - halfCreaseWidthInPixels,
+                             creaseClipWidth,
+                             creaseWidthInPixels);
+            graphics.SetClip(creaseClipRect2);
+            RectangleF crease2ArcRect =
+              new RectangleF(rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels - creaseArcRadiusInPixels,
+                             centreOfIce.Y - creaseArcRadiusInPixels,
+                             creaseArcDiameterInPixels,
+                             creaseArcDiameterInPixels);
+            graphics.FillEllipse(creaseBrush, crease2ArcRect);
+            graphics.DrawEllipse(redThinLinePen, crease2ArcRect);
+            graphics.Clip = creaseOldClip;
+            graphics.DrawLine(redThinLinePen,
+                       rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels,
                        centreOfIce.Y - halfCreaseWidthInPixels,
-                       creaseClipWidth,
-                       creaseWidthInPixels);
-      graphics.SetClip(creaseClipRect2);
-      RectangleF crease2ArcRect =
-        new RectangleF(rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels - creaseArcRadiusInPixels,
-                       centreOfIce.Y - creaseArcRadiusInPixels,
-                       creaseArcDiameterInPixels,
-                       creaseArcDiameterInPixels);
-      graphics.FillEllipse(creaseBrush, crease2ArcRect);
-      graphics.DrawEllipse(redThinLinePen, crease2ArcRect);
-      graphics.Clip = creaseOldClip;
-      graphics.DrawLine(redThinLinePen,
-                 rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels,
-                 centreOfIce.Y - halfCreaseWidthInPixels,
-                 rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels - creaseEdgeLengthInPixels,
-                 centreOfIce.Y - halfCreaseWidthInPixels);
-      graphics.DrawLine(redThinLinePen,
-                 rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels,
-                 centreOfIce.Y + halfCreaseWidthInPixels,
-                 rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels - creaseEdgeLengthInPixels,
-                 centreOfIce.Y + halfCreaseWidthInPixels);
+                       rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels - creaseEdgeLengthInPixels,
+                       centreOfIce.Y - halfCreaseWidthInPixels);
+            graphics.DrawLine(redThinLinePen,
+                       rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels,
+                       centreOfIce.Y + halfCreaseWidthInPixels,
+                       rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels - creaseEdgeLengthInPixels,
+                       centreOfIce.Y + halfCreaseWidthInPixels);
+            graphics.Clip = creaseOldClip;
+          }
 
-      graphics.Clip = creaseOldClip;
+          // Draw the goal lines
+          graphics.DrawLine(redThinLinePen,
+                     0.0F + distanceOfGoalLinesFromEndOfRinkInPixels,
+                     0.0F,
+                     0.0F + distanceOfGoalLinesFromEndOfRinkInPixels,
+                     rinkWidth);
+          graphics.DrawLine(redThinLinePen,
+                     rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels,
+                     0.0F,
+                     rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels,
+                     rinkWidth);
 
-      // Draw the goal lines
-      graphics.DrawLine(redThinLinePen,
-                 0.0F + distanceOfGoalLinesFromEndOfRinkInPixels,
-                 0.0F,
-                 0.0F + distanceOfGoalLinesFromEndOfRinkInPixels,
-                 rinkWidth);
-      graphics.DrawLine(redThinLinePen,
-                 rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels,
-                 0.0F,
-                 rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels,
-                 rinkWidth);
+          // Draw the blue lines
+          using (Pen blueLinePen = new Pen(pms286, thickLinePenWidth)) {
+            graphics.DrawLine(blueLinePen,
+                       0.0F + distanceOfBlueLineFromEndOfRinkInPixels,
+                       0.0F,
+                       0.0F + distanceOfBlueLineFromEndOfRinkInPixels,
+                       rinkWidth);
+            graphics.DrawLine(blueLinePen,
+                       rinkLength - distanceOfBlueLineFromEndOfRinkInPixels,
+                       0.0F,
+                       rinkLength - distanceOfBlueLineFromEndOfRinkInPixels,
+                       rinkWidth);
+          }
 
-      // Draw the blue lines
-      graphics.DrawLine(blueLinePen,
-                 0.0F + distanceOfBlueLineFromEndOfRinkInPixels,
-                 0.0F,
-                 0.0F + distanceOfBlueLineFromEndOfRinkInPixels,
-                 rinkWidth);
-      graphics.DrawLine(blueLinePen,
-                 rinkLength - distanceOfBlueLineFromEndOfRinkInPixels,
-                 0.0F,
-                 rinkLength - distanceOfBlueLineFromEndOfRinkInPixels,
-                 rinkWidth);
+          // Draw the centre-circle
+          using (Pen blueThinLinePen = new Pen(pms286, thinLinePenWidth)) {
+            graphics.DrawEllipse(blueThinLinePen,
+                          centreOfIce.X - centreCircleRadiusInPixels,
+                          centreOfIce.Y - centreCircleRadiusInPixels,
+                          centreCircleDiameterInPixels,
+                          centreCircleDiameterInPixels);
+          }
 
-      // Draw the centre-circle
-      graphics.DrawEllipse(blueThinLinePen,
-                    centreOfIce.X - centreCircleRadiusInPixels,
-                    centreOfIce.Y - centreCircleRadiusInPixels,
-                    centreCircleDiameterInPixels,
-                    centreCircleDiameterInPixels);
+          // Draw the red line
+          using (Pen redLinePen = new Pen(pms186, thickLinePenWidth)) {
+            graphics.DrawLine(redLinePen,
+                       centreOfIce.X,
+                       0.0F,
+                       centreOfIce.X,
+                       rinkWidth);
+          }
 
-      // Draw the red line
-      graphics.DrawLine(redLinePen,
-                 centreOfIce.X,
-                 0.0F,
-                 centreOfIce.X,
-                 rinkWidth);
+          // Draw the centre face-off spot
+          using (Brush blueBrush = new SolidBrush(pms286)) {
+            DrawFaceOffSpot(graphics, centreOfIce, blueBrush, centreFaceOffSpotDiameter, true);
+          }
 
-      // Draw the centre face-off spot
-      DrawFaceOffSpot(graphics, centreOfIce, blueBrush, centreFaceOffSpotDiameter, true);
+          // Draw the "Referee's crease" (a semi-circle zone on one side at centre ice)
+          graphics.DrawArc(redThinLinePen,
+                    centreOfIce.X - refereesCreaseRadiusInPixels,
+                    rinkWidth - refereesCreaseRadiusInPixels,
+                    refereesCreaseDiameterInPixels,
+                    refereesCreaseDiameterInPixels,
+                    180.0F,
+                    360.0F);
 
-      // Draw the "Referee's crease" (a semi-circle zone on one side at centre ice)
-      graphics.DrawArc(redThinLinePen,
-                centreOfIce.X - refereesCreaseRadiusInPixels,
-                rinkWidth - refereesCreaseRadiusInPixels,
-                refereesCreaseDiameterInPixels, 
-                refereesCreaseDiameterInPixels, 
-                180.0F, 
-                360.0F);
+          // Draw the goals
+          RectangleF goal1 =
+            new RectangleF(0.0F + distanceOfGoalLinesFromEndOfRinkInPixels - goalDepth,
+                           centreOfIce.Y - halfGoalWidth,
+                           goalDepth,
+                           goalWidth);
+          RectangleF goal2 =
+            new RectangleF(rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels,
+                           centreOfIce.Y - halfGoalWidth,
+                           goalDepth,
+                           goalWidth);
+          RectangleF[] goals = new RectangleF[] {
+            goal1,
+            goal2
+          };
+          graphics.FillRectangles(goalBrush, goals);
+          graphics.DrawRectangles(redThinLinePen, goals);
 
-      // Draw the goals
-      // TODO: Make this fancier and rounded - just like the real nets
-      RectangleF goal1 =
-        new RectangleF(0.0F + distanceOfGoalLinesFromEndOfRinkInPixels - goalDepth,
-                       centreOfIce.Y - halfGoalWidth,
-                       goalDepth,
-                       goalWidth);
-      RectangleF goal2 =
-        new RectangleF(rinkLength - distanceOfGoalLinesFromEndOfRinkInPixels,
-                       centreOfIce.Y - halfGoalWidth,
-                       goalDepth,
-                       goalWidth);
-      RectangleF[] goals = new RectangleF[] {
-        goal1,
-        goal2
-      };
-      graphics.FillRectangles(goalBrush, goals);
-      graphics.DrawRectangles(redThinLinePen, goals);
+          // Draw the trapezoid zone behind the goals
+          graphics.DrawLine(redThinLinePen,
+                     new PointF(0.0F, (rinkWidth / 2.0F) - (trapezoidBaseWidth / 2.0F)),
+                     new PointF(distanceOfGoalLineFromEndOfRink, (rinkWidth / 2.0F) - trapezoidOffsetFromCentre));
+          graphics.DrawLine(redThinLinePen,
+                     new PointF(0.0F, (rinkWidth / 2.0F) + (trapezoidBaseWidth / 2.0F)),
+                     new PointF(distanceOfGoalLineFromEndOfRink, (rinkWidth / 2.0F) + trapezoidOffsetFromCentre));
+          graphics.DrawLine(redThinLinePen,
+                     new PointF(rinkLength, (rinkWidth / 2.0F) - (trapezoidBaseWidth / 2.0F)),
+                     new PointF(rinkLength - distanceOfGoalLineFromEndOfRink, (rinkWidth / 2.0F) - trapezoidOffsetFromCentre));
+          graphics.DrawLine(redThinLinePen,
+                     new PointF(rinkLength, (rinkWidth / 2.0F) + (trapezoidBaseWidth / 2.0F)),
+                     new PointF(rinkLength - distanceOfGoalLineFromEndOfRink, (rinkWidth / 2.0F) + trapezoidOffsetFromCentre));
 
-      // Draw the trapezoid zone behind the goals
-      graphics.DrawLine(redThinLinePen,
-                 new PointF(0.0F, (rinkWidth / 2.0F) - (trapezoidBaseWidth / 2.0F)),
-                 new PointF(distanceOfGoalLineFromEndOfRink, (rinkWidth / 2.0F) - trapezoidOffsetFromCentre));
-      graphics.DrawLine(redThinLinePen,
-                 new PointF(0.0F, (rinkWidth / 2.0F) + (trapezoidBaseWidth / 2.0F)),
-                 new PointF(distanceOfGoalLineFromEndOfRink, (rinkWidth / 2.0F) + trapezoidOffsetFromCentre));
-      graphics.DrawLine(redThinLinePen,
-                 new PointF(rinkLength, (rinkWidth / 2.0F) - (trapezoidBaseWidth / 2.0F)),
-                 new PointF(rinkLength - distanceOfGoalLineFromEndOfRink, (rinkWidth / 2.0F) - trapezoidOffsetFromCentre));
-      graphics.DrawLine(redThinLinePen,
-                 new PointF(rinkLength, (rinkWidth / 2.0F) + (trapezoidBaseWidth / 2.0F)),
-                 new PointF(rinkLength - distanceOfGoalLineFromEndOfRink, (rinkWidth / 2.0F) + trapezoidOffsetFromCentre));
+          using (Brush redBrush = new SolidBrush(pms186)) {
+            // Draw the face-off areas
+            PointF[] faceOffAreas = new PointF[] {
+              new PointF(distanceOfZoneFaceOffAreasFromEndOfRink, (rinkWidth / 2.0F) - distanceOfFaceOffSpotsFromCentreOfRink),
+              new PointF(distanceOfZoneFaceOffAreasFromEndOfRink, (rinkWidth / 2.0F) + distanceOfFaceOffSpotsFromCentreOfRink),
+              new PointF(rinkLength - distanceOfZoneFaceOffAreasFromEndOfRink, (rinkWidth / 2.0F) - distanceOfFaceOffSpotsFromCentreOfRink),
+              new PointF(rinkLength - distanceOfZoneFaceOffAreasFromEndOfRink, (rinkWidth / 2.0F) + distanceOfFaceOffSpotsFromCentreOfRink)
+            };
+            foreach (PointF faceOffArea in faceOffAreas) {
+              DrawFaceOffArea(graphics, faceOffArea, redBrush, redThinLinePen);
+            }
 
-      // Draw the face-off areas
-      PointF[] faceOffAreas = new PointF[] {
-        new PointF(distanceOfZoneFaceOffAreasFromEndOfRink, (rinkWidth / 2.0F) - distanceOfFaceOffSpotsFromCentreOfRink),
-        new PointF(distanceOfZoneFaceOffAreasFromEndOfRink, (rinkWidth / 2.0F) + distanceOfFaceOffSpotsFromCentreOfRink),
-        new PointF(rinkLength - distanceOfZoneFaceOffAreasFromEndOfRink, (rinkWidth / 2.0F) - distanceOfFaceOffSpotsFromCentreOfRink),
-        new PointF(rinkLength - distanceOfZoneFaceOffAreasFromEndOfRink, (rinkWidth / 2.0F) + distanceOfFaceOffSpotsFromCentreOfRink)
-      };
-      foreach (PointF faceOffArea in faceOffAreas) {
-        DrawFaceOffArea(graphics, faceOffArea, redBrush, redThinLinePen);
+            // Draw the neutral zone face off spots
+            PointF[] faceOffSpots = new PointF[] {
+              new PointF(distanceOfNeutralZoneFaceOffSpotsFromEndOfRink, (rinkWidth / 2.0F) - distanceOfFaceOffSpotsFromCentreOfRink),
+              new PointF(distanceOfNeutralZoneFaceOffSpotsFromEndOfRink, (rinkWidth / 2.0F) + distanceOfFaceOffSpotsFromCentreOfRink),
+              new PointF(rinkLength - distanceOfNeutralZoneFaceOffSpotsFromEndOfRink, (rinkWidth / 2.0F) - distanceOfFaceOffSpotsFromCentreOfRink),
+              new PointF(rinkLength - distanceOfNeutralZoneFaceOffSpotsFromEndOfRink, (rinkWidth / 2.0F) + distanceOfFaceOffSpotsFromCentreOfRink)
+            };
+            foreach (PointF faceOffSpot in faceOffSpots) {
+              DrawFaceOffSpot(graphics, faceOffSpot, redBrush, faceOffSpotDiameter, false);
+            }
+          }
+
+          // Restore clipping region to draw the boards and the stuff outside the boards
+          graphics.Clip = oldClip;
+
+          // Create the player benches
+          const float halfBenchWidth = playerBenchWidth / 2.0F;
+          const float benchWidth = playerBenchWidth;
+          const float benchHeight = playerBenchDepth;
+          RectangleF bench1 =
+            new RectangleF(0.0F + distanceOfBlueLineFromEndOfRinkInPixels - halfBenchWidth,
+                           0.0F - benchHeight,
+                           benchWidth,
+                           benchHeight);
+          RectangleF bench2 =
+            new RectangleF(rinkLength - distanceOfBlueLineFromEndOfRinkInPixels - halfBenchWidth,
+                           0.0F - benchHeight,
+                           benchWidth,
+                           benchHeight);
+
+          // Create the penalty boxes
+          RectangleF penaltyBox1 =
+            new RectangleF(0.0F + distanceOfBlueLineFromEndOfRinkInPixels,
+                           rinkWidth,
+                           penaltyBoxWidth,
+                           benchHeight);
+          RectangleF penaltyBox2 =
+            new RectangleF(rinkLength - distanceOfBlueLineFromEndOfRinkInPixels - penaltyBoxWidth,
+                           rinkWidth,
+                           penaltyBoxWidth,
+                           penaltyBoxDepth);
+
+          // Draw all the "benches"
+          RectangleF[] benches = new RectangleF[] {
+            bench1,
+            bench2,
+            penaltyBox1,
+            penaltyBox2
+          };
+          graphics.FillRectangles(benchBrush, benches);
+
+          using (Pen boardsPen = new Pen(Color.Black, boardsPenWidth)) {
+            graphics.DrawRectangles(boardsPen, benches);
+
+            // Draw the boards
+            graphics.DrawPath(boardsPen, rink);
+          }
+        }
+
       }
-
-      // Draw the neutral zone face off spots
-      PointF[] faceOffSpots = new PointF[] {
-        new PointF(distanceOfNeutralZoneFaceOffSpotsFromEndOfRink, (rinkWidth / 2.0F) - distanceOfFaceOffSpotsFromCentreOfRink),
-        new PointF(distanceOfNeutralZoneFaceOffSpotsFromEndOfRink, (rinkWidth / 2.0F) + distanceOfFaceOffSpotsFromCentreOfRink),
-        new PointF(rinkLength - distanceOfNeutralZoneFaceOffSpotsFromEndOfRink, (rinkWidth / 2.0F) - distanceOfFaceOffSpotsFromCentreOfRink),
-        new PointF(rinkLength - distanceOfNeutralZoneFaceOffSpotsFromEndOfRink, (rinkWidth / 2.0F) + distanceOfFaceOffSpotsFromCentreOfRink)
-      };
-      foreach (PointF faceOffSpot in faceOffSpots) {
-        DrawFaceOffSpot(graphics, faceOffSpot, redBrush, faceOffSpotDiameter, false);
-      }
-
-      // Restore clipping region to draw the boards and the stuff outside the boards
-      graphics.Clip = oldClip;
-
-      // Create the player benches
-      float halfBenchWidth = playerBenchWidth / 2.0F;
-      float benchWidth = playerBenchWidth;
-      float benchHeight = playerBenchDepth;
-      RectangleF bench1 =
-        new RectangleF(0.0F + distanceOfBlueLineFromEndOfRinkInPixels - halfBenchWidth,
-                       0.0F - benchHeight,
-                       benchWidth,
-                       benchHeight);
-      RectangleF bench2 =
-        new RectangleF(rinkLength - distanceOfBlueLineFromEndOfRinkInPixels - halfBenchWidth,
-                       0.0F - benchHeight,
-                       benchWidth,
-                       benchHeight);
-      
-      // Create the penalty boxes
-      RectangleF penaltyBox1 =
-        new RectangleF(0.0F + distanceOfBlueLineFromEndOfRinkInPixels,
-                       rinkWidth,
-                       penaltyBoxWidth,
-                       benchHeight);
-      RectangleF penaltyBox2 =
-        new RectangleF(rinkLength - distanceOfBlueLineFromEndOfRinkInPixels - penaltyBoxWidth,
-                       rinkWidth,
-                       penaltyBoxWidth,
-                       penaltyBoxDepth);
-
-      // Draw all the "benches"
-      RectangleF[] benches = new RectangleF[] {
-        bench1,
-        bench2,
-        penaltyBox1,
-        penaltyBox2
-      };
-      graphics.FillRectangles(benchBrush, benches);
-      graphics.DrawRectangles(boardsPen, benches);
-
-      // Draw the boards
-      graphics.DrawPath(boardsPen, rink);
-
-      // Dispose of resources (note that we don't dispose of 
-      // the system brushes otherwise we don't seem to get 
-      // them back - i.e. it releases the system brush)
-      boardsPen.Dispose();
-      blueLinePen.Dispose();
-      redLinePen.Dispose();
-      blueThinLinePen.Dispose();
-      redThinLinePen.Dispose();
-      blueBrush.Dispose();
-      redBrush.Dispose();
-      creaseBrush.Dispose();
-      rink.Dispose();
     }
 
   }

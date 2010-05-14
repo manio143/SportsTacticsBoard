@@ -202,7 +202,6 @@ namespace SportsTacticsBoard
         XmlSerializer serializer = new XmlSerializer(typeof(SavedLayout));
         using (TextWriter writer = new StreamWriter(fileName)) {
           serializer.Serialize(writer, layout);
-          writer.Close();
         }
         return true;
       }
@@ -274,11 +273,19 @@ namespace SportsTacticsBoard
                 categorySubMenus.Add(savedLayout.Category, menuToInsertIn);
               }
             }
-            ToolStripMenuItem mi = new ToolStripMenuItem(savedLayout.Name, null, menuItemClickEventHandler);
-            if (savedLayout.Description.Length > 0) {
-              mi.ToolTipText = savedLayout.Description;
+            ToolStripMenuItem mi = null;
+            try {
+              mi = new ToolStripMenuItem(savedLayout.Name, null, menuItemClickEventHandler);
+              if (savedLayout.Description.Length > 0) {
+                mi.ToolTipText = savedLayout.Description;
+              }
+              menuToInsertIn.DropDownItems.Add(mi);
+              mi = null;
+            } finally {
+              if (null != mi) {
+                mi.Dispose();
+              }
             }
-            menuToInsertIn.DropDownItems.Add(mi);
             itemsInserted = true;
           }
         }
@@ -292,9 +299,17 @@ namespace SportsTacticsBoard
       }
       if (!itemsInserted) {
         string menuItemStr = Properties.Resources.ResourceManager.GetString("NoSavedLayoutsMenuItemText");
-        ToolStripMenuItem mi = new ToolStripMenuItem(menuItemStr);
-        mi.Enabled = false;
-        menuToInsertInto.DropDownItems.Add(mi);
+        ToolStripMenuItem mi = null;
+        try {
+          mi = new ToolStripMenuItem(menuItemStr);
+          mi.Enabled = false;
+          menuToInsertInto.DropDownItems.Add(mi);
+          mi = null;
+        } finally {
+          if (null != mi) {
+            mi.Dispose();
+          }
+        }
       }
       return itemsInserted;
     }
