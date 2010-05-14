@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-// Sports Tactics Board
+﻿// Sports Tactics Board
 //
 // http://sportstacticsbd.sourceforge.net/
 // http://sourceforge.net/projects/sportstacticsbd/
@@ -24,6 +23,7 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace SportsTacticsBoard
@@ -54,6 +54,11 @@ namespace SportsTacticsBoard
         l = new CustomLabel() { Tag = tag, Label = customLabel };
         dictionary.Add(tag, l);
       }
+    }
+
+    public void Remove(string tag)
+    {
+      dictionary.Remove(tag);
     }
 
     #region ICollection<CustomLabel> Members

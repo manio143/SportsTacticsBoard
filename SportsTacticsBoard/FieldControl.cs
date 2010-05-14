@@ -344,6 +344,15 @@ namespace SportsTacticsBoard
           Capture = true;
         }
       }
+      if ((AllowInteraction) && (e.Button == MouseButtons.Right)) {
+        fieldObjectContextMenu.Tag = null;
+        FieldObject fo = ObjectAtPoint(e.Location);
+        if (fo != null) {
+          fieldObjectContextMenu.Tag = fo;
+          changeLabelMenuItem.Enabled = null != CustomLabelProvider;
+          fieldObjectContextMenu.Show(this, e.Location);
+        }
+      }
     }
 
     protected override void OnMouseMove(MouseEventArgs e)
@@ -367,6 +376,28 @@ namespace SportsTacticsBoard
         MoveObjectTo(dragObject, pt);
         dragObject = null;
         Capture = false;
+      }
+    }
+
+    private void changeLabelMenuItem_Click(object sender, EventArgs e)
+    {
+      FieldObject fo = fieldObjectContextMenu.Tag as FieldObject;
+      if ((null != fo) && (null != CustomLabelProvider)) {
+        using (var d = new EditFieldObjectLabelDialog()) {
+          d.FieldObjectName = fo.Name;
+          d.CustomLabel = CustomLabelProvider.GetCustomLabel(fo.Tag);
+          DialogResult r = d.ShowDialog(this);
+          switch (r) {
+            case DialogResult.No:
+              CustomLabelProvider.RemoveCustomLabel(fo.Tag);
+              InvalidateFieldArea(fo.GetRectangle());
+              break;
+            case DialogResult.OK:
+              CustomLabelProvider.UpdateCustomLabel(fo.Tag, d.CustomLabel);
+              InvalidateFieldArea(fo.GetRectangle());
+              break;
+          }
+        }
       }
     }
   }

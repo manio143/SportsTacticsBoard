@@ -77,6 +77,12 @@
     </Compile>
     <Compile Include="CustomLabel.cs" />
     <Compile Include="CustomLabelCollection.cs" />
+    <Compile Include="EditFieldObjectLabelDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditFieldObjectLabelDialog.Designer.cs">
+      <DependentUpon>EditFieldObjectLabelDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="FieldObjects\BaseCone.cs" />
     <Compile Include="FieldObjects\CircularConeWithBorder.cs" />
     <Compile Include="FieldObjects\UnlabelledTriangularCone.cs" />
@@ -110,6 +116,12 @@
     <EmbeddedResource Include="AboutBox.resx">
       <SubType>Designer</SubType>
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditFieldObjectLabelDialog.de.resx">
+      <DependentUpon>EditFieldObjectLabelDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditFieldObjectLabelDialog.resx">
+      <DependentUpon>EditFieldObjectLabelDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.de.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

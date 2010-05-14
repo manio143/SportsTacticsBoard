@@ -313,4 +313,7 @@
   <data name="TitleFormatString" xml:space="preserve">
     <value>{0} - {1}</value>
   </data>
+  <data name="CustomLabelLongerThanRecommended" xml:space="preserve">
+    <value>The custom label is longer than recommended (2 characters or less). It probably won't display properly. Do you want to keep this label?</value>
+  </data>
 </root>

@@ -31,6 +31,8 @@ namespace SportsTacticsBoard
   public interface ICustomLabelProvider
   {
     string GetCustomLabel(string tag);
+    void UpdateCustomLabel(string tag, string label);
+    void RemoveCustomLabel(string tag);
   }
 
   abstract class FieldObject

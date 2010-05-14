@@ -128,5 +128,13 @@ namespace SportsTacticsBoard
       }
       customLabels.AddOrUpdate(tag, customLabel);
     }
+
+    public void RemoveCustomLabel(string tag)
+    {
+      if (null == customLabels) {
+        return;
+      }
+      customLabels.Remove(tag);
+    }
   }
 }

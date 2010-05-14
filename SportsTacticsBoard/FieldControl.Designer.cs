@@ -52,8 +52,25 @@ namespace SportsTacticsBoard
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FieldControl));
+      this.fieldObjectContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.changeLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.fieldObjectContextMenu.SuspendLayout();
       this.SuspendLayout();
+      // 
+      // fieldObjectContextMenu
+      // 
+      this.fieldObjectContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.changeLabelMenuItem});
+      this.fieldObjectContextMenu.Name = "fieldObjectContextMenu";
+      resources.ApplyResources(this.fieldObjectContextMenu, "fieldObjectContextMenu");
+      // 
+      // changeLabelMenuItem
+      // 
+      this.changeLabelMenuItem.Name = "changeLabelMenuItem";
+      resources.ApplyResources(this.changeLabelMenuItem, "changeLabelMenuItem");
+      this.changeLabelMenuItem.Click += new System.EventHandler(this.changeLabelMenuItem_Click);
       // 
       // FieldControl
       // 
@@ -61,10 +78,14 @@ namespace SportsTacticsBoard
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.DoubleBuffered = true;
       this.Name = "FieldControl";
+      this.fieldObjectContextMenu.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
 
     #endregion
+
+    private System.Windows.Forms.ContextMenuStrip fieldObjectContextMenu;
+    private System.Windows.Forms.ToolStripMenuItem changeLabelMenuItem;
   }
 }
