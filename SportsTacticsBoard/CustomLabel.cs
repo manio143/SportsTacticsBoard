@@ -1,4 +1,4 @@
-// Sports Tactics Board
+﻿// Sports Tactics Board
 //
 // http://sportstacticsbd.sourceforge.net/
 // http://sourceforge.net/projects/sportstacticsbd/
@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006-2010 Robert Turner
+// Copyright (C) 2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,52 +23,17 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
+using System.Xml.Serialization;
 
-namespace SportsTacticsBoard.FieldObjects
+namespace SportsTacticsBoard
 {
-  class LabelledPlayer : Player
+  [XmlType(TypeName = "customLabel")]
+  public sealed class CustomLabel
   {
-    private string label;
+    [XmlAttribute("objectTag")]
+    public string Tag { get; set; }
 
-    public override string Label {
-      get { return label; }
-    }
-
-    private string overriddenTag;
-
-    protected override int LabelFontSize {
-      get {
-        if (LabelText.Length > 1) {
-          return 6;
-        } else {
-          return 9;
-        }
-      }
-    }
-
-    public override string Tag
-    {
-      get
-      {
-        if (string.IsNullOrEmpty(overriddenTag)) {
-          return base.Tag;
-        } else {
-          return ComposeTag(Team, overriddenTag);
-        }
-      }
-    }
-
-    public LabelledPlayer(string label, TeamId team, float dispRadius) :
-      base(team, dispRadius) {
-      this.label = label;
-    }
-
-    public LabelledPlayer(string label, TeamId team, float dispRadius, string overriddenTag) : 
-      base(team, dispRadius)
-    {
-      this.label = label;
-      this.overriddenTag = overriddenTag;
-    }
-
+    [XmlAttribute("label")]
+    public string Label { get; set; }
   }
 }

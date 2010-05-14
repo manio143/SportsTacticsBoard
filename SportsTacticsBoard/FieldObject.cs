@@ -24,16 +24,21 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 
 namespace SportsTacticsBoard
 {
+  public interface ICustomLabelProvider
+  {
+    string GetCustomLabel(string tag);
+  }
+
   abstract class FieldObject
   {
     public abstract string Tag { get; }
     public abstract string Label { get; }
+
+    public ICustomLabelProvider CustomLabelProvider { get; set; }
 
     public PointF Position
     {
@@ -74,6 +79,22 @@ namespace SportsTacticsBoard
       DrawAt(graphics, Position);
     }
 
+    protected string LabelText
+    {
+      get
+      {
+        if (null != CustomLabelProvider) {
+          string s = CustomLabelProvider.GetCustomLabel(Tag);
+          // Explicitly allow and empty string
+          if (null != s) {
+            return s;
+          }
+        }
+        // Return the "hard-coded" label
+        return Label;
+      }
+    }
+
 		public virtual void DrawAt(Graphics graphics, PointF pos)
     {
       if (null == graphics) {
@@ -96,7 +117,7 @@ namespace SportsTacticsBoard
             strFormat.LineAlignment = StringAlignment.Center;
             graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             try {
-              graphics.DrawString(Label, labelFont, LabelBrush, rect, strFormat);
+              graphics.DrawString(LabelText, labelFont, LabelBrush, rect, strFormat);
             } catch (System.Runtime.InteropServices.ExternalException) {
               // Sometimes we get a "generic error" from the GDI+ subsystem
               // when resizing the window really small and then slowly larger 
@@ -188,7 +209,7 @@ namespace SportsTacticsBoard
 
     private bool HasLabel
     {
-      get { return !String.IsNullOrEmpty(Label); }
+      get { return !String.IsNullOrEmpty(LabelText); }
     }
 
     private Pen GetMovementPen()

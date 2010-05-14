@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006-2007 Robert Turner
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,9 +23,8 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
-using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace SportsTacticsBoard
@@ -52,14 +51,26 @@ namespace SportsTacticsBoard
     }
     private Collection<FieldLayout> sequence;
 
+    [XmlArray(ElementName = "customLabels")]
+    public CustomLabelCollection CustomLabels
+    {
+      get
+      {
+        return customLabels;
+      }
+    }
+    private CustomLabelCollection customLabels;
+
     public LayoutSequence()
     {
       sequence = new Collection<FieldLayout>();
+      customLabels = new CustomLabelCollection();
     }
 
     public LayoutSequence(string fieldTypeTag)
     {
       sequence = new Collection<FieldLayout>();
+      customLabels = new CustomLabelCollection();
       this.fieldTypeTag = fieldTypeTag;
     }
 
@@ -100,6 +111,22 @@ namespace SportsTacticsBoard
       if ((index >= 0) && (index < sequence.Count)) {
         sequence.RemoveAt(index);
       }
+    }
+
+    public string GetCustomLabel(string tag)
+    {
+      if (null == customLabels) {
+        return null;
+      }
+      return customLabels.Get(tag);
+    }
+
+    public void AddOrUpdateCustomLabel(string tag, string customLabel)
+    {
+      if (null == customLabels) {
+        return;
+      }
+      customLabels.AddOrUpdate(tag, customLabel);
     }
   }
 }

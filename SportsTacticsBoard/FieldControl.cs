@@ -24,12 +24,9 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
 
 namespace SportsTacticsBoard
@@ -62,6 +59,8 @@ namespace SportsTacticsBoard
         }
       }
     }
+
+    public ICustomLabelProvider CustomLabelProvider { get; set; }
 
     public event EventHandler IsDirtyChanged;
 
@@ -97,6 +96,9 @@ namespace SportsTacticsBoard
           BackColor = fieldType.SurfaceColor;
           CalculateFieldGeometry(Size);
           fieldObjects = fieldType.StandardObjects;
+          foreach (var fo in fieldObjects) {
+            fo.CustomLabelProvider = CustomLabelProvider;
+          }
           SetLayout(fieldType.DefaultLayout);
         }
 

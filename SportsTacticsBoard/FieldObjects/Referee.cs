@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,9 +23,6 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 
 namespace SportsTacticsBoard.FieldObjects
@@ -47,7 +44,7 @@ namespace SportsTacticsBoard.FieldObjects
     protected override int LabelFontSize
     {
       get {
-        if (Label.Length > 1) {
+        if (LabelText.Length > 1) {
           return 6;
         } else {
           return 9;
