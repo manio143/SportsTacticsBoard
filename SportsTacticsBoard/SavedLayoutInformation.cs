@@ -56,28 +56,29 @@ namespace SportsTacticsBoard
 
     internal static SavedLayout AskUserForSavedLayoutDetails(ICollection<FieldObject> fieldObjects, string fieldTypeTag, string[] existingLayoutCategories)
     {
-      SavedLayoutInformation dialog = new SavedLayoutInformation();
-      foreach (var fo in fieldObjects) {
-        SavedLayoutEntryItem e = new SavedLayoutEntryItem()
-        {
-          Tag = fo.Tag,
-          Name = fo.Name 
-        };
-        dialog.entriesListBox.Items.Add(e, true);
-      }
-      dialog.categoryComboBox.DataSource = existingLayoutCategories;
-      dialog.categoryComboBox.SelectedIndex = -1; // make sure nothing is specified at first
-
-      if (dialog.ShowDialog() == DialogResult.OK) {
-        FieldLayout layout = FieldControl.ConvertFieldObjectsToLayout(fieldObjects);
-        for (int index = 0; index < dialog.entriesListBox.Items.Count; index++) {
-          if (!dialog.entriesListBox.GetItemChecked(index)) {
-            layout.RemoveEntry(((SavedLayoutEntryItem)(dialog.entriesListBox.Items[index])).Tag);
-          }
+      using (SavedLayoutInformation dialog = new SavedLayoutInformation()) {
+        foreach (var fo in fieldObjects) {
+          SavedLayoutEntryItem e = new SavedLayoutEntryItem()
+          {
+            Tag = fo.Tag,
+            Name = fo.Name
+          };
+          dialog.entriesListBox.Items.Add(e, true);
         }
-        return new SavedLayout(dialog.nameTextBox.Text, dialog.categoryComboBox.Text, dialog.descriptionTextBox.Text, layout, fieldTypeTag);
+        dialog.categoryComboBox.DataSource = existingLayoutCategories;
+        dialog.categoryComboBox.SelectedIndex = -1; // make sure nothing is specified at first
+
+        if (dialog.ShowDialog() == DialogResult.OK) {
+          FieldLayout layout = FieldControl.ConvertFieldObjectsToLayout(fieldObjects);
+          for (int index = 0; index < dialog.entriesListBox.Items.Count; index++) {
+            if (!dialog.entriesListBox.GetItemChecked(index)) {
+              layout.RemoveEntry(((SavedLayoutEntryItem)(dialog.entriesListBox.Items[index])).Tag);
+            }
+          }
+          return new SavedLayout(dialog.nameTextBox.Text, dialog.categoryComboBox.Text, dialog.descriptionTextBox.Text, layout, fieldTypeTag);
+        }
+        return null;
       }
-      return null;
     }
 
     private void nameTextBox_Validating(object sender, CancelEventArgs e)

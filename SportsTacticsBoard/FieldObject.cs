@@ -63,7 +63,7 @@ namespace SportsTacticsBoard
       return GetRectangleAt(position);
     }
 
-    protected RectangleF GetRectangleAt(PointF pos)
+    public RectangleF GetRectangleAt(PointF pos)
     {
       return new RectangleF(pos.X - DisplayRadius,
         pos.Y - DisplayRadius, DisplayRadius * 2, DisplayRadius * 2);
@@ -90,19 +90,20 @@ namespace SportsTacticsBoard
       }
       if (HasLabel) {
         float fontSize = LabelFontSize * (float)rect.Height / 18.0F;
-        Font labelFont = new Font("Arial", fontSize, FontStyle.Bold);
-        StringFormat strFormat = new StringFormat();
-        strFormat.Alignment = StringAlignment.Center;
-        strFormat.LineAlignment = StringAlignment.Center;
-        graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-        try {
-          graphics.DrawString(Label, labelFont, LabelBrush, rect, strFormat);
-        }
-        catch (System.Runtime.InteropServices.ExternalException) {
-          // Sometimes we get a "generic error" from the GDI+ subsystem
-          // when resizing the window really small and then slowly larger 
-          // again. All the parameters seem correct, so we'll just catch and
-          // ignore this exception here.
+        using (Font labelFont = new Font("Arial", fontSize, FontStyle.Bold)) {
+          using (StringFormat strFormat = new StringFormat()) {
+            strFormat.Alignment = StringAlignment.Center;
+            strFormat.LineAlignment = StringAlignment.Center;
+            graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+            try {
+              graphics.DrawString(Label, labelFont, LabelBrush, rect, strFormat);
+            } catch (System.Runtime.InteropServices.ExternalException) {
+              // Sometimes we get a "generic error" from the GDI+ subsystem
+              // when resizing the window really small and then slowly larger 
+              // again. All the parameters seem correct, so we'll just catch and
+              // ignore this exception here.
+            }
+          }
         }
       }
     }
@@ -117,7 +118,9 @@ namespace SportsTacticsBoard
       if (null == graphics) {
         throw new ArgumentNullException("graphics");
       }
-      graphics.DrawLine(GetMovementPen(), startPoint, endPoint);
+      using (Pen movementPen = GetMovementPen()) {
+        graphics.DrawLine(movementPen, startPoint, endPoint);
+      }
     }
 
     protected FieldObject(float posX, float posY, float dispRadius)
@@ -190,14 +193,24 @@ namespace SportsTacticsBoard
 
     private Pen GetMovementPen()
     {
-      Pen p = new Pen(MovementPenColor, MovementPenWidth);
-      p.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-      p.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
-      float[] dashPattern = MovementPenDashPattern;
-      if (null != dashPattern) {
-        p.DashPattern = dashPattern;
+      Pen result = null;
+      Pen p = null;
+      try {
+        p = new Pen(MovementPenColor, MovementPenWidth);
+        p.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+        p.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+        float[] dashPattern = MovementPenDashPattern;
+        if (null != dashPattern) {
+          p.DashPattern = dashPattern;
+        }
+        result = p;
+        p = null;
+        return result;
+      } finally {
+        if (null != p) {
+          p.Dispose();
+        }
       }
-      return p;
     }
 
     private PointF position;

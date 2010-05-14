@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006-2007 Robert Turner
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ namespace SportsTacticsBoard.FieldObjects
     }
 
     public override string Label {
-      get { return Number.ToString(CultureInfo.CurrentUICulture); }
+      get { return Number.ToString(CultureInfo.CurrentCulture); }
     }
 
     public static string ComposeTag(TeamId team, int playerNumber) {

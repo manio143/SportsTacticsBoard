@@ -188,57 +188,58 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
     public void DrawMarkings(Graphics graphics)
     {
       // Create the pen for drawing the field lines with
-      Pen linePen = new Pen(Color.Brown, linePenWidth);
-      Brush courtBrush = new SolidBrush(Color.LightGray);
+      using (Pen linePen = new Pen(Color.Brown, linePenWidth)) {
+        using (Brush courtBrush = new SolidBrush(Color.LightGray)) {
 
-      // Draw the court surface
-      System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
-      float pos_frame_rad = 2.0F;
-      path.AddArc(new RectangleF(0.0F, 0.0F, (pos_frame_rad * 2), (pos_frame_rad * 2)), -180.0F, 90.0F);
-      path.AddArc(new RectangleF(Length - (pos_frame_rad * 2), 0.0F, (pos_frame_rad * 2), (pos_frame_rad * 2)), 270.0F, 90.0F);
-      path.AddArc(new RectangleF(Length - (pos_frame_rad * 2), Width - (pos_frame_rad * 2), (pos_frame_rad * 2), (pos_frame_rad * 2)), 0.0F, 90.0F);
-      path.AddArc(new RectangleF(0.0F, Width - (pos_frame_rad * 2), (pos_frame_rad * 2), (pos_frame_rad * 2)), 90.0F, 90.0F);
-      path.CloseFigure();
-      linePen.Width *= 2.0F;
-      graphics.DrawPath(linePen, path);
-      linePen.Width /= 2.0F;
+          #region Draw the court surface
+          using (var path = new System.Drawing.Drawing2D.GraphicsPath()) {
+            float pos_frame_rad = 2.0F;
+            path.AddArc(new RectangleF(0.0F, 0.0F, (pos_frame_rad * 2), (pos_frame_rad * 2)), -180.0F, 90.0F);
+            path.AddArc(new RectangleF(Length - (pos_frame_rad * 2), 0.0F, (pos_frame_rad * 2), (pos_frame_rad * 2)), 270.0F, 90.0F);
+            path.AddArc(new RectangleF(Length - (pos_frame_rad * 2), Width - (pos_frame_rad * 2), (pos_frame_rad * 2), (pos_frame_rad * 2)), 0.0F, 90.0F);
+            path.AddArc(new RectangleF(0.0F, Width - (pos_frame_rad * 2), (pos_frame_rad * 2), (pos_frame_rad * 2)), 90.0F, 90.0F);
+            path.CloseFigure();
+            linePen.Width *= 2.0F;
+            graphics.DrawPath(linePen, path);
+            linePen.Width /= 2.0F;
+          }
+          #endregion
 
-      #region Draw central line
-      PointF fieldCenter = new PointF(Length / 2, Width / 2);
-      PointF centerLineTop = new PointF(fieldCenter.X, 0.0F);
-      PointF centerLineBottom = new PointF(fieldCenter.X, Width);
-      PointF leftLineTop = new PointF(2.5F, 0.0F);
-      PointF leftLineBottom = new PointF(2.5F, Width);
-      PointF rightLineTop = new PointF(Length - 2.5F, 0.0F);
-      PointF rightLineBottom = new PointF(Length - 2.5F, Width);
+          #region Draw central line
+          PointF fieldCenter = new PointF(Length / 2, Width / 2);
+          PointF centerLineTop = new PointF(fieldCenter.X, 0.0F);
+          PointF centerLineBottom = new PointF(fieldCenter.X, Width);
+          PointF leftLineTop = new PointF(2.5F, 0.0F);
+          PointF leftLineBottom = new PointF(2.5F, Width);
+          PointF rightLineTop = new PointF(Length - 2.5F, 0.0F);
+          PointF rightLineBottom = new PointF(Length - 2.5F, Width);
 
-      graphics.DrawLine(linePen, centerLineTop, centerLineBottom);
-      graphics.DrawLine(linePen, leftLineTop, leftLineBottom);
-      graphics.DrawLine(linePen, rightLineTop, rightLineBottom);
-      #endregion
+          graphics.DrawLine(linePen, centerLineTop, centerLineBottom);
+          graphics.DrawLine(linePen, leftLineTop, leftLineBottom);
+          graphics.DrawLine(linePen, rightLineTop, rightLineBottom);
+          #endregion
 
-      #region Draw goal lines
-      DrawGoal(graphics, linePen, 3.0F - 0.5F, Width / 2.0F, true);
-      DrawGoal(graphics, linePen, Length - 3.0F + 0.5F, Width / 2.0F, !true);
-      #endregion Draw goal lines
+          #region Draw goal lines
+          DrawGoal(graphics, linePen, 3.0F - 0.5F, Width / 2.0F, true);
+          DrawGoal(graphics, linePen, Length - 3.0F + 0.5F, Width / 2.0F, !true);
+          #endregion Draw goal lines
 
-      #region Draw bully line
-      Pen bullyPen = new Pen(Color.Black, 0.09F);
-      DrawingCross(graphics, bullyPen, Length / 2.0F, 1.0F);
-      DrawingCross(graphics, bullyPen, HalfLength, HalfWidth);
-      DrawingCross(graphics, bullyPen, Length / 2.0F, Width - 1.0F);
+          #region Draw bully line
+          using (Pen bullyPen = new Pen(Color.Black, 0.09F)) {
+            DrawingCross(graphics, bullyPen, Length / 2.0F, 1.0F);
+            DrawingCross(graphics, bullyPen, HalfLength, HalfWidth);
+            DrawingCross(graphics, bullyPen, Length / 2.0F, Width - 1.0F);
 
-      DrawingCross(graphics, bullyPen, 2.5F, 1.0F);
-      DrawingCross(graphics, bullyPen, 2.5F, Width - 1.0F);
+            DrawingCross(graphics, bullyPen, 2.5F, 1.0F);
+            DrawingCross(graphics, bullyPen, 2.5F, Width - 1.0F);
 
-      DrawingCross(graphics, bullyPen, Length - 2.5F, 1.0F);
-      DrawingCross(graphics, bullyPen, Length - 2.5F, Width - 1.0F);
+            DrawingCross(graphics, bullyPen, Length - 2.5F, 1.0F);
+            DrawingCross(graphics, bullyPen, Length - 2.5F, Width - 1.0F);
+          }
+          #endregion Draw bully line
 
-      bullyPen.Dispose();
-      #endregion Draw bully line
-
-      linePen.Dispose();
-      courtBrush.Dispose();
+        }
+      }
     }
 
     private static void DrawGoal(Graphics g, Pen pen, float px, float py, bool leftSide)

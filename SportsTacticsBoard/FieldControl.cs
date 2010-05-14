@@ -220,13 +220,19 @@ namespace SportsTacticsBoard
     {
       using (Graphics graphics = Graphics.FromImage(image)) {
         if (image.GetType() == typeof(Bitmap)) {
-          Brush brush;
-          if (null == FieldType) {
-            brush = new SolidBrush(Color.White);
-          } else {
-            brush = new SolidBrush(this.FieldType.SurfaceColor);
+          Brush brush = null;
+          try {
+            if (null == FieldType) {
+              brush = new SolidBrush(Color.White);
+            } else {
+              brush = new SolidBrush(this.FieldType.SurfaceColor);
+            }
+            graphics.FillRectangle(brush, 0, 0, image.Width, image.Height);
+          } finally {
+            if (null != brush) {
+              brush.Dispose();
+            }
           }
-          graphics.FillRectangle(brush, 0, 0, image.Width, image.Height);
         }
         DrawLayoutIntoGraphics(graphics, layoutToDraw, nextLayoutData);
       }
@@ -274,6 +280,9 @@ namespace SportsTacticsBoard
 
     protected override void OnPaint(PaintEventArgs e)
     {
+      if (null == e) {
+        return;
+      }
       FieldLayout nextLayoutData = null;
       if (showMovementLines) {
         nextLayoutData = nextLayout;
@@ -301,10 +310,20 @@ namespace SportsTacticsBoard
     private void MoveObjectTo(FieldObject fo, PointF pos)
     {
       if (fo.Position != pos) {
-        InvalidateFieldArea(fo.GetRectangle());
+        if (ShowMovementLines && (null != nextLayout)) {
+          RectangleF r = RectangleF.Union(fo.GetRectangle(), fo.GetRectangleAt(nextLayout.GetEntryPosition(fo.Tag)));
+          InvalidateFieldArea(r);
+        } else {
+          InvalidateFieldArea(fo.GetRectangle());
+        }
         fo.Position = pos;
         IsDirty = true;
-        InvalidateFieldArea(fo.GetRectangle());
+        if (ShowMovementLines && (null != nextLayout)) {
+          RectangleF r = RectangleF.Union(fo.GetRectangle(), fo.GetRectangleAt(nextLayout.GetEntryPosition(fo.Tag)));
+          InvalidateFieldArea(r);
+        } else {
+          InvalidateFieldArea(fo.GetRectangle());
+        }
         Update();
       }
     }
@@ -313,6 +332,9 @@ namespace SportsTacticsBoard
 
     protected override void OnMouseDown(MouseEventArgs e)
     {
+      if (null == e) {
+        return;
+      }
       if ((AllowInteraction) && (e.Button == MouseButtons.Left)) {
         FieldObject fo = ObjectAtPoint(e.Location);
         if (fo != null) {
@@ -324,6 +346,9 @@ namespace SportsTacticsBoard
 
     protected override void OnMouseMove(MouseEventArgs e)
     {
+      if (null == e) {
+        return;
+      }
       if ((Capture) && (dragObject != null)) {
         PointF pt = ToFieldPoint(new Point(e.X, e.Y));
         MoveObjectTo(dragObject, pt);
@@ -332,6 +357,9 @@ namespace SportsTacticsBoard
 
     protected override void OnMouseUp(MouseEventArgs e)
     {
+      if (null == e) {
+        return;
+      }
       if ((Capture) && (dragObject != null)) {
         PointF pt = ToFieldPoint(new Point(e.X, e.Y));
         MoveObjectTo(dragObject, pt);
