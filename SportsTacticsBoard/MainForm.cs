@@ -880,6 +880,20 @@ namespace SportsTacticsBoard
       return null;
     }
 
+    public void UpdateCustomLabel(string tag, string label)
+    {
+      if (null != currentSequence) {
+        currentSequence.AddOrUpdateCustomLabel(tag, label);
+      }
+    }
+
+    public void RemoveCustomLabel(string tag)
+    {
+      if (null != currentSequence) {
+        currentSequence.RemoveCustomLabel(tag);
+      }
+    }
+
     #endregion
   }
 }

@@ -78,6 +78,15 @@ namespace SportsTacticsBoard.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to The custom label is longer than recommended (2 characters or less). It probably won&apos;t display properly. Do you want to keep this label?.
+        /// </summary>
+        internal static string CustomLabelLongerThanRecommended {
+            get {
+                return ResourceManager.GetString("CustomLabelLongerThanRecommended", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap DataContainer_MoveFirstHS {
             get {
                 object obj = ResourceManager.GetObject("DataContainer_MoveFirstHS", resourceCulture);
