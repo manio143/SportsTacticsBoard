@@ -34,7 +34,7 @@ using System.Xml.Serialization;
 
 namespace SportsTacticsBoard
 {
-  public partial class MainForm : Form
+  public partial class MainForm : Form, ICustomLabelProvider
   {
     private SavedLayoutManager commonSavedLayoutManager;
     private SavedLayoutManager userSavedLayoutManager;
@@ -51,6 +51,7 @@ namespace SportsTacticsBoard
       userSavedLayoutManager = new SavedLayoutManager(SavedLayoutManager.UserLayoutPath);
       InitializeComponent();
       originalCaption = Text;
+      fieldControl.CustomLabelProvider = this;
       fieldControl.IsDirtyChanged += new EventHandler(fieldControl_IsDirtyChanged);
     }
 
@@ -868,5 +869,17 @@ namespace SportsTacticsBoard
         UpdateSequenceControls();
       }
     }
+
+    #region ICustomLabelProvider Members
+
+    public string GetCustomLabel(string tag)
+    {
+      if (null != currentSequence) {
+        return currentSequence.GetCustomLabel(tag);
+      }
+      return null;
+    }
+
+    #endregion
   }
 }
