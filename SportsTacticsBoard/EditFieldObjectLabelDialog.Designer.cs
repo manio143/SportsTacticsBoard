@@ -27,43 +27,40 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.Windows.Forms.Label label1;
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditFieldObjectLabelDialog));
-      System.Windows.Forms.Button okButton;
-      System.Windows.Forms.Button cancelButton;
-      this.label2 = new System.Windows.Forms.Label();
+      this.fieldObjectLabel = new System.Windows.Forms.Label();
+      this.okButton = new System.Windows.Forms.Button();
+      this.cancelButton = new System.Windows.Forms.Button();
+      this.customLabelLabel = new System.Windows.Forms.Label();
       this.customLabelTextBox = new System.Windows.Forms.TextBox();
       this.fieldObjectNameTextBox = new System.Windows.Forms.TextBox();
       this.revertToDefaultButton = new System.Windows.Forms.Button();
-      label1 = new System.Windows.Forms.Label();
-      okButton = new System.Windows.Forms.Button();
-      cancelButton = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
-      // label1
+      // fieldObjectLabel
       // 
-      resources.ApplyResources(label1, "label1");
-      label1.Name = "label1";
+      resources.ApplyResources(this.fieldObjectLabel, "fieldObjectLabel");
+      this.fieldObjectLabel.Name = "fieldObjectLabel";
       // 
       // okButton
       // 
-      resources.ApplyResources(okButton, "okButton");
-      okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-      okButton.Name = "okButton";
-      okButton.UseVisualStyleBackColor = true;
-      okButton.Click += new System.EventHandler(this.okButton_Click);
+      resources.ApplyResources(this.okButton, "okButton");
+      this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+      this.okButton.Name = "okButton";
+      this.okButton.UseVisualStyleBackColor = true;
+      this.okButton.Click += new System.EventHandler(this.okButton_Click);
       // 
       // cancelButton
       // 
-      resources.ApplyResources(cancelButton, "cancelButton");
-      cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      cancelButton.Name = "cancelButton";
-      cancelButton.UseVisualStyleBackColor = true;
+      resources.ApplyResources(this.cancelButton, "cancelButton");
+      this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+      this.cancelButton.Name = "cancelButton";
+      this.cancelButton.UseVisualStyleBackColor = true;
       // 
-      // label2
+      // customLabelLabel
       // 
-      resources.ApplyResources(this.label2, "label2");
-      this.label2.Name = "label2";
+      resources.ApplyResources(this.customLabelLabel, "customLabelLabel");
+      this.customLabelLabel.Name = "customLabelLabel";
       // 
       // customLabelTextBox
       // 
@@ -86,17 +83,17 @@
       // 
       // EditFieldObjectLabelDialog
       // 
-      this.AcceptButton = okButton;
+      this.AcceptButton = this.okButton;
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.CancelButton = cancelButton;
+      this.CancelButton = this.cancelButton;
       this.Controls.Add(this.revertToDefaultButton);
       this.Controls.Add(this.fieldObjectNameTextBox);
       this.Controls.Add(this.customLabelTextBox);
-      this.Controls.Add(cancelButton);
-      this.Controls.Add(okButton);
-      this.Controls.Add(this.label2);
-      this.Controls.Add(label1);
+      this.Controls.Add(this.cancelButton);
+      this.Controls.Add(this.okButton);
+      this.Controls.Add(this.customLabelLabel);
+      this.Controls.Add(this.fieldObjectLabel);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "EditFieldObjectLabelDialog";
@@ -109,9 +106,12 @@
 
     #endregion
 
-    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Label customLabelLabel;
     private System.Windows.Forms.TextBox customLabelTextBox;
     private System.Windows.Forms.TextBox fieldObjectNameTextBox;
     private System.Windows.Forms.Button revertToDefaultButton;
+    private System.Windows.Forms.Label fieldObjectLabel;
+    private System.Windows.Forms.Button okButton;
+    private System.Windows.Forms.Button cancelButton;
   }
 }

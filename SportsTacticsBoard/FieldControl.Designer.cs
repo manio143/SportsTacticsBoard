@@ -61,15 +61,15 @@ namespace SportsTacticsBoard
       // 
       // fieldObjectContextMenu
       // 
+      resources.ApplyResources(this.fieldObjectContextMenu, "fieldObjectContextMenu");
       this.fieldObjectContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changeLabelMenuItem});
       this.fieldObjectContextMenu.Name = "fieldObjectContextMenu";
-      resources.ApplyResources(this.fieldObjectContextMenu, "fieldObjectContextMenu");
       // 
       // changeLabelMenuItem
       // 
-      this.changeLabelMenuItem.Name = "changeLabelMenuItem";
       resources.ApplyResources(this.changeLabelMenuItem, "changeLabelMenuItem");
+      this.changeLabelMenuItem.Name = "changeLabelMenuItem";
       this.changeLabelMenuItem.Click += new System.EventHandler(this.changeLabelMenuItem_Click);
       // 
       // FieldControl

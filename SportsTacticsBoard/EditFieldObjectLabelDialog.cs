@@ -70,8 +70,8 @@ namespace SportsTacticsBoard
             MessageBoxIcon.Asterisk, 
             MessageBoxDefaultButton.Button2, 
             (MessageBoxOptions)0);
-        if (dr == System.Windows.Forms.DialogResult.Yes) {
-          this.DialogResult = System.Windows.Forms.DialogResult.OK;
+        if (dr != System.Windows.Forms.DialogResult.Yes) {
+          this.DialogResult = System.Windows.Forms.DialogResult.None;
         }
       }
     }

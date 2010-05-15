@@ -123,6 +123,9 @@
     <EmbeddedResource Include="EditFieldObjectLabelDialog.resx">
       <DependentUpon>EditFieldObjectLabelDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FieldControl.de.resx">
+      <DependentUpon>FieldControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.de.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
