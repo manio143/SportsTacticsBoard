@@ -499,9 +499,9 @@ namespace SportsTacticsBoard
           zoom = 0.9F * ((float)(-e.Delta) / 120.0F);
         }
         zoom = Math.Max(-2.0F, Math.Min(2.0F, zoom));
-        if (ModifierKeys == Keys.None) {
+        if ((ModifierKeys == Keys.None) || (ModifierKeys == Keys.Control)) {
           Zoom(zoom);
-        } else if (ModifierKeys == Keys.Control) {
+        } else if (ModifierKeys == Keys.Alt) {
           ZoomAt(ToFieldPoint(e.Location), zoom);
         }
       }
@@ -512,7 +512,7 @@ namespace SportsTacticsBoard
       if (null == e) {
         return;
       }
-      if ((e.Button == System.Windows.Forms.MouseButtons.Left) && (ModifierKeys == Keys.Control)) {
+      if ((e.Button == System.Windows.Forms.MouseButtons.Left) && (ModifierKeys == Keys.Alt)) {
         // Re-centre the display at the point clicked
         CentreAt(ToFieldPoint(e.Location));
       }

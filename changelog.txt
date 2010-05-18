@@ -1,5 +1,5 @@
 -- Changes committed to source control since previous release
-FEAT - Added basic framework for zooming and rotating the displayed view of the field (mouse wheel zooms, hold Ctrl to zoom on point; left-click holding Ctrl to centre on point)
+FEAT - Added basic framework for zooming and rotating the displayed view of the field (mouse wheel zooms, hold Alt to zoom on point; left-click holding Alt to centre on point)
 FEAT - Added the ability to provide a custom label for field objects within a saved sequence (allows re-numbering of players)
 FIX - Fixed redraw issue when moving objects with movement lines enabled
 
