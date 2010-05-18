@@ -28,13 +28,19 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace SportsTacticsBoard
 {
   partial class FieldControl : UserControl
   {
-    private float ratio;
-    private Point fieldOriginInDisplayUnits = new Point(0, 0);
+    private Matrix fieldToDisplayTransform;
+    private Matrix displayToFieldTransfom;
+
+    PointF zoomPoint;
+    float zoomFactor = 1.0F;
+    float rotationAngle = 0.0F;
+
     private bool dirty;
     private IPlayingSurfaceType fieldType;
     private bool allowInteraction = true;
@@ -82,6 +88,8 @@ namespace SportsTacticsBoard
     public FieldControl()
     {
       InitializeComponent();
+      this.MouseWheel += new MouseEventHandler(FieldControl_MouseWheel);
+      this.MouseClick += new MouseEventHandler(FieldControl_MouseClick);
     }
 
     public IPlayingSurfaceType FieldType
@@ -94,6 +102,7 @@ namespace SportsTacticsBoard
         fieldType = value;
         if (null != fieldType) {
           BackColor = fieldType.SurfaceColor;
+          ResetZoomAndRotation();
           CalculateFieldGeometry(Size);
           fieldObjects = fieldType.StandardObjects;
           foreach (var fo in fieldObjects) {
@@ -105,6 +114,18 @@ namespace SportsTacticsBoard
         Invalidate();
       }
       get { return fieldType; }
+    }
+
+    private void ResetZoomAndRotation()
+    {
+      var ft = FieldType;
+      if (null != ft) {
+        zoomPoint = new PointF(ft.Length / 2.0F, ft.Width / 2.0F);
+      } else {
+        zoomPoint = new PointF(0.0F, 0.0F);
+      }
+      zoomFactor = 1.0F;
+      rotationAngle = 0.0F;
     }
 
     private Collection<FieldObject> fieldObjects;
@@ -161,32 +182,37 @@ namespace SportsTacticsBoard
       SetLayout(layout);
     }
 
-    private int FieldUnitsToDisplayUnits(float fieldUnits)
-    {
-      return (int)Math.Round(fieldUnits * ratio);
-    }
-
-    private float DisplayUnitsToFieldUnits(float displayUnits)
-    {
-      return displayUnits / ratio;
-    }
-
     private PointF ToFieldPoint(Point pt)
     {
-      return new PointF(DisplayUnitsToFieldUnits((float)pt.X - fieldOriginInDisplayUnits.X),
-                        DisplayUnitsToFieldUnits((float)pt.Y - fieldOriginInDisplayUnits.Y));
+      PointF[] points = new PointF[] {
+        new PointF(pt.X, pt.Y)
+      };
+      displayToFieldTransfom.TransformPoints(points);
+      return points[0];
     }
 
-    private Rectangle ToDisplayRect(RectangleF fieldRect)
+    private Rectangle ToEnclosingDisplayRect(RectangleF fieldRect)
     {
-      Rectangle r = 
-        new Rectangle(FieldUnitsToDisplayUnits(fieldRect.X),
-                      FieldUnitsToDisplayUnits(fieldRect.Y),
-                      FieldUnitsToDisplayUnits(fieldRect.Width),
-                      FieldUnitsToDisplayUnits(fieldRect.Height));
-      r.Offset(fieldOriginInDisplayUnits.X,
-               fieldOriginInDisplayUnits.Y);
-      return r;
+      PointF[] points = new PointF[] {
+        new PointF(fieldRect.Left, fieldRect.Top), // Top Left
+        new PointF(fieldRect.Right, fieldRect.Top), // Top Right
+        new PointF(fieldRect.Left, fieldRect.Bottom), // Bottom Left
+        new PointF(fieldRect.Right, fieldRect.Bottom) // Bottom Right
+      };
+      fieldToDisplayTransform.TransformPoints(points);
+      int left = (int)Math.Round(points[0].X);
+      int right = left;
+      int top = (int)Math.Round(points[0].Y);
+      int bottom = top;
+      for (int idx = 1; idx < points.Length; idx++) {
+        int x = (int)Math.Round(points[idx].X);
+        int y = (int)Math.Round(points[idx].Y);
+        left = Math.Min(x, left);
+        right = Math.Max(x, right);
+        top = Math.Min(y, top);
+        bottom = Math.Max(y, bottom);
+      }
+      return new Rectangle(left, top, right - left, bottom - top);
     }
 
     private FieldObject ObjectAtPoint(Point pt)
@@ -200,22 +226,42 @@ namespace SportsTacticsBoard
       return null;
     }
 
+#if false
+    public void ZoomAndCentreOn(RectangleF fieldRectangle)
+    {
+      // TODO: Write and call this method
+      throw new NotImplementedException();
+    }
+#endif
+
     private void CalculateFieldGeometry(Size windowSize)
     {
       IPlayingSurfaceType ft = FieldType;
       if (null != ft) {
-        // Calculate the ratio used to scale "yards" into pixels
+        // TESTING: Values to determine where the "viewport" is (centre-point of the zoom/window, zoom ratio (1.0 is unity))
+        
+        // Calculate the ratio used to scale field units into pixels
         float ratioX = windowSize.Width / (ft.Length + (ft.Margin * 2.0F));
         float ratioY = windowSize.Height / (ft.Width + (ft.Margin * 2.0F));
-        ratio = (ratioX < ratioY) ? ratioX : ratioY;
+        float ratio = (ratioX < ratioY) ? ratioX : ratioY;
+        ratio *= zoomFactor;
 
-        fieldOriginInDisplayUnits = 
-          new Point((windowSize.Width - (int)Math.Round(ft.Length * ratio)) / 2,
-                    (windowSize.Height - (int)Math.Round(ft.Width * ratio)) / 2);
+        Point fieldOriginPositionInDisplayUnits =
+          new Point(windowSize.Width / 2 - (int)Math.Round(ratio * zoomPoint.X),
+                    windowSize.Height / 2 - (int)Math.Round(ratio * zoomPoint.Y));
+
+        // NOTE: The order of these transforms is important.
+        fieldToDisplayTransform = new Matrix();
+        fieldToDisplayTransform.Translate(fieldOriginPositionInDisplayUnits.X, fieldOriginPositionInDisplayUnits.Y);
+        fieldToDisplayTransform.Scale(ratio, ratio);
+        fieldToDisplayTransform.RotateAt(rotationAngle, zoomPoint);
+
       } else {
-        ratio = 1.0F;
-        fieldOriginInDisplayUnits = new Point(0, 0);
+        fieldToDisplayTransform = new Matrix();
       }
+      // Create the reverse transform matrix
+      displayToFieldTransfom = fieldToDisplayTransform.Clone();
+      displayToFieldTransfom.Invert();
     }
 
     public void DrawIntoImage(Image image, FieldLayout layoutToDraw, FieldLayout nextLayoutData)
@@ -245,13 +291,8 @@ namespace SportsTacticsBoard
       if (null == FieldType) {
         return;
       }
-      g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
-      // Adjust the transform to scale the "field units" to display units, and to
-      // offset the playing surface so that it is centered in the window.
-      // NOTE: The order of these transforms is important.
-      g.TranslateTransform(fieldOriginInDisplayUnits.X, fieldOriginInDisplayUnits.Y);
-      g.ScaleTransform(ratio, ratio);
+      g.SmoothingMode = SmoothingMode.AntiAlias;
+      g.Transform = fieldToDisplayTransform;
 
       FieldType.DrawMarkings(g);
 
@@ -302,7 +343,7 @@ namespace SportsTacticsBoard
 
     private void InvalidateFieldArea(RectangleF rect)
     {
-      Rectangle r = ToDisplayRect(rect);
+      Rectangle r = ToEnclosingDisplayRect(rect);
       // Make the rectangle slightly bigger to ensure that we invalidate the 
       // entire area of the object, including possible anti-aliasing area.
       r.Inflate(3, 3); 
@@ -337,14 +378,14 @@ namespace SportsTacticsBoard
       if (null == e) {
         return;
       }
-      if ((AllowInteraction) && (e.Button == MouseButtons.Left)) {
+      if ((AllowInteraction) && (e.Button == MouseButtons.Left) && (ModifierKeys == Keys.None)) {
         FieldObject fo = ObjectAtPoint(e.Location);
         if (fo != null) {
           dragObject = fo;
           Capture = true;
         }
       }
-      if ((AllowInteraction) && (e.Button == MouseButtons.Right)) {
+      if ((AllowInteraction) && (e.Button == MouseButtons.Right) && (ModifierKeys == Keys.None)) {
         fieldObjectContextMenu.Tag = null;
         FieldObject fo = ObjectAtPoint(e.Location);
         if (fo != null) {
@@ -400,5 +441,83 @@ namespace SportsTacticsBoard
         }
       }
     }
+
+    private void ZoomAt(PointF fieldPoint, float zoomRatio)
+    {
+      if (zoomRatio == 0.0F) {
+        throw new ArgumentOutOfRangeException("zoomRatio");
+      }
+      var ft = FieldType;
+      if (null != ft) {
+        PointF constrainedFieldPoint = new PointF(Math.Max(0.0F, Math.Min(ft.Length, fieldPoint.X)),
+                                                  Math.Max(0.0F, Math.Min(ft.Width, fieldPoint.Y)));
+        float oldZoomFactor = zoomFactor;
+        zoomFactor = Math.Max(0.5F, Math.Min(4.0F, zoomFactor * zoomRatio));
+        float offsetX = constrainedFieldPoint.X - zoomPoint.X;
+        float offsetY = constrainedFieldPoint.Y - zoomPoint.Y;
+        float zoomRatioChange = oldZoomFactor / zoomFactor;
+        zoomPoint.X = constrainedFieldPoint.X - (offsetX * zoomRatioChange);
+        zoomPoint.Y = constrainedFieldPoint.Y - (offsetY * zoomRatioChange);
+        CalculateFieldGeometry(Size);
+        Invalidate();
+      }
+    }
+
+    private void Zoom(float zoomRatio)
+    {
+      if (zoomRatio == 0.0F) {
+        throw new ArgumentOutOfRangeException("zoomRatio");
+      }
+      zoomFactor *= zoomRatio;
+      zoomFactor = Math.Max(0.5F, Math.Min(4.0F, zoomFactor));
+      CalculateFieldGeometry(Size);
+      Invalidate();
+    }
+
+    private void CentreAt(PointF fieldPoint)
+    {
+      var ft = FieldType;
+      if (null != ft) {
+        zoomPoint.X = Math.Max(0.0F, Math.Min(ft.Length, fieldPoint.X));
+        zoomPoint.Y = Math.Max(0.0F, Math.Min(ft.Width, fieldPoint.Y));
+        CalculateFieldGeometry(Size);
+        Invalidate();
+      }
+    }
+
+    void FieldControl_MouseWheel(object sender, MouseEventArgs e)
+    {
+      if (null == e) {
+        return;
+      }
+      if (e.Delta != 0) {
+        // Mouse wheel changed, so zoom on current location
+        float zoom = 1.0F;
+        if (e.Delta > 0) {
+          zoom = 1.1F * ((float)e.Delta / 120.0F);
+        } else {
+          zoom = 0.9F * ((float)(-e.Delta) / 120.0F);
+        }
+        zoom = Math.Max(-2.0F, Math.Min(2.0F, zoom));
+        if (ModifierKeys == Keys.None) {
+          Zoom(zoom);
+        } else if (ModifierKeys == Keys.Control) {
+          ZoomAt(ToFieldPoint(e.Location), zoom);
+        }
+      }
+    }
+
+    void FieldControl_MouseClick(object sender, MouseEventArgs e)
+    {
+      if (null == e) {
+        return;
+      }
+      if ((e.Button == System.Windows.Forms.MouseButtons.Left) && (ModifierKeys == Keys.Control)) {
+        // Re-centre the display at the point clicked
+        CentreAt(ToFieldPoint(e.Location));
+      }
+    }
+
   }
+  
 }

@@ -38,8 +38,16 @@ namespace SportsTacticsBoard
     /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
     protected override void Dispose(bool disposing)
     {
-      if (disposing && (components != null)) {
-        components.Dispose();
+      if (disposing) {
+        if (components != null) {
+          components.Dispose();
+        }
+        if (fieldToDisplayTransform != null) {
+          fieldToDisplayTransform.Dispose();
+        }
+        if (displayToFieldTransfom != null) {
+          displayToFieldTransfom.Dispose();
+        }
       }
       base.Dispose(disposing);
     }
@@ -61,15 +69,15 @@ namespace SportsTacticsBoard
       // 
       // fieldObjectContextMenu
       // 
-      resources.ApplyResources(this.fieldObjectContextMenu, "fieldObjectContextMenu");
       this.fieldObjectContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changeLabelMenuItem});
       this.fieldObjectContextMenu.Name = "fieldObjectContextMenu";
+      resources.ApplyResources(this.fieldObjectContextMenu, "fieldObjectContextMenu");
       // 
       // changeLabelMenuItem
       // 
-      resources.ApplyResources(this.changeLabelMenuItem, "changeLabelMenuItem");
       this.changeLabelMenuItem.Name = "changeLabelMenuItem";
+      resources.ApplyResources(this.changeLabelMenuItem, "changeLabelMenuItem");
       this.changeLabelMenuItem.Click += new System.EventHandler(this.changeLabelMenuItem_Click);
       // 
       // FieldControl
