@@ -37,9 +37,9 @@ namespace SportsTacticsBoard
     private Matrix fieldToDisplayTransform;
     private Matrix displayToFieldTransfom;
 
-    PointF zoomPoint;
-    float zoomFactor = 1.0F;
-    float rotationAngle = 0.0F;
+    private PointF zoomPoint;
+    private float zoomFactor = 1.0F;
+    private float rotationAngle;
 
     private bool dirty;
     private IPlayingSurfaceType fieldType;
