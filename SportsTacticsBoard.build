@@ -59,6 +59,7 @@
   <fileset id="binaries_file_set" basedir="${dir.build}">
     <include name="SportsTacticsBoard.exe"/>
     <include name="SportsTacticsBoard.exe.config"/>
+    <include name="de/SportsTacticsBoard.resources.dll"/>
   </fileset>
 
   <!-- === MAIN TARGETS === -->
@@ -159,6 +160,7 @@
       <fileset basedir="${dir.build}">
         <include name="SportsTacticsBoard.exe"/>
         <include name="SportsTacticsBoard.exe.config"/>
+        <include name="de/SportsTacticsBoard.resources.dll"/>
       </fileset>
     </zip>
 
