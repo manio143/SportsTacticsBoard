@@ -140,7 +140,7 @@
     <value>Neue Aufnahme</value>
   </data>
   <data name="recordOverCurrentPositionButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>203, 22</value>
+    <value>186, 22</value>
   </data>
   <data name="recordOverCurrentPositionButton.Text" xml:space="preserve">
     <value>Neustart der aktuellen Aufnahme</value>
@@ -187,6 +187,9 @@
   <data name="exportSequenceToImageFilesMenuItem.Text" xml:space="preserve">
     <value>Export als &amp;Bilder…</value>
   </data>
+  <data name="exportSequenceToImageFilesMenuItem.ToolTipText" xml:space="preserve">
+    <value>Exportiert die aktuelle taktische Sequenz als Bildserie.</value>
+  </data>
   <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
     <value>163, 6</value>
   </data>
@@ -232,6 +235,9 @@
   <data name="copyMenuItem.Text" xml:space="preserve">
     <value>&amp;Kopieren ins Clipboard</value>
   </data>
+  <data name="copyMenuItem.ToolTipText" xml:space="preserve">
+    <value>Kopiert das aktuelle Layout in den Zwischenspeicher</value>
+  </data>
   <data name="saveTofileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>236, 22</value>
   </data>
@@ -269,28 +275,28 @@
     <value>&amp;Bibliothek</value>
   </data>
   <data name="changeLogMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>149, 22</value>
   </data>
   <data name="changeLogMenuItem.Text" xml:space="preserve">
     <value>&amp;Änderungen…</value>
   </data>
   <data name="readMeMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>149, 22</value>
   </data>
   <data name="readMeMenuItem.Text" xml:space="preserve">
     <value>&amp;Lies Mich!...</value>
   </data>
   <data name="licenseMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>149, 22</value>
   </data>
   <data name="licenseMenuItem.Text" xml:space="preserve">
     <value>&amp;Lizenz…</value>
   </data>
   <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 6</value>
+    <value>146, 6</value>
   </data>
   <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>149, 22</value>
   </data>
   <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Über..</value>
@@ -401,11 +407,5 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Sport Taktik Board</value>
-  </data>
-  <data name="copyMenuItem.ToolTipText" xml:space="preserve">
-    <value>Kopiert das aktuelle Layout in den Zwischenspeicher</value>
-  </data>
-  <data name="exportSequenceToImageFilesMenuItem.ToolTipText" xml:space="preserve">
-    <value>Exportiert die aktuelle taktische Sequenz als Bildserie.</value>
   </data>
 </root>
