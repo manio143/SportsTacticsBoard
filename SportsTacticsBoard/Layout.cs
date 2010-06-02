@@ -50,14 +50,24 @@ namespace SportsTacticsBoard
       entries = new Collection<LayoutEntry>();
     }
 
+    public void AddEntry(string tag, PointF pos, bool hidden)
+    {
+      entries.Add(new LayoutEntry(tag, pos, hidden));
+    }
+
+    public void AddEntry(string tag, float posX, float posY, bool hidden)
+    {
+      entries.Add(new LayoutEntry(tag, posX, posY, hidden));
+    }
+
     public void AddEntry(string tag, PointF pos)
     {
-      entries.Add(new LayoutEntry(tag, pos));
+      entries.Add(new LayoutEntry(tag, pos, false));
     }
 
     public void AddEntry(string tag, float posX, float posY)
     {
-      entries.Add(new LayoutEntry(tag, posX, posY));
+      entries.Add(new LayoutEntry(tag, posX, posY, false));
     }
 
     private LayoutEntry FindEntry(string tag)

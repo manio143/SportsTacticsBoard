@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006-2007 Robert Turner
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -37,41 +37,33 @@ namespace SportsTacticsBoard
   public class LayoutEntry
   {
     public LayoutEntry() {
-      tag = "";
+      Tag = string.Empty;
     }
 
-    public LayoutEntry(string tag, float posX, float posY) {
-      this.tag = tag;
-      positionX = posX;
-      positionY = posY;
+    public LayoutEntry(string tag, float posX, float posY, bool hidden) {
+      Tag = tag;
+      PositionX = posX;
+      PositionY = posY;
+      Hidden = hidden;
     }
 
-    public LayoutEntry(string tag, PointF pt) {
-      this.tag = tag;
-      positionX = pt.X;
-      positionY = pt.Y;
+    public LayoutEntry(string tag, PointF pt, bool hidden) {
+      Tag = tag;
+      PositionX = pt.X;
+      PositionY = pt.Y;
+      Hidden = hidden;
     }
 
     [XmlAttribute(AttributeName = "tag")]
-    public string Tag {
-      get { return tag; }
-      set { tag = value; }
-    }
+    public string Tag { get; set; }
 
     [XmlAttribute(AttributeName = "x")]
-    public float PositionX {
-      get { return positionX; }
-      set { positionX = value; }
-    }
+    public float PositionX { get; set; }
 
     [XmlAttribute(AttributeName = "y")]
-    public float PositionY {
-      get { return positionY; }
-      set { positionY = value; }
-    }
+    public float PositionY { get; set; }
 
-    private string tag;
-    private float positionX;
-    private float positionY;
+    [XmlAttribute(AttributeName = "hidden")]
+    public bool Hidden { get; set; }
   }
 }
