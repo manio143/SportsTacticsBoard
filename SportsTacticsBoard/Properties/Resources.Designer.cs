@@ -439,7 +439,7 @@ namespace SportsTacticsBoard.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  - {0}.
+        ///   Looks up a localized string similar to  - {0:000}.
         /// </summary>
         internal static string ImageFileNamePattern {
             get {

@@ -215,7 +215,7 @@
     <value>..\images\help.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ImageFileNamePattern" xml:space="preserve">
-    <value> - {0}</value>
+    <value> - {0:000}</value>
   </data>
   <data name="NavBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\navback.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
