@@ -202,7 +202,7 @@
     <value>Sports Taktiks Board Dateien (*.stb.xml)|*.stb.xml|All files (*.*)|*.*</value>
   </data>
   <data name="ImageFileNamePattern" xml:space="preserve">
-    <value> - {0}</value>
+    <value> - {0:000}</value>
   </data>
   <data name="NoSavedLayoutsMenuItemText" xml:space="preserve">
     <value>&lt;&lt;keine&gt;&gt;</value>
