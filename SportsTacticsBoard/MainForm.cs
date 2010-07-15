@@ -44,6 +44,15 @@ namespace SportsTacticsBoard
     private string fileFilter = Properties.Resources.ResourceManager.GetString("FileFilter");
     private string saveAsImageFileFilter = Properties.Resources.ResourceManager.GetString("SaveAsImageFileFilter");
     private string originalCaption;
+    private bool sequenceDirty;
+
+    private bool IsDocumentDirty
+    {
+      get
+      {
+        return sequenceDirty || fieldControl.IsViewDirty || fieldControl.IsDirty;
+      }
+    }
 
     public MainForm()
     {
@@ -53,6 +62,12 @@ namespace SportsTacticsBoard
       originalCaption = Text;
       fieldControl.CustomLabelProvider = this;
       fieldControl.IsDirtyChanged += new EventHandler(fieldControl_IsDirtyChanged);
+      fieldControl.IsViewDirtyChanged += new EventHandler(fieldControl_IsViewDirtyChanged);
+    }
+
+    void fieldControl_IsViewDirtyChanged(object sender, EventArgs e)
+    {
+      UpdateFileMenuItems();
     }
 
     private void recordNewPositionButton_Click(object sender, EventArgs e)
@@ -94,7 +109,7 @@ namespace SportsTacticsBoard
     private void UpdateFileMenuItems()
     {
       saveSequenceAsMenuItem.Enabled = (fieldControl.FieldType != null);
-      saveSequenceMenuItem.Enabled = (fieldControl.FieldType != null);
+      saveSequenceMenuItem.Enabled = (fieldControl.FieldType != null) && (IsDocumentDirty || string.IsNullOrEmpty(fileName));
     }
 
     private void UpdateLayoutMenuItems()
@@ -326,8 +341,10 @@ namespace SportsTacticsBoard
                   fieldControl.FieldType = newFieldType;
                   fieldControl.SetNextLayout(null);
                   fieldControl.IsDirty = false;
+                  fieldControl.IsViewDirty = false;
                   positionInSequence = 0;
                   currentSequence = seq;
+                  sequenceDirty = false;
                   RestorePositionFromSequence(positionInSequence, currentSequence, GetNextLayout());
                   fileName = openFileDialog.FileName;
                   UpdateCaption();
@@ -336,6 +353,7 @@ namespace SportsTacticsBoard
                   UpdateCommonSavedLayoutMenuItems();
                   UpdateUserSavedLayoutMenuItems();
                   UpdateSequenceControls();
+                  UpdateViewMenuItems();
                 }
               } else {
                 string msgFormat = Properties.Resources.ResourceManager.GetString("FailedToOpenFileFormatStr");
@@ -388,6 +406,8 @@ namespace SportsTacticsBoard
           serializer.Serialize(writer, currentSequence);
         }
       }
+      sequenceDirty = false;
+      fieldControl.IsViewDirty = false;
       UpdateFileMenuItems();
     }
 
@@ -505,7 +525,9 @@ namespace SportsTacticsBoard
       fieldControl.FieldType = newFieldType;
       fieldControl.SetNextLayout(null);
       fieldControl.IsDirty = false;
+      fieldControl.IsViewDirty = false;
       positionInSequence = 0;
+      sequenceDirty = false;
       currentSequence = new LayoutSequence(fieldControl.FieldType.Tag);
       RecordPositionToSequence(false, positionInSequence, currentSequence);
       UpdateCaption();
@@ -513,6 +535,7 @@ namespace SportsTacticsBoard
       UpdateLayoutMenuItems();
       UpdateCommonSavedLayoutMenuItems();
       UpdateUserSavedLayoutMenuItems();
+      UpdateViewMenuItems();
       UpdateSequenceControls();
     }
 
@@ -540,6 +563,7 @@ namespace SportsTacticsBoard
     {
       FieldLayout layout = fieldControl.FieldLayout;
       fieldControl.IsDirty = false;
+      sequenceDirty = true;
       if (replace) {
         sequence.SetLayout(index, layout);
         return index;
@@ -790,6 +814,7 @@ namespace SportsTacticsBoard
 
     private void StartPlayingSequence()
     {
+      playSequenceTimer.Interval = global::SportsTacticsBoard.Properties.Settings.Default.AnimationFrameDurationInMilliseconds;
       playSequenceTimer.Enabled = true;
       fieldControl.AllowInteraction = false;
       UpdateSequenceControls();
@@ -895,5 +920,37 @@ namespace SportsTacticsBoard
     }
 
     #endregion
+
+    private void horizontalToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      fieldControl.SetView(fieldControl.ZoomPoint, fieldControl.ZoomFactor, 0.0F);
+      UpdateViewMenuItems();
+    }
+
+    private void verticalToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      fieldControl.SetView(fieldControl.ZoomPoint, fieldControl.ZoomFactor, 90.0F);
+      UpdateViewMenuItems();
+    }
+
+    private void resetViewToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      fieldControl.ResetView();
+      UpdateViewMenuItems();
+    }
+
+    private void UpdateViewMenuItems()
+    {
+      horizontalToolStripMenuItem.Checked = fieldControl.RotationAngle == 0.0F;
+      verticalToolStripMenuItem.Checked = fieldControl.RotationAngle == 90.0F;
+    }
+
+    private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      StopPlayingSequence();
+
+      NotImplementedYet();
+
+    }
   }
 }

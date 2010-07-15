@@ -43,5 +43,17 @@ namespace SportsTacticsBoard.Properties {
                 return ((string)(this["CommonLibraryFolder"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public int AnimationFrameDurationInMilliseconds {
+            get {
+                return ((int)(this["AnimationFrameDurationInMilliseconds"]));
+            }
+            set {
+                this["AnimationFrameDurationInMilliseconds"] = value;
+            }
+        }
     }
 }
