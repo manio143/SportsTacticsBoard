@@ -81,6 +81,8 @@ namespace SportsTacticsBoard
       this.saveSequenceAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
       this.printMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+      this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
       this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.layoutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,6 +102,11 @@ namespace SportsTacticsBoard
       this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.playingSurfaceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.changePlayingSurfaceTypeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+      this.orientationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.horizontalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.verticalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.resetViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
       this.playSequenceTimer = new System.Windows.Forms.Timer(this.components);
@@ -252,6 +259,8 @@ namespace SportsTacticsBoard
             this.saveSequenceAsMenuItem,
             this.toolStripSeparator5,
             this.printMenuItem,
+            this.toolStripSeparator13,
+            this.optionsToolStripMenuItem,
             this.toolStripSeparator9,
             this.exitMenuItem});
       this.sequenceMenuItem.Name = "sequenceMenuItem";
@@ -310,6 +319,17 @@ namespace SportsTacticsBoard
       this.printMenuItem.Name = "printMenuItem";
       resources.ApplyResources(this.printMenuItem, "printMenuItem");
       this.printMenuItem.Click += new System.EventHandler(this.printMenuItem_Click);
+      // 
+      // toolStripSeparator13
+      // 
+      this.toolStripSeparator13.Name = "toolStripSeparator13";
+      resources.ApplyResources(this.toolStripSeparator13, "toolStripSeparator13");
+      // 
+      // optionsToolStripMenuItem
+      // 
+      this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+      resources.ApplyResources(this.optionsToolStripMenuItem, "optionsToolStripMenuItem");
+      this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
       // 
       // toolStripSeparator9
       // 
@@ -425,7 +445,10 @@ namespace SportsTacticsBoard
       // playingSurfaceMenuItem
       // 
       this.playingSurfaceMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.changePlayingSurfaceTypeMenuItem});
+            this.changePlayingSurfaceTypeMenuItem,
+            this.toolStripSeparator12,
+            this.orientationToolStripMenuItem,
+            this.resetViewToolStripMenuItem});
       this.playingSurfaceMenuItem.Name = "playingSurfaceMenuItem";
       resources.ApplyResources(this.playingSurfaceMenuItem, "playingSurfaceMenuItem");
       // 
@@ -434,6 +457,37 @@ namespace SportsTacticsBoard
       this.changePlayingSurfaceTypeMenuItem.Name = "changePlayingSurfaceTypeMenuItem";
       resources.ApplyResources(this.changePlayingSurfaceTypeMenuItem, "changePlayingSurfaceTypeMenuItem");
       this.changePlayingSurfaceTypeMenuItem.Click += new System.EventHandler(this.newPlayingSurfaceTypeMenuItem_Click);
+      // 
+      // toolStripSeparator12
+      // 
+      this.toolStripSeparator12.Name = "toolStripSeparator12";
+      resources.ApplyResources(this.toolStripSeparator12, "toolStripSeparator12");
+      // 
+      // orientationToolStripMenuItem
+      // 
+      this.orientationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.horizontalToolStripMenuItem,
+            this.verticalToolStripMenuItem});
+      this.orientationToolStripMenuItem.Name = "orientationToolStripMenuItem";
+      resources.ApplyResources(this.orientationToolStripMenuItem, "orientationToolStripMenuItem");
+      // 
+      // horizontalToolStripMenuItem
+      // 
+      this.horizontalToolStripMenuItem.Name = "horizontalToolStripMenuItem";
+      resources.ApplyResources(this.horizontalToolStripMenuItem, "horizontalToolStripMenuItem");
+      this.horizontalToolStripMenuItem.Click += new System.EventHandler(this.horizontalToolStripMenuItem_Click);
+      // 
+      // verticalToolStripMenuItem
+      // 
+      this.verticalToolStripMenuItem.Name = "verticalToolStripMenuItem";
+      resources.ApplyResources(this.verticalToolStripMenuItem, "verticalToolStripMenuItem");
+      this.verticalToolStripMenuItem.Click += new System.EventHandler(this.verticalToolStripMenuItem_Click);
+      // 
+      // resetViewToolStripMenuItem
+      // 
+      this.resetViewToolStripMenuItem.Name = "resetViewToolStripMenuItem";
+      resources.ApplyResources(this.resetViewToolStripMenuItem, "resetViewToolStripMenuItem");
+      this.resetViewToolStripMenuItem.Click += new System.EventHandler(this.resetViewToolStripMenuItem_Click);
       // 
       // toolStripMenuItem1
       // 
@@ -459,6 +513,7 @@ namespace SportsTacticsBoard
       resources.ApplyResources(this.fieldControl, "fieldControl");
       this.fieldControl.FieldType = null;
       this.fieldControl.IsDirty = false;
+      this.fieldControl.IsViewDirty = false;
       this.fieldControl.Name = "fieldControl";
       this.fieldControl.ShowMovementLines = true;
       // 
@@ -534,6 +589,13 @@ namespace SportsTacticsBoard
     private System.Windows.Forms.Timer playSequenceTimer;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
     private System.Windows.Forms.ToolStripButton goToLastToolStripButton;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
+    private System.Windows.Forms.ToolStripMenuItem orientationToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem horizontalToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem verticalToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem resetViewToolStripMenuItem;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+    private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
   }
 }
 

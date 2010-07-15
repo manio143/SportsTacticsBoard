@@ -447,6 +447,33 @@ namespace SportsTacticsBoard.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Value supplied (&apos;{1}&apos;) for {0} option does not contain a valid or supported value.
+        /// </summary>
+        internal static string InvalidCultureOption_Format {
+            get {
+                return ResourceManager.GetString("InvalidCultureOption_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Parameters.
+        /// </summary>
+        internal static string InvalidParametersTitle {
+            get {
+                return ResourceManager.GetString("InvalidParametersTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} option missing culture name.
+        /// </summary>
+        internal static string MissingCultureOptionValue_Format {
+            get {
+                return ResourceManager.GetString("MissingCultureOptionValue_Format", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap NavBack {
             get {
                 object obj = ResourceManager.GetObject("NavBack", resourceCulture);

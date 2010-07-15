@@ -316,4 +316,13 @@
   <data name="CustomLabelLongerThanRecommended" xml:space="preserve">
     <value>The custom label is longer than recommended (2 characters or less). It probably won't display properly. Do you want to keep this label?</value>
   </data>
+  <data name="InvalidCultureOption_Format" xml:space="preserve">
+    <value>Value supplied ('{1}') for {0} option does not contain a valid or supported value</value>
+  </data>
+  <data name="InvalidParametersTitle" xml:space="preserve">
+    <value>Invalid Parameters</value>
+  </data>
+  <data name="MissingCultureOptionValue_Format" xml:space="preserve">
+    <value>{0} option missing culture name</value>
+  </data>
 </root>

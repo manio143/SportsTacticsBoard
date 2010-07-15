@@ -38,9 +38,12 @@ namespace SportsTacticsBoard
     private Matrix displayToFieldTransfom;
 
     private PointF zoomPoint;
+
     private float zoomFactor = 1.0F;
+
     private float rotationAngle;
 
+    private bool viewDirty;
     private bool dirty;
     private IPlayingSurfaceType fieldType;
     private bool allowInteraction = true;
@@ -66,9 +69,55 @@ namespace SportsTacticsBoard
       }
     }
 
+    public bool IsViewDirty
+    {
+      get { return viewDirty; }
+      set
+      {
+        viewDirty = value;
+        if (null != IsViewDirtyChanged) {
+          IsViewDirtyChanged.Invoke(this, null);
+        }
+      }
+    }
+
+    public PointF ZoomPoint
+    {
+      get { return zoomPoint; }
+    }
+
+    public float ZoomFactor
+    {
+      get { return zoomFactor; }
+    }
+
+    public float RotationAngle
+    {
+      get { return rotationAngle; }
+    }
+
+    public void SetView(PointF newZoomPoint, float newZoomFactor, float newRotationAngle)
+    {
+      zoomPoint = newZoomPoint;
+      zoomFactor = newZoomFactor;
+      rotationAngle = newRotationAngle;
+      CalculateFieldGeometry(Size);
+      IsViewDirty = true;
+      Invalidate();
+    }
+
+    public void ResetView()
+    {
+      ResetZoom();
+      CalculateFieldGeometry(Size);
+      IsViewDirty = true;
+      Invalidate();
+    }
+
     public ICustomLabelProvider CustomLabelProvider { get; set; }
 
     public event EventHandler IsDirtyChanged;
+    public event EventHandler IsViewDirtyChanged;
 
     private bool showMovementLines = true;
 
@@ -109,6 +158,8 @@ namespace SportsTacticsBoard
             fo.CustomLabelProvider = CustomLabelProvider;
           }
           SetLayout(fieldType.DefaultLayout);
+        } else {
+          ResetZoomAndRotation();
         }
 
         Invalidate();
@@ -118,6 +169,12 @@ namespace SportsTacticsBoard
 
     private void ResetZoomAndRotation()
     {
+      ResetZoom();
+      rotationAngle = 0.0F;
+    }
+
+    private void ResetZoom()
+    {
       var ft = FieldType;
       if (null != ft) {
         zoomPoint = new PointF(ft.Length / 2.0F, ft.Width / 2.0F);
@@ -125,7 +182,6 @@ namespace SportsTacticsBoard
         zoomPoint = new PointF(0.0F, 0.0F);
       }
       zoomFactor = 1.0F;
-      rotationAngle = 0.0F;
     }
 
     private Collection<FieldObject> fieldObjects;
@@ -451,15 +507,20 @@ namespace SportsTacticsBoard
       if (null != ft) {
         PointF constrainedFieldPoint = new PointF(Math.Max(0.0F, Math.Min(ft.Length, fieldPoint.X)),
                                                   Math.Max(0.0F, Math.Min(ft.Width, fieldPoint.Y)));
-        float oldZoomFactor = zoomFactor;
-        zoomFactor = Math.Max(0.5F, Math.Min(4.0F, zoomFactor * zoomRatio));
+        float newZoomFactor = Math.Max(0.5F, Math.Min(4.0F, zoomFactor * zoomRatio));
         float offsetX = constrainedFieldPoint.X - zoomPoint.X;
         float offsetY = constrainedFieldPoint.Y - zoomPoint.Y;
-        float zoomRatioChange = oldZoomFactor / zoomFactor;
-        zoomPoint.X = constrainedFieldPoint.X - (offsetX * zoomRatioChange);
-        zoomPoint.Y = constrainedFieldPoint.Y - (offsetY * zoomRatioChange);
-        CalculateFieldGeometry(Size);
-        Invalidate();
+        float zoomRatioChange = zoomFactor / newZoomFactor;
+        float newZoomPointX = constrainedFieldPoint.X - (offsetX * zoomRatioChange);
+        float newZoomPointY = constrainedFieldPoint.Y - (offsetY * zoomRatioChange);
+        if ((newZoomPointX != zoomPoint.X) || (newZoomPointY != zoomPoint.Y) || (newZoomFactor != zoomFactor)) {
+          zoomPoint.X = newZoomPointX;
+          zoomPoint.Y = newZoomPointY;
+          zoomFactor = newZoomFactor;
+          CalculateFieldGeometry(Size);
+          IsViewDirty = true;
+          Invalidate();
+        }
       }
     }
 
@@ -468,20 +529,29 @@ namespace SportsTacticsBoard
       if (zoomRatio == 0.0F) {
         throw new ArgumentOutOfRangeException("zoomRatio");
       }
-      zoomFactor *= zoomRatio;
-      zoomFactor = Math.Max(0.5F, Math.Min(4.0F, zoomFactor));
-      CalculateFieldGeometry(Size);
-      Invalidate();
+      float newZoomFactor = zoomFactor * zoomRatio;
+      newZoomFactor = Math.Max(0.5F, Math.Min(4.0F, newZoomFactor));
+      if (newZoomFactor != zoomFactor) {
+        zoomFactor = newZoomFactor;
+        CalculateFieldGeometry(Size);
+        IsViewDirty = true;
+        Invalidate();
+      }
     }
 
     private void CentreAt(PointF fieldPoint)
     {
       var ft = FieldType;
       if (null != ft) {
-        zoomPoint.X = Math.Max(0.0F, Math.Min(ft.Length, fieldPoint.X));
-        zoomPoint.Y = Math.Max(0.0F, Math.Min(ft.Width, fieldPoint.Y));
-        CalculateFieldGeometry(Size);
-        Invalidate();
+        float newZoomPointX = Math.Max(0.0F, Math.Min(ft.Length, fieldPoint.X));
+        float newZoomPointY = Math.Max(0.0F, Math.Min(ft.Width, fieldPoint.Y));
+        if ((newZoomPointX != zoomPoint.X) || (newZoomPointY != zoomPoint.Y)) {
+          zoomPoint.X = newZoomPointX;
+          zoomPoint.Y = newZoomPointY;
+          CalculateFieldGeometry(Size);
+          IsViewDirty = true;
+          Invalidate();
+        }
       }
     }
 
