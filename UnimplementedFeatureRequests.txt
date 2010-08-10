@@ -3,7 +3,7 @@
   - Badminton [SF Tracker] 
   - Sepaktakraw [SF Tracker] 
 - Saving the zoom/position/orientation when saving the sequence [me]
-- Creating movie (flv, wmv) sequence from the sequence [Email: Ralph Rinschen]
+- Creating movie (flv, wmv) sequence from the sequence [Email: Ralph Rinschen]  --> maybe used HTML + Javascript with PNG files (e.g. http://javascript.internet.com/miscellaneous/fading-slide-show.html)
 - Abitrarily positioning text objects on the field [Email: Ralph Rinschen]
 - Adding/removing players (making players visible/shown) [SF Tracker]
 - Separate arrows with different renderings [me, SF Tracker]
