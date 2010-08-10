@@ -317,7 +317,9 @@ namespace SportsTacticsBoard
       }
       // Create the reverse transform matrix
       displayToFieldTransfom = fieldToDisplayTransform.Clone();
-      displayToFieldTransfom.Invert();
+      if (displayToFieldTransfom.IsInvertible) {
+        displayToFieldTransfom.Invert();
+      }
     }
 
     public void DrawIntoImage(Image image, FieldLayout layoutToDraw, FieldLayout nextLayoutData)
