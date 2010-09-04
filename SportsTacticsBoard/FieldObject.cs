@@ -209,6 +209,11 @@ namespace SportsTacticsBoard
       get { return null; }
     }
 
+    public virtual bool ShowsLabel
+    {
+      get { return true; }
+    }
+
     private bool HasLabel
     {
       get { return !String.IsNullOrEmpty(LabelText); }

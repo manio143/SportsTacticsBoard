@@ -238,6 +238,11 @@ namespace SportsTacticsBoard
       SetLayout(layout);
     }
 
+    /// <summary>
+    /// Converts the supplied point to the field coordinates.
+    /// </summary>
+    /// <param name="pt">The point on the user interface.</param>
+    /// <returns>A point converted to field coordinates.</returns>
     private PointF ToFieldPoint(Point pt)
     {
       PointF[] points = new PointF[] {
@@ -436,6 +441,10 @@ namespace SportsTacticsBoard
       if (null == e) {
         return;
       }
+      if (toolTip.Active) {
+        toolTip.Hide(this);
+        toolTip.Tag = null;
+      }
       if ((AllowInteraction) && (e.Button == MouseButtons.Left) && (ModifierKeys == Keys.None)) {
         FieldObject fo = ObjectAtPoint(e.Location);
         if (fo != null) {
@@ -448,7 +457,7 @@ namespace SportsTacticsBoard
         FieldObject fo = ObjectAtPoint(e.Location);
         if (fo != null) {
           fieldObjectContextMenu.Tag = fo;
-          changeLabelMenuItem.Enabled = null != CustomLabelProvider;
+          changeLabelMenuItem.Enabled = (null != CustomLabelProvider) && (fo.ShowsLabel);
           fieldObjectContextMenu.Show(this, e.Location);
         }
       }
@@ -462,6 +471,22 @@ namespace SportsTacticsBoard
       if ((Capture) && (dragObject != null)) {
         PointF pt = ToFieldPoint(new Point(e.X, e.Y));
         MoveObjectTo(dragObject, pt);
+      } else if (!Capture) {
+        // Show a tool tip if the cursor is over an item
+        FieldObject fo = ObjectAtPoint(e.Location);
+        if ((toolTip.Tag != fo) || (!toolTip.Active)) {
+          if (null != fo) {
+            toolTip.Tag = fo;
+            toolTip.ToolTipTitle = fo.Label;
+            var objectRect = this.ToEnclosingDisplayRect(fo.GetRectangle());
+            var tipPosition = new Point(objectRect.Right, objectRect.Bottom);
+            tipPosition.Offset(10, 10);
+            toolTip.Show(fo.Name, this, tipPosition);
+          } else {
+            toolTip.Hide(this);
+            toolTip.Tag = null;
+          }
+        }
       }
     }
 

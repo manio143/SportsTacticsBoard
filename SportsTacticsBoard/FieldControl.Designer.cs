@@ -64,6 +64,7 @@ namespace SportsTacticsBoard
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FieldControl));
       this.fieldObjectContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.changeLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolTip = new System.Windows.Forms.ToolTip(this.components);
       this.fieldObjectContextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -95,5 +96,6 @@ namespace SportsTacticsBoard
 
     private System.Windows.Forms.ContextMenuStrip fieldObjectContextMenu;
     private System.Windows.Forms.ToolStripMenuItem changeLabelMenuItem;
+    private System.Windows.Forms.ToolTip toolTip;
   }
 }

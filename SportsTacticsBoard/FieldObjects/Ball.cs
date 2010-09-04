@@ -41,6 +41,11 @@ namespace SportsTacticsBoard.FieldObjects
       get { return tag; }
     }
 
+    public override bool ShowsLabel
+    {
+      get { return false; }
+    }
+
     public Ball(float posX, float posY, float dispRadius) :
       base(posX, posY, dispRadius)
     {

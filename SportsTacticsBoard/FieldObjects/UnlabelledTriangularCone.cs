@@ -34,6 +34,11 @@ namespace SportsTacticsBoard.FieldObjects
     {
     }
 
+    public override bool ShowsLabel
+    {
+      get { return false; }
+    }
+
     public override void DrawAt(Graphics graphics, PointF pos)
     {
       RectangleF rect = GetRectangleAt(pos);
