@@ -42,6 +42,11 @@ namespace SportsTacticsBoard.FieldObjects
       get { return "Puck"; }
     }
 
+    public override bool ShowsLabel
+    {
+      get { return false; }
+    }
+
     public Puck(float posX, float posY, float dispRadius) :
       base(posX, posY, dispRadius)
     {

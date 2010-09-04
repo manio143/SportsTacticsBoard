@@ -1,6 +1,7 @@
 -- Changes committed to source control since previous release
+FEAT - Added tooltips for field objects so that it's easier to identify them.
 FEAT - Added basic framework for zooming and rotating the displayed view of the field (mouse wheel zooms, hold Alt to zoom on point; left-click holding Alt to centre on point); menu items to reset the view, and to change the orientation between horizontal and vertical.
-FEAT - Added the ability to provide a custom label for field objects within a saved sequence (allows re-numbering of players)
+FEAT - Added the ability to provide a custom label for field objects within a saved sequence (allows re-numbering of players). Only objects with labels can be renamed.
 FIX - Fixed redraw issue when moving objects with movement lines enabled
 CHG - Changed file name formatting when exporting images to include leading zeros and be 3 digits long to permit easier sorting of files.
 
