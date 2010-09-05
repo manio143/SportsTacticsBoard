@@ -254,6 +254,8 @@
     <Content Include="Images\PauseHS.png" />
     <Content Include="Images\PlayHS.png" />
     <Content Include="Images\RecordHS.png" />
+    <Content Include="Images\RepeatHS.png" />
+    <Content Include="Images\zoom.cur" />
     <Content Include="program.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

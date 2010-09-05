@@ -111,6 +111,7 @@ namespace SportsTacticsBoard
       this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
       this.playSequenceTimer = new System.Windows.Forms.Timer(this.components);
       this.fieldControl = new SportsTacticsBoard.FieldControl();
+      this.repeatToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.sequenceToolString.SuspendLayout();
       this.mainMenuStrip.SuspendLayout();
       this.SuspendLayout();
@@ -125,6 +126,7 @@ namespace SportsTacticsBoard
             this.goToLastToolStripButton,
             this.toolStripSeparator11,
             this.playToolStripButton,
+            this.repeatToolStripButton,
             this.toolStripSeparator2,
             this.recordNewPositionButton,
             this.recordOverCurrentPositionButton,
@@ -508,7 +510,7 @@ namespace SportsTacticsBoard
       // fieldControl
       // 
       this.fieldControl.AllowInteraction = true;
-      this.fieldControl.Cursor = System.Windows.Forms.Cursors.Default;
+      this.fieldControl.Cursor = System.Windows.Forms.Cursors.Arrow;
       this.fieldControl.CustomLabelProvider = null;
       resources.ApplyResources(this.fieldControl, "fieldControl");
       this.fieldControl.FieldType = null;
@@ -516,6 +518,16 @@ namespace SportsTacticsBoard
       this.fieldControl.IsViewDirty = false;
       this.fieldControl.Name = "fieldControl";
       this.fieldControl.ShowMovementLines = true;
+      this.fieldControl.Tool = SportsTacticsBoard.Tool.MoveObjects;
+      this.fieldControl.ToolMode = SportsTacticsBoard.ToolMode.MultiUse;
+      // 
+      // repeatToolStripButton
+      // 
+      this.repeatToolStripButton.CheckOnClick = true;
+      this.repeatToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.repeatToolStripButton.Image = global::SportsTacticsBoard.Properties.Resources.RepeatHS;
+      resources.ApplyResources(this.repeatToolStripButton, "repeatToolStripButton");
+      this.repeatToolStripButton.Name = "repeatToolStripButton";
       // 
       // MainForm
       // 
@@ -596,6 +608,7 @@ namespace SportsTacticsBoard
     private System.Windows.Forms.ToolStripMenuItem resetViewToolStripMenuItem;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
     private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+    private System.Windows.Forms.ToolStripButton repeatToolStripButton;
   }
 }
 

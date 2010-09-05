@@ -63,6 +63,7 @@ namespace SportsTacticsBoard
       fieldControl.CustomLabelProvider = this;
       fieldControl.IsDirtyChanged += new EventHandler(fieldControl_IsDirtyChanged);
       fieldControl.IsViewDirtyChanged += new EventHandler(fieldControl_IsViewDirtyChanged);
+      fieldControl.KeyDown +=new KeyEventHandler(fieldControl_KeyDown);
     }
 
     void fieldControl_IsViewDirtyChanged(object sender, EventArgs e)
@@ -550,10 +551,10 @@ namespace SportsTacticsBoard
     {
       StopPlayingSequence();
 
-      if (!e.Handled && !e.Shift && !e.Alt && !e.Control) {
-        if (e.KeyCode == Keys.Left) {
+      if (!e.Handled) {
+        if ((e.KeyCode == Keys.Left) || (e.KeyCode == Keys.Up)) {
           MoveToPreviousLayout();
-        } else if (e.KeyCode == Keys.Right) {
+        } else if ((e.KeyCode == Keys.Right) || (e.KeyCode == Keys.Down)) {
           MoveToNextLayout();
         }
       }
@@ -836,6 +837,7 @@ namespace SportsTacticsBoard
       UpdateSequenceControls();
     }
 
+
     private void playToolStripButton_Click(object sender, EventArgs e)
     {
       if (IsPlayingSequence) {
@@ -862,12 +864,17 @@ namespace SportsTacticsBoard
           }
         }
         if (positionInSequence + 1 >= currentSequence.NumberOfLayouts) {
-          positionInSequence = 0;
-          RestorePositionFromSequence(positionInSequence, currentSequence, GetNextLayout());
-          UpdateSequenceControls();
+          GoToStartOfSequence();
         }
         StartPlayingSequence();
       }
+    }
+
+    private void GoToStartOfSequence()
+    {
+      positionInSequence = 0;
+      RestorePositionFromSequence(positionInSequence, currentSequence, GetNextLayout());
+      UpdateSequenceControls();
     }
 
     private void playSequenceTimer_Tick(object sender, EventArgs e)
@@ -876,6 +883,10 @@ namespace SportsTacticsBoard
         MoveToNextLayout();
         if (positionInSequence + 1 < currentSequence.NumberOfLayouts) {
           // Continue playing the sequence if there are more left
+          return;
+        } else if (repeatToolStripButton.Checked) {
+          // Repeat is enabled, so go back to the beginning and continue playback
+          GoToStartOfSequence();
           return;
         }
       }
