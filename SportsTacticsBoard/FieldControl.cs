@@ -32,6 +32,19 @@ using System.Drawing.Drawing2D;
 
 namespace SportsTacticsBoard
 {
+  internal enum Tool
+  {
+    MoveObjects,
+    Move,
+    Zoom,
+  }
+
+  internal enum ToolMode
+  {
+    MultiUse,
+    RevertAfterSingleUse
+  }
+
   partial class FieldControl : UserControl
   {
     private Matrix fieldToDisplayTransform;
@@ -47,13 +60,65 @@ namespace SportsTacticsBoard
     private bool dirty;
     private IPlayingSurfaceType fieldType;
     private bool allowInteraction = true;
+    private Tool previousTool = Tool.MoveObjects;
+    private Tool tool = Tool.MoveObjects;
+    private ToolMode toolMode = ToolMode.MultiUse;
+
+    private Cursor zoomCursor;
 
     public bool AllowInteraction
     {
       get { return allowInteraction; }
-      set { 
-        allowInteraction = value;
-        this.Cursor = (allowInteraction) ? Cursors.Default : Cursors.No;
+      set {
+        if (value != allowInteraction) {
+          allowInteraction = value;
+          this.Cursor = (allowInteraction) ? ToolCursor : Cursors.No;
+          if (!allowInteraction) {
+            ClearToolTip();
+          }
+        }
+      }
+    }
+
+    public Tool Tool
+    {
+      get { return tool; }
+      set
+      {
+        if (value != tool) {
+          previousTool = tool;
+          CancelDrag();
+          tool = value;
+          this.Cursor = ToolCursor;
+        }
+      }
+    }
+
+    public ToolMode ToolMode
+    {
+      get { return toolMode; }
+      set { toolMode = value; }
+    }
+
+    private void RevertTool()
+    {
+      ToolMode = ToolMode.MultiUse;
+      Tool = previousTool;
+    }
+
+    private Cursor ToolCursor
+    {
+      get
+      {
+        switch (Tool) {
+          case Tool.MoveObjects:
+          default:
+            return Cursors.Arrow;
+          case Tool.Move:
+            return Cursors.Hand;
+          case Tool.Zoom:
+            return zoomCursor;
+        }
       }
     }
 
@@ -137,8 +202,10 @@ namespace SportsTacticsBoard
     public FieldControl()
     {
       InitializeComponent();
-      this.MouseWheel += new MouseEventHandler(FieldControl_MouseWheel);
-      this.MouseClick += new MouseEventHandler(FieldControl_MouseClick);
+      using (var s = new System.IO.MemoryStream(Properties.Resources.zoom, false)) {
+        zoomCursor = new Cursor(s);
+      }
+      this.Cursor = ToolCursor;
     }
 
     public IPlayingSurfaceType FieldType
@@ -434,73 +501,156 @@ namespace SportsTacticsBoard
       }
     }
 
-    private FieldObject dragObject;
-
-    protected override void OnMouseDown(MouseEventArgs e)
+    private void ClearToolTip()
     {
-      if (null == e) {
-        return;
-      }
       if (toolTip.Active) {
         toolTip.Hide(this);
         toolTip.Tag = null;
       }
-      if ((AllowInteraction) && (e.Button == MouseButtons.Left) && (ModifierKeys == Keys.None)) {
-        FieldObject fo = ObjectAtPoint(e.Location);
-        if (fo != null) {
-          dragObject = fo;
-          Capture = true;
+    }
+
+    private FieldObject dragObject;
+    private PointF dragObjectOriginalPosition;
+
+    protected override void OnMouseDown(MouseEventArgs e)
+    {
+      if ((null != e) && (AllowInteraction)) {
+        ClearToolTip();
+
+        switch (Tool) {
+          case Tool.MoveObjects:
+            if ((e.Button == MouseButtons.Left) && (ModifierKeys == Keys.None)) {
+              FieldObject fo = ObjectAtPoint(e.Location);
+              if (fo != null) {
+                dragObject = fo;
+                dragObjectOriginalPosition = fo.Position;
+                Capture = true;
+              }
+            } else if ((e.Button == MouseButtons.Right) && (ModifierKeys == Keys.None)) {
+              fieldObjectContextMenu.Tag = null;
+              FieldObject fo = ObjectAtPoint(e.Location);
+              if (fo != null) {
+                fieldObjectContextMenu.Tag = fo;
+                changeLabelMenuItem.Enabled = (null != CustomLabelProvider) && (fo.ShowsLabel);
+                fieldObjectContextMenu.Show(this, e.Location);
+              }
+            }
+            break;
+          case Tool.Move:
+            // TODO: Support capturing the mouse for moving the field around
+            break;
+          case Tool.Zoom:
+            if (e.Button == MouseButtons.Left) {
+              ZoomAtPoint(e.Location, true);
+            } else if (e.Button == MouseButtons.Right) {
+              ZoomAtPoint(e.Location, false);
+            } else if (e.Button == MouseButtons.Middle) {
+              CentreAt(ToFieldPoint(e.Location));
+            }
+            if (ToolMode == ToolMode.RevertAfterSingleUse) {
+              RevertTool();
+            }
+            break;
         }
       }
-      if ((AllowInteraction) && (e.Button == MouseButtons.Right) && (ModifierKeys == Keys.None)) {
-        fieldObjectContextMenu.Tag = null;
-        FieldObject fo = ObjectAtPoint(e.Location);
-        if (fo != null) {
-          fieldObjectContextMenu.Tag = fo;
-          changeLabelMenuItem.Enabled = (null != CustomLabelProvider) && (fo.ShowsLabel);
-          fieldObjectContextMenu.Show(this, e.Location);
-        }
-      }
+      base.OnMouseDown(e);
+    }
+
+    private void ZoomAtPoint(Point displayPoint, bool zoomIn)
+    {
+      const float Top = 4.0F;
+      const float Bottom = 3.0F;
+      float zoom = (zoomIn) ? (Top / Bottom) : (Bottom / Top);
+      zoom = Math.Max(-2.0F, Math.Min(2.0F, zoom));
+      ZoomAt(ToFieldPoint(displayPoint), zoom);
     }
 
     protected override void OnMouseMove(MouseEventArgs e)
     {
-      if (null == e) {
-        return;
-      }
-      if ((Capture) && (dragObject != null)) {
-        PointF pt = ToFieldPoint(new Point(e.X, e.Y));
-        MoveObjectTo(dragObject, pt);
-      } else if (!Capture) {
-        // Show a tool tip if the cursor is over an item
-        FieldObject fo = ObjectAtPoint(e.Location);
-        if ((toolTip.Tag != fo) || (!toolTip.Active)) {
-          if (null != fo) {
-            toolTip.Tag = fo;
-            toolTip.ToolTipTitle = fo.Label;
-            var objectRect = this.ToEnclosingDisplayRect(fo.GetRectangle());
-            var tipPosition = new Point(objectRect.Right, objectRect.Bottom);
-            tipPosition.Offset(10, 10);
-            toolTip.Show(fo.Name, this, tipPosition);
-          } else {
-            toolTip.Hide(this);
-            toolTip.Tag = null;
+      if (null != e) {
+        if ((Capture) && (dragObject != null)) {
+          PointF pt = ToFieldPoint(new Point(e.X, e.Y));
+          MoveObjectTo(dragObject, pt);
+        } else if ((AllowInteraction) && (!Capture)) {
+          // Show a tool tip if the cursor is over an item
+          FieldObject fo = ObjectAtPoint(e.Location);
+          if ((toolTip.Tag != fo) || (!toolTip.Active)) {
+            if (null != fo) {
+              toolTip.Tag = fo;
+              toolTip.ToolTipTitle = fo.Label;
+              var objectRect = this.ToEnclosingDisplayRect(fo.GetRectangle());
+              var tipPosition = new Point(objectRect.Right, objectRect.Bottom);
+              tipPosition.Offset(10, 10);
+              toolTip.Show(fo.Name, this, tipPosition);
+            } else {
+              ClearToolTip();
+            }
           }
         }
       }
+      base.OnMouseMove(e);
     }
 
     protected override void OnMouseUp(MouseEventArgs e)
     {
-      if (null == e) {
-        return;
+      if (null != e) {
+        if ((Capture) && (dragObject != null)) {
+          PointF pt = ToFieldPoint(new Point(e.X, e.Y));
+          MoveObjectTo(dragObject, pt);
+          dragObject = null;
+          Capture = false;
+        }
       }
+      base.OnMouseUp(e);
+    }
+
+    private bool CancelDrag()
+    {
       if ((Capture) && (dragObject != null)) {
-        PointF pt = ToFieldPoint(new Point(e.X, e.Y));
-        MoveObjectTo(dragObject, pt);
+        MoveObjectTo(dragObject, dragObjectOriginalPosition);
         dragObject = null;
         Capture = false;
+        return true;
       }
+      return false;
+    }
+
+    protected override bool IsInputKey(Keys keyData)
+    {
+      switch (keyData) {
+        case Keys.Escape:
+        case Keys.Cancel:
+        case Keys.Left:
+        case Keys.Right:
+        case Keys.Up:
+        case Keys.Down:
+          return true;
+        default:
+          return base.IsInputKey(keyData);
+      }
+    }
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+      if (null != e) {
+        if ((e.KeyCode == Keys.Escape) || (e.KeyCode == Keys.Cancel)) {
+          e.Handled = CancelDrag();
+        } else if ((AllowInteraction) && ((e.KeyCode == Keys.Control) || (e.KeyCode == Keys.ControlKey))) {
+          Tool = Tool.Zoom;
+          ToolMode = ToolMode.MultiUse;
+        }
+      }
+      base.OnKeyDown(e);
+    }
+
+    protected override void OnKeyUp(KeyEventArgs e)
+    {
+      if (null != e) {
+        if ((Tool == Tool.Zoom) && ((e.KeyCode == Keys.Control) || (e.KeyCode == Keys.ControlKey))) {
+          RevertTool();
+        }
+      }
+      base.OnKeyUp(e);
     }
 
     private void changeLabelMenuItem_Click(object sender, EventArgs e)
@@ -582,37 +732,37 @@ namespace SportsTacticsBoard
       }
     }
 
-    void FieldControl_MouseWheel(object sender, MouseEventArgs e)
+    protected override void OnMouseWheel(MouseEventArgs e)
     {
-      if (null == e) {
-        return;
-      }
-      if (e.Delta != 0) {
-        // Mouse wheel changed, so zoom on current location
-        float zoom = 1.0F;
-        if (e.Delta > 0) {
-          zoom = 1.1F * ((float)e.Delta / 120.0F);
-        } else {
-          zoom = 0.9F * ((float)(-e.Delta) / 120.0F);
+      if (null != e) {
+        if (e.Delta != 0) {
+          // Mouse wheel changed, so zoom on current location
+          float zoom = 1.0F;
+          if (e.Delta > 0) {
+            zoom = 1.1F * ((float)e.Delta / 120.0F);
+          } else {
+            zoom = 0.9F * ((float)(-e.Delta) / 120.0F);
+          }
+          zoom = Math.Max(-2.0F, Math.Min(2.0F, zoom));
+          if ((ModifierKeys == Keys.None) || (ModifierKeys == Keys.Control)) {
+            Zoom(zoom);
+          } else if (ModifierKeys == Keys.Alt) {
+            ZoomAt(ToFieldPoint(e.Location), zoom);
+          }
         }
-        zoom = Math.Max(-2.0F, Math.Min(2.0F, zoom));
-        if ((ModifierKeys == Keys.None) || (ModifierKeys == Keys.Control)) {
-          Zoom(zoom);
-        } else if (ModifierKeys == Keys.Alt) {
-          ZoomAt(ToFieldPoint(e.Location), zoom);
-        }
       }
+      base.OnMouseWheel(e);
     }
 
-    void FieldControl_MouseClick(object sender, MouseEventArgs e)
+    protected override void OnMouseClick(MouseEventArgs e)
     {
-      if (null == e) {
-        return;
+      if (null != e) {
+        if ((e.Button == System.Windows.Forms.MouseButtons.Left) && (ModifierKeys == Keys.Alt)) {
+          // Re-centre the display at the point clicked
+          CentreAt(ToFieldPoint(e.Location));
+        }
       }
-      if ((e.Button == System.Windows.Forms.MouseButtons.Left) && (ModifierKeys == Keys.Alt)) {
-        // Re-centre the display at the point clicked
-        CentreAt(ToFieldPoint(e.Location));
-      }
+      base.OnMouseClick(e);
     }
 
   }

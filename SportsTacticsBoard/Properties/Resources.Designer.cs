@@ -541,6 +541,13 @@ namespace SportsTacticsBoard.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap RepeatHS {
+            get {
+                object obj = ResourceManager.GetObject("RepeatHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap RestartHS {
             get {
                 object obj = ResourceManager.GetObject("RestartHS", resourceCulture);
@@ -642,6 +649,13 @@ namespace SportsTacticsBoard.Properties {
         internal static string UnableToOpenFile_InstallationMayBeIncomplete {
             get {
                 return ResourceManager.GetString("UnableToOpenFile_InstallationMayBeIncomplete", resourceCulture);
+            }
+        }
+        
+        internal static byte[] zoom {
+            get {
+                object obj = ResourceManager.GetObject("zoom", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

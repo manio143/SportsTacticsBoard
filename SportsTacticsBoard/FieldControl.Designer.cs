@@ -48,6 +48,9 @@ namespace SportsTacticsBoard
         if (displayToFieldTransfom != null) {
           displayToFieldTransfom.Dispose();
         }
+        if (null != zoomCursor) {
+          zoomCursor.Dispose();
+        }
       }
       base.Dispose(disposing);
     }
