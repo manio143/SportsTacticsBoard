@@ -1,4 +1,5 @@
 -- Changes committed to source control since previous release
+FIX - Corrected number of players to 6 for Floorball. [3475030]
 FEAT - Added Repeat button for sequence playback -- allows sequence to play continuously in a  loop
 FEAT - Added tooltips for field objects so that it's easier to identify them.
 FEAT - Added basic framework for zooming and rotating the displayed view of the field (while holding Ctrl: left click to zoom in, right click to zoom out; mouse wheel zooms: hold Alt to zoom on point; left-click holding Alt to centre on point); menu items to reset the view, and to change the orientation between horizontal and vertical.
