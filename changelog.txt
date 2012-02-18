@@ -1,4 +1,5 @@
 -- Changes committed to source control since previous release
+FEAT - Added Handball (based on Futsal with 2 extra players) [3388096]
 FIX - Corrected number of players to 6 for Floorball. [3475030]
 FEAT - Added Repeat button for sequence playback -- allows sequence to play continuously in a  loop
 FEAT - Added tooltips for field objects so that it's easier to identify them.

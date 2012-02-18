@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2010-2012 Robert Turner
+// Copyright (C) 2012 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ using System.Drawing;
 namespace SportsTacticsBoard.PlayingSurfaceTypes
 {
   /// <summary>
-  /// Implements a standard FIFA Futsal pitch.
+  /// Implements a standard Handball pitch based on the FIFA Futsal pitch.
   /// 
   /// Playing surface units are in metres and the default pitch 
   /// dimensions are 40 metres by 22 metres. Pitch is drawn to
@@ -38,16 +38,16 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
   /// 
   /// 2 referee field objects are supported for referee training.
   /// </summary>
-  class Futsal : FutsalHandballBase
+  class Handball : FutsalHandballBase
   {
     public override string Tag
     {
-      get { return "Futsal"; }
+      get { return "Handball"; }
     }
 
     protected override int PlayersPerTeam
     {
-      get { return 5; }
+      get { return 7; }
     }
   }
 }
