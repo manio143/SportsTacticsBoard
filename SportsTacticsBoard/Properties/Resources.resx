@@ -328,8 +328,16 @@
   <data name="zoom" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\zoom.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="RepeatHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\RepeatHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FieldObject_Referee_Handball_1" xml:space="preserve">
+    <value>Referee 1</value>
+  </data>
+  <data name="FieldObject_Referee_Handball_2" xml:space="preserve">
+    <value>Referee 2</value>
+  </data>
+  <data name="FieldType_Handball" xml:space="preserve">
+    <value>Handball</value>
   </data>
 </root>

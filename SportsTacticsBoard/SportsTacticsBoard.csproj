@@ -95,8 +95,10 @@
     <Compile Include="FieldObjects\NumberedPlayer.cs" />
     <Compile Include="FieldObjects\Puck.cs" />
     <Compile Include="PlayingSurfaceTypes\AmericanFootball_NFL.cs" />
+    <Compile Include="PlayingSurfaceTypes\Handball.cs" />
     <Compile Include="PlayingSurfaceTypes\FloorballField.cs" />
     <Compile Include="PlayingSurfaceTypes\Futsal.cs" />
+    <Compile Include="PlayingSurfaceTypes\FutsalHandballBase.cs" />
     <Compile Include="PlayingSurfaceTypes\HockeyRink_NHL.cs" />
     <Compile Include="IPlayingSurfaceType.cs" />
     <Compile Include="FieldObjects\Ball.cs" />
