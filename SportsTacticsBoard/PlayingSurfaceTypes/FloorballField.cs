@@ -7,7 +7,7 @@
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2010 Robert Turner
+// Copyright (C) 2010-2012 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
     private const float fieldObjectMovementPenWidth = fieldObjectOutlinePenWidth * 3.0F;
     private const float coneSize = 0.25F;
 
-    private const int playersPerTeam = 4;
+    private const int playersPerTeam = 6;
 
 
     public string Tag
@@ -148,10 +148,14 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
       string playerTag = FieldObjects.NumberedPlayer.ComposeTag(teamId, 1);
       layout.AddEntry(playerTag, 2.6F, HalfWidth);
       playerTag = FieldObjects.NumberedPlayer.ComposeTag(teamId, 2);
-      layout.AddEntry(playerTag, HalfLength / 2.0F, HalfWidth);
+      layout.AddEntry(playerTag, HalfLength / 2.0F, HalfWidth + 2.0F);
       playerTag = FieldObjects.NumberedPlayer.ComposeTag(teamId, 3);
-      layout.AddEntry(playerTag, HalfLength - 0.6F, HalfWidth);
+      layout.AddEntry(playerTag, HalfLength / 2.0F, HalfWidth - 2.0F);
       playerTag = FieldObjects.NumberedPlayer.ComposeTag(teamId, 4);
+      layout.AddEntry(playerTag, HalfLength - 0.6F, HalfWidth);
+      playerTag = FieldObjects.NumberedPlayer.ComposeTag(teamId, 5);
+      layout.AddEntry(playerTag, HalfLength - 0.6F, HalfWidth - 3.0F);
+      playerTag = FieldObjects.NumberedPlayer.ComposeTag(teamId, 6);
       layout.AddEntry(playerTag, HalfLength - 0.6F, HalfWidth + 3.0F);
 
       // Add defending players
@@ -159,10 +163,14 @@ namespace SportsTacticsBoard.PlayingSurfaceTypes
       playerTag = FieldObjects.NumberedPlayer.ComposeTag(teamId, 1);
       layout.AddEntry(playerTag, Length - 2.6F, Width / 2.0F);
       playerTag = FieldObjects.NumberedPlayer.ComposeTag(teamId, 2);
-      layout.AddEntry(playerTag, HalfLength / 2.0F * 3.0F, HalfWidth);
+      layout.AddEntry(playerTag, HalfLength / 2.0F * 3.0F, HalfWidth + 2.0F);
       playerTag = FieldObjects.NumberedPlayer.ComposeTag(teamId, 3);
-      layout.AddEntry(playerTag, HalfLength + 0.6F, HalfWidth);
+      layout.AddEntry(playerTag, HalfLength / 2.0F * 3.0F, HalfWidth - 2.0F);
       playerTag = FieldObjects.NumberedPlayer.ComposeTag(teamId, 4);
+      layout.AddEntry(playerTag, HalfLength + 0.6F, HalfWidth);
+      playerTag = FieldObjects.NumberedPlayer.ComposeTag(teamId, 5);
+      layout.AddEntry(playerTag, HalfLength + 0.6F, HalfWidth - 3.0F);
+      playerTag = FieldObjects.NumberedPlayer.ComposeTag(teamId, 6);
       layout.AddEntry(playerTag, HalfLength + 0.6F, HalfWidth + 3.0F);
     }
 
