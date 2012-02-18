@@ -255,4 +255,13 @@
   <data name="CustomLabelLongerThanRecommended" xml:space="preserve">
     <value>Diese Bezeichnung is länger als empfohlen (2 Zeichen oder weniger) und wird wahrscheinlich nicht richtig angezeigt. Willst du die Bezeichnung behalten?</value>
   </data>
+  <data name="FieldObject_Referee_Handball_1" xml:space="preserve">
+    <value>Schiedsrichter #1</value>
+  </data>
+  <data name="FieldObject_Referee_Handball_2" xml:space="preserve">
+    <value>Schiedsrichter #2</value>
+  </data>
+  <data name="FieldType_Handball" xml:space="preserve">
+    <value>Handball</value>
+  </data>
 </root>
