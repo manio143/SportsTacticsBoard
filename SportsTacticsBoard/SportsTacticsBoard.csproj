@@ -200,6 +200,9 @@
     </Compile>
     <Compile Include="LayoutSequence.cs" />
     <Compile Include="GlobalizationAwareMessageBox.cs" />
+    <Compile Include="Resources\ImagesResource.cs" />
+    <Compile Include="Resources\LocalizationResource.cs" />
+    <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="SavedLayout.cs" />
     <Compile Include="SavedLayoutInformation.cs">
       <SubType>Form</SubType>
@@ -218,16 +221,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Images\NavBack.png" />
-    <None Include="Images\NavForward.png" />
-    <None Include="Images\DeleteHS.png" />
-    <None Include="Images\Help.png" />
-    <None Include="Images\GoToNextHS.png" />
-    <None Include="Images\GoToPrevious.png" />
-    <None Include="Images\NewDocumentHS.png" />
-    <None Include="Images\openHS.png" />
-    <None Include="Images\RestartHS.png" />
-    <None Include="Images\saveHS.png" />
+    <EmbeddedResource Include="Images\NavBack.png" />
+    <EmbeddedResource Include="Images\NavForward.png" />
+    <EmbeddedResource Include="Images\DeleteHS.png" />
+    <EmbeddedResource Include="Images\Help.png" />
+    <EmbeddedResource Include="Images\GoToNextHS.png" />
+    <EmbeddedResource Include="Images\GoToPrevious.png" />
+    <EmbeddedResource Include="Images\NewDocumentHS.png" />
+    <EmbeddedResource Include="Images\OpenHS.png" />
+    <EmbeddedResource Include="Images\RestartHS.png" />
+    <EmbeddedResource Include="Images\SaveHS.png" />
+    <None Include="res\localization.en-US.res">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SportsTacticsBoard.snk" />
   </ItemGroup>
   <ItemGroup>
@@ -258,16 +264,16 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\DataContainer_MoveFirstHS.png" />
-    <Content Include="Images\DataContainer_MoveLastHS.png" />
-    <Content Include="Images\DataContainer_MoveNextHS.png" />
-    <Content Include="Images\DataContainer_MovePreviousHS.png" />
-    <Content Include="Images\Edit_UndoHS.png" />
-    <Content Include="Images\PauseHS.png" />
-    <Content Include="Images\PlayHS.png" />
-    <Content Include="Images\RecordHS.png" />
-    <Content Include="Images\RepeatHS.png" />
-    <Content Include="Images\zoom.cur" />
+    <EmbeddedResource Include="Images\DataContainer_MoveFirstHS.png" />
+    <EmbeddedResource Include="Images\DataContainer_MoveLastHS.png" />
+    <EmbeddedResource Include="Images\DataContainer_MoveNextHS.png" />
+    <EmbeddedResource Include="Images\DataContainer_MovePreviousHS.png" />
+    <EmbeddedResource Include="Images\Edit_UndoHS.png" />
+    <EmbeddedResource Include="Images\PauseHS.png" />
+    <EmbeddedResource Include="Images\PlayHS.png" />
+    <EmbeddedResource Include="Images\RecordHS.png" />
+    <EmbeddedResource Include="Images\RepeatHS.png" />
+    <EmbeddedResource Include="Images\Zoom.cur" />
     <Content Include="program.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
