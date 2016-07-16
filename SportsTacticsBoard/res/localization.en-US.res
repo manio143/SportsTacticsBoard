@@ -1,4 +1,4 @@
-﻿CurrentLayoutNumberEmpty: 
+﻿CurrentLayoutNumberEmpty: ''
 
 CurrentLayoutNumberFormat: '{0}/{1}'
 
@@ -94,6 +94,8 @@ MenuExit: E&xit
 
 MenuExport: Export to &image files...
 
+MenuExportSingle: Export to &image file...
+
 MenuExportTooltip: Exports the current tactical sequence as a series of image files.
 
 MenuHelp: '&Help'
@@ -162,7 +164,9 @@ You should have received a copy of the GNU General Public License along with thi
 
 CustomLabel: 'Custom &label:'
 
-RevertToDefault: 'Field &object:'
+FieldObject: 'Field &object:'
+
+RevertToDefault: 'Revert to default'
 
 Ok: OK
 

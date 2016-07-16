@@ -78,6 +78,7 @@ namespace SportsTacticsBoard.Resources
         public string MenuCopyTooltip { get; set; }
         public string MenuExit { get; set; }
         public string MenuExport { get; set; }
+        public string MenuExportSingle { get; set; }
         public string MenuExportTooltip { get; set; }
         public string MenuHelp { get; set; }
         public string MenuOrientation { get; set; }

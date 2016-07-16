@@ -1,12 +1,12 @@
 // Sports Tactics Board
 //
-// http://sportstacticsbd.sourceforge.net/
-// http://sourceforge.net/projects/sportstacticsbd/
+// http://github.com/manio143/SportsTacticsBoard
 // 
 // Sports Tactics Board is a utility that allows coaches, trainers and 
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
+// Copyright (C) 2016 Marian Dziubiak
 // Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
@@ -24,56 +24,53 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
+using System.Globalization;
+using System.Threading;
+using Eto.Forms;
+using SportsTacticsBoard.Resources;
 
 namespace SportsTacticsBoard
 {
-  static class Program
-  {
-    const string CultureOption = "-culture";
-
-    /// <summary>
-    /// The main entry point for the application.
-    /// </summary>
-    [STAThread]
-    static void Main(string[] args)
+    static class Program
     {
-      System.Globalization.CultureInfo culture = null;
-      for (int index = 0; (index < args.Length); index++) {
-        if (string.Compare(args[index], CultureOption, StringComparison.OrdinalIgnoreCase) == 0) {
-          index++;
-          if (index >= args.Length) {
-            // Missing parameter
-            var msg = string.Format(System.Globalization.CultureInfo.CurrentCulture, global::SportsTacticsBoard.Properties.Resources.MissingCultureOptionValue_Format, CultureOption);
-            GlobalizationAwareMessageBox.Show(null, msg, global::SportsTacticsBoard.Properties.Resources.InvalidParametersTitle, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, 0);
-            return;
-          }
-          try {
-            culture = new System.Globalization.CultureInfo(args[index]);
-          } catch (ArgumentException) {
-            var msg = string.Format(System.Globalization.CultureInfo.CurrentCulture, global::SportsTacticsBoard.Properties.Resources.InvalidCultureOption_Format, CultureOption, args[index]);
-            GlobalizationAwareMessageBox.Show(null, msg, global::SportsTacticsBoard.Properties.Resources.InvalidParametersTitle, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, 0);
-            return;
-          }
-        }
-      }
+        private const string CultureOption = "-culture";
 
-      if (null != culture) {
-        try {
-          System.Threading.Thread.CurrentThread.CurrentCulture = culture;
-          System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
-        } catch (NotSupportedException) {
-          var msg = string.Format(System.Globalization.CultureInfo.CurrentCulture, global::SportsTacticsBoard.Properties.Resources.InvalidCultureOption_Format, CultureOption, culture.Name);
-          GlobalizationAwareMessageBox.Show(null, msg, global::SportsTacticsBoard.Properties.Resources.InvalidParametersTitle, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, 0);
-          return;
-        }
-      }
+        [STAThread]
+        static void Main(string[] args)
+        {
+            var application = new Application();
 
-      System.Diagnostics.Trace.TraceInformation("System.Threading.Thread.CurrentThread.CurrentCulture.Name={0}", System.Threading.Thread.CurrentThread.CurrentCulture.Name);
-      System.Diagnostics.Trace.TraceInformation("System.Threading.Thread.CurrentThread.CurrentUICulture.Name={0}", System.Threading.Thread.CurrentThread.CurrentUICulture.Name);
-      Application.EnableVisualStyles();
-      Application.Run(new MainForm());
+            ResourceManager manager;
+            if (args.Length == 2 && args[0] == CultureOption)
+            {
+                try
+                {
+                    var culture = new CultureInfo(args[1]);
+                    manager = new ResourceManager(args[1]);
+                    Thread.CurrentThread.CurrentCulture = culture;
+                    Thread.CurrentThread.CurrentUICulture = culture;
+                }
+                catch (Exception exception)
+                {
+                    if (exception is ArgumentException || exception is NotSupportedException)
+                    {
+                        manager = new ResourceManager(CultureInfo.CurrentCulture.Name);
+                        var msg = string.Format(CultureInfo.CurrentCulture,
+                            manager.LocalizationResource.InvalidCultureOptionFormat, CultureOption, args[1]);
+                        MessageBox.Show(msg, manager.LocalizationResource.InvalidParametersTitle,
+                            MessageBoxButtons.OK, MessageBoxType.Information);
+                    }
+                    else
+                        throw;
+                }
+            }
+            else
+                manager = new ResourceManager(CultureInfo.CurrentCulture.Name);
+
+            System.Diagnostics.Trace.TraceInformation("System.Threading.Thread.CurrentThread.CurrentCulture.Name={0}", Thread.CurrentThread.CurrentCulture.Name);
+            System.Diagnostics.Trace.TraceInformation("System.Threading.Thread.CurrentThread.CurrentUICulture.Name={0}", Thread.CurrentThread.CurrentUICulture.Name);
+            
+            application.Run(new MainForm(manager));
+        }
     }
-  }
 }
