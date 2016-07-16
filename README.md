@@ -9,10 +9,16 @@ The original readme can be found in Readme.original.txt.
 The goal of this fork is to provide portability and extend the current application. By portability I mean moving the project from Windows Forms to a multiplaftorm framework like Eto.Forms.
 
 ## Building
-_Yet to come, but surely it'll involve NuGet and MSBuild/xbuild._
+I decided to use [Cake](https://github.com/cake-build/cake) to script my building process. That way all you need to do is run:
+
+	#Windows
+	PS> .\build.windows.ps1
+	
+	#Linux
+	$ ./build.linux.sh
 
 ## Running
-_Yet to come._
+Go into the Build folder and run `SportsTacticsBoard.exe`.
 
 ## Roadmap
 - [ ] Read all of the source code and understand what is for what
