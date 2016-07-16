@@ -70,7 +70,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="YamlDotNet, Version=3.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\YamlDotNet.3.9.0\lib\net35\YamlDotNet.dll</HintPath>
@@ -81,28 +80,18 @@
     <Compile Include="..\Version\ver.cs">
       <Link>ver.cs</Link>
     </Compile>
-    <Compile Include="AboutBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AboutBox.Designer.cs">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="CustomLabel.cs" />
     <Compile Include="CustomLabelCollection.cs" />
-    <Compile Include="EditFieldObjectLabelDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditFieldObjectLabelDialog.Designer.cs">
-      <DependentUpon>EditFieldObjectLabelDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="FieldObjects\BaseCone.cs" />
     <Compile Include="FieldObjects\CircularConeWithBorder.cs" />
     <Compile Include="FieldObjects\UnlabelledTriangularCone.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="LayoutEntry.cs" />
     <Compile Include="FieldObjects\LabelledPlayer.cs" />
     <Compile Include="FieldObjects\NumberedPlayer.cs" />
     <Compile Include="FieldObjects\Puck.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Eto.Forms</SubType>
+    </Compile>
     <Compile Include="PlayingSurfaceTypes\AmericanFootball_NFL.cs" />
     <Compile Include="PlayingSurfaceTypes\Handball.cs" />
     <Compile Include="PlayingSurfaceTypes\FloorballField.cs" />
@@ -113,70 +102,11 @@
     <Compile Include="FieldObjects\Ball.cs" />
     <Compile Include="PlayingSurfaceTypes\SoccerField.cs" />
     <Compile Include="FieldObject.cs" />
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="FieldObjects\Person.cs" />
     <Compile Include="FieldObjects\Player.cs" />
     <Compile Include="PlayingSurfaceTypes\VolleyballCourt.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AboutBox.de.resx">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AboutBox.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditFieldObjectLabelDialog.de.resx">
-      <DependentUpon>EditFieldObjectLabelDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditFieldObjectLabelDialog.resx">
-      <DependentUpon>EditFieldObjectLabelDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FieldControl.de.resx">
-      <DependentUpon>FieldControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.de.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FieldControl.resx">
-      <DependentUpon>FieldControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.de.resx" />
-    <EmbeddedResource Include="SavedLayoutInformation.de.resx">
-      <DependentUpon>SavedLayoutInformation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SavedLayoutInformation.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>SavedLayoutInformation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SelectPlayingSurfaceType.de.resx">
-      <DependentUpon>SelectPlayingSurfaceType.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SelectPlayingSurfaceType.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>SelectPlayingSurfaceType.cs</DependentUpon>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
@@ -192,31 +122,11 @@
     </Compile>
     <Compile Include="FieldObjects\Referee.cs" />
     <Compile Include="Layout.cs" />
-    <Compile Include="FieldControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FieldControl.Designer.cs">
-      <DependentUpon>FieldControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="LayoutSequence.cs" />
-    <Compile Include="GlobalizationAwareMessageBox.cs" />
     <Compile Include="Resources\ImagesResource.cs" />
     <Compile Include="Resources\LocalizationResource.cs" />
     <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="SavedLayout.cs" />
-    <Compile Include="SavedLayoutInformation.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SavedLayoutInformation.Designer.cs">
-      <DependentUpon>SavedLayoutInformation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SavedLayoutManager.cs" />
-    <Compile Include="SelectPlayingSurfaceType.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SelectPlayingSurfaceType.Designer.cs">
-      <DependentUpon>SelectPlayingSurfaceType.cs</DependentUpon>
-    </Compile>
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
