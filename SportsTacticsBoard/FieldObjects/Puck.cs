@@ -1,13 +1,13 @@
 // Sports Tactics Board
 //
-// http://sportstacticsbd.sourceforge.net/
-// http://sourceforge.net/projects/sportstacticsbd/
+// http://github.com/manio143/SportsTacticsBoard
 // 
 // Sports Tactics Board is a utility that allows coaches, trainers and 
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006 Robert Turner
+// Copyright (C) 2016 Marian Dziubiak
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,44 +23,39 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
+
+using Eto.Drawing;
 
 namespace SportsTacticsBoard.FieldObjects
 {
-  class Puck : FieldObject
-  {
-    public override string Label
+    public class Puck : FieldObject
     {
-      get { return ""; }
-    }
+        public override string Label
+        {
+            get { return ""; }
+        }
 
-    public override string Tag
-    {
-      get { return "Puck"; }
-    }
+        public override string Tag
+        {
+            get { return "Puck"; }
+        }
 
-    public override bool ShowsLabel
-    {
-      get { return false; }
-    }
+        public override bool ShowsLabel
+        {
+            get { return false; }
+        }
 
-    public Puck(float posX, float posY, float dispRadius) :
-      base(posX, posY, dispRadius)
-    {
-      OutlinePenColor = Color.Black;
-      MovementPenColor = Color.Black;
-      FillBrushColor = Color.Black;
-    }
+        protected override float[] MovementPenDashPattern
+        {
+            get { return new[] { 3.0F, 2.0F }; }
+        }
 
-    protected override float[] MovementPenDashPattern
-    {
-      get
-      {
-        return new float[] { 3.0F, 2.0F };
-      }
+        public Puck(float posX, float posY, float dispRadius) :
+          base(posX, posY, dispRadius)
+        {
+            OutlinePenColor = Colors.Black;
+            MovementPenColor = Colors.Black;
+            FillBrushColor = Colors.Black;
+        }
     }
-  }
 }

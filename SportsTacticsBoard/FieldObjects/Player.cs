@@ -1,13 +1,13 @@
 // Sports Tactics Board
 //
-// http://sportstacticsbd.sourceforge.net/
-// http://sourceforge.net/projects/sportstacticsbd/
+// http://github.com/manio143/SportsTacticsBoard
 // 
 // Sports Tactics Board is a utility that allows coaches, trainers and 
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2006-2007 Robert Turner
+// Copyright (C) 2016 Marian Dziubiak
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,67 +23,65 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
+
+using Eto.Drawing;
 using System.Globalization;
 
 namespace SportsTacticsBoard.FieldObjects
 {
-  abstract class Player : Person
-  {
-    public enum TeamId {
-      Attacking,
-      Defending
-    }
-
-    private TeamId team;
-    public TeamId Team
+    public abstract class Player : Person
     {
-      get { return team; }
-    }
+        public enum TeamId
+        {
+            Attacking,
+            Defending
+        }
 
-    public override string Tag
-    {
-      get { return ComposeTag(Team, Label); }
-    }
+        public TeamId Team { get; }
 
-    public override string Name
-    {
-      get { return ComposeName(Team, Label); }
-    }
+        public override string Tag
+        {
+            get { return ComposeTag(Team, Label); }
+        }
 
-    public static string ComposeName(TeamId team, string playerLabel)
-    {
-      string nameFormat = Properties.Resources.ResourceManager.GetString("FieldObject_Player_Name_Format");
-      string teamName = Properties.Resources.ResourceManager.GetString("TeamName_" + team.ToString());
-      return String.Format(CultureInfo.CurrentUICulture, nameFormat, teamName, playerLabel);
-    }
+        public override string Name
+        {
+            get { return ComposeName(Team, Label); }
+        }
 
-    public static string ComposeTag(TeamId team, string playerLabel)
-    {
-      return "Player_" + team.ToString() + "_" + playerLabel;
-    }
+        public static string ComposeName(TeamId team, string playerLabel)
+        {
+            var nameFormat = ResourceManager.LocalizationResource.FieldObjectPlayerNameFormat;
+            var teamName = team == TeamId.Attacking ?
+                ResourceManager.LocalizationResource.TeamNameAttacking :
+                ResourceManager.LocalizationResource.TeamNameDefending;
+            return string.Format(CultureInfo.CurrentUICulture, nameFormat, teamName, playerLabel);
+        }
 
-    private static Color GetTeamColor(TeamId team)
-    {
-      switch (team) {
-        case TeamId.Defending:
-          return Color.Red;
-        case TeamId.Attacking:
-        default:
-          return Color.Yellow;
-      }
-    }
+        public static string ComposeTag(TeamId team, string playerLabel)
+        {
+            return "Player_" + team + "_" + playerLabel;
+        }
 
-    public Player(TeamId _team, float dispRadius) :
-      base(0.0F, 0.0F, dispRadius)
-    {
-      team = _team;
-      OutlinePenColor = Color.White;
-      MovementPenColor = GetTeamColor(team);
-      FillBrushColor = GetTeamColor(team);
+        private static Color GetTeamColor(TeamId team)
+        {
+            switch (team)
+            {
+                case TeamId.Defending:
+                    return Colors.Red;
+                case TeamId.Attacking:
+                default:
+                    return Colors.Yellow;
+            }
+        }
+
+        public Player(TeamId team, float dispRadius) :
+          base(0.0F, 0.0F, dispRadius)
+        {
+            Team = team;
+            OutlinePenColor = Colors.White;
+            MovementPenColor = GetTeamColor(team);
+            FillBrushColor = GetTeamColor(team);
+        }
     }
-  }
 }

@@ -1,12 +1,12 @@
 // Sports Tactics Board
 //
-// http://sportstacticsbd.sourceforge.net/
-// http://sourceforge.net/projects/sportstacticsbd/
+// http://github.com/manio143/SportsTacticsBoard
 // 
 // Sports Tactics Board is a utility that allows coaches, trainers and 
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
+// Copyright (C) 2016 Marian Dziubiak
 // Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
@@ -26,49 +26,36 @@
 
 namespace SportsTacticsBoard.FieldObjects
 {
-  class LabelledPlayer : Player
-  {
-    private string label;
-
-    public override string Label {
-      get { return label; }
-    }
-
-    private string overriddenTag;
-
-    protected override int LabelFontSize {
-      get {
-        if (LabelText.Length > 1) {
-          return 6;
-        } else {
-          return 9;
-        }
-      }
-    }
-
-    public override string Tag
+    public class LabelledPlayer : Player
     {
-      get
-      {
-        if (string.IsNullOrEmpty(overriddenTag)) {
-          return base.Tag;
-        } else {
-          return ComposeTag(Team, overriddenTag);
+        public override string Label { get; }
+
+        private readonly string overriddenTag;
+
+        protected override int LabelFontSize
+        {
+            get { return LabelText.Length > 1 ? 6 : 9; }
         }
-      }
-    }
 
-    public LabelledPlayer(string label, TeamId team, float dispRadius) :
-      base(team, dispRadius) {
-      this.label = label;
-    }
+        public override string Tag
+        {
+            get
+            {
+                return string.IsNullOrEmpty(overriddenTag) ? base.Tag : ComposeTag(Team, overriddenTag);
+            }
+        }
 
-    public LabelledPlayer(string label, TeamId team, float dispRadius, string overriddenTag) : 
-      base(team, dispRadius)
-    {
-      this.label = label;
-      this.overriddenTag = overriddenTag;
-    }
+        public LabelledPlayer(string label, TeamId team, float dispRadius) :
+          base(team, dispRadius)
+        {
+            Label = label;
+        }
 
-  }
+        public LabelledPlayer(string label, TeamId team, float dispRadius, string overriddenTag) :
+          base(team, dispRadius)
+        {
+            Label = label;
+            this.overriddenTag = overriddenTag;
+        }
+    }
 }

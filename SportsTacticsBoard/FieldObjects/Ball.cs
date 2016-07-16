@@ -1,12 +1,12 @@
 // Sports Tactics Board
 //
-// http://sportstacticsbd.sourceforge.net/
-// http://sourceforge.net/projects/sportstacticsbd/
+// http://github.com/manio143/SportsTacticsBoard
 // 
 // Sports Tactics Board is a utility that allows coaches, trainers and 
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
+// Copyright (C) 2016 Marian Dziubiak
 // Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
@@ -23,50 +23,39 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
-using System.Drawing;
+
+using Eto.Drawing;
 
 namespace SportsTacticsBoard.FieldObjects
 {
-  class Ball : FieldObject
-  {
-    private string label = string.Empty;
-    public override string Label
+    public class Ball : FieldObject
     {
-      get { return label; }
-    }
+        public override string Label { get; }
+        public override string Tag { get; }
 
-    private string tag = "Ball";
-    public override string Tag
-    {
-      get { return tag; }
-    }
+        public override bool ShowsLabel
+        {
+            get { return false; }
+        }
 
-    public override bool ShowsLabel
-    {
-      get { return false; }
-    }
+        protected override float[] MovementPenDashPattern
+        {
+            get { return new[] { 3.0F, 2.0F }; }
+        }
 
-    public Ball(float posX, float posY, float dispRadius) :
-      base(posX, posY, dispRadius)
-    {
-      OutlinePenColor = Color.Black;
-      FillBrushColor = Color.White;
-    }
+        public Ball(float posX, float posY, float dispRadius)
+            : this(string.Empty, "Ball", posX, posY, dispRadius)
+        {
+            OutlinePenColor = Colors.White;
+        }
 
-    public Ball(string label, string tag, float posX, float posY, float dispRadius)
-      : base(posX, posY, dispRadius)
-    {
-      OutlinePenColor = Color.Black;
-      FillBrushColor = Color.White;
-      this.label = label;
-      this.tag = tag;
+        public Ball(string label, string tag, float posX, float posY, float dispRadius)
+            : base(posX, posY, dispRadius)
+        {
+            OutlinePenColor = Colors.Black;
+            FillBrushColor = Colors.White;
+            Label = label;
+            Tag = tag;
+        }
     }
-
-    protected override float[] MovementPenDashPattern
-    {
-      get { 
-        return new float[] { 3.0F, 2.0F }; 
-      }
-    }
-  }
 }

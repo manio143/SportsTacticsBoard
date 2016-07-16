@@ -1,12 +1,12 @@
-﻿// Sports Tactics Board
+// Sports Tactics Board
 //
-// http://sportstacticsbd.sourceforge.net/
-// http://sourceforge.net/projects/sportstacticsbd/
+// http://github.com/manio143/SportsTacticsBoard
 // 
 // Sports Tactics Board is a utility that allows coaches, trainers and 
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
+// Copyright (C) 2016 Marian Dziubiak
 // Copyright (C) 2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
@@ -23,47 +23,48 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
-using System.Drawing;
+
+using System.Globalization;
+using Eto.Drawing;
 
 namespace SportsTacticsBoard.FieldObjects
 {
-  abstract class BaseCone : FieldObject
-  {
-    public int ConeNumber { get; private set; }
-
-    public override string Label
+    public abstract class BaseCone : FieldObject
     {
-      get { return string.Format(System.Globalization.CultureInfo.CurrentUICulture, Properties.Resources.FieldObject_BaseCone_Label_Format, ConeNumber); }
-    }
+        public int ConeNumber { get; }
 
-    public override string Tag
-    {
-      get { return string.Format(System.Globalization.CultureInfo.InvariantCulture, "Cone_{0}", ConeNumber); }
-    }
+        public override string Label { get; }
 
-    public override string Name
-    {
-      get { return string.Format(System.Globalization.CultureInfo.CurrentUICulture, Properties.Resources.FieldObject_BaseCone_Name_Format, ConeNumber); }
-    }
+        public override string Tag
+        {
+            get { return string.Format(CultureInfo.InvariantCulture, "Cone_{0}", ConeNumber); }
+        }
 
-    protected override int LabelFontSize
-    {
-      get { return 8; }
-    }
+        public override string Name { get; }
 
-    protected BaseCone(int coneNumber, float posX, float posY, float dispRadius) :
-      base(posX, posY, dispRadius)
-    {
-      ConeNumber = coneNumber;
-      OutlinePenColor = Color.Black;
-      FillBrushColor = Color.Orange;
-      MovementPenWidth = 1.5F;
-      MovementPenColor = Color.Orange;
-    }
+        protected override int LabelFontSize
+        {
+            get { return 8; }
+        }
 
-    protected override float[] MovementPenDashPattern
-    {
-      get { return new float[] { 3.0F, 2.0F }; }
+        protected override float[] MovementPenDashPattern
+        {
+            get { return new[] { 3.0F, 2.0F }; }
+        }
+
+        protected BaseCone(int coneNumber, float posX, float posY, float dispRadius)
+                : base(posX, posY, dispRadius)
+        {
+            ConeNumber = coneNumber;
+            OutlinePenColor = Colors.Black;
+            FillBrushColor = Colors.Orange;
+            MovementPenWidth = 1.5F;
+            MovementPenColor = Colors.Orange;
+
+            Label = string.Format(CultureInfo.CurrentUICulture,
+                ResourceManager.LocalizationResource.FieldObjectBaseConeLabelFormat, coneNumber);
+            Name = string.Format(CultureInfo.CurrentUICulture,
+                ResourceManager.LocalizationResource.FieldObjectBaseConeNameFormat, coneNumber);
+        }
     }
-  }
 }

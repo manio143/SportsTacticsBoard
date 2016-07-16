@@ -1,12 +1,12 @@
 // Sports Tactics Board
 //
-// http://sportstacticsbd.sourceforge.net/
-// http://sourceforge.net/projects/sportstacticsbd/
+// http://github.com/manio143/SportsTacticsBoard
 // 
 // Sports Tactics Board is a utility that allows coaches, trainers and 
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
+// Copyright (C) 2016 Marian Dziubiak
 // Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
@@ -23,43 +23,29 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
-using System.Drawing;
+using Eto.Drawing;
 
 namespace SportsTacticsBoard.FieldObjects
 {
-  class Referee : Person
-  {
-    private string label;
-    public override string Label
+    public class Referee : Person
     {
-      get { return label; }
-    }
+        public override string Label { get; }
 
-    private string tag;
-    public override string Tag
-    {
-      get { return tag; }
-    }
+        public override string Tag { get; }
 
-    protected override int LabelFontSize
-    {
-      get {
-        if (LabelText.Length > 1) {
-          return 6;
-        } else {
-          return 9;
+        protected override int LabelFontSize
+        {
+            get { return LabelText.Length > 1 ? 6 : 9; }
         }
-      }
-    }
 
-    public Referee(string _label, string _tag, float posX, float posY, float dispRadius) :
-      base(posX, posY, dispRadius)
-    {
-      label = _label;
-      tag = _tag;
-      FillBrushColor = Color.Black;
-      MovementPenColor = Color.Black;
-      LabelBrushColor = Color.White;
+        public Referee(string label, string tag, float posX, float posY, float dispRadius)
+            : base(posX, posY, dispRadius)
+        {
+            Label = label;
+            Tag = tag;
+            FillBrushColor = Colors.Black;
+            MovementPenColor = Colors.Black;
+            LabelBrushColor = Colors.White;
+        }
     }
-  }
 }

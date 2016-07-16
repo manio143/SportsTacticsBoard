@@ -1,12 +1,12 @@
 // Sports Tactics Board
 //
-// http://sportstacticsbd.sourceforge.net/
-// http://sourceforge.net/projects/sportstacticsbd/
+// http://github.com/manio143/SportsTacticsBoard
 // 
 // Sports Tactics Board is a utility that allows coaches, trainers and 
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
+// Copyright (C) 2016 Marian Dziubiak
 // Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
@@ -23,30 +23,30 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
-using System;
+
 using System.Globalization;
 
 namespace SportsTacticsBoard.FieldObjects
 {
-  class NumberedPlayer : Player
-  {
-    private int number;
-    public int Number {
-      get { return number; }
-    }
+    public class NumberedPlayer : Player
+    {
+        public int Number { get; }
 
-    public override string Label {
-      get { return Number.ToString(CultureInfo.CurrentCulture); }
-    }
+        public override string Label
+        {
+            get { return Number.ToString(CultureInfo.CurrentCulture); }
+        }
 
-    public static string ComposeTag(TeamId team, int playerNumber) {
-      return Player.ComposeTag(team, playerNumber.ToString(CultureInfo.InvariantCulture));
-    }
+        public static string ComposeTag(TeamId team, int playerNumber)
+        {
+            return ComposeTag(team, playerNumber.ToString(CultureInfo.InvariantCulture));
+        }
 
-    public NumberedPlayer(int _number, TeamId _team, float dispRadius)
-      : base(_team, dispRadius) {
-      number = _number;
-    }
+        public NumberedPlayer(int number, TeamId team, float dispRadius)
+          : base(team, dispRadius)
+        {
+            Number = number;
+        }
 
-  }
+    }
 }

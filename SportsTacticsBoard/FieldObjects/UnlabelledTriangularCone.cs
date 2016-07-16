@@ -1,13 +1,13 @@
-﻿// Sports Tactics Board
+// Sports Tactics Board
 //
-// http://sportstacticsbd.sourceforge.net/
-// http://sourceforge.net/projects/sportstacticsbd/
+// http://github.com/manio143/SportsTacticsBoard
 // 
 // Sports Tactics Board is a utility that allows coaches, trainers and 
 // officials to describe sports tactics, strategies and positioning using 
 // a magnetic or chalk-board style approach.
 // 
-// Copyright (C) 2010 Robert Turner
+// Copyright (C) 2016 Marian Dziubiak
+// Copyright (C) 2006-2010 Robert Turner
 // 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,40 +23,40 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
-using System.Drawing;
+using Eto.Drawing;
 
 namespace SportsTacticsBoard.FieldObjects
 {
-  class UnlabelledTriangularCone : BaseCone
-  {
-    public UnlabelledTriangularCone(int coneNumber, float posX, float posY, float dispRadius)
-      : base(coneNumber, posX, posY, dispRadius)
+    public class UnlabelledTriangularCone : BaseCone
     {
-    }
-
-    public override bool ShowsLabel
-    {
-      get { return false; }
-    }
-
-    public override void DrawAt(Graphics graphics, PointF pos)
-    {
-      RectangleF rect = GetRectangleAt(pos);
-      PointF[] trianglePoints = new PointF[] {
-        new PointF(pos.X, rect.Top),
-        new PointF(rect.Left, rect.Bottom),
-        new PointF(rect.Right, rect.Bottom),
-        new PointF(pos.X, rect.Top)
-      };
-
-      using (Brush fillBrush = new SolidBrush(FillBrushColor)) {
-        graphics.FillPolygon(fillBrush, trianglePoints);
-      }
-      if (OutlinePenWidth > 0.0) {
-        using (Pen outlinePen = new Pen(OutlinePenColor, OutlinePenWidth)) {
-          graphics.DrawPolygon(outlinePen, trianglePoints);
+        public UnlabelledTriangularCone(int coneNumber, float posX, float posY, float dispRadius)
+          : base(coneNumber, posX, posY, dispRadius)
+        {
         }
-      }
+
+        public override bool ShowsLabel
+        {
+            get { return false; }
+        }
+
+        public override void DrawAt(Graphics graphics, PointF pos)
+        {
+            var rect = GetRectangleAt(pos);
+            PointF[] trianglePoints =
+            {
+                new PointF(pos.X, rect.Top),
+                new PointF(rect.Left, rect.Bottom),
+                new PointF(rect.Right, rect.Bottom),
+                new PointF(pos.X, rect.Top)
+            };
+
+            using (var fillBrush = new SolidBrush(FillBrushColor))
+                graphics.FillPolygon(fillBrush, trianglePoints);
+
+            if (!(OutlinePenWidth > 0.0)) return;
+
+            using (var outlinePen = new Pen(OutlinePenColor, OutlinePenWidth))
+                graphics.DrawPolygon(outlinePen, trianglePoints);
+        }
     }
-  }
 }
