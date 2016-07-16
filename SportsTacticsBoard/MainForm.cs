@@ -21,6 +21,7 @@ namespace SportsTacticsBoard
         {
             ClientSize = new Size(767, 553);
             InitilizeMenu();
+            InitilizeToolbar();
         }
 
         private void InitilizeMenu()
@@ -207,6 +208,92 @@ namespace SportsTacticsBoard
                     Enabled = false
                 }
             };
+        }
+
+        private void InitilizeToolbar()
+        {
+            var toolbar = new ToolBar
+            {
+                Items =
+                {
+                    new ButtonToolItem  //GoToFirst
+                    {
+                        ToolTip = ResourceManager.LocalizationResource.GoToFirst,
+                        Image = ResourceManager.ImagesResource.DataContainerMoveFirstHs,
+                        Command = /* ToDo: Add GoToFirst command */ null
+                    },
+                    new ButtonToolItem  //Previous
+                    {
+                        ToolTip = ResourceManager.LocalizationResource.PreviousLayout,
+                        Image = ResourceManager.ImagesResource.DataContainerMovePreviousHs,
+                        Command = /* ToDo: Add GoToPrevious command */ null
+                    },
+                    //ToDo: create a text tool item to display sequence position
+                    new ButtonToolItem {Text = "1/1", Enabled = false},
+                    new ButtonToolItem  //Next
+                    {
+                        ToolTip = ResourceManager.LocalizationResource.NextLayout,
+                        Image = ResourceManager.ImagesResource.DataContainerMoveNextHs,
+                        Command = /* ToDo: Add GoToNext command */ null
+                    },
+                    new ButtonToolItem  //GoToLast
+                    {
+                        ToolTip = ResourceManager.LocalizationResource.GoToLast,
+                        Image = ResourceManager.ImagesResource.DataContainerMoveLastHs,
+                        Command = /* ToDo: Add GoToLast command */ null
+                    },
+                    new SeparatorToolItem(),
+                    new ButtonToolItem  //PlayPause
+                    {
+                        ToolTip = ResourceManager.LocalizationResource.PlayPause,
+                        Image = ResourceManager.ImagesResource.PlayHs,
+                        Command = /* ToDo: Add PlayPause command */ null
+                    },
+                    new ButtonToolItem  //Repeat
+                    {
+                        ToolTip = ResourceManager.LocalizationResource.Repeat,
+                        Image = ResourceManager.ImagesResource.RepeatHs,
+                        Command = /* ToDo: Add Repeat command */ null
+                    },
+                    new SeparatorToolItem(),
+                    new ButtonToolItem  //RecordNew
+                    {
+                        Text = ResourceManager.LocalizationResource.RecordNewPosition,
+                        ToolTip = ResourceManager.LocalizationResource.RecordNewPosition,
+                        Image = ResourceManager.ImagesResource.RecordHs,
+                        Command = /* ToDo: Add RecordNewPosition command */ null
+                    },
+                    new ButtonToolItem  //RecordOverCurrent
+                    {
+                        Text = ResourceManager.LocalizationResource.RecordOverCurrentPosition,
+                        ToolTip = ResourceManager.LocalizationResource.RecordOverCurrentPosition,
+                        Command = /* ToDo: Add RecordOverCurrentPosition command */ null
+                    },
+                    new ButtonToolItem  //RemoveCurrent
+                    {
+                        Text = ResourceManager.LocalizationResource.RemoveCurrent,
+                        ToolTip = ResourceManager.LocalizationResource.RemoveCurrent,
+                        Image = ResourceManager.ImagesResource.DeleteHs,
+                        Command = /* ToDo: Add RemoveCurrent command */ null
+                    },
+                    new ButtonToolItem  //RevertCurrent
+                    {
+                        Text = ResourceManager.LocalizationResource.RevertCurrent,
+                        ToolTip = ResourceManager.LocalizationResource.RevertCurrent,
+                        Image = ResourceManager.ImagesResource.EditUndoHs,
+                        Command = /* ToDo: Add RevertCurrent command */ null
+                    },
+                    new SeparatorToolItem(),
+                    new CheckToolItem   //ShowMovement
+                    {
+                        Text = ResourceManager.LocalizationResource.ShowMovement,
+                        ToolTip = ResourceManager.LocalizationResource.ShowMovement,
+                        Command = /* ToDo: Add ShowMovement command */ null
+                    },
+                    new SeparatorToolItem()
+                }
+            };
+            ToolBar = toolbar;
         }
     }
 }
